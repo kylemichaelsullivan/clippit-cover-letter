@@ -53,17 +53,13 @@ export const TemplatesForm = memo(function TemplatesForm({
 			<div className='flex items-center justify-between'>
 				<TabTitle title='Templates' componentName='TemplatesFormTitle' />
 				<Button
-					color='primary'
-					size='xs'
-					onClick={handleOpenHelpModal}
-					title='Template Variables Help'
 					componentName='TemplatesFormHelpButton'
+					color='primary'
+					size='md'
+					title='Template Variables Help'
+					onClick={handleOpenHelpModal}
 				>
-					<FontAwesomeIcon
-						icon={faCircleQuestion}
-						className='h-5 w-5 text-white'
-						aria-hidden='true'
-					/>
+					<FontAwesomeIcon icon={faCircleQuestion} aria-hidden='true' />
 				</Button>
 			</div>
 			<Form componentName='TemplatesFormContent' onSubmit={handleSubmit}>

@@ -89,11 +89,7 @@ export function SkillGroupName({
 									title='Remove Group'
 									componentName='SkillGroupCardRemoveButton'
 								>
-									<FontAwesomeIcon
-										icon={faTrash}
-										className='h-4 w-4 sm:h-5 sm:w-5'
-										aria-hidden='true'
-									/>
+									<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 								</Button>
 							) : undefined
 						}

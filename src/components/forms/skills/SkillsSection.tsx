@@ -68,11 +68,7 @@ export function SkillsSection({
 								color='secondary'
 								componentName='AddSkillGroupButton'
 							>
-								<FontAwesomeIcon
-									icon={faPlus}
-									className='h-4 w-4 sm:h-5 sm:w-5'
-									aria-hidden='true'
-								/>
+								<FontAwesomeIcon icon={faPlus} aria-hidden='true' />
 							</Button>
 						</>
 					);

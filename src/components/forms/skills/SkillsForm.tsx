@@ -51,11 +51,12 @@ export const SkillsForm = memo(function SkillsForm({
 					})
 					.filter(Boolean)
 					.join('\n\n')}
+				color='primary'
+				size='sm'
 				title='Skills'
 				filename='skills'
-				disabled={false}
 				showIcon={true}
-				color='primary'
+				disabled={false}
 			/>
 		) : undefined;
 

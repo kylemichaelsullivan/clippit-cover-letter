@@ -63,18 +63,14 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 				componentName='JobFormTitle'
 				actionButton={
 					<Button
+						componentName='ClearJobButton'
 						color='danger'
 						size='md'
-						onClick={handleClearClick}
-						componentName='ClearJobButton'
-						aria-label='Clear Job Details'
 						title='Clear Job Details'
+						aria-label='Clear Job Details'
+						onClick={handleClearClick}
 					>
-						<FontAwesomeIcon
-							icon={faTrash}
-							className='h-4 w-4'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 						Clear
 					</Button>
 				}

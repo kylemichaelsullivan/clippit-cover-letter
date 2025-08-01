@@ -46,11 +46,7 @@ export function SkillsHeader({
 						title='Alphabetize Skill Group Names'
 						componentName='AlphabetizeSkillsButton border-black'
 					>
-						<FontAwesomeIcon
-							icon={faSort}
-							className='h-3 w-3 sm:h-4 sm:w-4'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faSort} aria-hidden='true' />
 						<span className='hidden sm:inline'>Alphabetize</span>
 					</Button>
 				)}

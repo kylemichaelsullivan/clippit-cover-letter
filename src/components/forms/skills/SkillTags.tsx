@@ -258,19 +258,15 @@ export function SkillTags({
 				className='flex-1 text-sm sm:text-base'
 				labelContent={
 					<Button
-						color='primary'
+						componentName='SkillTagsAddButton'
+						color='success'
 						size='xs'
+						aria-label='Add Skill'
+						title='Add Skill'
 						onClick={handleAddClick}
 						disabled={!inputValue.trim()}
-						title='Add Skill'
-						className='text-xs sm:text-sm'
-						componentName='SkillTagsAddButton'
 					>
-						<FontAwesomeIcon
-							icon={faThumbtack}
-							className='h-3 w-3 sm:h-4 sm:w-4'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
 					</Button>
 				}
 			/>
@@ -335,17 +331,14 @@ export function SkillTags({
 								>
 									{skill}
 									<Button
+										componentName='SkillTagRemoveButton'
 										color='secondary'
 										size='xs'
-										onClick={() => removeSkill(originalIndex)}
+										aria-label={`Remove ${skill}`}
 										title={`Remove ${skill}`}
-										componentName='SkillTagRemoveButton'
+										onClick={() => removeSkill(originalIndex)}
 									>
-										<FontAwesomeIcon
-											icon={faTimes}
-											className='h-2.5 w-2.5 sm:h-3 sm:w-3'
-											aria-hidden='true'
-										/>
+										<FontAwesomeIcon icon={faTimes} aria-hidden='true' />
 									</Button>
 								</span>
 							))}
