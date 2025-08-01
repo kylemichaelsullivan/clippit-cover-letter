@@ -37,12 +37,11 @@ export function ThemeToggle() {
 					<div className='flex h-4 w-4 items-center justify-center'>
 						<FontAwesomeIcon
 							icon={theme === 'light' ? faSun : faMoon}
-							className='h-4 w-4'
 							aria-hidden='true'
 						/>
 					</div>
 				) : (
-					<div className='h-4 w-4 animate-pulse rounded-full bg-gray-300' />
+					<div className='bg-light-gray h-4 w-4 animate-pulse rounded-full' />
 				)}
 			</div>
 		</Button>

@@ -40,10 +40,10 @@ export function ActionButtons({
 
 			<DownloadButtonMD
 				content={text}
+				size='flex'
 				title='MD'
 				filename={filename}
 				disabled={disabled}
-				size='flex'
 			/>
 
 			<DownloadButtonTXT

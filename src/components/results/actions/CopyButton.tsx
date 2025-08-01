@@ -27,12 +27,12 @@ export function CopyButton({ text, disabled = false }: CopyButtonProps) {
 
 	return (
 		<Button
+			componentName='CopyButton'
 			color='primary'
 			size='flex'
 			title='Copy'
 			onClick={handleCopy}
 			disabled={isDisabled}
-			componentName='CopyButton'
 		>
 			Copy
 		</Button>

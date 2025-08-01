@@ -40,13 +40,13 @@ export function DownloadButtonTXT({
 
 	return (
 		<Button
+			componentName='DownloadButtonTXT'
 			color='primary'
 			size='flex'
-			onClick={handleDownloadTXT}
-			disabled={isDisabled}
-			componentName='DownloadButtonTXT'
 			title={`${title}`}
 			aria-label={`${title} as TXT`}
+			onClick={handleDownloadTXT}
+			disabled={isDisabled}
 		>
 			{title}
 		</Button>

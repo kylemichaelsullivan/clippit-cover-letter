@@ -56,9 +56,7 @@ export function DownloadButtonMD({
 			title={`Download ${title}`}
 			aria-label={`${title} as Markdown file`}
 		>
-			{showIcon && (
-				<FontAwesomeIcon icon={faSave} className='h-4 w-4' aria-hidden='true' />
-			)}
+			{showIcon && <FontAwesomeIcon icon={faSave} aria-hidden='true' />}
 			{title}
 		</Button>
 	);

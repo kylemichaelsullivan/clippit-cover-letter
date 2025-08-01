@@ -73,29 +73,20 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 						title='Close'
 						componentName='MustacheReplacementModalCloseButton'
 						color='danger'
-						size='xs'
+						size='sm'
 					>
-						<FontAwesomeIcon
-							icon={faXmark}
-							className='h-4 w-4'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faXmark} aria-hidden='true' />
 					</Button>
 				</div>
 
 				<div className='TemplateVariables flex max-h-96 flex-col gap-6 overflow-y-auto'>
-					{/* Mustache Variables Section */}
 					<div className='MustacheVariables'>
 						<h4 className='MustacheVariablesTitle text-gray mb-3 text-sm font-semibold tracking-wide uppercase'>
 							Mustache Variables: &#123;&#123;variable&#125;&#125;
 						</h4>
 
 						<p className='MustacheReplacementModalInstructions text-gray flex gap-2 pb-4'>
-							<FontAwesomeIcon
-								icon={faCopy}
-								className='xs:h-4 xs:w-4 h-3 w-3'
-								aria-hidden='true'
-							/>
+							<FontAwesomeIcon icon={faCopy} aria-hidden='true' />
 							<span className='MustacheReplacementModalDescriptionText xs:text-sm text-xs italic'>
 								Click a variable to copy it to the clipboard
 							</span>

@@ -47,11 +47,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 			<div className='mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'>
 				<div className='flex flex-col gap-4'>
 					<div className='flex items-center gap-3'>
-						<FontAwesomeIcon
-							icon={faExclamationTriangle}
-							className='text-red h-6 w-6'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faExclamationTriangle} aria-hidden='true' />
 						<h3 className='text-lg font-semibold text-black'>{title}</h3>
 					</div>
 
@@ -79,11 +75,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 								'Clearing...'
 							) : (
 								<>
-									<FontAwesomeIcon
-										icon={faTrash}
-										className='h-4 w-4'
-										aria-hidden='true'
-									/>
+									<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 									{confirmText}
 								</>
 							)}

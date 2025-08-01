@@ -34,7 +34,7 @@ export const Copyright = memo(function Copyright() {
 			<footer
 				className='Copyright cursor-pointer text-sm text-black transition-colors hover:text-gray-600'
 				role='button'
-				tabIndex={0}
+				tabIndex={-1}
 				onClick={handleClick}
 				onKeyDown={(e) => {
 					if (e.key === 'Enter' || e.key === ' ') {

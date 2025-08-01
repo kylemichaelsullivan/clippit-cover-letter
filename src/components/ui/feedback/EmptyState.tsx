@@ -134,7 +134,7 @@ export function EmptyState({
 				<div className='flex flex-col items-center gap-4'>
 					<FontAwesomeIcon
 						icon={faSpinner}
-						className='text-blue h-8 w-8 animate-spin'
+						className='animate-spin'
 						aria-hidden='true'
 					/>
 					<div className='flex flex-col gap-2'>
@@ -200,11 +200,7 @@ export function EmptyState({
 						componentName='EmptyStateGenerateButton'
 					>
 						Generate
-						<FontAwesomeIcon
-							icon={faRefresh}
-							className='h-5 w-5'
-							aria-hidden='true'
-						/>
+						<FontAwesomeIcon icon={faRefresh} aria-hidden='true' />
 					</Button>
 				)}
 			</div>
