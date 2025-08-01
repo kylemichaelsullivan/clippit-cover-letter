@@ -1,0 +1,171 @@
+---
+globs: ['**/*.tsx', '**/*.ts']
+exclude:
+  [
+    '**/__tests__/**',
+    '**/*.test.*',
+    '**/*.spec.*',
+    '**/config/**',
+    '**/lib/schemas.ts',
+    '**/lib/openai.ts',
+  ]
+---
+
+# React Development Standards
+
+## Component Architecture
+
+### Single-Purpose Components
+
+- **One component per file**: Each file contains exactly one React component
+- **Bite-sized components**: Components should be focused and single-purpose (one thing == one component == one file)
+- **Descriptive naming**: Use PascalCase with descriptive names indicating visual purpose
+- **Component suffixes**: Use appropriate suffixes (e.g., `Container`, `Panel`, `Button`)
+
+### Component Guidelines
+
+- **TypeScript types**: Prefer `type` over `interface` for component props and data structures
+- **Named exports**: Export components as named exports
+- **Index files**: Create `index.ts` files for directory exports
+- **Memoization**: Use `React.memo` for performance-critical components
+- **Props interface**: Define clear, typed props with descriptive names
+
+### Performance Optimization
+
+### React.memo Usage
+
+- **Import pattern**: Import `memo` from React for component memoization
+- **Component exports**: Use default exports with `memo` for performance-critical components
+- **Memoization criteria**: Apply `memo` to components with stable props or frequent re-renders
+
+#### Memoization Guidelines
+
+```typescript
+// ✅ Good memoization pattern
+import { memo } from 'react';
+
+function ComponentName({ prop1, prop2 }: ComponentProps) {
+  return <div>{/* component content */}</div>;
+}
+
+export default memo(ComponentName);
+```
+
+#### When to Use React.memo
+
+- **UI components**: Button, FormField, DocumentContent, etc.
+- **Display components**: MarkdownPreview, ResultPanel, etc.
+- **Form components**: FormField, FormSection, etc.
+- **Navigation components**: PhaseSwitcher, etc.
+
+#### When NOT to Use React.memo
+
+- **Context providers**: ThemeProvider, etc.
+- **Layout components**: Header, Footer, etc.
+- **Components with frequently changing props**
+- **Components that are already optimized**
+
+### HMR Optimization
+
+- **Component memoization**: Use `React.memo` to prevent unnecessary re-renders
+- **Context minimization**: Avoid deep context nesting that causes HMR issues
+- **Development tools**: Include HMR debug components for development
+- **Store structure**: Use Zustand stores to reduce HMR complexity
+
+### Performance Considerations
+
+### Memoization
+
+- **React.memo**: Use for components with stable props
+- **useMemo**: Use for expensive computations
+- **useCallback**: Use for event handlers passed as props
+
+### Bundle Optimization
+
+- **Tree shaking**: Import only necessary components
+- **Dynamic imports**: Use for large components when appropriate
+- **Code splitting**: Leverage Next.js automatic code splitting
+
+## State Management
+
+### Zustand Stores
+
+- **DevTools integration**: Include Zustand devtools middleware for development
+- **State management**: Use Zustand for all application state
+- **Store naming**: Use `use[Feature]Store` naming convention
+- **Store organization**: Create focused stores in `src/lib/stores/`
+- **Store structure**: Separate state, setters, and actions clearly
+
+#### Store Guidelines
+
+```typescript
+// ✅ Good store structure
+export const useAppStore = create<AppState>()(
+  devtools(
+    (set, get) => ({
+      // State
+      data: initialState,
+
+      // Setters
+      setData: (data) => set({ data }),
+
+      // Actions
+      asyncAction: async () => {
+        const state = get();
+        // Action logic
+        set({ data: newData });
+      },
+    }),
+    { name: 'app-store' }
+  )
+);
+```
+
+#### Store Usage
+
+```typescript
+// ✅ Use stores directly in components
+const { data, setData, asyncAction } = useAppStore();
+
+// ❌ Don't create wrapper hooks unless necessary
+const useAppData = () => useAppStore(state => state.data);
+```
+
+### Context Optimization
+
+- **Minimize context usage**: Prefer Zustand stores over React contexts
+- **Context nesting**: Avoid deep context nesting (max 2-3 levels)
+- **Context splitting**: Break large contexts into smaller, focused contexts
+- **Performance**: Use `React.memo` for context consumers
+
+## Browser Extension Safety
+
+### Hydration Safety
+
+- **Consistent rendering**: Ensure server and client render the same structure initially
+- **suppressHydrationWarning**: Use where appropriate for theme-dependent elements
+- **Client-only hooks**: Use utility hooks for browser APIs
+- **Mounting detection**: Check for client mounting before applying dynamic changes
+
+### Extension Interference
+
+- **Graceful handling**: Handle browser extension interference gracefully
+- **Cleanup mechanisms**: Implement cleanup for extension interference
+- **Fallback states**: Provide fallback states for extension-modified content
+
+## Accessibility Standards
+
+### ARIA and Semantics
+
+- **Proper ARIA labels**: Include appropriate ARIA labels and roles
+- **Keyboard navigation**: Support keyboard navigation
+- **Focus management**: Implement proper focus management
+- **Screen reader compatibility**: Ensure screen reader compatibility
+- **Color contrast**: Maintain proper color contrast ratios
+- **Semantic HTML**: Use semantic HTML structure
+
+### Error Handling
+
+- **Error message association**: Associate error messages with form fields
+- **Loading state announcements**: Announce loading states to screen readers
+- **Error boundaries**: Implement error boundaries for graceful error handling

@@ -1,0 +1,271 @@
+---
+globs: ['**/components/**/*.tsx', '**/components/**/*.ts']
+exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
+---
+
+# Component Development Standards
+
+## File Organization
+
+```
+src/components/
+├── ui/                    # UI components by function
+│   ├── buttons/          # Button components
+│   ├── display/          # Display and preview components
+│   ├── feedback/         # Status and feedback components
+│   ├── input/            # Input components
+│   ├── navigation/       # Navigation components
+│   └── debug/            # Development debugging components
+├── forms/                # Form components
+├── layout/               # Layout components
+├── providers/            # Context providers
+├── utils/                # Utility components
+├── features/             # Feature-based components
+│   └── document-generation/ # Document generation components
+└── results/              # Results display components
+    ├── actions/          # Action buttons
+    ├── display/          # Display components
+    ├── feedback/         # Feedback components
+    └── panels/           # Panel components
+```
+
+## Component Structure Guidelines
+
+### Avoid Superfluous Wrappers
+
+- **Remove unnecessary wrapper divs**: Don't create wrapper divs that add DOM complexity without benefit
+- **Simplify component structure**: Remove redundant nesting when possible
+- **Keep meaningful wrappers**: Retain wrappers that serve styling, semantic, or organizational purposes
+
+### Spacing Guidelines
+
+- **Avoid `space-*` utilities**: Don't use `space-x-*` or `space-y-*` utilities - they rely on margin-based spacing
+- **Use flex/gap spacing**: Use `flex flex-col gap-*` for vertical spacing and `flex items-center gap-*` for horizontal spacing
+- **Maintain visual consistency**: All spacing changes should preserve the original visual appearance
+
+#### Spacing Examples
+
+```tsx
+// ❌ Avoid - margin-based spacing
+<div className='space-y-4'>
+  <Component />
+</div>
+
+// ✅ Good - flexbox-based spacing
+<div className='flex flex-col gap-4'>
+  <Component />
+</div>
+```
+
+```tsx
+// ❌ Avoid - redundant wrapper
+<div className='Container'>
+  <div className='flex flex-col gap-4'>
+    <Component />
+  </div>
+</div>
+
+// ✅ Good - simplified structure
+<div className='Container flex flex-col gap-4'>
+  <Component />
+</div>
+```
+
+## Utility Components
+
+Always use the project's utility components instead of creating custom HTML elements when possible:
+
+### Core UI Components
+
+- **Button** (`@/components/ui/buttons/Button`) - Use for all button interactions
+
+  - Supports colors: `primary`, `secondary`, `success`, `danger`, `navigation`
+  - Supports sizes: `sm`, `md`, `lg`
+  - Includes proper accessibility attributes
+
+#### Example Usage
+
+```tsx
+// ✅ Use utility components
+import { Button } from '@/components/ui/buttons';
+import { Form, FormField } from '@/components/forms/core';
+import { Error } from '@/components/ui/feedback';
+import { candidateDetailsSchema } from '@/lib/schemas';
+
+<Form componentName="MyForm" onSubmit={handleSubmit}>
+  <FormField
+    id="email"
+    type="email"
+    label="Email Address"
+    value={email}
+    onChange={setEmail}
+    placeholder="your.email@example.com"
+    schema={candidateDetailsSchema}
+    fieldName="email"
+  />
+
+  <Button color="primary" size="md" type="submit">
+    Submit
+  </Button>
+</Form>
+
+{error && <Error>{error}</Error>}
+
+// ❌ Don't create custom elements when utilities exist
+<form className="custom-form-classes" onSubmit={handleSubmit}>
+  <input className="custom-input-classes" />
+</form>
+```
+
+### Feedback Components
+
+- **Error** (`@/components/ui/feedback/Error`) - Use for error messages
+- **Confirmation** (`@/components/ui/feedback/Confirmation`) - Use for confirmation dialogs
+- **LoadingState** (`@/components/ui/feedback/LoadingState`) - Use for loading indicators
+
+### Display Components
+
+- **DocumentContent** (`@/components/results/panels/DocumentContent`) - Use for document content display and editing
+- **MarkdownPreview** (`@/components/ui/display/MarkdownPreview`) - Use for markdown rendering
+- **ResultPanel** (`@/components/ui/display/ResultPanel`) - Use for result displays
+- **SkillsDisplay** (`@/components/ui/display/SkillsDisplay`) - Use for skills content
+
+### Navigation Components
+
+- **PhaseSwitcher** (`@/components/ui/navigation/PhaseSwitcher`) - Use for phase navigation
+- **PhaseSwitcher** (`@/components/ui/navigation/PhaseSwitcher`) - Use for phase navigation (includes individual phase buttons)
+
+### Input Components
+
+- **DocumentContent** (`@/components/results/panels/DocumentContent`) - Use for document content display and editing (supports both readonly and editable modes)
+- **MarkdownInput** (`@/components/ui/input/MarkdownInput`) - Use for markdown text areas
+
+## Component Guidelines
+
+### Single-Purpose Components
+
+- **One component per file**: Each file contains exactly one React component
+- **Bite-sized components**: Components should be focused and single-purpose (one thing == one component == one file)
+- **Descriptive naming**: Use PascalCase with descriptive names indicating visual purpose
+- **Component suffixes**: Use appropriate suffixes (e.g., `Container`, `Panel`, `Button`)
+
+### Component Structure
+
+```tsx
+// Standard component file structure
+'use client';
+
+import { memo } from 'react';
+import type { ReactNode } from 'react';
+import clsx from 'clsx';
+
+type ComponentProps = {
+  // Required props
+  title: string;
+  // Optional props with defaults
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  // Children
+  children?: ReactNode;
+};
+
+function ComponentName({
+  title,
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  children
+}: ComponentProps) {
+  return (
+    <div className={clsx(
+      'ComponentName base-classes',
+      variant === 'secondary' && 'secondary-classes',
+      size === 'lg' && 'large-classes',
+      disabled && 'disabled-classes'
+    )}>
+      {children}
+    </div>
+  );
+}
+
+export default memo(ComponentName);
+```
+
+### Component Guidelines
+
+- **TypeScript types**: Prefer `type` over `interface` for component props and data structures
+- **Named exports**: Export components as named exports
+- **Index files**: Create `index.ts` files for directory exports
+- **Memoization**: Use `React.memo` for performance-critical components
+- **Props interface**: Define clear, typed props with descriptive names
+
+## Component Patterns
+
+### Layout Components
+
+- **Header** (`@/components/layout/Header`) - Main application header
+- **Footer** (`@/components/layout/Footer`) - Main application footer
+- **Body** (`@/components/layout/Body`) - Main application body
+- **ClientLayoutContent** (`@/components/layout/ClientLayoutContent`) - Client-side layout wrapper
+
+### Feature Components
+
+- **DocumentGenerator** (`@/components/features/document-generation/DocumentGenerator`) - Document generation logic
+- **ResultsGenerator** (`@/components/features/document-generation/ResultsGenerator`) - Results generation logic
+- **PreviewContent** (`@/components/features/PreviewContent`) - Content preview functionality
+
+### Results Components
+
+- **DocumentContent** (`@/components/results/panels/DocumentContent`) - Document content display and editing
+- **DocumentHeader** (`@/components/results/panels/DocumentHeader`) - Document header display
+- **DocumentPanel** (`@/components/results/panels/DocumentPanel`) - Document panel container
+- **ResultContent** (`@/components/results/display/ResultContent`) - Result content display
+- **ResultsStateManager** (`@/components/results/display/ResultsStateManager`) - Results state management
+
+### Action Components
+
+- **ActionButtons** (`@/components/results/actions/ActionButtons`) - Action button container
+- **CopyButton** (`@/components/results/actions/CopyButton`) - Copy functionality
+- **DownloadButtonPDF** (`@/components/results/actions/DownloadButtonPDF`) - PDF download
+- **DownloadButtonTXT** (`@/components/results/actions/DownloadButtonTXT`) - TXT download
+
+## Component Best Practices
+
+### Performance
+
+- **React.memo**: Use for components with stable props
+- **useMemo**: Use for expensive computations
+- **useCallback**: Use for event handlers passed as props
+- **Tree shaking**: Import only necessary components
+
+### Accessibility
+
+- **ARIA labels**: Include appropriate ARIA labels and roles
+- **Keyboard navigation**: Support keyboard navigation
+- **Focus management**: Implement proper focus management
+- **Screen reader compatibility**: Ensure screen reader compatibility
+- **Color contrast**: Maintain proper color contrast ratios
+- **Semantic HTML**: Use semantic HTML structure
+
+### Error Handling
+
+- **Error boundaries**: Implement error boundaries for graceful error handling
+- **Error message association**: Associate error messages with form fields
+- **Loading state announcements**: Announce loading states to screen readers
+
+## Component Testing
+
+### Unit Testing
+
+- **Component rendering**: Test component rendering with different props
+- **User interactions**: Test user interactions and callbacks
+- **Accessibility features**: Test accessibility features
+- **Theme switching**: Test theme switching functionality
+
+### Integration Testing
+
+- **Form integration**: Test component integration with forms
+- **Context behavior**: Test component behavior in different contexts
+- **Responsive behavior**: Test responsive behavior across screen sizes
+- **Feature flag functionality**: Test feature flag functionality

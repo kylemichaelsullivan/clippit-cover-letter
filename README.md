@@ -1,36 +1,252 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Clippit
+
+A Next.js application that generates tailored cover letters and resumes using AI assistance.
+
+## Features
+
+- 🤖 AI-powered document generation
+- 🎯 Template-based document generation with {{mustache values}} and <%=ERB instructions%> for AI enhancement
+- 📋 Multi-phase form workflow (React Hook Form)
+- 🎨 Modern, responsive UI (Tailwind CSS v4)
+- 🔒 Secure API key management
+- 🌙 Light/Dark mode toggle
+- 🔧 Comprehensive feature flag system
+- 🐛 Development debugging tools
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm (recommended) or npm
+- OpenAI API key
+
+### Installation
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone <repository-url>
+cd clippit-cover-letter
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Set up environment variables:
+
+```bash
+# Copy the example environment file
+cp .env.example .env.local
+
+# Edit .env.local and add your OpenAI API key
+OPENAI_API_KEY=your_actual_openai_api_key_here
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+# Required: Your OpenAI API key
+OPENAI_API_KEY=sk-your-api-key-here
+
+# Optional: AI configuration (defaults shown)
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_MAX_TOKENS=2000
+OPENAI_TEMPERATURE=0.7
+
+
+```
+
+**Important**: Never commit your `.env.local` file to version control. It's already included in `.gitignore`.
+
+### Running the Development Server
+
+#### Fast Development (Recommended)
+
+Uses Turbopack for faster builds and hot reloading:
+
+```bash
 pnpm dev
-# or
-bun dev
+```
+
+#### Standard Development
+
+Uses Webpack (slower but more stable):
+
+```bash
+pnpm dev:webpack
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Enter Candidate Details**: Fill in your personal information
+2. **Add Templates**: Provide your resume and cover letter templates with {{mustache values}} and <%=ERB instructions%>
+3. **Enter Job Details**: Fill in the company name, position, and other relevant information
+4. **Generate Documents**: Click generate to create personalized documents (AI-enhanced when available)
+5. **Preview and Edit**: Review the generated content and make any adjustments
+6. **Export**: Copy or download your final documents
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS v4 with custom class ordering
+- **Language**: TypeScript
+- **AI**: OpenAI GPT API
+- **Package Manager**: pnpm
+- **Form Handling**: TanStack Form with Zod validation and proper TypeScript typing
+- **Markdown**: React Markdown
+- **Theme**: Custom light/dark mode implementation
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js app router pages
+│   ├── layout.tsx         # Root layout with theme provider
+│   ├── page.tsx           # Main application page
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── ui/               # UI components by function
+│   │   ├── buttons/      # Button components
+│   │   ├── display/      # Display and preview components
+│   │   ├── feedback/     # Status and feedback components
+│   │   ├── input/        # Input components
+│   │   ├── navigation/   # Navigation components
+│   │   ├── debug/        # Development debugging components
+
+│   ├── forms/            # Form components
+│   ├── layout/           # Layout components
+│   ├── providers/        # Context providers
+│   ├── utils/            # Utility components
+│   └── features/         # Feature-based components
+├── config/               # Configuration files
+│   ├── ai.ts            # AI configuration and validation
+│   ├── constants.ts     # Application constants
+│   ├── features.ts      # Feature flag system
+│   └── env.ts           # Environment variable handling
+├── contexts/            # React contexts
+│   └── AppContext.tsx   # Main application context
+├── lib/                 # Utility functions and hooks
+│   ├── hooks.ts         # Custom React hooks
+│   └── openai.ts        # OpenAI API integration
+└── types/               # TypeScript type definitions
+```
+
+## Key Features
+
+### AI Integration
+
+Secure and configurable AI integration with:
+
+- API key validation and security
+- Rate limiting and error handling
+- Configurable models and parameters
+- Safe logging practices
+- Template enhancement capabilities
+
+### Template-based Document Generation
+
+Advanced template system with:
+
+- Mustache-style placeholder replacement (`{{variable}}`) and ERB-style AI instructions (`<%=instruction%>`)
+- AI enhancement when available
+- Direct template rendering as fallback
+- Template validation and error handling
+
+### Multi-phase Form Workflow
+
+Comprehensive form management with:
+
+- TanStack Form integration
+- Zod schema validation for all forms with form-specific types
+- Multi-step form progression with type-safe form sections
+- Form validation and error handling with detailed error logging
+- State persistence across steps with proper type inference
+
+### Modern, Responsive UI
+
+Professional user interface featuring:
+
+- Tailwind CSS v4 styling
+- Responsive design for all devices
+- Modern component architecture
+- Consistent design system
+
+### Secure API Key Management
+
+Enterprise-grade security with:
+
+- Environment variable protection
+- Client-side key validation
+- Secure API communication
+- No key exposure in client code
+
+### Light/Dark Mode Toggle
+
+Accessible theme system with:
+
+- Hydration-safe implementation
+- Browser extension interference handling
+- Accessible theme toggle
+- CSS custom properties
+
+### Feature Flag System
+
+A robust feature flag system allows fine-grained control over functionality:
+
+- Environment variable-based configuration
+- Runtime feature checking
+- Development debugging tools
+- Performance optimization options
+
+### Development Debugging Tools
+
+Comprehensive debugging support including:
+
+- Development mode indicators
+- Error boundary implementation
+- Performance monitoring tools
+
+### Theme System
+
+Hydration-safe theme implementation with:
+
+- Consistent server/client rendering
+- Browser extension interference handling
+- Accessible theme toggle
+- CSS custom properties
+
+## Documentation
+
+- [AI Configuration Guide](./documentation/AI_CONFIGURATION.md)
+- [Template Syntax Guide](./documentation/TEMPLATE_SYNTAX.md)
+- [Hydration Error Handling Guide](./documentation/HYDRATION_GUIDE.md)
+- [Components Documentation](./src/components/README.md)
+- [UI Components Documentation](./src/components/ui/README.md)
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [TanStack Form Documentation](https://tanstack.com/form/latest)
+- [Zod Documentation](https://zod.dev/)
+- [OpenAI API Documentation](https://platform.openai.com/docs)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Remember to set your environment variables in your deployment platform's settings.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is open source and available under the [MIT License](LICENSE).

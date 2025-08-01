@@ -1,0 +1,270 @@
+---
+globs: ['**/forms/**/*.tsx', '**/forms/**/*.ts', '**/lib/schemas.ts']
+exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
+---
+
+# Form Development Standards
+
+## TanStack Form Integration
+
+- **TanStack Form**: Defer to TanStack Form and Zod whenever possible
+- **No reinvention**: Don't reinvent the wheel - use established patterns
+- **Type safety**: Ensure proper TypeScript typing for all forms
+- **Multi-step forms**: Support multi-step form progression
+- **State persistence**: Maintain state across form steps
+- **Schema-driven validation**: Use Zod schemas as the single source of truth for field requirements
+- **Automatic required indicators**: FormField component automatically shows required field indicators based on Zod schema
+- **No manual required props**: Never use manual `required` props - always use `schema` and `fieldName` for consistency
+- **Schema validation utility**: Use `validateSchema(schema, fieldName)` for real-time field validation in TanStack Form Field validators
+
+## Available Schemas
+
+### Candidate Details Schema
+
+```typescript
+// src/lib/schemas.ts
+export const candidateDetailsSchema = z.object({
+  fullName: z.string().min(1, 'Full name is required'),
+  email: z.string().email('Please enter a valid email address'),
+  phone: z.string(),
+  location: z.string(),
+  linkedin: z.string()
+    .min(3, 'LinkedIn slug must be at least 3 characters')
+    .max(100, 'LinkedIn slug cannot exceed 100 characters')
+    .regex(/^[a-zA-Z0-9-]+$/, 'LinkedIn slug can only contain letters, numbers, and hyphens')
+    .refine((val) => !val.toLowerCase().includes('linkedin'), {
+      message: 'LinkedIn slug should not include the word "LinkedIn"',
+    }),
+  portfolio: z.string(),
+});
+```
+
+### Job Details Schema
+
+```typescript
+export const jobDetailsSchema = z.object({
+  companyName: z.string().min(1, 'Company name is required'),
+  jobTitle: z.string().min(1, 'Job title is required'),
+  jobDescription: z.string().min(1, 'Job description is required'),
+  hiringManager: z.string(),
+  companyAddress: z.string(),
+});
+```
+
+### Skills Schema
+
+```typescript
+export const skillsSchema = z.object({
+  groups: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      skills: z.array(z.string()),
+    }),
+  ),
+  minSkillsToUse: z.number().min(1),
+  maxSkillsToUse: z.number().min(1),
+});
+```
+
+### Templates Schema
+
+```typescript
+export const templatesSchema = z.object({
+  includeCoverLetter: z.boolean(),
+  coverLetterContent: z.string(),
+  includeResume: z.boolean(),
+  resumeContent: z.string(),
+});
+```
+
+## Utility Components
+
+Always use the project's utility components instead of creating custom HTML elements when possible:
+
+### Core Form Components
+
+- **Form** (`@/components/forms/core/Form`) - Use for consistent form containers
+
+  - **Consistent styling**: Uses `CONSTANTS.CLASS_NAMES.FORM_CONTAINER` for uniform appearance
+  - **Component naming**: Pass `componentName` prop for debugging and styling
+  - **Form handling**: Automatically handles `preventDefault` and `stopPropagation`
+  - **Flexible content**: Accepts any children components
+  - **Customizable**: Optional `className` prop for additional styling
+
+- **FormField** (`@/components/forms/core/FormField`) - Use for all form inputs
+
+  - Supports types: `text`, `email`, `tel`, `url`, `password`, `select`, `textarea`
+  - Includes error handling and help text
+  - Supports label content for additional elements
+  - **Prefix/Suffix support**: Optional `prefix` and `suffix` props for input decorations
+  - **Required field detection**: Automatically determines required status from Zod schema
+  - **Schema-driven**: Pass `schema` and `fieldName` props for automatic required field indicators
+  - **TanStack Form integration**: Pass `field` prop for seamless form integration
+
+- **FormSection** (`@/components/forms/core/FormSection`) - Use for form sections with checkboxes
+  - Includes checkbox and content area
+  - Supports markdown input integration
+
+#### Schema Validation Example
+
+```tsx
+import { validateSchema } from '@/lib/schemas';
+import { candidateDetailsSchema } from '@/lib/schemas';
+
+<Field
+  form={form}
+  name='email'
+  validators={{
+    onChange: validateSchema(candidateDetailsSchema, 'email'),
+  }}
+>
+  {(field) => (
+    <FormField
+      id='email'
+      type='email'
+      label='Email Address'
+      field={field}
+      schema={candidateDetailsSchema}
+      fieldName='email'
+    />
+  )}
+</Field>
+```
+
+#### Example Usage
+
+```tsx
+// ✅ Use utility components
+import { Form, FormField } from '@/components/forms/core';
+import { candidateDetailsSchema } from '@/lib/schemas';
+
+<Form componentName="MyForm" onSubmit={handleSubmit}>
+  <FormField
+    id="email"
+    type="email"
+    label="Email Address"
+    value={email}
+    onChange={setEmail}
+    placeholder="your.email@example.com"
+    schema={candidateDetailsSchema}
+    fieldName="email"
+  />
+
+  {/* With prefix/suffix */}
+  <FormField
+    id="phone"
+    type="tel"
+    label="Phone Number"
+    value={phone}
+    onChange={setPhone}
+    placeholder="(555) 123-4567"
+    prefix="📞"
+    suffix="Call"
+    schema={candidateDetailsSchema}
+    fieldName="phone"
+  />
+
+  <Button color="primary" size="md" type="submit">
+    Submit
+  </Button>
+</Form>
+
+// ❌ Don't create custom elements when utilities exist
+<form className="custom-form-classes" onSubmit={handleSubmit}>
+  <input className="custom-input-classes" />
+</form>
+```
+
+**Benefits of using utility components:**
+
+- Consistent styling and behavior across the application
+- Built-in accessibility features
+- Proper TypeScript typing
+- Reduced code duplication
+- Easier maintenance and updates
+
+## Form Patterns
+
+### Multi-Step Forms
+
+- **State persistence**: Use Zustand stores to maintain form state across steps
+- **Validation per step**: Validate each step before allowing progression
+- **Progress indicators**: Show clear progress through form steps
+- **Back navigation**: Allow users to go back and modify previous steps
+
+### Form Validation
+
+- **Zod schemas**: Use Zod for all form validation
+- **Real-time validation**: Validate fields as users type
+- **Error display**: Show clear, accessible error messages
+- **Required field indicators**: Automatically show required field indicators
+
+### Form Accessibility
+
+- **Label association**: Properly associate labels with form controls
+- **Error association**: Associate error messages with form fields
+- **Keyboard navigation**: Support full keyboard navigation
+- **Screen reader support**: Ensure screen reader compatibility
+- **Focus management**: Implement proper focus management
+
+## Data Persistence
+
+### Zustand Persistence
+
+- **Persist middleware**: Use Zustand's persist middleware for data persistence
+- **Store structure**: Organize stores by feature (candidate, job, skills, templates)
+- **State hydration**: Handle state hydration properly
+- **Storage keys**: Use descriptive storage keys for different stores
+
+### Form State Management
+
+- **Store integration**: Integrate forms with Zustand stores
+- **State synchronization**: Keep form state synchronized with store state
+- **Validation state**: Store validation state in stores
+- **Error state**: Store error state in stores
+
+## Schema Utilities
+
+### Validation Functions
+
+```typescript
+// Validate a specific field from a schema
+export function validateSchema(schema: z.ZodObject<any>, fieldName: string) {
+  return ({ value }: { value: any }) => {
+    const fieldSchema = schema.shape[fieldName];
+    if (!fieldSchema) return undefined;
+
+    const result = fieldSchema.safeParse(value);
+    return result.success ? undefined : result.error.errors[0]?.message;
+  };
+}
+
+// Check if a field is required
+export function isFieldRequired(schema: z.ZodSchema, fieldName: string): boolean {
+  try {
+    if (schema instanceof z.ZodObject) {
+      const shape = schema.shape as Record<string, z.ZodSchema>;
+      const fieldSchema = shape[fieldName];
+
+      if (!fieldSchema) return false;
+
+      if (fieldSchema instanceof z.ZodOptional) {
+        return false;
+      }
+
+      if (fieldSchema instanceof z.ZodString) {
+        return fieldSchema._def.checks.some(
+          (check) => check.kind === 'min' && check.value > 0,
+        );
+      }
+
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+}
+```

@@ -1,0 +1,329 @@
+---
+globs: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx', '**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx']
+exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
+---
+
+# Testing Standards
+
+## Testing Stack
+
+- **Vitest**: Fast unit test framework powered by Vite
+- **React Testing Library**: User-centric testing utilities
+- **Playwright**: E2E testing for browser automation
+- **user-event**: Simulate user interactions
+- **@testing-library/jest-dom**: Custom matchers for DOM testing
+
+## Test Organization
+
+```
+src/__tests__/
+├── components/           # Component tests
+├── forms/               # Form tests
+├── stores/              # Store tests
+├── lib/                 # Library tests
+└── e2e/                 # E2E tests
+```
+
+## Testing Patterns
+
+### Component Testing
+
+```typescript
+// __tests__/components/Button.test.tsx
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
+import Button from '@/components/ui/buttons/Button';
+
+describe('Button', () => {
+  it('renders with correct text', () => {
+    render(<Button>Click me</Button>);
+    expect(screen.getByRole('button', { name: /click me/i })).toBeInTheDocument();
+  });
+
+  it('handles click events', async () => {
+    const handleClick = vi.fn();
+    const user = userEvent.setup();
+    
+    render(<Button onClick={handleClick}>Click me</Button>);
+    
+    await user.click(screen.getByRole('button'));
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('applies correct classes based on props', () => {
+    render(
+      <Button color="primary" size="lg" disabled>
+        Button
+      </Button>
+    );
+    
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass('Button', 'bg-primary', 'text-lg', 'opacity-50');
+  });
+
+  it('is accessible', () => {
+    render(<Button aria-label="Submit form">Submit</Button>);
+    expect(screen.getByRole('button', { name: /submit form/i })).toBeInTheDocument();
+  });
+});
+```
+
+### Form Testing
+
+```typescript
+// __tests__/forms/CandidateForm.test.tsx
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi } from 'vitest';
+import { Form } from '@tanstack/react-form';
+import { candidateDetailsSchema } from '@/lib/schemas';
+import CandidateForm from '@/components/forms/candidate/CandidateForm';
+
+describe('CandidateForm', () => {
+  it('renders all form fields', () => {
+    render(<CandidateForm />);
+    
+    expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
+  });
+
+  it('validates required fields', async () => {
+    const user = userEvent.setup();
+    render(<CandidateForm />);
+    
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+    
+    await waitFor(() => {
+      expect(screen.getByText(/full name is required/i)).toBeInTheDocument();
+      expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument();
+    });
+  });
+
+  it('submits form with valid data', async () => {
+    const mockSubmit = vi.fn();
+    const user = userEvent.setup();
+    
+    render(<CandidateForm onSubmit={mockSubmit} />);
+    
+    await user.type(screen.getByLabelText(/full name/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.click(screen.getByRole('button', { name: /submit/i }));
+    
+    await waitFor(() => {
+      expect(mockSubmit).toHaveBeenCalledWith({
+        fullName: 'John Doe',
+        email: 'john@example.com',
+        phone: '',
+        location: '',
+        linkedin: '',
+        portfolio: '',
+      });
+    });
+  });
+});
+```
+
+### Store Testing
+
+```typescript
+// __tests__/stores/useCandidateStore.test.ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { renderHook, act } from '@testing-library/react';
+import { useCandidateStore } from '@/lib/stores/useCandidateStore';
+
+describe('useCandidateStore', () => {
+  beforeEach(() => {
+    // Clear store state before each test
+    const { result } = renderHook(() => useCandidateStore());
+    act(() => {
+      result.current.clearCandidate();
+    });
+  });
+
+  it('initializes with default state', () => {
+    const { result } = renderHook(() => useCandidateStore());
+    
+    expect(result.current.candidate).toEqual({
+      fullName: '',
+      email: '',
+      phone: '',
+      location: '',
+      linkedin: '',
+      portfolio: '',
+    });
+  });
+
+  it('updates candidate data', () => {
+    const { result } = renderHook(() => useCandidateStore());
+    
+    act(() => {
+      result.current.setCandidate({
+        fullName: 'John Doe',
+        email: 'john@example.com',
+        phone: '555-1234',
+        location: 'New York',
+        linkedin: 'johndoe',
+        portfolio: 'https://portfolio.com',
+      });
+    });
+    
+    expect(result.current.candidate.fullName).toBe('John Doe');
+    expect(result.current.candidate.email).toBe('john@example.com');
+  });
+
+  it('persists data across renders', () => {
+    const { result, rerender } = renderHook(() => useCandidateStore());
+    
+    act(() => {
+      result.current.setCandidate({
+        fullName: 'Jane Smith',
+        email: 'jane@example.com',
+        phone: '',
+        location: '',
+        linkedin: '',
+        portfolio: '',
+      });
+    });
+    
+    rerender();
+    
+    expect(result.current.candidate.fullName).toBe('Jane Smith');
+    expect(result.current.candidate.email).toBe('jane@example.com');
+  });
+});
+```
+
+## Test Data
+
+### Mock Data
+
+```typescript
+// __tests__/mocks/candidateData.ts
+export const mockCandidate = {
+  fullName: 'John Doe',
+  email: 'john@example.com',
+  phone: '555-123-4567',
+  location: 'New York, NY',
+  linkedin: 'johndoe',
+  portfolio: 'https://portfolio.com',
+};
+
+export const mockJob = {
+  companyName: 'Tech Corp',
+  jobTitle: 'Senior Developer',
+  jobDescription: 'We are looking for a senior developer...',
+  hiringManager: 'Jane Smith',
+  companyAddress: '123 Tech St, San Francisco, CA',
+};
+
+export const mockSkills = {
+  groups: [
+    {
+      id: '1',
+      name: 'Programming Languages',
+      skills: ['JavaScript', 'TypeScript', 'Python', 'Java'],
+    },
+    {
+      id: '2',
+      name: 'Frameworks',
+      skills: ['React', 'Next.js', 'Node.js', 'Express'],
+    },
+  ],
+  minSkillsToUse: 3,
+  maxSkillsToUse: 8,
+};
+```
+
+## Accessibility Testing
+
+### Screen Reader Testing
+
+```typescript
+// __tests__/accessibility/Button.test.tsx
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import Button from '@/components/ui/buttons/Button';
+
+describe('Button Accessibility', () => {
+  it('has accessible name', () => {
+    render(<Button>Submit</Button>);
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
+  });
+
+  it('supports aria-label', () => {
+    render(<Button aria-label="Submit form">Submit</Button>);
+    expect(screen.getByRole('button', { name: /submit form/i })).toBeInTheDocument();
+  });
+
+  it('announces disabled state', () => {
+    render(<Button disabled>Submit</Button>);
+    const button = screen.getByRole('button');
+    expect(button).toBeDisabled();
+  });
+});
+```
+
+## Performance Testing
+
+### Component Performance
+
+```typescript
+// __tests__/performance/ComponentPerformance.test.tsx
+import { render } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { performance } from 'perf_hooks';
+import LargeComponent from '@/components/LargeComponent';
+
+describe('Component Performance', () => {
+  it('renders within acceptable time', () => {
+    const start = performance.now();
+    
+    render(<LargeComponent />);
+    
+    const end = performance.now();
+    const renderTime = end - start;
+    
+    expect(renderTime).toBeLessThan(100); // 100ms threshold
+  });
+});
+```
+
+## E2E Testing
+
+### Playwright Tests
+
+```typescript
+// __tests__/e2e/cover-letter-generation.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('complete cover letter generation flow', async ({ page }) => {
+  // Navigate to the application
+  await page.goto('/');
+  
+  // Fill candidate form
+  await page.fill('[data-testid="full-name"]', 'John Doe');
+  await page.fill('[data-testid="email"]', 'john@example.com');
+  await page.click('[data-testid="next-button"]');
+  
+  // Fill job form
+  await page.fill('[data-testid="company-name"]', 'Tech Corp');
+  await page.fill('[data-testid="job-title"]', 'Senior Developer');
+  await page.fill('[data-testid="job-description"]', 'We are looking for...');
+  await page.click('[data-testid="next-button"]');
+  
+  // Select skills
+  await page.click('[data-testid="skill-javascript"]');
+  await page.click('[data-testid="skill-react"]');
+  await page.click('[data-testid="next-button"]');
+  
+  // Generate cover letter
+  await page.click('[data-testid="generate-button"]');
+  
+  // Verify results
+  await expect(page.locator('[data-testid="cover-letter"]')).toBeVisible();
+  await expect(page.locator('[data-testid="download-pdf"]')).toBeVisible();
+});
+```

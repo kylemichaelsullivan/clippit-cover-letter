@@ -1,0 +1,223 @@
+---
+globs: ['**/*.tsx', '**/*.ts', '**/*.css']
+exclude:
+  [
+    '**/__tests__/**',
+    '**/*.test.*',
+    '**/*.spec.*',
+    '**/config/**',
+    '**/lib/schemas.ts',
+    '**/lib/openai.ts',
+  ]
+---
+
+# Styling Standards
+
+## Tailwind CSS
+
+- **Custom class ordering**: Follow the project's custom Tailwind configuration
+- **Utility function**: Use `clsx()` for conditional classes (not `cn()`)
+- **Direct strings**: Use direct strings for simple cases without conditionals
+- **Prettier integration**: Leverage `prettier-plugin-tailwindcss` for automatic class sorting
+- **Color utilities**: Prefer color utility classes from globals.css that use CSS Custom Properties
+- **Compelling reasons**: Only avoid color utilities when there's a compelling reason not to
+
+### ClassName Patterns
+
+```tsx
+// Component name should be first in className for debugging
+className='ComponentName rounded-lg border p-4 bg-white'
+
+// Conditional cases - use clsx
+className={clsx(
+  'ComponentName base-classes',
+  isActive && 'active-classes',
+  isDisabled && 'disabled-classes',
+  className
+)}
+
+// Component props - use clsx
+className={clsx('ComponentName base-classes', className)}
+```
+
+### JSX Attribute Order
+
+Follow this specific order for JSX attributes:
+
+1. **type** - Element type (for form elements)
+2. **className** - CSS classes
+3. **Standard HTML attributes** - (alphabetically)
+4. **Event handlers** - (alphabetically, starting with 'on')
+5. **ARIA attributes** - (alphabetically)
+6. **Custom data attributes** - (alphabetically)
+7. **ref** - React ref (penultimate)
+8. **id** - Element identifier (always last)
+
+#### JSX Attribute Order Example
+
+```tsx
+<button
+  type="button"
+  className="Button rounded-lg border p-4 bg-white"
+  disabled={isDisabled}
+  title="Submit form"
+  onClick={handleClick}
+  onKeyDown={handleKeyDown}
+  aria-label="Submit form"
+  aria-describedby="submit-help"
+  data-testid="submit-button"
+  ref={buttonRef}
+  id="submit-button"
+>
+  Submit
+</button>
+```
+
+### Layout Principles
+
+- **Flexbox/Grid**: Use Flexbox and Grid for layouts
+- **Avoid margins**: Don't use CSS margins except for printing and where flex/grid won't work
+- **Avoid space- utilities**: Don't use `space-x-*` or `space-y-*` utilities - they rely on margins
+- **Use flex/gap**: Use `flex flex-col gap-*` for vertical spacing and `flex items-center gap-*` for horizontal spacing
+- **Consistent spacing**: Use Tailwind's spacing scale
+- **Theme variables**: Use CSS custom properties for theme colors
+
+### Spacing Patterns
+
+```tsx
+// Vertical spacing
+className='flex flex-col gap-2'    // Small gaps
+className='flex flex-col gap-4'    // Medium gaps
+className='flex flex-col gap-6'    // Large gaps
+
+// Horizontal spacing
+className='flex items-center gap-2'
+className='flex justify-between'
+
+// Responsive spacing
+className='flex flex-col gap-3 sm:gap-4'
+className='flex items-center gap-1.5 sm:gap-2'
+```
+
+### Component Structure
+
+- **Avoid superfluous wrappers**: Don't create unnecessary wrapper divs that add DOM complexity
+- **Simplify nesting**: Remove redundant wrapper elements when possible
+- **Keep meaningful wrappers**: Retain wrappers that serve styling, semantic, or organizational purposes
+
+#### Wrapper Removal Examples
+
+```tsx
+// ❌ Avoid - redundant wrapper
+<div className='flex flex-col gap-6'>
+  <div className='flex flex-col gap-6'>
+    <Component />
+  </div>
+</div>
+
+// ✅ Good - simplified structure
+<div className='flex flex-col gap-6'>
+  <Component />
+</div>
+```
+
+## Font Awesome Icons
+
+- **Preferred icon library**: Use Font Awesome icons for all icon needs
+- **Import pattern**: Import icons from `@fortawesome/free-solid-svg-icons`
+- **Component usage**: Use `FontAwesomeIcon` component from `@fortawesome/react-fontawesome`
+- **Library registration**: Add new icons to `src/lib/fontawesome.ts` library registration
+- **Accessibility**: Always include `aria-hidden="true"` on icons
+- **Size consistency**: Use consistent sizing classes (`h-3 w-3`, `h-4 w-4`, `h-5 w-5`)
+- **Responsive sizing**: Use responsive classes for different screen sizes
+
+#### Font Awesome Usage Example
+
+```tsx
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
+
+<FontAwesomeIcon
+  icon={faSort}
+  className="h-3 w-3 sm:h-4 sm:w-4"
+  aria-hidden="true"
+/>
+```
+
+#### Adding New Icons
+
+1. **Import the icon** in `src/lib/fontawesome.ts`:
+
+```tsx
+import { faNewIcon } from '@fortawesome/free-solid-svg-icons';
+```
+
+2. **Add to library registration**:
+
+```tsx
+library.add(faNewIcon);
+```
+
+3. **Use in components**:
+
+```tsx
+import { faNewIcon } from '@fortawesome/free-solid-svg-icons';
+```
+
+- **Icon selection**: Prefer solid icons over regular/light variants
+- **Semantic meaning**: Choose icons that clearly represent their function
+- **Consistency**: Use similar icons for similar actions across the application
+
+## Theme System
+
+- **Hydration safety**: Implement hydration-safe theme system
+- **CSS custom properties**: Use CSS custom properties for theme colors
+- **Accessible toggle**: Provide accessible theme toggle
+- **Browser extension handling**: Handle browser extension interference
+
+## Custom Tailwind CSS Utility Class Order
+
+Follow this custom order based on CSS property categories:
+
+1. **position** - `absolute`, `relative`, `fixed`, etc.
+2. **display** - `block`, `inline`, `flex`, `grid`, etc.
+3. **visibility** - `visible`, `invisible`, `hidden`
+4. **isolation** - `isolate`
+5. **flex-flow** - `flex-wrap`, `flex-nowrap`
+6. **flex-direction** - `flex-row`, `flex-col`, `flex-row-reverse`, `flex-col-reverse`
+7. **justify-content** - `justify-start`, `justify-center`, `justify-end`, `justify-between`, `justify-around`, `justify-evenly`
+8. **flex** - `flex`, `flex-1`, `flex-auto`, `flex-initial`, `flex-none`
+9. **flex-basis** - `basis-0`, `basis-1`, etc.
+10. **flex-grow** - `grow-0`, `grow`
+11. **flex-shrink** - `shrink-0`, `shrink`
+12. **grid-template** - `grid-cols-1`, `grid-rows-1`, etc.
+13. **grid-template-rows** - `grid-rows-1`, `grid-rows-2`, etc.
+14. **grid-template-columns** - `grid-cols-1`, `grid-cols-2`, etc.
+15. **grid-template-areas** - `grid-areas-none`
+16. **grid-row** - `row-auto`, `row-span-1`, etc.
+17. **grid-column** - `col-auto`, `col-span-1`, etc.
+18. **order** - `order-1`, `order-2`, etc.
+19. **float** - `float-right`, `float-left`, `float-none`
+20. **box-sizing** - `box-border`, `box-content`
+21. **clear** - `clear-left`, `clear-right`, `clear-both`, `clear-none`
+22. **content** - `content-none`
+23. **cursor** - `cursor-auto`, `cursor-pointer`, etc.
+24. **Other utilities alphabetically**
+25. **object-fit** - `object-contain`, `object-cover`, etc.
+26. **object-position** - `object-bottom`, `object-center`, etc.
+27. **width/min/max** - `w-1`, `min-w-0`, `max-w-xs`, etc.
+28. **height/min/max** - `h-1`, `min-h-0`, `max-h-xs`, etc.
+29. **padding** - `p-1`, `px-1`, `py-1`, etc.
+30. **margin** - `m-1`, `mx-1`, `my-1`, etc.
+31. **top/right/bottom/left** - `top-0`, `right-0`, `bottom-0`, `left-0`
+32. **transforms** - `transform`, `scale-0`, `rotate-0`, etc.
+33. **animation properties** - `animate-spin`, `animate-ping`, etc.
+34. **widows** - `widows-1`, `widows-2`, etc.
+35. **page-break rules** - `break-normal`, `break-words`, etc.
+36. **orphans** - `orphans-1`, `orphans-2`, etc.
+37. **overflow** - `overflow-auto`, `overflow-hidden`, etc.
+38. **text-overflow** - `text-ellipsis`, `text-clip`
+39. **white-space** - `whitespace-normal`, `whitespace-nowrap`, etc.
+40. **opacity** - `opacity-0`, `opacity-25`, etc.
+41. **transition properties** - `transition`, `duration-75`, `ease-linear`, etc.
+42. **z-index** - `z-0`, `z-10`, `z-20`, etc.

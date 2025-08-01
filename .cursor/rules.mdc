@@ -1,0 +1,175 @@
+---
+alwaysApply: true
+---
+
+# Global Project Rules
+
+## Core Principles
+
+- Write and review code like a senior developer
+- Challenge erroneous assumptions and inefficiencies
+- Use **pnpm** for package management
+- Prefer `pnpm build` over `pnpm dev` for compilation
+- Use **TypeScript** with strict configuration
+- Follow **Next.js 15** App Router architecture
+
+## Package Management
+
+- **Package Manager**: pnpm
+- **Build Command**: `pnpm build` (preferred over `pnpm dev`)
+- **Lock File**: `pnpm-lock.yaml`
+
+## Development Scripts
+
+### Bundler Configuration
+
+- **Default Development**: `pnpm dev` (uses Turbopack for faster builds)
+- **Webpack Development**: `pnpm dev:webpack` (uses Webpack for stability)
+- **Production Build**: `pnpm build` (uses Webpack)
+
+#### Turbopack Benefits
+
+- **10x faster** startup times
+- **700x faster** updates in development
+- **Incremental compilation** that only rebuilds what changed
+- **Parallel processing** and better caching
+- **Memory efficiency** with less resource usage
+
+#### When to Use Each
+
+- **Use `pnpm dev` (Turbopack)**: For most development work (faster, recommended)
+- **Use `pnpm dev:webpack`**: When you need maximum stability or encounter Turbopack issues
+- **Use `pnpm build`**: For production builds (always uses Webpack)
+
+## Project Structure
+
+```
+src/
+├── app/                   # Next.js App Router pages
+├── components/            # React components
+│   ├── ui/               # UI components by function
+│   ├── forms/            # Form components
+│   ├── layout/           # Layout components
+│   ├── providers/        # Context providers
+│   ├── utils/            # Utility components
+│   ├── features/         # Feature-based components
+│   └── results/          # Results display components
+├── lib/                  # Library code and utilities
+│   ├── stores/           # Zustand stores
+│   ├── hooks/            # Custom React hooks
+│   └── schemas.ts        # Zod schemas
+├── config/               # Configuration files
+├── types/                # TypeScript type definitions
+└── __tests__/            # Test files
+```
+
+## Code Organization
+
+### Import Organization
+
+- **Defined order**: Follow specific import order, then alphabetize within each group
+- **Import order**:
+  1. React imports (from 'react')
+  2. Third-party libraries (alphabetically by source)
+  3. Internal project imports (alphabetically by path)
+  4. Type imports (alphabetically by path)
+- **Avoid React namespace**: Import React types directly, avoid `React.` prefix
+- **Named imports**: Use named imports for better tree-shaking
+
+#### Import Order Example
+
+```tsx
+// 1. React imports
+import { useState, useEffect, memo } from 'react';
+import type { ReactNode } from 'react';
+
+// 2. Third-party libraries (alphabetically by source)
+import clsx from 'clsx';
+import { useForm } from '@tanstack/react-form';
+import { z } from 'zod';
+
+// 3. Internal project imports (alphabetically by path)
+import { CONSTANTS } from '@/config';
+import { useAppStore } from '@/lib/stores';
+import { Button } from '@/components/ui/buttons';
+
+// 4. Type imports (alphabetically by path)
+import type { ComponentProps } from '@/types';
+import type { FormData } from '@/lib/schemas';
+```
+
+### File Structure
+
+```tsx
+// Standard component file structure
+'use client';
+
+import { memo } from 'react';
+import type { ReactNode } from 'react';
+import clsx from 'clsx';
+
+type ComponentProps = {
+  // Required props
+  title: string;
+  // Optional props with defaults
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
+  // Children
+  children?: ReactNode;
+};
+
+function ComponentName({
+  title,
+  variant = 'primary',
+  size = 'md',
+  disabled = false,
+  children
+}: ComponentProps) {
+  return (
+    <div className={clsx(
+      'ComponentName base-classes',
+      variant === 'secondary' && 'secondary-classes',
+      size === 'lg' && 'large-classes',
+      disabled && 'disabled-classes'
+    )}>
+      {children}
+    </div>
+  );
+}
+
+export default memo(ComponentName);
+```
+
+## Comments and Documentation
+
+### Comment Guidelines
+
+- **Minimal comments**: Limit comments to non-obvious functionality
+- **Purpose comments**: Comment on oddities like `setTimeout(..., 0)` that have non-obvious purposes
+- **Self-documenting code**: Write code that explains itself through clear naming and structure
+- **JSDoc**: Use JSDoc comments for complex props and functions
+
+### Documentation Standards
+
+- **Documentation directory**: Place all MD documentation in the `documentation` directory
+- **Usage examples**: Provide clear usage examples
+- **Props documentation**: Document all props with types and descriptions
+- **Migration guides**: Include migration guides for breaking changes
+
+## Communication Standards
+
+### Progress Updates
+
+- **Meaningful updates only**: Avoid inane progress updates and status reports
+- **Focus on substance**: Communicate actual progress, blockers, or decisions that matter
+- **No busy work updates**: Don't report on routine tasks or obvious progress
+- **Context matters**: Provide context when updates are necessary
+- **Efficiency**: Respect time by being concise and relevant
+
+### Documentation Updates
+
+- **Substantive changes only**: Update documentation for meaningful changes
+- **Avoid trivial updates**: Don't update docs for minor formatting or obvious changes
+- **Focus on value**: Document decisions, patterns, and changes that provide value
+- **Clear purpose**: Ensure documentation updates serve a clear purpose
