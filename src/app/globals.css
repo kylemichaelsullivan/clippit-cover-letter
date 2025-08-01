@@ -1,26 +1,636 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+@theme {
+	--breakpoint-xs: 350px;
+}
+
+/* Palette */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--white: #ffffff;
+	--red: #dc2626;
+	--green: #10b981;
+	--light-blue: #60a5fa;
+	--blue: #3b82f6;
+	--light-gray: #cbd5e1;
+	--gray: #64748b;
+	--black: #0f172a;
+
+	/* Text Sizes */
+	--text-2xs: 0.625rem;
+	--text-2xs--line-height: 0.75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Light Mode */
+:root {
+	--color-white: var(--white);
+	--color-red: var(--red);
+	--color-green: var(--green);
+	--color-light-blue: var(--light-blue);
+	--color-blue: var(--blue);
+	--color-light-gray: var(--light-gray);
+	--color-gray: var(--gray);
+	--color-black: var(--black);
+	color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark Mode */
+.dark {
+	--color-white: var(--black);
+	--color-light-blue: var(--blue);
+	--color-blue: var(--light-blue);
+	--color-light-gray: var(--gray);
+	--color-gray: var(--light-gray);
+	--color-black: var(--white);
+	color-scheme: dark;
+}
+
+/* Elements */
+*:focus-visible {
+	outline: 2px solid var(--color-blue);
+	outline-offset: 2px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+	background-color: var(--color-light-gray);
+	color: var(--color-black);
+}
+
+button,
+label {
+	cursor: pointer;
+}
+
+button {
+	border: 1px solid;
+}
+
+label {
+	color: var(--color-black);
+	font-weight: 500;
+}
+
+.FormFieldContainer label:has(+ input[required]) > span::after,
+.FormFieldContainer label:has(+ textarea[required]) > span::after,
+.FormFieldContainer label:has(+ select[required]) > span::after {
+	content: ' *';
+	color: var(--color-red);
+}
+
+input,
+textarea,
+select {
+	background-color: var(--color-white);
+	border: 1px solid var(--color-black);
+	border-radius: 0.5rem;
+	color: var(--color-black);
+	font-size: 0.875rem;
+	padding: 0.75rem 1rem;
+	transition: border-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+	border-color: var(--color-blue);
+	outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--color-gray);
+}
+
+/* Label hover effects */
+label:hover + input,
+label:hover + textarea,
+label:hover + select,
+.FormField label:hover + input,
+.FormField label:hover + textarea,
+.FormField label:hover + select {
+	border-color: var(--color-blue);
+}
+
+/* Prefix/Suffix hover effects */
+.FormField .input-prefix:hover + input,
+.FormField:has(.input-suffix:hover) input {
+	border-color: var(--color-blue);
+}
+
+/* Direct hover effects for inputs without labels */
+input:hover,
+textarea:hover,
+select:hover {
+	border-color: var(--color-blue);
+}
+
+textarea {
+	font-family: inherit;
+	min-height: 6rem;
+	resize: vertical;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+	width: 1rem;
+	height: 1rem;
+	padding: 0;
+}
+
+input[type='file'] {
+	padding: 0.5rem;
+}
+
+a {
+	color: var(--color-blue);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+a:hover {
+	text-decoration-thickness: 2px;
+}
+
+button {
+	background-color: var(--color-light-gray);
+	border: 1px solid var(--color-light-gray);
+	border-radius: 0.5rem;
+	color: var(--color-black);
+	font-weight: 500;
+	padding: 0.75rem 1.5rem;
+	transition: all 0.2s ease;
+	cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+	background-color: var(--color-gray);
+	border-color: var(--color-gray);
+	color: var(--color-white);
+}
+
+button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+button:active {
+	transform: translateY(0);
+}
+
+/* Utility Classes */
+/* Shadows */
+.shadow-xs {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-sm {
+	box-shadow:
+		0 1px 3px 0 rgba(0, 0, 0, 0.1),
+		0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.shadow-md {
+	box-shadow:
+		0 4px 6px -1px rgba(0, 0, 0, 0.1),
+		0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-lg {
+	box-shadow:
+		0 10px 15px -3px rgba(0, 0, 0, 0.1),
+		0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-xl {
+	box-shadow:
+		0 20px 25px -5px rgba(0, 0, 0, 0.1),
+		0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark mode shadow adjustments */
+.dark .shadow-xs {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-sm {
+	box-shadow:
+		0 1px 3px 0 rgba(0, 0, 0, 0.3),
+		0 1px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-md {
+	box-shadow:
+		0 4px 6px -1px rgba(0, 0, 0, 0.3),
+		0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-lg {
+	box-shadow:
+		0 10px 15px -3px rgba(0, 0, 0, 0.3),
+		0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+.dark .shadow-xl {
+	box-shadow:
+		0 20px 25px -5px rgba(0, 0, 0, 0.3),
+		0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* Background */
+.bg-white {
+	background-color: var(--color-white);
+}
+
+.bg-light-blue {
+	background-color: var(--color-light-blue);
+}
+
+.bg-blue {
+	background-color: var(--color-blue);
+}
+
+.bg-light-gray {
+	background-color: var(--color-light-gray);
+}
+
+.bg-gray {
+	background-color: var(--color-gray);
+}
+
+.bg-black {
+	background-color: var(--color-black);
+}
+
+.bg-red {
+	background-color: var(--color-red);
+}
+
+.bg-green {
+	background-color: var(--color-green);
+}
+
+/* Border */
+.border-white {
+	border-color: var(--color-white);
+}
+
+.border-light-blue {
+	border-color: var(--color-light-blue);
+}
+
+.border-blue {
+	border-color: var(--color-blue);
+}
+
+.border-light-gray {
+	border-color: var(--color-light-gray);
+}
+
+.border-gray {
+	border-color: var(--color-gray);
+}
+
+.border-black {
+	border-color: var(--color-black);
+}
+
+.border-red {
+	border-color: var(--color-red);
+}
+
+.border-green {
+	border-color: var(--color-green);
+}
+
+/* Color */
+.text-white {
+	color: var(--color-white);
+}
+
+.text-light-blue {
+	color: var(--color-light-blue);
+}
+
+.text-blue {
+	color: var(--color-blue);
+}
+
+.text-light-gray {
+	color: var(--color-light-gray);
+}
+
+.text-gray {
+	color: var(--color-gray);
+}
+
+.text-black {
+	color: var(--color-black);
+}
+
+.text-red {
+	color: var(--color-red);
+}
+
+.text-green {
+	color: var(--color-green);
+}
+
+/* Focus Ring */
+.focus\:ring-blue:focus {
+	--tw-ring-color: var(--color-blue);
+}
+
+.focus\:ring-red:focus {
+	--tw-ring-color: var(--color-red);
+}
+
+/* Focus Border */
+.focus\:border-blue:focus {
+	border-color: var(--color-blue);
+}
+
+.focus\:border-red:focus {
+	border-color: var(--color-red);
+}
+
+/* Hover Background */
+.hover\:bg-white:hover {
+	background-color: var(--color-white);
+}
+
+.hover\:bg-light-blue:hover {
+	background-color: var(--color-light-blue);
+}
+
+.hover\:bg-blue:hover {
+	background-color: var(--color-blue);
+}
+
+.hover\:bg-light-gray:hover {
+	background-color: var(--color-light-gray);
+}
+
+.hover\:bg-gray:hover {
+	background-color: var(--color-gray);
+}
+
+.hover\:bg-black:hover {
+	background-color: var(--color-black);
+}
+
+.hover\:bg-red:hover {
+	background-color: var(--color-red);
+}
+
+.hover\:bg-green:hover {
+	background-color: var(--color-green);
+}
+
+/* Hover Border */
+.hover\:border-white:hover {
+	border-color: var(--color-white);
+}
+
+.hover\:border-light-blue:hover {
+	border-color: var(--color-light-blue);
+}
+
+.hover\:border-blue:hover {
+	border-color: var(--color-blue);
+}
+
+.hover\:border-light-gray:hover {
+	border-color: var(--color-light-gray);
+}
+
+.hover\:border-gray:hover {
+	border-color: var(--color-gray);
+}
+
+.hover\:border-black:hover {
+	border-color: var(--color-black);
+}
+
+.hover\:border-red:hover {
+	border-color: var(--color-red);
+}
+
+.hover\:border-green:hover {
+	border-color: var(--color-green);
+}
+
+/* Hover Text */
+.hover\:text-white:hover {
+	color: var(--color-white);
+}
+
+.hover\:text-light-blue:hover {
+	color: var(--color-light-blue);
+}
+
+.hover\:text-blue:hover {
+	color: var(--color-blue);
+}
+
+.hover\:text-light-gray:hover {
+	color: var(--color-light-gray);
+}
+
+.hover\:text-gray:hover {
+	color: var(--color-gray);
+}
+
+.hover\:text-black:hover {
+	color: var(--color-black);
+}
+
+.hover\:text-red:hover {
+	color: var(--color-red);
+}
+
+.hover\:text-green:hover {
+	color: var(--color-green);
+}
+
+/* Focus Background */
+.focus\:bg-white:focus {
+	background-color: var(--color-white);
+}
+
+.focus\:bg-light-blue:focus {
+	background-color: var(--color-light-blue);
+}
+
+.focus\:bg-blue:focus {
+	background-color: var(--color-blue);
+}
+
+.focus\:bg-light-gray:focus {
+	background-color: var(--color-light-gray);
+}
+
+.focus\:bg-gray:focus {
+	background-color: var(--color-gray);
+}
+
+.focus\:bg-black:focus {
+	background-color: var(--color-black);
+}
+
+.focus\:bg-red:focus {
+	background-color: var(--color-red);
+}
+
+.focus\:bg-green:focus {
+	background-color: var(--color-green);
+}
+
+/* Focus Border (additional colors) */
+.focus\:border-white:focus {
+	border-color: var(--color-white);
+}
+
+.focus\:border-light-blue:focus {
+	border-color: var(--color-light-blue);
+}
+
+.focus\:border-light-gray:focus {
+	border-color: var(--color-light-gray);
+}
+
+.focus\:border-gray:focus {
+	border-color: var(--color-gray);
+}
+
+.focus\:border-black:focus {
+	border-color: var(--color-black);
+}
+
+.focus\:border-green:focus {
+	border-color: var(--color-green);
+}
+
+/* Focus Text */
+.focus\:text-white:focus {
+	color: var(--color-white);
+}
+
+.focus\:text-light-blue:focus {
+	color: var(--color-light-blue);
+}
+
+.focus\:text-blue:focus {
+	color: var(--color-blue);
+}
+
+.focus\:text-light-gray:focus {
+	color: var(--color-light-gray);
+}
+
+.focus\:text-gray:focus {
+	color: var(--color-gray);
+}
+
+.focus\:text-black:focus {
+	color: var(--color-black);
+}
+
+.focus\:text-red:focus {
+	color: var(--color-red);
+}
+
+.focus\:text-green:focus {
+	color: var(--color-green);
+}
+
+/* Focus Ring (additional colors) */
+.focus\:ring-white:focus {
+	--tw-ring-color: var(--color-white);
+}
+
+.focus\:ring-light-blue:focus {
+	--tw-ring-color: var(--color-light-blue);
+}
+
+.focus\:ring-light-gray:focus {
+	--tw-ring-color: var(--color-light-gray);
+}
+
+.focus\:ring-gray:focus {
+	--tw-ring-color: var(--color-gray);
+}
+
+.focus\:ring-black:focus {
+	--tw-ring-color: var(--color-black);
+}
+
+.focus\:ring-green:focus {
+	--tw-ring-color: var(--color-green);
+}
+
+/* Text Sizes */
+.text-2xs {
+	font-size: var(--text-2xs);
+	line-height: var(--tw-leading, var(--text-2xs--line-height));
+}
+
+/* Ensure our custom text size takes precedence over Tailwind defaults */
+button.text-2xs,
+.Button.text-2xs {
+	font-size: var(--text-2xs);
+	line-height: var(--tw-leading, var(--text-2xs--line-height));
+}
+
+.hidden-fallback {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.print-content {
+	white-space: pre-wrap;
+}
+
+/* Component Styles*/
+.FormField input {
+	border-radius: 0.5rem;
+}
+
+.FormField:has(.input-prefix) input {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+	border-left: none;
+}
+
+.FormField:has(.input-suffix) input {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: none;
+}
+
+.FormField .input-prefix {
+	border-right: none;
+	border-top-left-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+}
+
+.FormField .input-suffix {
+	border-left: none;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+.PhaseSwitcherButton {
+	border: 2px solid transparent;
+}
+
+.PhaseSwitcherButton[aria-selected='true'] {
+	border-color: var(--color-blue);
+}
+
+.SkillsRangeSlider input {
+	padding-inline: 0.25em;
+}
+
+.SkillTag button {
+	padding: 0.25rem;
 }
