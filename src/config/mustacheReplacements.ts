@@ -25,7 +25,6 @@ export const MUSTACHE_REPLACEMENTS: MustacheReplacement[] = [
 	{ name: 'Job Description', description: 'Job description text' },
 ];
 
-// Create a union type from the mustache replacement names for type safety
 export type MustacheReplacementName =
 	(typeof MUSTACHE_REPLACEMENTS)[number]['name'];
 

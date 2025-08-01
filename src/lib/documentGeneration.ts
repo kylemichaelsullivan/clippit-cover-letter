@@ -35,7 +35,6 @@ const replaceERBInstructions = (
 	return template.replace(/<%=([^%>]+)%>/g, (match, key) => {
 		const cleanKey = key.trim();
 
-		// Then replace the ERB instruction itself
 		return instructions[cleanKey]
 			? instructions[cleanKey].replace(
 					/\{\{([^}]+)\}\}/g,
@@ -137,7 +136,6 @@ const createMustacheValues = (
 				values[replacement.name] = jobDetails.jobDescription || '';
 				break;
 			default:
-				// If we reach here, it means we have a mustache replacement that's not handled
 				console.warn(`Unhandled mustache replacement: ${name}`);
 				values[replacement.name] = '';
 		}
@@ -200,7 +198,6 @@ export async function generateDocuments({
 
 	if (includeResume && resumeTemplate) {
 		console.log('Generating resume...');
-		// Process mustache replacements first, then ERB instructions
 		let processedTemplate = replaceMustacheValues(
 			resumeTemplate,
 			mustacheValues,
@@ -218,7 +215,6 @@ export async function generateDocuments({
 
 	if (includeCoverLetter && coverLetterTemplate) {
 		console.log('Generating cover letter...');
-		// Process mustache replacements first, then ERB instructions
 		let processedTemplate = replaceMustacheValues(
 			coverLetterTemplate,
 			mustacheValues,

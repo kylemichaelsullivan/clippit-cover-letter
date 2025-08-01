@@ -31,7 +31,7 @@ export const DocumentSection = function DocumentSection({
 	hasContent,
 }: DocumentSectionProps) {
 	return (
-		<div className='flex flex-col gap-1'>
+		<div className='flex flex-col gap-2'>
 			{hasContent ? (
 				<>
 					<DocumentContent
