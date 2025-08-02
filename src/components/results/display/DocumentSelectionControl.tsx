@@ -1,15 +1,13 @@
-import { CONSTANTS } from '@/config';
-
 type DocumentSelectionControlProps = {
 	checked: boolean;
-	onChange: (checked: boolean) => void;
 	label: string;
+	onChange: (checked: boolean) => void;
 };
 
 export function DocumentSelectionControl({
 	checked,
-	onChange,
 	label,
+	onChange,
 }: DocumentSelectionControlProps) {
 	const id = `include-${label.toLowerCase().replace(/\s+/g, '-')}`;
 
@@ -17,7 +15,6 @@ export function DocumentSelectionControl({
 		<div className='DocumentSelectionControl flex items-center gap-2'>
 			<input
 				type='checkbox'
-				className={CONSTANTS.CLASS_NAMES.CHECKBOX}
 				checked={checked}
 				onChange={(e) => onChange(e.target.checked)}
 				id={id}

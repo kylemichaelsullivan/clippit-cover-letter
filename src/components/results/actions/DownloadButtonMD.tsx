@@ -14,6 +14,7 @@ type DownloadButtonMDProps = {
 	showIcon?: boolean;
 	color?: 'primary' | 'secondary' | 'success' | 'danger';
 	size?: 'sm' | 'flex';
+	tabIndex?: number;
 };
 
 export function DownloadButtonMD({
@@ -24,6 +25,7 @@ export function DownloadButtonMD({
 	showIcon = false,
 	color = 'primary',
 	size = 'sm',
+	tabIndex,
 }: DownloadButtonMDProps) {
 	const isClient = useIsClient();
 	const hasContent = content && content.trim() !== '';
@@ -55,6 +57,7 @@ export function DownloadButtonMD({
 			componentName='DownloadButtonMD'
 			title={`Download ${title}`}
 			aria-label={`${title} as Markdown file`}
+			tabIndex={tabIndex}
 		>
 			{showIcon && <FontAwesomeIcon icon={faSave} aria-hidden='true' />}
 			{title}

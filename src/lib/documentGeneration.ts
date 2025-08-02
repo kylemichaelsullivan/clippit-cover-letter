@@ -1,4 +1,5 @@
 import { CONSTANTS, MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
+import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
 import type { CandidateDetails, Job, Skills } from '@/types';
 import type { MustacheReplacement } from '@/config/mustacheReplacements';
 
@@ -61,7 +62,8 @@ const formatSkillsGrouped = (skills?: Skills): string => {
 		return '';
 	}
 
-	return skills.groups
+	const sortedGroups = getSortedSkillGroups(skills);
+	return sortedGroups
 		.map((group) => {
 			if (group.skills.length === 0) return '';
 			return `${group.name}: ${group.skills.join(', ')}`;
@@ -75,12 +77,8 @@ const formatSkillsUngrouped = (skills?: Skills): string => {
 		return '';
 	}
 
-	const allSkills: string[] = [];
-	skills.groups.forEach((group) => {
-		allSkills.push(...group.skills);
-	});
-
-	return allSkills.join(', ');
+	const sortedSkills = sortAllSkills(skills);
+	return sortedSkills.join(', ');
 };
 
 const createMustacheValues = (

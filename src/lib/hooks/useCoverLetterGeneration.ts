@@ -74,4 +74,4 @@ export const useCoverLetterGeneration = ({
 		performGeneration,
 		handleGenerate,
 	};
-}; 
+};

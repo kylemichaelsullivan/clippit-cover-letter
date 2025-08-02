@@ -50,7 +50,15 @@ export const DocumentSection = function DocumentSection({
 					/>
 				</>
 			) : (
-				<div className='flex flex-col gap-4'>{fallbackMessage}</div>
+				<div className='flex flex-col gap-4'>
+					{fallbackMessage}
+					<GenerateButton
+						isGenerating={isGenerating}
+						onClick={onGenerate}
+						componentName={componentName}
+						title={generateTitle}
+					/>
+				</div>
 			)}
 		</div>
 	);
