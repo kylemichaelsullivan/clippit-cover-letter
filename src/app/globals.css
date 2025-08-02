@@ -85,7 +85,7 @@ select {
 	border-radius: 0.5rem;
 	color: var(--color-black);
 	font-size: 0.875rem;
-	padding: 0.75rem 1rem;
+	padding: 0.5rem 0.75rem;
 	transition: border-color 0.2s ease;
 }
 
@@ -94,6 +94,7 @@ textarea:focus,
 select:focus {
 	border-color: var(--color-blue);
 	outline: none;
+	box-shadow: 0 0 0 1px var(--color-blue);
 }
 
 input::placeholder,
@@ -135,6 +136,18 @@ input[type='radio'] {
 	width: 1rem;
 	height: 1rem;
 	padding: 0;
+	border-radius: 0.25rem;
+	border: 1px solid var(--color-black);
+	background-color: var(--color-white);
+	accent-color: var(--color-blue);
+}
+
+input[type='checkbox']:focus,
+input[type='radio']:focus {
+	outline: none;
+	box-shadow:
+		0 0 0 2px var(--color-blue),
+		0 0 0 4px var(--color-white);
 }
 
 input[type='file'] {
@@ -633,4 +646,31 @@ button.text-2xs,
 
 .SkillTag button {
 	padding: 0.25rem;
+}
+
+/* Skills Tab Order using modern typed attr() with fallback */
+.skill-group-card {
+	/* Fallback for browsers that don't support typed attr() */
+	order: var(--group-index, 0);
+}
+
+/* Skills button positioning */
+.SkillGroupCard .FormFieldContainer .FormFieldLabel {
+	padding: 0.75rem 0;
+}
+
+.SkillGroupCard .SkillGroupCardRemoveButton,
+.SkillGroupCard .SkillTagsAddButton {
+	position: absolute;
+	width: 4rem;
+	height: 2.5rem;
+	top: 0.25rem;
+	right: 0;
+	padding: 0;
+}
+
+/* Reserve space for LastPass icon */
+input[data-lpignore='false'] {
+	padding-right: 24px !important;
+	box-sizing: border-box;
 }

@@ -21,7 +21,6 @@ export const Checkbox = memo(function Checkbox({
 				type='checkbox'
 				checked={checked}
 				onChange={(e) => onChange(e.target.checked)}
-				className='text-blue focus:ring-blue rounded border-black'
 			/>
 			<span className='text-sm font-medium text-black'>{label}</span>
 		</label>

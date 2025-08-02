@@ -50,7 +50,6 @@ export const FormSection = memo(function FormSection({
 				<div className='flex items-center gap-3'>
 					<input
 						type='checkbox'
-						className={CONSTANTS.CLASS_NAMES.CHECKBOX}
 						checked={checked}
 						onChange={(e) => onCheckedChange(e.target.checked)}
 						id={id}

@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 
 import { CONSTANTS } from '@/config/constants';
 
-import { ThemeProvider } from '@/components';
+import { ThemeProvider, ConfirmationProvider } from '@/components';
 import { ClientLayoutContent } from '@/components/layout';
 
 import '@/lib/fontawesome';
@@ -39,7 +39,9 @@ export default function RootLayout({
 				suppressHydrationWarning
 			>
 				<ThemeProvider>
-					<ClientLayoutContent>{children}</ClientLayoutContent>
+					<ConfirmationProvider>
+						<ClientLayoutContent>{children}</ClientLayoutContent>
+					</ConfirmationProvider>
 				</ThemeProvider>
 			</body>
 		</html>

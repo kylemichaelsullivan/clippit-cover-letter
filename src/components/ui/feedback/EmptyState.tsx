@@ -113,9 +113,9 @@ export function EmptyState({
 				};
 			case 'skills-not-configured':
 				return {
-					title: 'Skills Not Configured',
-					description: CONSTANTS.MESSAGES.SKILLS_NOT_CONFIGURED,
-					className: 'EmptyState text-gray text-center',
+					title: 'Skills Not Generated',
+					description: CONSTANTS.MESSAGES.SKILLS_NOT_GENERATED,
+					className: 'EmptyState text-gray text-center max-w-md self-center',
 				};
 			default:
 				return {

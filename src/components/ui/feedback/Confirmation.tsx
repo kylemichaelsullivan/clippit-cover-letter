@@ -1,9 +1,10 @@
 'use client';
 
-import type { MouseEvent, ReactNode } from 'react';
+import { useEffect, type MouseEvent, type ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { Button } from '../buttons/Button';
+import { useConfirmationContext } from '../../providers/ConfirmationProvider';
 
 type ConfirmationProps = {
 	children: ReactNode;
@@ -13,6 +14,8 @@ type ConfirmationProps = {
 	cancelText?: string;
 	componentName?: string;
 	className?: string;
+	confirmTabIndex?: number;
+	cancelTabIndex?: number;
 };
 
 export function Confirmation({
@@ -23,7 +26,18 @@ export function Confirmation({
 	cancelText = 'Cancel',
 	componentName,
 	className,
+	confirmTabIndex,
+	cancelTabIndex,
 }: ConfirmationProps) {
+	const { addConfirmation, removeConfirmation } = useConfirmationContext();
+
+	useEffect(() => {
+		addConfirmation(onCancel);
+		return () => {
+			removeConfirmation(onCancel);
+		};
+	}, [addConfirmation, removeConfirmation, onCancel]);
+
 	return (
 		<div
 			className={clsx(
@@ -39,6 +53,7 @@ export function Confirmation({
 					size='xs'
 					onClick={onConfirm}
 					componentName='ConfirmationConfirmButton'
+					tabIndex={confirmTabIndex}
 				>
 					{confirmText}
 				</Button>
@@ -47,6 +62,7 @@ export function Confirmation({
 					size='xs'
 					onClick={onCancel}
 					componentName='ConfirmationCancelButton'
+					tabIndex={cancelTabIndex}
 				>
 					{cancelText}
 				</Button>

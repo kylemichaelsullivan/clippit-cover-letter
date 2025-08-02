@@ -19,7 +19,7 @@ export const NumberInput = memo(function NumberInput({
 	min,
 	max,
 	ariaLabel,
-	className = 'border-black placeholder-gray focus:border-blue focus:ring-blue w-12 rounded-lg border bg-white px-3 py-2 text-center text-sm text-black focus:ring-1 focus:outline-none',
+	className = 'w-12 text-center',
 }: NumberInputProps) {
 	return (
 		<input

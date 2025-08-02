@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { CopyButton } from '@/components/results';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { CONSTANTS, PLACEHOLDERS } from '@/config';
-import type { Skills } from '@/types';
+import { getSortedSkillGroups } from '@/lib/utils';
 import { clsx } from 'clsx';
+import type { Skills } from '@/types';
 
 type SkillsDisplayProps = {
 	skills: Skills;
@@ -13,7 +14,8 @@ type SkillsDisplayProps = {
 
 export function SkillsDisplay({ skills }: SkillsDisplayProps) {
 	const [skillsText, setSkillsText] = useState(() => {
-		return skills.groups
+		const sortedGroups = getSortedSkillGroups(skills);
+		return sortedGroups
 			.map((group) => {
 				if (group.skills.length === 0) return '';
 				return `<strong>${group.name}:</strong> ${group.skills.join(', ')}`;

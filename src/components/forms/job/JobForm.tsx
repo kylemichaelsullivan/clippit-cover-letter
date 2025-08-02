@@ -3,7 +3,7 @@
 import { memo, useState } from 'react';
 import { Field } from '@tanstack/react-form';
 
-import { Form, FormField } from '@/components/forms/core';
+import { Form, FormField, FormFieldContainer } from '@/components/forms/core';
 import { TabTitle, Button } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { MarkdownInput } from '@/components/ui/input';
@@ -181,10 +181,10 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 					}}
 				>
 					{(field) => (
-						<div className='FormFieldContainer flex flex-col gap-1'>
+						<FormFieldContainer>
 							<label
 								htmlFor='jobDescription'
-								className='FormFieldLabel flex items-center justify-between text-sm font-medium text-black'
+								className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
 							>
 								<span>Job Description</span>
 							</label>
@@ -201,11 +201,11 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								id='jobDescription'
 							/>
 							{field.state.meta.errors?.[0] && (
-								<p className='FormFieldError text-red text-sm'>
+								<p className='FormFieldError text-red pt-1 text-sm'>
 									{field.state.meta.errors[0]}
 								</p>
 							)}
-						</div>
+						</FormFieldContainer>
 					)}
 				</Field>
 			</Form>
