@@ -1,1 +1,2 @@
-export { ThemeProvider, useTheme, ClientOnly } from './ThemeProvider';
+export { ConfirmationProvider } from './ConfirmationProvider';
+export { ClientOnly, ThemeProvider, useTheme } from './ThemeProvider';
