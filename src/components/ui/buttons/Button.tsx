@@ -13,6 +13,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	size?: ButtonSize;
 	componentName?: string;
 	children: ReactNode;
+	tabIndex?: number;
 };
 
 export const Button = memo(function Button({

@@ -24,12 +24,10 @@ export const CONSTANTS = {
 		FORM_CONTAINER:
 			'flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md w-full sm:gap-6 sm:p-6',
 		SUBMIT_BUTTON: 'px-4 py-2',
-		MARKDOWN_INPUT:
-			'border-black placeholder-gray focus:border-blue focus:ring-blue block w-full rounded-lg border bg-white px-3 py-2 text-sm focus:ring-1 focus:outline-none font-mono h-64 sm:h-96 sm:text-base',
+		MARKDOWN_INPUT: 'w-full font-mono h-64 sm:h-96 sm:text-base',
 		FORM_SECTION:
 			'flex flex-col gap-2 bg-light-gray border border-black rounded-lg p-4 shadow-sm sm:p-6',
-		CHECKBOX:
-			'text-blue border-black focus:ring-blue h-4 w-4 rounded bg-white focus:ring-2',
+
 		SECTION_LABEL: 'cursor-pointer text-base font-medium text-black sm:text-lg',
 	},
 
@@ -85,8 +83,8 @@ export const CONSTANTS = {
 			'Resume template is missing. Please go back to Templates and add your resume template.',
 		EMPTY_SKILLS:
 			'No skill groups found. Click the button below to get started.',
-		SKILLS_NOT_CONFIGURED:
-			'Skills not configured yet. Please go back to the Skills tab to configure your skills.',
+		SKILLS_NOT_GENERATED:
+			'Skills not generated yet. Please go back to the Skills tab to add Skills or click the button to generate skills.',
 		COVER_LETTER_NOT_PROVIDED:
 			'Cover letter template not provided yet. Please go back to the Templates tab to add your cover letter template.',
 		RESUME_NOT_PROVIDED:

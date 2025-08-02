@@ -39,9 +39,9 @@ export const templatesSchema = z.object({
 });
 
 export const jobDetailsSchema = z.object({
-	companyName: z.string().min(1, 'Company name is required'),
-	jobTitle: z.string().min(1, 'Job title is required'),
-	jobDescription: z.string().min(1, 'Job description is required'),
+	companyName: z.string().min(1, 'Company Name is required'),
+	jobTitle: z.string().min(1, 'Job Title is required'),
+	jobDescription: z.string().min(1, 'Job Description is required'),
 	hiringManager: z.string(),
 	companyAddress: z.string(),
 });

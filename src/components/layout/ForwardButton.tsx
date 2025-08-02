@@ -18,13 +18,14 @@ export function ForwardButton({
 }: ForwardButtonProps) {
 	return (
 		<Button
-			onClick={onClick}
-			disabled={disabled}
+			componentName='ForwardButton'
 			color='secondary'
 			size='md'
 			aria-label={CONSTANTS.ARIA_LABELS.NAVIGATION.FORWARD}
 			title={title}
-			componentName='ForwardButton'
+			onClick={onClick}
+			tabIndex={0}
+			disabled={disabled}
 		>
 			<FontAwesomeIcon icon={faChevronRight} aria-hidden='true' />
 		</Button>

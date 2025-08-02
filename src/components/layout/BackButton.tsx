@@ -18,13 +18,14 @@ export function BackButton({
 }: BackButtonProps) {
 	return (
 		<Button
-			onClick={onClick}
-			disabled={disabled}
+			componentName='BackButton'
 			color='secondary'
 			size='md'
 			aria-label={CONSTANTS.ARIA_LABELS.NAVIGATION.BACK}
 			title={title}
-			componentName='BackButton'
+			onClick={onClick}
+			tabIndex={0}
+			disabled={disabled}
 		>
 			<FontAwesomeIcon icon={faChevronLeft} aria-hidden='true' />
 		</Button>
