@@ -4,6 +4,7 @@ import { Field } from '@tanstack/react-form';
 
 import { SkillGroupName, SkillTags } from './';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
+import { SkipLinkTarget } from '@/components/ui/navigation';
 
 import type { SkillGroup } from '@/types';
 
@@ -34,10 +35,14 @@ export function SkillsContent({
 								removeSkillGroup(groupIndex);
 							};
 
+
+
 							return (
-								<div
+								<SkipLinkTarget
 									key={`${group.id}-${groupIndex}`}
-									className='SkillGroupCard border-light-gray flex flex-col gap-3 rounded-lg border bg-white p-3 sm:gap-4 sm:p-4'
+									id={`skill-group-${groupIndex + 1}`}
+									className='SkillGroupCard skill-group-card border-light-gray flex flex-col gap-3 rounded-lg border bg-white p-3 sm:gap-4 sm:p-4'
+									style={{ '--group-index': groupIndex } as React.CSSProperties}
 								>
 									<SkillGroupName
 										form={form}
@@ -49,8 +54,9 @@ export function SkillsContent({
 										form={form}
 										groupIndex={groupIndex}
 										handleFieldChange={handleFieldChange}
+										isLastGroup={groupIndex === groups.length - 1}
 									/>
-								</div>
+								</SkipLinkTarget>
 							);
 						})}
 					</div>

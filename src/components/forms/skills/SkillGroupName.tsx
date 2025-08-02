@@ -2,7 +2,7 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { FormField } from '../core/FormField';
+import { FormField, FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -55,45 +55,49 @@ export function SkillGroupName({
 				);
 
 				return (
-					<FormField
-						id={`group-name-${groupIndex}`}
-						label='Group Name'
-						type='text'
-						value={currentValue}
-						onChange={(value: string) => {
-							field.handleChange(value);
-							if (handleFieldChange) {
-								const updatedGroups = [...currentGroups];
-								updatedGroups[groupIndex] = {
-									...updatedGroups[groupIndex],
-									name: value,
-								};
-								handleFieldChange('groups', updatedGroups);
-							}
-						}}
-						placeholder={PLACEHOLDERS.SKILLS.GROUP_NAME}
-						className='text-sm sm:text-base'
-						schema={skillsSchema}
-						fieldName='groups'
-						error={
-							hasDuplicate && currentValue.trim()
-								? 'This group name already exists'
-								: undefined
-						}
-						labelContent={
-							onRemove ? (
-								<Button
-									color='danger'
-									size='xs'
-									onClick={onRemove}
-									title='Remove Group'
-									componentName='SkillGroupCardRemoveButton'
-								>
-									<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
-								</Button>
-							) : undefined
-						}
-					/>
+					<FormFieldContainer className='relative pb-3'>
+						<label
+							htmlFor={`group-name-${groupIndex}`}
+							className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
+						>
+							<span>Group Name</span>
+						</label>
+						<input
+							id={`group-name-${groupIndex}`}
+							type='text'
+							value={currentValue}
+							onChange={(e) => {
+								const value = e.target.value;
+								field.handleChange(value);
+								if (handleFieldChange) {
+									const updatedGroups = [...currentGroups];
+									updatedGroups[groupIndex] = {
+										...updatedGroups[groupIndex],
+										name: value,
+									};
+									handleFieldChange('groups', updatedGroups);
+								}
+							}}
+							placeholder={PLACEHOLDERS.SKILLS.GROUP_NAME}
+							className='text-sm sm:text-base'
+						/>
+						{onRemove && (
+							<Button
+								color='danger'
+								size='sm'
+								onClick={onRemove}
+								title='Remove Group'
+								componentName='SkillGroupCardRemoveButton'
+							>
+								<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
+							</Button>
+						)}
+						{hasDuplicate && currentValue.trim() && (
+							<p className='FormFieldError text-red pt-1 text-sm'>
+								This group name already exists
+							</p>
+						)}
+					</FormFieldContainer>
 				);
 			}}
 		</Field>

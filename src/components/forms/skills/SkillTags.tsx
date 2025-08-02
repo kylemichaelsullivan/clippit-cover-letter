@@ -4,14 +4,16 @@ import { useState } from 'react';
 import type { KeyboardEvent, MouseEvent, ClipboardEvent } from 'react';
 
 import { Field } from '@tanstack/react-form';
-import { FormField } from '../core/FormField';
+import { FormField, FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
+import { SkipLink } from '@/components/ui/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS } from '@/config';
 
 import { Confirmation, Error } from '@/components/ui/feedback';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
+import { sortSkillsInGroup } from '@/lib/utils';
 
 import type { SkillGroup } from '@/types';
 
@@ -19,6 +21,7 @@ type SkillTagsProps = {
 	form: any; // TanStack Form
 	groupIndex: number;
 	handleFieldChange?: (fieldName: string, value: any) => void;
+	isLastGroup?: boolean;
 };
 
 const hasDuplicateSkillInGroup = (
@@ -68,6 +71,7 @@ export function SkillTags({
 	form,
 	groupIndex,
 	handleFieldChange,
+	isLastGroup,
 }: SkillTagsProps) {
 	const [inputValue, setInputValue] = useState('');
 	const [error, setError] = useState<string>('');
@@ -245,31 +249,36 @@ export function SkillTags({
 	};
 
 	return (
-		<div className='SkillTags flex flex-col gap-2'>
-			<FormField
-				id={`skill-input-${groupIndex}`}
-				label='Skill'
-				type='text'
-				value={inputValue}
-				onChange={handleInputChange}
-				placeholder={PLACEHOLDERS.SKILLS.SKILL}
-				onKeyDown={handleKeyDown}
-				onPaste={handlePaste}
-				className='flex-1 text-sm sm:text-base'
-				labelContent={
-					<Button
-						componentName='SkillTagsAddButton'
-						color='success'
-						size='xs'
-						aria-label='Add Skill'
-						title='Add Skill'
-						onClick={handleAddClick}
-						disabled={!inputValue.trim()}
-					>
-						<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
-					</Button>
-				}
-			/>
+		<div className='SkillTags flex flex-col gap-2' id='skills-tags'>
+			<FormFieldContainer className='relative pb-1'>
+				<label
+					htmlFor={`skill-input-${groupIndex}`}
+					className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
+				>
+					<span>Skill</span>
+				</label>
+				<input
+					id={`skill-input-${groupIndex}`}
+					type='text'
+					value={inputValue}
+					onChange={(e) => handleInputChange(e.target.value)}
+					placeholder={PLACEHOLDERS.SKILLS.SKILL}
+					onKeyDown={handleKeyDown}
+					onPaste={handlePaste}
+					className='text-sm sm:text-base'
+				/>
+				<Button
+					componentName='SkillTagsAddButton'
+					color='success'
+					size='sm'
+					aria-label='Add Skill'
+					title='Add Skill'
+					onClick={handleAddClick}
+					disabled={!inputValue.trim()}
+				>
+					<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
+				</Button>
+			</FormFieldContainer>
 
 			{error && <Error componentName='SkillTagsError'>{error}</Error>}
 
@@ -302,6 +311,11 @@ export function SkillTags({
 				</Confirmation>
 			)}
 
+			<SkipLink
+				href={isLastGroup ? '#AddSkillGroupButton' : `#group-name-${groupIndex + 1}`}
+				destination={isLastGroup ? 'Add Group' : 'Next Group'}
+			/>
+
 			<Field
 				name={`groups.${groupIndex}.skills`}
 				form={form}
@@ -313,17 +327,13 @@ export function SkillTags({
 					const skills = (field.state.value as string[]) || [];
 					if (skills.length === 0) return null;
 
-					const skillsWithIndices = skills.map((skill, index) => ({
+					const sortedSkills = sortSkillsInGroup(skills).map((skill) => ({
 						skill,
-						originalIndex: index,
+						originalIndex: skills.indexOf(skill),
 					}));
 
-					const sortedSkills = skillsWithIndices.sort((a, b) =>
-						a.skill.toLowerCase().localeCompare(b.skill.toLowerCase()),
-					);
-
 					return (
-						<div className='SkillTagsList flex flex-wrap gap-1.5 sm:gap-2'>
+						<div className='SkillTagsList flex flex-wrap gap-1.5 pt-1 sm:gap-2'>
 							{sortedSkills.map(({ skill, originalIndex }) => (
 								<span
 									key={originalIndex}

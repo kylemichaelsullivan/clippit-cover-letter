@@ -2,7 +2,6 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
-import { CONSTANTS } from '@/config';
 import { Button } from '@/components/ui/buttons';
 
 type SkillsHeaderProps = {
@@ -23,7 +22,6 @@ export function SkillsHeader({
 			<label className='flex cursor-pointer items-center gap-2 sm:gap-3'>
 				<input
 					type='checkbox'
-					className={CONSTANTS.CLASS_NAMES.CHECKBOX}
 					checked={includeSkills}
 					onChange={(e) => onIncludeSkillsChange(e.target.checked)}
 				/>

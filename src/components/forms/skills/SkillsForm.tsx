@@ -8,6 +8,7 @@ import { TabTitle } from '@/components/ui';
 import { DownloadButtonMD } from '@/components/results/actions';
 import { useSkillsForm } from '@/lib/hooks';
 import { usePhaseStore, useSkillsStore } from '@/lib/stores';
+import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
 
 type SkillsFormProps = {
@@ -44,7 +45,7 @@ export const SkillsForm = memo(function SkillsForm({
 	const actionButton =
 		skills && skills.groups && skills.groups.length > 0 ? (
 			<DownloadButtonMD
-				content={skills.groups
+				content={getSortedSkillGroups(skills)
 					.map((group) => {
 						if (group.skills.length === 0) return '';
 						return `## ${group.name}\n${group.skills.join(', ')}`;
@@ -57,6 +58,7 @@ export const SkillsForm = memo(function SkillsForm({
 				filename='skills'
 				showIcon={true}
 				disabled={false}
+				tabIndex={0}
 			/>
 		) : undefined;
 

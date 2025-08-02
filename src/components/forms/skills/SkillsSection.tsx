@@ -3,6 +3,7 @@
 import { Field } from '@tanstack/react-form';
 import { SkillsHeader, SkillsContent } from './';
 import { Button } from '@/components/ui/buttons';
+import { SkipLinkTarget } from '@/components/ui/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Error } from '@/components/ui/feedback';
@@ -62,14 +63,20 @@ export function SkillsSection({
 								handleFieldChange={handleFieldChange}
 							/>
 
-							<Button
-								onClick={addSkillGroup}
-								title='Add Skill Group'
-								color='secondary'
-								componentName='AddSkillGroupButton'
+							<SkipLinkTarget
+								className='flex justify-center pt-2'
+								id='AddSkillGroupButton'
 							>
-								<FontAwesomeIcon icon={faPlus} aria-hidden='true' />
-							</Button>
+								<Button
+									componentName='AddSkillGroupButton'
+									onClick={addSkillGroup}
+									title='Add Skill Group'
+									color='secondary'
+									id='AddSkillGroupButton'
+								>
+									<FontAwesomeIcon icon={faPlus} aria-hidden='true' />
+								</Button>
+							</SkipLinkTarget>
 						</>
 					);
 				}}

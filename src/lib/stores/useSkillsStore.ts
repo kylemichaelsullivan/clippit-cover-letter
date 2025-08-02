@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { DEFAULTS } from '@/config';
+import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
 
 type SkillsState = {
@@ -57,7 +58,8 @@ export const useSkillsStore = create<SkillsState>()(
 						// Mock generation - in real app this would call an API
 						await new Promise((resolve) => setTimeout(resolve, 1000));
 
-						const skillsText = state.skills.groups
+						const sortedGroups = getSortedSkillGroups(state.skills);
+						const skillsText = sortedGroups
 							.map((group) => {
 								if (group.skills.length === 0) return '';
 								return `<strong>${group.name}:</strong> ${group.skills.join(', ')}`;

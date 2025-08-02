@@ -5,6 +5,7 @@ import { useForm } from '@tanstack/react-form';
 
 import { useSkillsStore } from '@/lib/stores';
 import { skillsSchema } from '@/lib/schemas';
+import { sortSkillGroups } from '@/lib/utils';
 
 import type { Skills, SkillGroup } from '@/types';
 
@@ -98,15 +99,16 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 
 	// Business logic functions
 	const sortGroupsAlphabetically = (groups: SkillGroup[]): SkillGroup[] => {
-		return [...groups].sort((a, b) => {
-			const nameA = (a.name || '').toLowerCase();
-			const nameB = (b.name || '').toLowerCase();
-			return nameA.localeCompare(nameB);
-		});
+		return sortSkillGroups(groups);
 	};
 
 	const addSkillGroup = () => {
 		const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
+
+		if (currentGroups.length >= 25) {
+			setError('Maximum of 25 Skill Groups allowed.');
+			return;
+		}
 
 		const hasEmptyGroup = currentGroups.some((group) => !group.name.trim());
 		if (hasEmptyGroup) {
