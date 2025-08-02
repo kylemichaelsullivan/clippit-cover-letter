@@ -4,6 +4,7 @@ import { memo, useRef, type ChangeEvent } from 'react';
 import clsx from 'clsx';
 
 import { isFieldRequired } from '@/lib/schemas';
+import { FormFieldContainer } from './FormFieldContainer';
 
 import type {
 	InputHTMLAttributes,
@@ -105,7 +106,7 @@ export const FormField = memo(function FormField({
 		schema && fieldName ? isFieldRequired(schema, fieldName as string) : false;
 
 	const inputClasses = clsx(
-		'FormField placeholder-gray focus:border-blue focus:ring-blue block w-full rounded-lg border border-black bg-white px-3 py-2 text-sm focus:ring-1 focus:outline-none',
+		'FormField w-full',
 		fieldError && 'border-red focus:border-red focus:ring-red',
 		prefix && 'rounded-l-none',
 		suffix && 'rounded-r-none',
@@ -190,11 +191,11 @@ export const FormField = memo(function FormField({
 	};
 
 	return (
-		<div className='FormFieldContainer flex flex-col gap-1'>
+		<FormFieldContainer>
 			{label && (
 				<label
 					htmlFor={id}
-					className='FormFieldLabel flex items-center justify-between text-sm font-medium text-black'
+					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
 				>
 					<span>{label}</span>
 					{labelContent}
@@ -202,11 +203,11 @@ export const FormField = memo(function FormField({
 			)}
 			{renderInput()}
 			{fieldError && (
-				<p className='FormFieldError text-red text-sm'>{fieldError}</p>
+				<p className='FormFieldError text-red pt-1 text-sm'>{fieldError}</p>
 			)}
 			{helpText && !fieldError && (
-				<p className='FormFieldHelp text-gray text-sm'>{helpText}</p>
+				<p className='FormFieldHelp text-gray pt-1 text-sm'>{helpText}</p>
 			)}
-		</div>
+		</FormFieldContainer>
 	);
 });
