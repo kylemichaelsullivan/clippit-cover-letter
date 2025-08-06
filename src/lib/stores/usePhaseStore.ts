@@ -13,7 +13,7 @@ type PhaseState = {
 
 export const usePhaseStore = create<PhaseState>()(
 	devtools(
-		(set, get) => ({
+		(set) => ({
 			currentPhase: DEFAULTS.INITIAL_STATES.PHASE,
 			phases: CONSTANTS.PHASES,
 
@@ -24,7 +24,6 @@ export const usePhaseStore = create<PhaseState>()(
 			},
 
 			focusCurrentPhaseButton: () => {
-				const { currentPhase } = get();
 				const phaseSwitcher = document.getElementById('PhaseSwitcher');
 
 				if (phaseSwitcher) {
