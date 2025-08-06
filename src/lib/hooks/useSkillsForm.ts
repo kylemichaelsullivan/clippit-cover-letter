@@ -126,6 +126,8 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		const updatedGroups = [...currentGroups, newGroup];
 		form.setFieldValue('groups', updatedGroups);
 		handleFieldChange('groups', updatedGroups);
+
+		return updatedGroups.length - 1;
 	};
 
 	const alphabetizeGroups = () => {

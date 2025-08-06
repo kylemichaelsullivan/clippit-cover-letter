@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { KeyboardEvent, MouseEvent, ClipboardEvent } from 'react';
 
 import { Field } from '@tanstack/react-form';
-import { FormField, FormFieldContainer } from '../core';
+import { FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
 import { SkipLink } from '@/components/ui/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -311,10 +311,14 @@ export function SkillTags({
 				</Confirmation>
 			)}
 
-			<SkipLink
-				href={isLastGroup ? '#AddSkillGroupButton' : `#group-name-${groupIndex + 1}`}
-				destination={isLastGroup ? 'Add Group' : 'Next Group'}
-			/>
+			{isLastGroup ? (
+				<SkipLink href='#AddSkillGroupButton' destination='Add Group' />
+			) : (
+				<SkipLink
+					href={`#skill-group-${groupIndex + 2}`}
+					destination='Next Group'
+				/>
+			)}
 
 			<Field
 				name={`groups.${groupIndex}.skills`}

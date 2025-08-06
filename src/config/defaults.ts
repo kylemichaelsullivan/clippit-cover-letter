@@ -55,6 +55,7 @@ export const DEFAULTS = {
 		INCLUDE_SKILLS: true,
 		INCLUDE_COVER_LETTER: true,
 		INCLUDE_RESUME: true,
+		INCLUDE_SKILL_GROUP_NAMES: true,
 		SKILLS_RANGE: {
 			MIN: 0,
 			MAX: 20,

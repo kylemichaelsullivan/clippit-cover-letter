@@ -2,7 +2,7 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { FormField, FormFieldContainer } from '../core';
+import { FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,10 @@ type SkillGroupNameProps = {
 	groupIndex: number;
 	onRemove?: () => void;
 	handleFieldChange?: (fieldName: string, value: any) => void;
+	registerFocusRef?: (
+		groupIndex: number,
+		inputElement: HTMLInputElement | null,
+	) => void;
 };
 
 const hasDuplicateGroupName = (
@@ -35,6 +39,7 @@ export function SkillGroupName({
 	groupIndex,
 	onRemove,
 	handleFieldChange,
+	registerFocusRef,
 }: SkillGroupNameProps) {
 	const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
 
@@ -80,6 +85,11 @@ export function SkillGroupName({
 							}}
 							placeholder={PLACEHOLDERS.SKILLS.GROUP_NAME}
 							className='text-sm sm:text-base'
+							ref={(element) => {
+								if (registerFocusRef) {
+									registerFocusRef(groupIndex, element);
+								}
+							}}
 						/>
 						{onRemove && (
 							<Button

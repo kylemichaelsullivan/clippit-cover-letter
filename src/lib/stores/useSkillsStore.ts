@@ -5,14 +5,23 @@ import { DEFAULTS } from '@/config';
 import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
 
+type SkillsGroup = {
+	name: string;
+	skills: string[];
+};
+
 type SkillsState = {
 	skills: Skills;
 	setSkills: (skills: Skills) => void;
 	setSkillsRange: (minSkills: number, maxSkills: number) => void;
 	includeSkills: boolean;
 	setIncludeSkills: (include: boolean) => void;
+	includeSkillGroupNames: boolean;
+	setIncludeSkillGroupNames: (include: boolean) => void;
 	generatedSkills: string;
 	setGeneratedSkills: (result: string) => void;
+	generatedSkillsData: SkillsGroup[];
+	setGeneratedSkillsData: (data: SkillsGroup[]) => void;
 	isGeneratingSkills: boolean;
 	setIsGeneratingSkills: (generating: boolean) => void;
 	generateSkills: () => Promise<void>;
@@ -34,7 +43,10 @@ export const useSkillsStore = create<SkillsState>()(
 					maxSkillsToUse: 10,
 				},
 				includeSkills: DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILLS,
+				includeSkillGroupNames:
+					DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILL_GROUP_NAMES,
 				generatedSkills: DEFAULTS.INITIAL_STATES.GENERATION.generatedSkills,
+				generatedSkillsData: [],
 				isGeneratingSkills: false,
 
 				setSkills: (skills) => set({ skills }),
@@ -47,7 +59,10 @@ export const useSkillsStore = create<SkillsState>()(
 						},
 					})),
 				setIncludeSkills: (include) => set({ includeSkills: include }),
+				setIncludeSkillGroupNames: (include) =>
+					set({ includeSkillGroupNames: include }),
 				setGeneratedSkills: (result) => set({ generatedSkills: result }),
+				setGeneratedSkillsData: (data) => set({ generatedSkillsData: data }),
 				setIsGeneratingSkills: (generating) =>
 					set({ isGeneratingSkills: generating }),
 
@@ -59,18 +74,40 @@ export const useSkillsStore = create<SkillsState>()(
 						await new Promise((resolve) => setTimeout(resolve, 1000));
 
 						const sortedGroups = getSortedSkillGroups(state.skills);
-						const skillsText = sortedGroups
-							.map((group) => {
-								if (group.skills.length === 0) return '';
-								return `<strong>${group.name}:</strong> ${group.skills.join(', ')}`;
-							})
-							.filter(Boolean)
+						const skillsData = sortedGroups
+							.map((group) => ({
+								name: group.name,
+								skills: group.skills,
+							}))
+							.filter((group) => group.skills.length > 0);
+
+						if (skillsData.length === 0) {
+							set({
+								generatedSkills:
+									'No skills found. Please add skills in the Skills tab before generating.',
+								generatedSkillsData: [],
+							});
+							return;
+						}
+
+						// For backward compatibility, also generate the HTML string
+						const skillsText = skillsData
+							.map((group) =>
+								state.includeSkillGroupNames
+									? `<strong>${group.name}:</strong> ${group.skills.join(', ')}`
+									: group.skills.join(', '),
+							)
 							.join('<br>');
-						set({ generatedSkills: skillsText });
+
+						set({
+							generatedSkills: skillsText,
+							generatedSkillsData: skillsData,
+						});
 					} catch (error) {
 						console.error('Error generating skills:', error);
 						set({
 							generatedSkills: 'Error generating skills. Please try again.',
+							generatedSkillsData: [],
 						});
 					} finally {
 						set({ isGeneratingSkills: false });

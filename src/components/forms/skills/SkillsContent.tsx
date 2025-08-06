@@ -12,12 +12,17 @@ type SkillsContentProps = {
 	form: any; // TanStack Form
 	removeSkillGroup: (groupIndex: number) => void;
 	handleFieldChange?: (fieldName: string, value: any) => void;
+	registerFocusRef?: (
+		groupIndex: number,
+		inputElement: HTMLInputElement | null,
+	) => void;
 };
 
 export function SkillsContent({
 	form,
 	removeSkillGroup,
 	handleFieldChange,
+	registerFocusRef,
 }: SkillsContentProps) {
 	return (
 		<Field name='groups' form={form}>
@@ -35,8 +40,6 @@ export function SkillsContent({
 								removeSkillGroup(groupIndex);
 							};
 
-
-
 							return (
 								<SkipLinkTarget
 									key={`${group.id}-${groupIndex}`}
@@ -49,6 +52,7 @@ export function SkillsContent({
 										groupIndex={groupIndex}
 										onRemove={handleRemoveSkillGroup}
 										handleFieldChange={handleFieldChange}
+										registerFocusRef={registerFocusRef}
 									/>
 									<SkillTags
 										form={form}

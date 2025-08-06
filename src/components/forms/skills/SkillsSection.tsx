@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Error } from '@/components/ui/feedback';
 import { CONSTANTS } from '@/config';
+import { useFocusNewSkillGroup } from '@/lib/hooks';
 
 import type { SkillGroup } from '@/types';
 
@@ -32,6 +33,7 @@ export function SkillsSection({
 	removeSkillGroup,
 	handleFieldChange,
 }: SkillsSectionProps) {
+	const { registerFocusRef, focusNewGroup } = useFocusNewSkillGroup();
 	return (
 		<section
 			className={`SkillsSection ${CONSTANTS.CLASS_NAMES.FORM_SECTION} p-4 sm:p-6`}
@@ -61,6 +63,7 @@ export function SkillsSection({
 								form={form}
 								removeSkillGroup={removeSkillGroup}
 								handleFieldChange={handleFieldChange}
+								registerFocusRef={registerFocusRef}
 							/>
 
 							<SkipLinkTarget
@@ -69,7 +72,12 @@ export function SkillsSection({
 							>
 								<Button
 									componentName='AddSkillGroupButton'
-									onClick={addSkillGroup}
+									onClick={() => {
+										const newGroupIndex = addSkillGroup();
+										if (newGroupIndex !== undefined) {
+											focusNewGroup(newGroupIndex);
+										}
+									}}
 									title='Add Skill Group'
 									color='secondary'
 									id='AddSkillGroupButton'
