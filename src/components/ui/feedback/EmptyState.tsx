@@ -55,7 +55,7 @@ export function EmptyState({
 					title: 'Generation Error',
 					description: CONSTANTS.MESSAGES.ERROR_GENERATING,
 					className:
-						'EmptyState bg-red-50 border border-red-200 rounded-lg p-8 text-center shadow-sm',
+						'EmptyState bg-light-gray border border-red rounded-lg p-8 text-center shadow-sm',
 				};
 			case 'loading':
 				return {

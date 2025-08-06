@@ -11,6 +11,7 @@ type UseGenerationConfirmationsProps = {
 	resumeTemplate: string;
 	includeCoverLetter: boolean;
 	includeResume: boolean;
+	includeSkills: boolean;
 };
 
 export const useGenerationConfirmations = ({
@@ -21,6 +22,7 @@ export const useGenerationConfirmations = ({
 	resumeTemplate,
 	includeCoverLetter,
 	includeResume,
+	includeSkills,
 }: UseGenerationConfirmationsProps) => {
 	const {
 		generatedCoverLetter,
@@ -120,11 +122,19 @@ export const useGenerationConfirmations = ({
 	};
 
 	const handleGenerateSkills = async () => {
-		if (generatedSkills && generatedSkills.trim() !== '') {
+		if (!includeSkills) {
+			return;
+		}
+
+		// Check if there's existing generated skills content
+		const hasExistingSkills = generatedSkills && generatedSkills.trim() !== '';
+
+		if (hasExistingSkills) {
 			setShowSkillsConfirmation(true);
 			return;
 		}
 
+		// If no existing content, generate directly
 		await performSkillsGeneration();
 	};
 

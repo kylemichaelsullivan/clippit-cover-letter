@@ -1,37 +1,76 @@
 import { useCallback } from 'react';
-
-import {
-	useAppStore,
-	useSkillsStore,
-	useTemplatesStore,
-	useCandidateStore,
-	useJobStore,
-} from '@/lib/stores';
-import { generateDocuments } from '@/lib/documentGeneration';
+import { useAppStore } from '../stores/useAppStore';
+import { useCandidateStore } from '../stores/useCandidateStore';
+import { useJobStore } from '../stores/useJobStore';
+import { useSkillsStore } from '../stores/useSkillsStore';
+import { useTemplatesStore } from '../stores/useTemplatesStore';
+import { generateDocuments } from '../documentGeneration';
+import { useState } from 'react';
 
 export const useDocumentGeneration = () => {
-	const { includeSkills, generateSkills, isGeneratingSkills, skills } =
-		useSkillsStore();
 	const { includeCoverLetter, includeResume } = useAppStore();
+	const { candidateDetails } = useCandidateStore();
+	const { jobDetails } = useJobStore();
+	const {
+		skills,
+		generateSkills,
+		isGeneratingSkills,
+		setIsGeneratingSkills,
+		generatedSkills,
+		setGeneratedSkills,
+	} = useSkillsStore();
 	const {
 		coverLetterTemplate,
 		resumeTemplate,
-		setGeneratedCoverLetter,
-		setGeneratedResume,
-		setIsGeneratingCoverLetter,
-		setIsGeneratingResume,
 		isGeneratingCoverLetter,
+		setIsGeneratingCoverLetter,
 		isGeneratingResume,
+		setIsGeneratingResume,
+		generatedCoverLetter,
+		setGeneratedCoverLetter,
+		generatedResume,
+		setGeneratedResume,
 	} = useTemplatesStore();
-	const { candidateDetails } = useCandidateStore();
-	const { jobDetails } = useJobStore();
 
+	const [showGenerateAllConfirmation, setShowGenerateAllConfirmation] =
+		useState(false);
+
+	const includeSkills = skills.groups.some((group) => group.skills.length > 0);
 	const hasSelectedDocuments =
 		includeSkills || includeCoverLetter || includeResume;
 	const isGeneratingAny =
 		isGeneratingSkills || isGeneratingCoverLetter || isGeneratingResume;
 
-	const handleGenerateAll = useCallback(async () => {
+	const checkForExistingContent = useCallback(() => {
+		const existingContent = [];
+
+		if (includeSkills && generatedSkills && generatedSkills.trim() !== '') {
+			existingContent.push('Skills Summary');
+		}
+
+		if (
+			includeCoverLetter &&
+			generatedCoverLetter &&
+			generatedCoverLetter.trim() !== ''
+		) {
+			existingContent.push('Cover Letter');
+		}
+
+		if (includeResume && generatedResume && generatedResume.trim() !== '') {
+			existingContent.push('Resume');
+		}
+
+		return existingContent;
+	}, [
+		includeSkills,
+		includeCoverLetter,
+		includeResume,
+		generatedSkills,
+		generatedCoverLetter,
+		generatedResume,
+	]);
+
+	const performGenerateAll = async () => {
 		if (!hasSelectedDocuments) {
 			return;
 		}
@@ -39,7 +78,89 @@ export const useDocumentGeneration = () => {
 		const generationTasks: Promise<void>[] = [];
 
 		if (includeSkills) {
-			generationTasks.push(generateSkills());
+			if (!generatedSkills || generatedSkills.trim() === '') {
+				generationTasks.push(generateSkills());
+			}
+		}
+
+		if (includeCoverLetter && coverLetterTemplate) {
+			if (!generatedCoverLetter || generatedCoverLetter.trim() === '') {
+				setIsGeneratingCoverLetter(true);
+				const coverLetterTask = generateDocuments({
+					includeResume: false,
+					includeCoverLetter: true,
+					resumeTemplate: '',
+					coverLetterTemplate,
+					candidateDetails,
+					jobDetails,
+					skills,
+				})
+					.then((result) => {
+						setGeneratedCoverLetter(result.coverLetter);
+					})
+					.catch((error) => {
+						console.error('Error generating cover letter:', error);
+						setGeneratedCoverLetter(
+							'Error generating cover letter. Please try again.',
+						);
+					})
+					.finally(() => {
+						setIsGeneratingCoverLetter(false);
+					});
+				generationTasks.push(coverLetterTask);
+			}
+		}
+
+		if (includeResume && resumeTemplate) {
+			if (!generatedResume || generatedResume.trim() === '') {
+				setIsGeneratingResume(true);
+				const resumeTask = generateDocuments({
+					includeCoverLetter: false,
+					includeResume: true,
+					coverLetterTemplate: '',
+					resumeTemplate,
+					candidateDetails,
+					skills,
+					jobDetails,
+				})
+					.then((result) => {
+						setGeneratedResume(result.resume);
+					})
+					.catch((error) => {
+						console.error('Error generating resume:', error);
+						setGeneratedResume('Error generating resume. Please try again.');
+					})
+					.finally(() => {
+						setIsGeneratingResume(false);
+					});
+				generationTasks.push(resumeTask);
+			}
+		}
+
+		await Promise.all(generationTasks);
+	};
+
+	const performGenerateAllWithReplacements = async () => {
+		if (!hasSelectedDocuments) {
+			return;
+		}
+
+		const generationTasks: Promise<void>[] = [];
+
+		if (includeSkills) {
+			setIsGeneratingSkills(true);
+			const skillsTask = generateSkills()
+				.then(() => {
+					// generateSkills already handles setting the result
+				})
+				.catch((error) => {
+					console.error('Error generating skills:', error);
+					setGeneratedSkills('Error generating skills. Please try again.');
+				})
+				.finally(() => {
+					setIsGeneratingSkills(false);
+				});
+			generationTasks.push(skillsTask);
 		}
 
 		if (includeCoverLetter && coverLetterTemplate) {
@@ -93,26 +214,121 @@ export const useDocumentGeneration = () => {
 		}
 
 		await Promise.all(generationTasks);
+	};
+
+	const performGenerateEmptyOnly = useCallback(async () => {
+		if (!hasSelectedDocuments) {
+			return;
+		}
+
+		const generationTasks: Promise<void>[] = [];
+
+		if (includeSkills && (!generatedSkills || generatedSkills.trim() === '')) {
+			generationTasks.push(generateSkills());
+		}
+
+		if (
+			includeCoverLetter &&
+			coverLetterTemplate &&
+			(!generatedCoverLetter || generatedCoverLetter.trim() === '')
+		) {
+			setIsGeneratingCoverLetter(true);
+			const coverLetterTask = generateDocuments({
+				includeResume: false,
+				includeCoverLetter: true,
+				resumeTemplate: '',
+				coverLetterTemplate,
+				candidateDetails,
+				jobDetails,
+				skills,
+			})
+				.then((result) => {
+					setGeneratedCoverLetter(result.coverLetter);
+				})
+				.catch((error) => {
+					console.error('Error generating cover letter:', error);
+					setGeneratedCoverLetter(
+						'Error generating cover letter. Please try again.',
+					);
+				})
+				.finally(() => {
+					setIsGeneratingCoverLetter(false);
+				});
+			generationTasks.push(coverLetterTask);
+		}
+
+		if (
+			includeResume &&
+			resumeTemplate &&
+			(!generatedResume || generatedResume.trim() === '')
+		) {
+			setIsGeneratingResume(true);
+			const resumeTask = generateDocuments({
+				includeCoverLetter: false,
+				includeResume: true,
+				coverLetterTemplate: '',
+				resumeTemplate,
+				candidateDetails,
+				skills,
+				jobDetails,
+			})
+				.then((result) => {
+					setGeneratedResume(result.resume);
+				})
+				.catch((error) => {
+					console.error('Error generating resume:', error);
+					setGeneratedResume('Error generating resume. Please try again.');
+				})
+				.finally(() => {
+					setIsGeneratingResume(false);
+				});
+			generationTasks.push(resumeTask);
+		}
+
+		await Promise.all(generationTasks);
 	}, [
 		hasSelectedDocuments,
 		includeSkills,
-		generateSkills,
 		includeCoverLetter,
-		coverLetterTemplate,
 		includeResume,
+		coverLetterTemplate,
 		resumeTemplate,
+		generatedSkills,
+		generatedCoverLetter,
+		generatedResume,
 		candidateDetails,
 		jobDetails,
 		skills,
-		setGeneratedCoverLetter,
-		setGeneratedResume,
+		generateSkills,
 		setIsGeneratingCoverLetter,
+		setGeneratedCoverLetter,
 		setIsGeneratingResume,
+		setGeneratedResume,
 	]);
+
+	const handleGenerateAll = useCallback(async () => {
+		if (!hasSelectedDocuments) {
+			return;
+		}
+
+		const existingContent = checkForExistingContent();
+
+		performGenerateEmptyOnly();
+
+		if (existingContent.length > 0) {
+			setShowGenerateAllConfirmation(true);
+		}
+	}, [hasSelectedDocuments, checkForExistingContent, performGenerateEmptyOnly]);
 
 	return {
 		hasSelectedDocuments,
 		isGeneratingAny,
 		handleGenerateAll,
+		performGenerateAll,
+		performGenerateAllWithReplacements,
+		performGenerateEmptyOnly,
+		showGenerateAllConfirmation,
+		setShowGenerateAllConfirmation,
+		checkForExistingContent,
 	};
 };

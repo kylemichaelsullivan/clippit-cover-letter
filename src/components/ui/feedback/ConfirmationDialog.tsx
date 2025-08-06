@@ -32,18 +32,22 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 
 	const handleConfirm = async () => {
 		setIsClearing(true);
+		onClose();
 		try {
 			await onConfirm();
 		} finally {
 			setIsClearing(false);
-			onClose();
 		}
+	};
+
+	const handleCancel = () => {
+		onClose();
 	};
 
 	if (!isOpen) return null;
 
 	return (
-		<div className='ConfirmationDialog bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black'>
+		<div className='ConfirmationDialog fixed inset-0 z-50 flex items-center justify-center bg-black'>
 			<div className='mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'>
 				<div className='flex flex-col gap-4'>
 					<div className='flex items-center gap-3'>
@@ -55,7 +59,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 
 					<div className='flex justify-end gap-3'>
 						<Button
-							onClick={onClose}
+							onClick={handleCancel}
 							disabled={isClearing}
 							className='px-4 py-2'
 							title={cancelText}

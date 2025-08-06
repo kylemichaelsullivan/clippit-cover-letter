@@ -5,15 +5,17 @@ import { DEFAULTS } from '@/config';
 
 type AppState = {
 	includeCoverLetter: boolean;
-	setIncludeCoverLetter: (include: boolean) => void;
 	includeResume: boolean;
+	setIncludeCoverLetter: (include: boolean) => void;
 	setIncludeResume: (include: boolean) => void;
 	skillsInstructions: string;
-	setSkillsInstructions: (instructions: string) => void;
 	coverLetterInstructions: string;
-	setCoverLetterInstructions: (instructions: string) => void;
 	resumeInstructions: string;
+	setSkillsInstructions: (instructions: string) => void;
+	setCoverLetterInstructions: (instructions: string) => void;
 	setResumeInstructions: (instructions: string) => void;
+	previewViewMode: 'markdown' | 'formatted';
+	setPreviewViewMode: (mode: 'markdown' | 'formatted') => void;
 };
 
 export const useAppStore = create<AppState>()(
@@ -22,22 +24,25 @@ export const useAppStore = create<AppState>()(
 			(set) => ({
 				includeCoverLetter: DEFAULTS.FORM_DEFAULTS.INCLUDE_COVER_LETTER,
 				includeResume: DEFAULTS.FORM_DEFAULTS.INCLUDE_RESUME,
+				setIncludeCoverLetter: (include) =>
+					set({ includeCoverLetter: include }),
+				setIncludeResume: (include) => set({ includeResume: include }),
+
 				skillsInstructions:
 					DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.skillsInstructions,
 				coverLetterInstructions:
 					DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.coverLetterInstructions,
 				resumeInstructions:
 					DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.resumeInstructions,
-
-				setIncludeCoverLetter: (include) =>
-					set({ includeCoverLetter: include }),
-				setIncludeResume: (include) => set({ includeResume: include }),
 				setSkillsInstructions: (instructions) =>
 					set({ skillsInstructions: instructions }),
 				setCoverLetterInstructions: (instructions) =>
 					set({ coverLetterInstructions: instructions }),
 				setResumeInstructions: (instructions) =>
 					set({ resumeInstructions: instructions }),
+
+				previewViewMode: 'formatted',
+				setPreviewViewMode: (mode) => set({ previewViewMode: mode }),
 			}),
 			{
 				name: 'app-store',

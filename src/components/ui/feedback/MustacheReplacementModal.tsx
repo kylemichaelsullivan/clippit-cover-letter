@@ -60,7 +60,7 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 
 	return (
 		<div
-			className='MustacheReplacementModal bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black px-4 backdrop-blur-sm'
+			className='MustacheReplacementModal fixed inset-0 z-50 flex items-center justify-center bg-black px-4 backdrop-blur-sm'
 			onClick={handleBackdropClick}
 		>
 			<div className='MustacheReplacementModalContent w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg'>

@@ -60,6 +60,9 @@ export function clearAllPersistentData() {
 			],
 		});
 		skillsStore.setIncludeSkills(DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILLS);
+		skillsStore.setIncludeSkillGroupNames(
+			DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILL_GROUP_NAMES,
+		);
 		skillsStore.setGeneratedSkills(
 			DEFAULTS.INITIAL_STATES.GENERATION.generatedSkills,
 		);
