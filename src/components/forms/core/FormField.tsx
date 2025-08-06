@@ -107,7 +107,7 @@ export const FormField = memo(function FormField({
 
 	const inputClasses = clsx(
 		'FormField w-full',
-		fieldError && 'border-red focus:border-red focus:ring-red',
+		fieldError && 'border-red focus:border-red',
 		prefix && 'rounded-l-none',
 		suffix && 'rounded-r-none',
 		prefix && suffix && 'rounded-none',

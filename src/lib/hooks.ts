@@ -217,6 +217,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 export { useCandidateForm } from './hooks/useCandidateForm';
 export { useCoverLetterGeneration } from './hooks/useCoverLetterGeneration';
 export { useDocumentGeneration } from './hooks/useDocumentGeneration';
+export { useFocusNewSkillGroup } from './hooks/useFocusNewSkillGroup';
 export { useGenerationConfirmations } from './hooks/useGenerationConfirmations';
 export { useJobForm } from './hooks/useJobForm';
 export { useResumeGeneration } from './hooks/useResumeGeneration';

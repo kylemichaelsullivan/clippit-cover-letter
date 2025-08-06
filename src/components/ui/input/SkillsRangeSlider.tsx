@@ -84,7 +84,7 @@ export const SkillsRangeSlider = memo(function SkillsRangeSlider({
 			<div className='flex flex-col gap-2'>
 				<ReactSlider
 					className='bg-light-gray h-2 w-full rounded-full'
-					thumbClassName='h-5 w-5 rounded-full bg-blue border border-gray shadow-md cursor-pointer -top-1.5 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:scale-110 transition-transform'
+					thumbClassName='h-5 w-5 rounded-full bg-blue border border-gray shadow-md cursor-pointer -top-1.5 focus:outline-none hover:scale-110 transition-transform'
 					trackClassName='h-2 rounded-full bg-blue'
 					value={[minSkills, maxSkills]}
 					onChange={handleChange}

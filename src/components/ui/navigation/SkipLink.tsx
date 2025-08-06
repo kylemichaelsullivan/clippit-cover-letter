@@ -72,7 +72,7 @@ export const SkipLink = memo(function SkipLink({
 			onClick={handleClick}
 			onKeyDown={handleKeyDown}
 			tabIndex={tabIndex}
-			className='SkipLink bg-blue focus:ring-blue absolute -top-96 rounded-lg px-4 py-2 text-center text-sm font-medium text-white focus:relative focus:top-0 focus:z-50 focus:ring-2 focus:ring-offset-2 focus:outline-none'
+			className='SkipLink bg-blue absolute -top-96 rounded-lg px-4 py-2 text-center text-sm font-medium text-white focus:relative focus:top-0 focus:z-50 focus:outline-none'
 		>
 			{`Skip to ${destination}`}
 		</a>

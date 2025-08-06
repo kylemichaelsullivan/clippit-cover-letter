@@ -32,7 +32,7 @@ export const Copyright = memo(function Copyright() {
 	return (
 		<>
 			<footer
-				className='Copyright cursor-pointer text-sm text-black transition-colors hover:text-gray-600'
+				className='Copyright hover:text-gray cursor-pointer text-sm text-black transition-colors'
 				role='button'
 				tabIndex={-1}
 				onClick={handleClick}
