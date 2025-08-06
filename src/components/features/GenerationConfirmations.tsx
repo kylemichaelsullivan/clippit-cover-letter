@@ -11,6 +11,8 @@ type GenerationConfirmationsProps = {
 	resumeTemplate: string;
 	includeCoverLetter: boolean;
 	includeResume: boolean;
+	includeSkills: boolean;
+	generationConfirmations?: any;
 };
 
 export const GenerationConfirmations = ({
@@ -21,7 +23,20 @@ export const GenerationConfirmations = ({
 	resumeTemplate,
 	includeCoverLetter,
 	includeResume,
+	includeSkills,
+	generationConfirmations,
 }: GenerationConfirmationsProps) => {
+	const hookResult = useGenerationConfirmations({
+		candidateDetails,
+		jobDetails,
+		skills,
+		coverLetterTemplate,
+		resumeTemplate,
+		includeCoverLetter,
+		includeResume,
+		includeSkills,
+	});
+
 	const {
 		showSkillsConfirmation,
 		setShowSkillsConfirmation,
@@ -32,15 +47,7 @@ export const GenerationConfirmations = ({
 		showResumeConfirmation,
 		setShowResumeConfirmation,
 		performResumeGeneration,
-	} = useGenerationConfirmations({
-		candidateDetails,
-		jobDetails,
-		skills,
-		coverLetterTemplate,
-		resumeTemplate,
-		includeCoverLetter,
-		includeResume,
-	});
+	} = generationConfirmations || hookResult;
 
 	return (
 		<>

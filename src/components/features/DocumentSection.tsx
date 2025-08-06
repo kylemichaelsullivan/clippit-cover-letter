@@ -16,6 +16,7 @@ type DocumentSectionProps = {
 	generateTitle: string;
 	fallbackMessage: ReactNode;
 	hasContent: boolean;
+	disabled?: boolean;
 };
 
 export const DocumentSection = function DocumentSection({
@@ -29,6 +30,7 @@ export const DocumentSection = function DocumentSection({
 	generateTitle,
 	fallbackMessage,
 	hasContent,
+	disabled = false,
 }: DocumentSectionProps) {
 	return (
 		<div className='flex flex-col gap-2'>
@@ -47,6 +49,7 @@ export const DocumentSection = function DocumentSection({
 						onClick={onGenerate}
 						componentName={componentName}
 						title={generateTitle}
+						disabled={disabled}
 					/>
 				</>
 			) : (
@@ -57,6 +60,7 @@ export const DocumentSection = function DocumentSection({
 						onClick={onGenerate}
 						componentName={componentName}
 						title={generateTitle}
+						disabled={disabled}
 					/>
 				</div>
 			)}

@@ -16,8 +16,14 @@ import {
 	usePhaseStore,
 	useSkillsStore,
 } from '@/lib/stores';
+import { useGenerationConfirmations } from '@/lib/hooks';
 
-import { CoverLetterSection, DocumentSection, ResumeSection } from './';
+import {
+	CoverLetterSection,
+	DocumentSection,
+	ResumeSection,
+	GenerationConfirmations,
+} from './';
 
 export const PreviewContent = memo(function PreviewContent() {
 	const { currentPhase } = usePhaseStore();
@@ -28,7 +34,18 @@ export const PreviewContent = memo(function PreviewContent() {
 	const { skills, includeSkills, isGeneratingSkills, generatedSkills } =
 		useSkillsStore();
 
-	const handleGenerateSkills = () => {};
+	const generationConfirmations = useGenerationConfirmations({
+		candidateDetails,
+		jobDetails,
+		skills,
+		coverLetterTemplate,
+		resumeTemplate,
+		includeSkills,
+		includeCoverLetter,
+		includeResume,
+	});
+
+	const { handleGenerateSkills } = generationConfirmations;
 
 	if (currentPhase !== 'preview') {
 		return null;
@@ -43,7 +60,9 @@ export const PreviewContent = memo(function PreviewContent() {
 	return (
 		<>
 			<div className='PreviewContent flex flex-col gap-12'>
-				<TabTitle title='Preview' componentName='PreviewContentTitle' />
+				<div className='flex items-center justify-between'>
+					<TabTitle title='Preview' componentName='PreviewContentTitle' />
+				</div>
 				<DocumentSelectionControls />
 				<div className='flex flex-col gap-4'>
 					{!hasData && <EmptyState variant='no-data' />}
@@ -67,6 +86,9 @@ export const PreviewContent = memo(function PreviewContent() {
 									hasContent={
 										!!generatedSkills && generatedSkills.trim() !== ''
 									}
+									disabled={
+										!skills?.groups?.some((group) => group.skills.length > 0)
+									}
 								/>
 							)}
 
@@ -89,6 +111,18 @@ export const PreviewContent = memo(function PreviewContent() {
 					)}
 				</div>
 			</div>
+
+			<GenerationConfirmations
+				candidateDetails={candidateDetails}
+				jobDetails={jobDetails}
+				skills={skills}
+				coverLetterTemplate={coverLetterTemplate}
+				resumeTemplate={resumeTemplate}
+				includeSkills={includeSkills}
+				includeCoverLetter={includeCoverLetter}
+				includeResume={includeResume}
+				generationConfirmations={generationConfirmations}
+			/>
 		</>
 	);
 });

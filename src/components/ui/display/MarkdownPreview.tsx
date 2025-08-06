@@ -25,11 +25,8 @@ export function MarkdownPreview({
 			className={clsx(
 				componentName || 'MarkdownPreview',
 				CONSTANTS.CLASS_NAMES.MARKDOWN_INPUT,
-				'min-h-64 max-w-none bg-white text-sm leading-relaxed sm:min-h-96 sm:text-base',
-				// Skills section styling
-				isSkills && !isGenerating && 'overflow-hidden p-4',
-				// Generating state styling
-				isGenerating && 'text-light-gray p-4',
+				'min-h-64 max-w-none overflow-y-auto bg-white p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
+				isGenerating && 'text-light-gray',
 				className,
 			)}
 		>

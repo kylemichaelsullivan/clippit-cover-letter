@@ -9,6 +9,7 @@ type GenerateButtonProps = {
 	onClick: () => void;
 	componentName: string;
 	title: string;
+	disabled?: boolean;
 };
 
 export const GenerateButton = function GenerateButton({
@@ -16,6 +17,7 @@ export const GenerateButton = function GenerateButton({
 	onClick,
 	componentName,
 	title,
+	disabled = false,
 }: GenerateButtonProps) {
 	return (
 		<div className={`${componentName} flex w-full justify-center`}>
@@ -23,6 +25,7 @@ export const GenerateButton = function GenerateButton({
 				color='primary'
 				size='md'
 				onClick={onClick}
+				disabled={disabled || isGenerating}
 				componentName={componentName}
 				title={title}
 			>
