@@ -603,6 +603,24 @@ button.text-2xs,
 	white-space: pre-wrap;
 }
 
+/* Page Header Styles */
+.page-header {
+	text-align: center;
+	padding-bottom: 2rem;
+}
+
+.page-header-name {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 0 0 0.5rem 0;
+}
+
+.page-header-contact {
+	font-size: 0.875rem;
+	color: var(--color-gray);
+	margin: 0;
+}
+
 /* Component Styles*/
 .FormField input {
 	border-radius: 0.5rem;
