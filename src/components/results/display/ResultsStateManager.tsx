@@ -5,7 +5,12 @@ import { memo } from 'react';
 import { DocumentContent } from '@/components/results/panels';
 import { ActionButtons, CopyButton } from '@/components/results/actions';
 import { EmptyState } from '@/components/ui/feedback';
-import { useAppStore, useTemplatesStore, useSkillsStore } from '@/lib/stores';
+import {
+	useAppStore,
+	useTemplatesStore,
+	useSkillsStore,
+	useCandidateStore,
+} from '@/lib/stores';
 
 type ResultsStateManagerProps = {
 	className?: string;
@@ -17,6 +22,7 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 	const { includeCoverLetter, includeResume } = useAppStore();
 	const { generatedCoverLetter, generatedResume } = useTemplatesStore();
 	const { generatedSkills, includeSkills } = useSkillsStore();
+	const { candidateDetails } = useCandidateStore();
 
 	const hasSelectedDocuments =
 		includeSkills || includeCoverLetter || includeResume;
@@ -57,7 +63,11 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						content={generatedCoverLetter}
 						isEditable={false}
 					/>
-					<ActionButtons text={generatedCoverLetter} filename='cover-letter' />
+					<ActionButtons
+						text={generatedCoverLetter}
+						filename='cover-letter'
+						candidateDetails={candidateDetails}
+					/>
 				</div>
 			</div>
 
@@ -68,7 +78,11 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						content={generatedResume}
 						isEditable={false}
 					/>
-					<ActionButtons text={generatedResume} filename='resume' />
+					<ActionButtons
+						text={generatedResume}
+						filename='resume'
+						candidateDetails={candidateDetails}
+					/>
 				</div>
 			</div>
 		</div>

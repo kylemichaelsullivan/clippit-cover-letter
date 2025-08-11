@@ -8,10 +8,12 @@ import {
 	DownloadButtonTXT,
 	CopyButton,
 } from './';
+import type { CandidateDetails } from '@/types';
 
 type ActionButtonsProps = {
 	text: string;
 	filename: string;
+	candidateDetails: CandidateDetails;
 	className?: string;
 	disabled?: boolean;
 };
@@ -19,6 +21,7 @@ type ActionButtonsProps = {
 export function ActionButtons({
 	text,
 	filename,
+	candidateDetails,
 	className,
 	disabled = false,
 }: ActionButtonsProps) {
@@ -35,6 +38,7 @@ export function ActionButtons({
 				content={text}
 				title='PDF'
 				filename={filename}
+				candidateDetails={candidateDetails}
 				disabled={disabled}
 			/>
 
