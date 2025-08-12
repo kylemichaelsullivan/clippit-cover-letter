@@ -4,9 +4,12 @@ import { memo } from 'react';
 import clsx from 'clsx';
 
 import { MarkdownInput, Checkbox } from '@/components/ui/input';
-import { MarkdownPreview, FormattedPreview } from '@/components/ui/display';
+import {
+	StyledMarkdownPreview,
+	FormattedPreview,
+} from '@/components/ui/display';
 import { PLACEHOLDERS } from '@/config';
-import { useAppStore, useSkillsStore } from '@/lib/stores';
+import { useSkillsStore, useCandidateStore } from '@/lib/stores';
 
 type DocumentContentProps = {
 	title: string;
@@ -25,14 +28,39 @@ export const DocumentContent = memo(function DocumentContent({
 	isGenerating = false,
 	className,
 }: DocumentContentProps) {
-	const { previewViewMode } = useAppStore();
 	const { includeSkillGroupNames, setIncludeSkillGroupNames } =
 		useSkillsStore();
+	const { candidateDetails } = useCandidateStore();
 	const isSkills = title.toLowerCase().includes('skills');
+	const isCoverLetter = title.toLowerCase().includes('cover letter');
+	const isResume = title.toLowerCase().includes('resume');
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
 		return `Generating ${title}...`;
+	};
+
+	const renderPageHeader = () => {
+		if (!isCoverLetter && !isResume) return null;
+
+		const { fullName, email, phone, linkedin, portfolio } = candidateDetails;
+		const formattedLinkedin = linkedin ? `/in/${linkedin}` : '';
+		const contactInfo = [email, phone, formattedLinkedin, portfolio]
+			.filter(Boolean)
+			.join(' | ');
+
+		return (
+			<div className='page-header pb-4 text-center'>
+				<h1 className='page-header-name text-2xl font-bold text-gray-800'>
+					{fullName}
+				</h1>
+				{contactInfo && (
+					<div className='page-header-contact text-sm text-gray-500'>
+						{contactInfo}
+					</div>
+				)}
+			</div>
+		);
 	};
 
 	return (
@@ -44,7 +72,7 @@ export const DocumentContent = memo(function DocumentContent({
 				<span>{title}</span>
 			</label>
 			{isSkills && (
-				<div className='mb-4'>
+				<div className='pb-4'>
 					<Checkbox
 						checked={includeSkillGroupNames}
 						onChange={setIncludeSkillGroupNames}
@@ -71,24 +99,21 @@ export const DocumentContent = memo(function DocumentContent({
 					content={content}
 					componentName='DocumentContentFormattedPreview'
 					isGenerating={isGenerating}
-					isSkills={isSkills}
+					isSkills={true}
 					title={title}
-				/>
-			) : previewViewMode === 'markdown' ? (
-				<MarkdownPreview
-					content={content}
-					componentName='DocumentContentMarkdownPreview'
-					isGenerating={isGenerating}
-					isSkills={isSkills}
 				/>
 			) : (
-				<FormattedPreview
-					content={content}
-					componentName='DocumentContentFormattedPreview'
-					isGenerating={isGenerating}
-					isSkills={isSkills}
-					title={title}
-				/>
+				<div className='print-content rounded-lg border border-gray-200 bg-white p-4'>
+					{renderPageHeader()}
+					<StyledMarkdownPreview
+						content={content}
+						componentName='DocumentContentStyledPreview'
+						isGenerating={isGenerating}
+						title={title}
+						className='border-0 bg-transparent p-0'
+						isCompact={isCoverLetter || isResume}
+					/>
+				</div>
 			)}
 		</div>
 	);

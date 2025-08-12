@@ -81,7 +81,7 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 
 				<div className='TemplateVariables flex max-h-96 flex-col gap-6 overflow-y-auto'>
 					<div className='MustacheVariables'>
-						<h4 className='MustacheVariablesTitle text-gray mb-3 text-sm font-semibold tracking-wide uppercase'>
+						<h4 className='MustacheVariablesTitle text-gray pb-3 text-sm font-semibold tracking-wide uppercase'>
 							Mustache Variables: &#123;&#123;variable&#125;&#125;
 						</h4>
 
@@ -119,7 +119,7 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 
 					{/* Inline Instructions Section */}
 					<div className='InlineInstructions'>
-						<h4 className='InlineInstructionsTitle text-gray mb-3 text-sm font-semibold tracking-wide uppercase'>
+						<h4 className='InlineInstructionsTitle text-gray pb-3 text-sm font-semibold tracking-wide uppercase'>
 							Inline Instructions: &#60;%= instruction %&#62;
 						</h4>
 						<div className='InlineInstructionsGrid grid gap-3'>

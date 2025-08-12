@@ -18,10 +18,10 @@ export function SkillsDisplay({ skills }: SkillsDisplayProps) {
 		return sortedGroups
 			.map((group) => {
 				if (group.skills.length === 0) return '';
-				return `<strong>${group.name}:</strong> ${group.skills.join(', ')}`;
+				return `**${group.name}:** ${group.skills.join(', ')}`;
 			})
 			.filter(Boolean)
-			.join('<br />');
+			.join('\n\n');
 	});
 
 	const handleTextChange = (value: string) => {

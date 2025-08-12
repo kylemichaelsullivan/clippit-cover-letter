@@ -66,10 +66,10 @@ const formatSkillsGrouped = (skills?: Skills): string => {
 	return sortedGroups
 		.map((group) => {
 			if (group.skills.length === 0) return '';
-			return `${group.name}: ${group.skills.join(', ')}`;
+			return `**${group.name}:** ${group.skills.join(', ')}`;
 		})
 		.filter(Boolean)
-		.join('\n');
+		.join('\n\n');
 };
 
 const formatSkillsUngrouped = (skills?: Skills): string => {

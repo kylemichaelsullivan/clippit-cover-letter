@@ -10,7 +10,6 @@ type MarkdownPreviewProps = {
 	componentName?: string;
 	className?: string;
 	isGenerating?: boolean;
-	isSkills?: boolean;
 };
 
 export function MarkdownPreview({
@@ -18,7 +17,6 @@ export function MarkdownPreview({
 	componentName,
 	className = '',
 	isGenerating = false,
-	isSkills = false,
 }: MarkdownPreviewProps) {
 	return (
 		<div
