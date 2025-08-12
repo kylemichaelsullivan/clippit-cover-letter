@@ -606,13 +606,15 @@ button.text-2xs,
 /* Page Header Styles */
 .page-header {
 	text-align: center;
-	padding-bottom: 2rem;
+	padding: 0;
+	margin: 0;
 }
 
 .page-header-name {
 	font-size: 1.5rem;
 	font-weight: bold;
-	margin: 0 0 0.5rem 0;
+	font-variant: small-caps;
+	margin: 0 !important;
 }
 
 .page-header-contact {
@@ -691,4 +693,130 @@ button.text-2xs,
 input[data-lpignore='false'] {
 	padding-right: 24px !important;
 	box-sizing: border-box;
+}
+
+/* Prose Styles for Markdown Content */
+.prose-compact {
+	color: var(--color-black);
+	line-height: 1.25;
+}
+
+.prose-compact h1,
+.prose-compact h2,
+.prose-compact h3,
+.prose-compact h4,
+.prose-compact h5,
+.prose-compact h6 {
+	color: var(--color-black);
+	font-weight: 700;
+	line-height: 1.125;
+	margin-bottom: 0;
+}
+
+.prose-compact h1,
+.prose-compact h2 {
+	text-transform: uppercase;
+}
+
+.prose-compact h1 {
+	font-size: 1.875rem;
+}
+
+.prose-compact h2 {
+	border-bottom: 1px solid var(--color-gray);
+	font-size: 1.5rem;
+}
+
+.prose-compact h3 {
+	font-size: 1.25rem;
+}
+
+.prose-compact h4 {
+	font-size: 1.125rem;
+}
+
+.prose-compact p {
+	line-height: 1.25;
+	margin-bottom: 0;
+}
+
+.prose-compact h3 + ul,
+.prose-compact h4 + ul,
+.prose-compact h3 + ol,
+.prose-compact h4 + ol,
+.prose-compact h3 + p,
+.prose-compact h4 + p {
+	margin-top: -1em;
+}
+
+.prose-compact strong {
+	color: var(--color-black);
+	font-weight: 700;
+}
+
+.prose-compact em {
+	font-style: italic;
+}
+
+.prose-compact ul,
+.prose-compact ol {
+	line-height: 1;
+	padding-left: 1.5em;
+	margin-bottom: 0;
+}
+
+.prose-compact li {
+	margin-bottom: 0;
+}
+
+.prose-compact ul li {
+	list-style-type: disc;
+}
+
+.prose-compact ol li {
+	list-style-type: decimal;
+}
+
+.prose-compact blockquote {
+	border-left: 4px solid var(--color-blue);
+	color: var(--color-gray);
+	font-style: italic;
+	padding-left: 1em;
+	margin: 0.75em 0;
+}
+
+.prose-compact code {
+	background-color: var(--color-light-gray);
+	border-radius: 0.25rem;
+	font-size: 0.875em;
+	font-family: var(--font-geist-mono), 'Courier New', monospace;
+	padding: 0.125rem 0.25rem;
+}
+
+.prose-compact pre {
+	background-color: var(--color-light-gray);
+	border-radius: 0.5rem;
+	padding: 1em;
+	margin: 0.75em 0;
+	overflow-x: auto;
+}
+
+.prose-compact pre code {
+	background-color: transparent;
+	padding: 0;
+}
+
+.prose-compact a {
+	color: var(--color-blue);
+	text-decoration: underline;
+}
+
+.prose-compact a:hover {
+	color: var(--color-light-blue);
+}
+
+.prose-compact hr {
+	border: none;
+	border-top: 1px solid var(--color-light-gray);
+	margin: 1em 0;
 }
