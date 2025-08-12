@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useMemo } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
@@ -37,7 +37,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 }: ConfirmationDialogProps) {
 	const [isClearing, setIsClearing] = useState(false);
 	const [selectedItems, setSelectedItems] = useState<string[]>(
-		availableItems?.filter((item) => item.checked).map((item) => item.id) || [],
+		availableItems?.map((item) => item.id) || [],
 	);
 
 	const handleItemToggle = (itemId: string, checked: boolean) => {
@@ -47,6 +47,21 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 			setSelectedItems((prev) => prev.filter((id) => id !== itemId));
 		}
 	};
+
+	const allItemsSelected = useMemo(() => {
+		return (
+			availableItems &&
+			availableItems.length > 0 &&
+			availableItems.every((item) => selectedItems.includes(item.id))
+		);
+	}, [availableItems, selectedItems]);
+
+	const dynamicConfirmText = useMemo(() => {
+		if (!availableItems || availableItems.length === 0) {
+			return confirmText;
+		}
+		return allItemsSelected ? 'Generate All' : 'Generate Selected';
+	}, [availableItems, allItemsSelected, confirmText]);
 
 	const handleConfirm = async () => {
 		if (availableItems && selectedItems.length === 0) {
@@ -114,7 +129,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 								isClearing || (availableItems && selectedItems.length === 0)
 							}
 							className='bg-red hover:bg-red flex items-center gap-2 px-4 py-2 text-white'
-							title={confirmText}
+							title={dynamicConfirmText}
 							componentName='ConfirmationDialogConfirmButton'
 						>
 							{isClearing ? (
@@ -122,7 +137,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 							) : (
 								<>
 									<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
-									{confirmText}
+									{dynamicConfirmText}
 								</>
 							)}
 						</Button>

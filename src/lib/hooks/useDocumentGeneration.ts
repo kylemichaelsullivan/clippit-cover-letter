@@ -34,6 +34,13 @@ export const useDocumentGeneration = () => {
 
 	const [showGenerateAllConfirmation, setShowGenerateAllConfirmation] =
 		useState(false);
+	const [existingContentForDialog, setExistingContentForDialog] = useState<
+		Array<{
+			id: string;
+			label: string;
+			checked: boolean;
+		}>
+	>([]);
 
 	const includeSkills = skills.groups.some((group) => group.skills.length > 0);
 	const hasSelectedDocuments =
@@ -393,12 +400,50 @@ export const useDocumentGeneration = () => {
 
 		const existingContent = checkForExistingContent();
 
-		performGenerateEmptyOnly();
+		const existingItems = [];
+		if (includeSkills && generatedSkills && generatedSkills.trim() !== '') {
+			existingItems.push({
+				id: 'skills',
+				label: 'Skills Summary',
+				checked: true,
+			});
+		}
+		if (
+			includeCoverLetter &&
+			generatedCoverLetter &&
+			generatedCoverLetter.trim() !== ''
+		) {
+			existingItems.push({
+				id: 'coverLetter',
+				label: 'Cover Letter',
+				checked: true,
+			});
+		}
+		if (includeResume && generatedResume && generatedResume.trim() !== '') {
+			existingItems.push({
+				id: 'resume',
+				label: 'Resume',
+				checked: true,
+			});
+		}
+		setExistingContentForDialog(existingItems);
+
+		await performGenerateEmptyOnly();
 
 		if (existingContent.length > 0) {
 			setShowGenerateAllConfirmation(true);
 		}
-	}, [hasSelectedDocuments, checkForExistingContent, performGenerateEmptyOnly]);
+	}, [
+		hasSelectedDocuments,
+		checkForExistingContent,
+		performGenerateEmptyOnly,
+		includeSkills,
+		generatedSkills,
+		includeCoverLetter,
+		generatedCoverLetter,
+		includeResume,
+		generatedResume,
+	]);
 
 	return {
 		hasSelectedDocuments,
@@ -411,5 +456,6 @@ export const useDocumentGeneration = () => {
 		showGenerateAllConfirmation,
 		setShowGenerateAllConfirmation,
 		checkForExistingContent,
+		existingContentForDialog,
 	};
 };

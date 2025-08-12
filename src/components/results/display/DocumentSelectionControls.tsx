@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
@@ -60,13 +60,10 @@ export const DocumentSelectionControls = memo(
 			performSelectiveGeneration,
 			showGenerateAllConfirmation,
 			setShowGenerateAllConfirmation,
-			checkForExistingContent,
+			existingContentForDialog,
 		} = useDocumentGeneration();
 
-		const existingContent = checkForExistingContent();
-		const contentList = existingContent.join(', ');
-
-		const getAvailableItems = () => {
+		const availableItems = useMemo(() => {
 			const items = [];
 
 			if (includeSkills && generatedSkills && generatedSkills.trim() !== '') {
@@ -98,7 +95,18 @@ export const DocumentSelectionControls = memo(
 			}
 
 			return items;
-		};
+		}, [
+			includeSkills,
+			generatedSkills,
+			includeCoverLetter,
+			generatedCoverLetter,
+			includeResume,
+			generatedResume,
+		]);
+
+		const allItemsSelected =
+			availableItems.length > 0 && availableItems.every((item) => item.checked);
+		const buttonText = allItemsSelected ? 'Generate All' : 'Generate Selected';
 
 		return (
 			<>
@@ -150,10 +158,10 @@ export const DocumentSelectionControls = memo(
 								size='md'
 								onClick={handleGenerateAll}
 								disabled={isGeneratingAny}
-								title='Generate All'
+								title={buttonText}
 								componentName='GenerateAllButton'
 							>
-								{isGeneratingAny ? 'Generating...' : 'Generate All'}
+								{isGeneratingAny ? 'Generating...' : buttonText}
 							</Button>
 						</div>
 					)}
@@ -163,10 +171,9 @@ export const DocumentSelectionControls = memo(
 					isOpen={showGenerateAllConfirmation}
 					onClose={() => setShowGenerateAllConfirmation(false)}
 					onConfirm={performSelectiveGeneration}
-					title='Select Content to Regenerate'
-					message={`The following content already exists: ${contentList}. Select which content you would like to regenerate.`}
-					availableItems={getAvailableItems()}
-					confirmText='Generate Selected'
+					title='Regenerate Content'
+					message='Select content to regenerate:'
+					availableItems={existingContentForDialog}
 					cancelText='Cancel'
 				/>
 			</>
