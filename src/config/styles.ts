@@ -25,6 +25,7 @@ export const PDF_STYLES = `
 }
 
 html {
+	font-size: 11pt;
 	padding: 1rem 0;
 }
 
@@ -32,8 +33,6 @@ body {
 	box-sizing: border-box;
 	background-color: #f3f4f6;
 	font-family: Arial, sans-serif; 
-	font-size: 12pt;
-	line-height: 1.6; 
 	min-height: 11in;
 	width: 8.5in;
 	margin: 0 auto;
@@ -86,7 +85,7 @@ body > div {
 
 .print-content h1,
 .print-content h2 {
-	text-transform: uppercase;
+	font-variant: small-caps;
 }
 
 .print-content h1 {
@@ -199,10 +198,8 @@ body > div {
 }
 
 .page-header-name {
-	font-size: 1.5rem;
-	font-variant: small-caps;
 	font-weight: bold;
-	line-height: 1.125;
+	text-transform: uppercase;
 	margin: 0;
 }
 

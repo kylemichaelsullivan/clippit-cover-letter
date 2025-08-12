@@ -677,9 +677,8 @@ button.text-2xs,
 }
 
 .page-header-name {
-	font-size: 1.5rem;
 	font-weight: bold;
-	font-variant: small-caps;
+	text-transform: uppercase;
 	margin: 0;
 }
 
@@ -790,7 +789,7 @@ input[data-lpignore='false'] {
 
 .prose-compact h1,
 .prose-compact h2 {
-	text-transform: uppercase;
+	font-variant: small-caps;
 }
 
 .prose-compact h1 {
