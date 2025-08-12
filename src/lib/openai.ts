@@ -1,4 +1,4 @@
-import { env } from '@/config/env';
+import { getAIConfig } from '@/config/ai';
 
 export type OpenAIResponse = {
 	content: string;
@@ -13,7 +13,9 @@ export async function callOpenAI(
 	prompt: string,
 	systemMessage?: string,
 ): Promise<OpenAIResponse> {
-	if (!env.OPENAI_API_KEY) {
+	const config = getAIConfig();
+
+	if (!config.apiKey) {
 		throw new Error('OpenAI API key is not configured');
 	}
 
@@ -29,13 +31,13 @@ export async function callOpenAI(
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+				Authorization: `Bearer ${config.apiKey}`,
 			},
 			body: JSON.stringify({
-				model: env.OPENAI_MODEL,
+				model: config.model,
 				messages,
-				max_tokens: env.OPENAI_MAX_TOKENS,
-				temperature: 0.7,
+				max_tokens: config.maxTokens,
+				temperature: config.temperature,
 			}),
 		});
 

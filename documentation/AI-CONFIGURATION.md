@@ -12,27 +12,95 @@ The application integrates with OpenAI's API to provide three primary AI-powered
 
 ## Environment Configuration
 
+### Quick Setup
+
+1. Copy the sample environment file:
+
+```bash
+cp .env.sample .env.local
+```
+
+2. Edit `.env.local` and replace `sk-your-api-key-here` with your actual OpenAI API key
+
+3. All other variables have sensible defaults and are optional
+
 ### Required Environment Variables
 
 ```typescript
 // src/config/env.ts
-import { z } from 'zod';
+export const env = {
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4',
+  OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
+} as const;
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']),
-  OPENAI_API_KEY: z.string().min(1),
-  OPENAI_MODEL: z.string().default('gpt-4'),
-  OPENAI_MAX_TOKENS: z.string().transform(Number).default('1000'),
-});
+export function validateEnv() {
+  const requiredVars = ['OPENAI_API_KEY'] as const;
 
-export const env = envSchema.parse(process.env);
+  for (const varName of requiredVars) {
+    if (!env[varName]) {
+      throw new Error(`Missing required environment variable: ${varName}`);
+    }
+  }
+}
 ```
 
 ### Environment Files
 
-- `.env.local`: Development environment variables
-- `.env.test`: Testing environment variables
-- `.env.production`: Production environment variables (set in deployment)
+- `.env.sample`: Sample environment variables (copy this file)
+- `.env.local`: Development environment variables (copy from .env.sample)
+- Production: Set environment variables in your deployment platform
+
+## AI Configuration System
+
+The application uses a comprehensive AI configuration system located in `src/config/ai.ts` that provides:
+
+- **Environment Variable Parsing**: Secure parsing of all OpenAI-related environment variables
+- **Validation**: Comprehensive validation of configuration values
+- **Defaults**: Safe default values for all configuration options
+- **Security**: API key protection and safe logging practices
+
+### Configuration Options
+
+```typescript
+// src/config/ai.ts
+export type AIConfig = {
+  // API Configuration
+  apiKey: string;
+  model: string;
+  maxTokens: number;
+  temperature: number;
+
+  // Rate Limiting
+  requestsPerMinute: number;
+  requestsPerHour: number;
+
+  // Security
+  enableLogging: boolean;
+  logLevel: 'none' | 'error' | 'warn' | 'info';
+
+  // Feature Flags
+  enableAI: boolean;
+  enableStreaming: boolean;
+  enableRetry: boolean;
+};
+```
+
+### Environment Variables
+
+| Variable                     | Default       | Description                |
+| ---------------------------- | ------------- | -------------------------- |
+| `OPENAI_API_KEY`             | (required)    | Your OpenAI API key        |
+| `OPENAI_MODEL`               | `gpt-4o-mini` | AI model to use            |
+| `OPENAI_MAX_TOKENS`          | `2000`        | Maximum tokens per request |
+| `OPENAI_TEMPERATURE`         | `0.7`         | Creativity level (0.0-2.0) |
+| `OPENAI_REQUESTS_PER_MINUTE` | `60`          | Rate limit per minute      |
+| `OPENAI_REQUESTS_PER_HOUR`   | `1000`        | Rate limit per hour        |
+| `OPENAI_ENABLE_LOGGING`      | `false`       | Enable debug logging       |
+| `OPENAI_LOG_LEVEL`           | `error`       | Logging level              |
+| `OPENAI_ENABLE_AI`           | `true`        | Enable AI features         |
+| `OPENAI_ENABLE_STREAMING`    | `false`       | Enable streaming responses |
+| `OPENAI_ENABLE_RETRY`        | `true`        | Enable retry logic         |
 
 ## OpenAI Service Integration
 
@@ -40,6 +108,8 @@ export const env = envSchema.parse(process.env);
 
 ```typescript
 // src/lib/openai.ts
+import { getAIConfig } from '@/config/ai';
+
 export type OpenAIResponse = {
   content: string;
   usage?: {
@@ -53,7 +123,9 @@ export async function callOpenAI(
   prompt: string,
   systemMessage?: string,
 ): Promise<OpenAIResponse> {
-  if (!env.OPENAI_API_KEY) {
+  const config = getAIConfig();
+
+  if (!config.apiKey) {
     throw new Error('OpenAI API key is not configured');
   }
 
@@ -69,13 +141,13 @@ export async function callOpenAI(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${config.apiKey}`,
       },
       body: JSON.stringify({
-        model: env.OPENAI_MODEL,
+        model: config.model,
         messages,
-        max_tokens: env.OPENAI_MAX_TOKENS,
-        temperature: 0.7,
+        max_tokens: config.maxTokens,
+        temperature: config.temperature,
       }),
     });
 
@@ -106,46 +178,7 @@ export async function callOpenAI(
 
 ## Core AI Features
 
-### 1. Intelligent Skill Selection
-
-AI analyzes job requirements and candidate skills to select the most relevant skills for a specific position.
-
-```typescript
-export async function selectRelevantSkills(
-  jobDescription: string,
-  candidateSkills: string[],
-  jobTitle: string,
-): Promise<string[]> {
-  const systemMessage = `You are an expert at matching candidate skills to job requirements.
-Analyze the job description and select the most relevant skills from the candidate's skill list.
-Return only the skill names that are most relevant to this specific position.`;
-
-  const prompt = `Job Title: ${jobTitle}
-
-Job Description:
-${jobDescription}
-
-Available Skills:
-${candidateSkills.join(', ')}
-
-Please select the 5-8 most relevant skills for this position. Return only the skill names, separated by commas.`;
-
-  const response = await callOpenAI(prompt, systemMessage);
-  return response.content.split(',').map(skill => skill.trim());
-}
-```
-
-**Usage:**
-
-```typescript
-const relevantSkills = await selectRelevantSkills(
-  jobDescription,
-  candidateSkills,
-  jobTitle
-);
-```
-
-### 2. Custom Cover Letter Generation
+### 1. Custom Cover Letter Generation
 
 AI creates personalized cover letters that match job requirements and highlight relevant experience.
 
@@ -154,16 +187,14 @@ export async function generateCoverLetter(
   jobDescription: string,
   companyDetails: string,
   userExperience: string,
-  selectedSkills: string[],
 ): Promise<string> {
   const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
 - Addresses the specific job requirements
-- Highlights relevant experience and selected skills
+- Highlights relevant experience
 - Shows enthusiasm for the company
 - Is professional yet engaging
 - Is between 200-300 words
-- Uses a professional tone
-- Incorporates the selected skills naturally`;
+- Uses a professional tone`;
 
   const prompt = `Please write a cover letter for the following position:
 
@@ -176,10 +207,7 @@ ${companyDetails}
 My Experience:
 ${userExperience}
 
-Selected Skills to Highlight:
-${selectedSkills.join(', ')}
-
-Please write a professional cover letter that connects my experience and skills to this specific role.`;
+Please write a professional cover letter that connects my experience to this specific role.`;
 
   const response = await callOpenAI(prompt, systemMessage);
   return response.content;
@@ -192,59 +220,35 @@ Please write a professional cover letter that connects my experience and skills 
 const coverLetter = await generateCoverLetter(
   jobDescription,
   companyDetails,
-  userExperience,
-  selectedSkills
+  userExperience
 );
 ```
 
-### 3. Resume Tailoring
+### 2. Template Enhancement
 
-AI customizes resume content to highlight relevant experience for specific positions.
+The application also supports AI-enhanced template processing through the template system, where ERB instructions (`<%=instruction%>`) can be processed by AI to generate dynamic content.
 
-```typescript
-export async function tailorResume(
-  originalResume: string,
-  jobDescription: string,
-  jobTitle: string,
-  selectedSkills: string[],
-): Promise<string> {
-  const systemMessage = `You are an expert resume writer. Tailor the provided resume to match the specific job requirements.
-- Highlight relevant experience
-- Emphasize selected skills
-- Adjust language to match job description
-- Maintain professional tone
-- Keep the same structure but enhance content relevance`;
+**Example Template with AI Enhancement:**
 
-  const prompt = `Please tailor this resume for the following position:
+```
+Dear {{Job Manager}},
 
-Job Title: ${jobTitle}
+<%=Write a compelling opening paragraph that connects my experience with {{My Skills}} to the {{Job Title}} position at {{Job Company}}%>
 
-Job Description:
-${jobDescription}
+I am writing to express my interest in the {{Job Title}} position at {{Job Company}}.
 
-Skills to Emphasize:
-${selectedSkills.join(', ')}
-
-Original Resume:
-${originalResume}
-
-Please provide a tailored version that highlights relevant experience and skills for this specific position.`;
-
-  const response = await callOpenAI(prompt, systemMessage);
-  return response.content;
-}
+Best regards,
+{{My Name}}
 ```
 
-**Usage:**
+### 3. Future AI Features
 
-```typescript
-const tailoredResume = await tailorResume(
-  originalResume,
-  jobDescription,
-  jobTitle,
-  selectedSkills
-);
-```
+The following AI features are planned for future implementation:
+
+- **Intelligent Skill Selection**: AI analysis of job requirements to select relevant skills
+- **Resume Tailoring**: AI customization of resume content for specific positions
+- **Job Description Analysis**: AI analysis of job descriptions to extract key requirements
+- **Interview Preparation**: AI-generated interview questions and preparation materials
 
 ## AI Workflow Integration
 
@@ -255,38 +259,17 @@ export async function generateCompleteApplication(
   jobDescription: string,
   companyDetails: string,
   userExperience: string,
-  candidateSkills: string[],
-  originalResume: string,
-  jobTitle: string,
 ) {
   try {
-    // Step 1: Select relevant skills
-    const selectedSkills = await selectRelevantSkills(
-      jobDescription,
-      candidateSkills,
-      jobTitle
-    );
-
-    // Step 2: Generate cover letter
+    // Step 1: Generate cover letter
     const coverLetter = await generateCoverLetter(
       jobDescription,
       companyDetails,
-      userExperience,
-      selectedSkills
-    );
-
-    // Step 3: Tailor resume
-    const tailoredResume = await tailorResume(
-      originalResume,
-      jobDescription,
-      jobTitle,
-      selectedSkills
+      userExperience
     );
 
     return {
-      selectedSkills,
       coverLetter,
-      tailoredResume,
     };
   } catch (error) {
     console.error('AI generation failed:', error);
