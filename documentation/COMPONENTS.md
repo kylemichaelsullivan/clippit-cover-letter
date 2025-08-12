@@ -394,34 +394,7 @@ Utility components.
 
 The application includes several components that integrate with AI:
 
-#### 1. Skill Selection Components
-
-```typescript
-// SkillsForm.tsx - Integrates with AI for skill selection
-import { selectRelevantSkills } from '@/lib/openai';
-
-const SkillsForm = () => {
-  const handleAISkillSelection = async () => {
-    const relevantSkills = await selectRelevantSkills(
-      jobDescription,
-      candidateSkills,
-      jobTitle
-    );
-    setSelectedSkills(relevantSkills);
-  };
-
-  return (
-    <div>
-      {/* Skills form content */}
-      <Button onClick={handleAISkillSelection}>
-        AI Select Skills
-      </Button>
-    </div>
-  );
-};
-```
-
-#### 2. Cover Letter Generation Components
+#### 1. Cover Letter Generation Components
 
 ```typescript
 // DocumentGenerator.tsx - Integrates with AI for cover letter generation
@@ -432,8 +405,7 @@ const DocumentGenerator = () => {
     const coverLetter = await generateCoverLetter(
       jobDescription,
       companyDetails,
-      userExperience,
-      selectedSkills
+      userExperience
     );
     setCoverLetter(coverLetter);
   };
@@ -449,32 +421,39 @@ const DocumentGenerator = () => {
 };
 ```
 
-#### 3. Resume Tailoring Components
+#### 2. Template Enhancement Components
 
 ```typescript
-// ResultsGenerator.tsx - Integrates with AI for resume tailoring
-import { tailorResume } from '@/lib/openai';
+// DocumentGenerator.tsx - Integrates with AI for template enhancement
+import { callOpenAI } from '@/lib/openai';
 
-const ResultsGenerator = () => {
-  const handleTailorResume = async () => {
-    const tailoredResume = await tailorResume(
-      originalResume,
-      jobDescription,
-      jobTitle,
-      selectedSkills
-    );
-    setTailoredResume(tailoredResume);
+const DocumentGenerator = () => {
+  const handleEnhanceTemplate = async (template: string) => {
+    // Process ERB instructions in templates
+    const enhancedTemplate = await processERBInstructions(template);
+    setEnhancedTemplate(enhancedTemplate);
   };
 
   return (
     <div>
-      {/* Results generation content */}
-      <Button onClick={handleTailorResume}>
-        Tailor Resume
+      {/* Template enhancement content */}
+      <Button onClick={() => handleEnhanceTemplate(template)}>
+        Enhance Template
       </Button>
     </div>
   );
 };
+```
+
+#### 3. Future AI Components
+
+The following AI components are planned for future implementation:
+
+```typescript
+// Future: Skill Selection Components
+// Future: Resume Tailoring Components
+// Future: Job Description Analysis Components
+// Future: Interview Preparation Components
 ```
 
 ### AI Loading States

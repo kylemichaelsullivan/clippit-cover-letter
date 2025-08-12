@@ -39,28 +39,28 @@ pnpm install
 3. Set up environment variables:
 
 ```bash
-# Copy the example environment file
-cp .env.example .env.local
+# Copy the sample environment file
+cp .env.sample .env.local
 
 # Edit .env.local and add your OpenAI API key
-OPENAI_API_KEY=your_actual_openai_api_key_here
+# Replace 'your-api-key-here' with your actual OpenAI API key
 ```
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory with the following variables:
+Copy `.env.sample` to `.env.local` and update the values:
 
-```env
-# Required: Your OpenAI API key
-OPENAI_API_KEY=sk-your-api-key-here
-
-# Optional: AI configuration (defaults shown)
-OPENAI_MODEL=gpt-4o-mini
-OPENAI_MAX_TOKENS=2000
-OPENAI_TEMPERATURE=0.7
-
-
+```bash
+cp .env.sample .env.local
 ```
+
+Then edit `.env.local` and replace `your-api-key-here` with your actual OpenAI API key. All other variables have sensible defaults and are optional.
+
+**Required:**
+
+- `OPENAI_API_KEY` - Your OpenAI API key (get one from https://platform.openai.com/api-keys)
+
+**Optional:** See `.env.sample` for all available configuration options.
 
 **Important**: Never commit your `.env.local` file to version control. It's already included in `.gitignore`.
 
@@ -225,11 +225,12 @@ Hydration-safe theme implementation with:
 
 ## Documentation
 
-- [AI Configuration Guide](./documentation/AI_CONFIGURATION.md)
+- [AI Configuration Guide](./documentation/AI-CONFIGURATION.md)
 - [Template Syntax Guide](./documentation/TEMPLATE_SYNTAX.md)
 - [Hydration Error Handling Guide](./documentation/HYDRATION_GUIDE.md)
-- [Components Documentation](./src/components/README.md)
-- [UI Components Documentation](./src/components/ui/README.md)
+- [Components Documentation](./documentation/COMPONENTS.md)
+- [State Management Guide](./documentation/STATE_MANAGEMENT.md)
+- [Classname Optimization Guide](./documentation/CLASSNAME_OPTIMIZATION.md)
 
 ## Learn More
 
