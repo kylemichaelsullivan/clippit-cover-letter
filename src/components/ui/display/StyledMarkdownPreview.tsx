@@ -11,6 +11,7 @@ type StyledMarkdownPreviewProps = {
 	isGenerating?: boolean;
 	title?: string;
 	isCompact?: boolean;
+	isPrintDocument?: boolean;
 };
 
 export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
@@ -20,6 +21,7 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 	isGenerating = false,
 	title = '',
 	isCompact = false,
+	isPrintDocument = false,
 }: StyledMarkdownPreviewProps) {
 	const renderContent = () => {
 		if (isGenerating) {
@@ -43,10 +45,12 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 		<div
 			className={clsx(
 				componentName || 'StyledMarkdownPreview',
-				'min-h-64 w-full max-w-none overflow-y-auto bg-white p-4 text-sm sm:min-h-96 sm:text-base',
+				'min-h-64 w-full max-w-none overflow-y-auto p-4 text-sm sm:min-h-96 sm:text-base',
 				isCompact ? 'leading-tight' : 'leading-relaxed',
 				isCompact ? 'prose-compact' : 'prose prose-sm sm:prose-base max-w-none',
 				isGenerating && 'text-light-gray flex items-center justify-center',
+				isPrintDocument && 'print-document-content',
+				!isPrintDocument && 'bg-white',
 				className,
 			)}
 		>

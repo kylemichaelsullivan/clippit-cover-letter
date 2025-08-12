@@ -51,11 +51,9 @@ export const DocumentContent = memo(function DocumentContent({
 
 		return (
 			<div className='page-header pb-4 text-center'>
-				<h1 className='page-header-name text-2xl font-bold text-gray-800'>
-					{fullName}
-				</h1>
+				<h1 className='page-header-name text-2xl font-bold'>{fullName}</h1>
 				{contactInfo && (
-					<div className='page-header-contact text-sm text-gray-500'>
+					<div className='page-header-contact text-sm font-light'>
 						{contactInfo}
 					</div>
 				)}
@@ -103,15 +101,18 @@ export const DocumentContent = memo(function DocumentContent({
 					title={title}
 				/>
 			) : (
-				<div className='print-content rounded-lg border border-gray-200 bg-white p-4'>
+				<div
+					className={`print-content rounded-lg p-4 ${isCoverLetter || isResume ? 'print-document' : 'border-light-gray border bg-white'}`}
+				>
 					{renderPageHeader()}
 					<StyledMarkdownPreview
 						content={content}
 						componentName='DocumentContentStyledPreview'
 						isGenerating={isGenerating}
 						title={title}
-						className='border-0 bg-transparent p-0'
+						className='p-0'
 						isCompact={isCoverLetter || isResume}
+						isPrintDocument={isCoverLetter || isResume}
 					/>
 				</div>
 			)}

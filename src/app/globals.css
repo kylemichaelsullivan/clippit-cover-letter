@@ -603,6 +603,72 @@ button.text-2xs,
 	white-space: pre-wrap;
 }
 
+/* Print Document Styles - Always show print-friendly colors */
+.print-document {
+	background-color: #ffffff !important;
+	border-color: #d1d5db !important;
+}
+
+.print-document-content {
+	background-color: #ffffff !important;
+	color: #000000 !important;
+}
+
+.print-document-content h1,
+.print-document-content h2,
+.print-document-content h3,
+.print-document-content h4,
+.print-document-content h5,
+.print-document-content h6 {
+	color: #000000 !important;
+}
+
+.print-document-content h2 {
+	border-bottom: 1px solid #64748b !important;
+}
+
+.print-document-content p {
+	color: #000000 !important;
+}
+
+.print-document-content strong {
+	color: #000000 !important;
+}
+
+.print-document-content em {
+	color: #000000 !important;
+}
+
+.print-document-content ul,
+.print-document-content ol {
+	color: #000000 !important;
+}
+
+.print-document-content li {
+	color: #000000 !important;
+}
+
+.print-document-content blockquote {
+	color: #374151 !important;
+}
+
+.print-document-content code {
+	background-color: #f3f4f6 !important;
+	color: #000000 !important;
+}
+
+.print-document-content pre {
+	background-color: #f3f4f6 !important;
+}
+
+.print-document-content a {
+	color: #3b82f6 !important;
+}
+
+.print-document-content hr {
+	border-color: #f3f4f6 !important;
+}
+
 /* Page Header Styles */
 .page-header {
 	text-align: center;
@@ -621,6 +687,15 @@ button.text-2xs,
 	font-size: 0.875rem;
 	color: var(--color-gray);
 	margin: 0;
+}
+
+/* Print-friendly page header styles */
+.print-document .page-header-name {
+	color: #000000 !important;
+}
+
+.print-document .page-header-contact {
+	color: #6b7280 !important;
 }
 
 /* Component Styles*/
