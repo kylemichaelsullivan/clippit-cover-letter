@@ -77,7 +77,7 @@ export function DownloadButtonPDF({
 							</style>
 						</head>
 						<body>
-							<div style="background-color: white; width: 8.5in; height: 11in; margin: 0 auto;">
+							<div style="background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
 								${pageHeader}
 								<div class="print-content">${formattedContent}</div>
 							</div>

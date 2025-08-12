@@ -669,11 +669,11 @@ button.text-2xs,
 	border-color: #f3f4f6 !important;
 }
 
-/* Page Header Styles */
+/* Page Header Styles - using shared styles */
 .page-header {
 	text-align: center;
 	padding: 0;
-	margin: 0;
+	margin: 0 0 2rem;
 }
 
 .page-header-name {
@@ -769,10 +769,16 @@ input[data-lpignore='false'] {
 	box-sizing: border-box;
 }
 
-/* Prose Styles for Markdown Content */
+/* Prose Styles for Markdown Content - using shared styles */
 .prose-compact {
+	white-space: pre-wrap;
 	color: var(--color-black);
-	line-height: 1.25;
+	line-height: 1;
+}
+
+.prose-compact * {
+	padding: 0;
+	margin: 0;
 }
 
 .prose-compact h1,

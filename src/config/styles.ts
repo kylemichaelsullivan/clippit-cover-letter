@@ -1,3 +1,11 @@
+import {
+	generateSharedProseStyles,
+	generateSharedPageHeaderStyles,
+	generatePrintContentStyles,
+	generateUIPageHeaderStyles,
+} from './shared-styles';
+
+// PDF-specific styles that extend the shared styles
 export const PDF_STYLES = `
 @page {
 	size: letter;
@@ -60,152 +68,8 @@ body > div {
 	}
 }
 
-.print-content {
-	white-space: pre-wrap;
-	color: var(--color-black);
-	line-height: 1;
-}
-
-.print-content * {
-	padding: 0;
-	margin: 0;
-}
-
-.print-content h1,
-.print-content h2,
-.print-content h3,
-.print-content h4,
-.print-content h5,
-.print-content h6 {
-	color: var(--color-black);
-	font-weight: 700;
-	line-height: 1.125;
-	margin-bottom: 0;
-}
-
-.print-content h1,
-.print-content h2 {
-	font-variant: small-caps;
-}
-
-.print-content h1 {
-	font-size: 1.875rem;
-}
-
-.print-content h2 {
-	border-bottom: 1px solid var(--color-gray);
-	font-size: 1.5rem;
-}
-
-.print-content h3 {
-	font-size: 1.25rem;
-}
-
-.print-content h4 {
-	font-size: 1.125rem;
-}
-
-.print-content p {
-	line-height: 1.25;
-	margin-bottom: 0;
-}
-
-.print-content h3 + ul,
-.print-content h4 + ul,
-.print-content h3 + ol,
-.print-content h4 + ol,
-.print-content h3 + p,
-.print-content h4 + p {
-	margin-top: -1em;
-}
-
-.print-content strong {
-	color: var(--color-black);
-	font-weight: 700;
-}
-
-.print-content em {
-	font-style: italic;
-}
-
-.print-content ul,
-.print-content ol {
-	line-height: 1;
-	padding-left: 1.5em;
-	margin-bottom: 0;
-}
-
-.print-content li {
-	margin-bottom: 0;
-}
-
-.print-content ul li {
-	list-style-type: disc;
-}
-
-.print-content ol li {
-	list-style-type: decimal;
-}
-
-.print-content blockquote {
-	border-left: 4px solid var(--color-blue);
-	color: var(--color-gray);
-	font-style: italic;
-	padding-left: 1em;
-	margin: 0.75em 0;
-}
-
-.print-content code {
-	background-color: var(--color-light-gray);
-	border-radius: 0.25rem;
-	font-family: var(--font-geist-mono), 'Courier New', monospace;
-	font-size: 0.875em;
-	padding: 0.125rem 0.25rem;
-}
-
-.print-content pre {
-	background-color: var(--color-light-gray);
-	border-radius: 0.5rem;
-	padding: 1em;
-	margin: 0.75em 0;
-	overflow-x: auto;
-}
-
-.print-content pre code {
-	background-color: transparent;
-	padding: 0;
-}
-
-.print-content a {
-	color: var(--color-blue);
-	text-decoration: underline;
-}
-
-.print-content a:hover {
-	color: var(--color-light-blue);
-}
-
-.print-content hr {
-	border: none;
-	border-top: 1px solid var(--color-light-gray);
-	margin: 1em 0;
-}
-
-.page-header {
-	text-align: center;
-	padding: 0;
-	margin: 0 0 2rem 0;
-}
-
-.page-header-name {
-	font-weight: bold;
-	text-transform: uppercase;
-	margin: 0;
-}
-
-.page-header-contact {
-	color: var(--color-gray);
-	font-size: 0.875rem;
-	margin: 0;
-}
+${generateSharedProseStyles()}
+${generateSharedPageHeaderStyles()}
+${generatePrintContentStyles()}
+${generateUIPageHeaderStyles()}
 `;
