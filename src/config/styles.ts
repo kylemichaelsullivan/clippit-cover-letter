@@ -64,7 +64,12 @@ body > div {
 .print-content {
 	white-space: pre-wrap;
 	color: var(--color-black);
-	line-height: 1.25;
+	line-height: 1;
+}
+
+.print-content * {
+	padding: 0;
+	margin: 0;
 }
 
 .print-content h1,
@@ -104,6 +109,15 @@ body > div {
 .print-content p {
 	line-height: 1.25;
 	margin-bottom: 0;
+}
+
+.print-content h3 + ul,
+.print-content h4 + ul,
+.print-content h3 + ol,
+.print-content h4 + ol,
+.print-content h3 + p,
+.print-content h4 + p {
+	margin-top: -1em;
 }
 
 .print-content strong {
