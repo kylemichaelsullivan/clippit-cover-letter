@@ -1,6 +1,28 @@
 ---
-globs: ['**/config/**/*.ts', '**/config/**/*.js', '**/config/**/*.mjs', '**/lib/schemas.ts', '**/lib/openai.ts', '**/lib/documentGeneration.ts', 'package.json', 'next.config.mjs', 'tailwind.config.js', 'tsconfig.json', 'eslint.config.mjs', 'postcss.config.mjs']
-exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*', '**/node_modules/**', '**/dist/**', '**/.next/**']
+globs:
+  [
+    '**/config/**/*.ts',
+    '**/config/**/*.js',
+    '**/config/**/*.mjs',
+    '**/lib/schemas.ts',
+    '**/lib/openai.ts',
+    '**/lib/documentGeneration.ts',
+    'package.json',
+    'next.config.mjs',
+    'tailwind.config.js',
+    'tsconfig.json',
+    'eslint.config.mjs',
+    'postcss.config.mjs',
+  ]
+exclude:
+  [
+    '**/__tests__/**',
+    '**/*.test.*',
+    '**/*.spec.*',
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/.next/**',
+  ]
 ---
 
 # Environment Configuration
@@ -18,16 +40,21 @@ exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*', '**/node_modules/**',
 
 ```typescript
 // src/config/env.ts
-import { z } from 'zod';
+export const env = {
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4',
+  OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
+} as const;
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']),
-  OPENAI_API_KEY: z.string().min(1),
-  OPENAI_MODEL: z.string().default('gpt-4'),
-  OPENAI_MAX_TOKENS: z.string().transform(Number).default('1000'),
-});
+export function validateEnv() {
+  const requiredVars = ['OPENAI_API_KEY'] as const;
 
-export const env = envSchema.parse(process.env);
+  for (const varName of requiredVars) {
+    if (!env[varName]) {
+      throw new Error(`Missing required environment variable: ${varName}`);
+    }
+  }
+}
 ```
 
 ### Required Variables
@@ -49,17 +76,11 @@ for (const envVar of requiredEnvVars) {
 ### Environment Files
 
 ```bash
-# .env.local (development)
-NODE_ENV=development
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4
-OPENAI_MAX_TOKENS=1000
+# Setup environment variables
+cp .env.sample .env.local
 
-# .env.production (production)
-NODE_ENV=production
-OPENAI_API_KEY=your_production_openai_api_key
-OPENAI_MODEL=gpt-4
-OPENAI_MAX_TOKENS=1000
+# Then edit .env.local and replace 'sk-your-api-key-here' with your actual API key
+# All other variables have sensible defaults and are optional
 ```
 
 ## Build Configuration
@@ -70,24 +91,24 @@ OPENAI_MAX_TOKENS=1000
 // next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-  },
+	experimental: {
+		turbo: {
+			rules: {
+				'*.svg': {
+					loaders: ['@svgr/webpack'],
+					as: '*.js',
+				},
+			},
+		},
+	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
+		],
+	},
 };
 
 export default nextConfig;
@@ -106,18 +127,18 @@ export default nextConfig;
 
 ```json
 {
-  "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
-  }
+	"scripts": {
+		"dev": "next dev --turbo",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"type-check": "tsc --noEmit",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest --coverage",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui"
+	}
 }
 ```
 
@@ -136,31 +157,31 @@ export default nextConfig;
 ```json
 // tsconfig.json
 {
-  "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "es6"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "es6"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }
 ```
 
@@ -174,35 +195,35 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 
 export default [
-  js.configs.recommended,
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      '@next/next': nextPlugin,
-      'react-hooks': reactHooksPlugin,
-      'react-refresh': reactRefreshPlugin,
-    },
-    rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...reactHooksPlugin.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-    },
-  },
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    languageOptions: {
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-  },
+	js.configs.recommended,
+	{
+		files: ['**/*.{js,jsx,ts,tsx}'],
+		plugins: {
+			'@next/next': nextPlugin,
+			'react-hooks': reactHooksPlugin,
+			'react-refresh': reactRefreshPlugin,
+		},
+		rules: {
+			...nextPlugin.configs.recommended.rules,
+			...reactHooksPlugin.configs.recommended.rules,
+			'react-refresh/only-export-components': [
+				'warn',
+				{ allowConstantExport: true },
+			],
+		},
+	},
+	{
+		files: ['**/*.{js,jsx,ts,tsx}'],
+		languageOptions: {
+			parserOptions: {
+				ecmaVersion: 'latest',
+				sourceType: 'module',
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
+	},
 ];
 ```
 
@@ -212,23 +233,23 @@ export default [
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        success: 'var(--color-success)',
-        danger: 'var(--color-danger)',
-        navigation: 'var(--color-navigation)',
-      },
-    },
-  },
-  plugins: [],
+	content: [
+		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
+	],
+	theme: {
+		extend: {
+			colors: {
+				primary: 'var(--color-primary)',
+				secondary: 'var(--color-secondary)',
+				success: 'var(--color-success)',
+				danger: 'var(--color-danger)',
+				navigation: 'var(--color-navigation)',
+			},
+		},
+	},
+	plugins: [],
 };
 ```
 
@@ -237,10 +258,10 @@ module.exports = {
 ```javascript
 // postcss.config.mjs
 export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+	plugins: {
+		tailwindcss: {},
+		autoprefixer: {},
+	},
 };
 ```
 

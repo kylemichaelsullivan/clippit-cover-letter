@@ -13,11 +13,11 @@ exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
 
 ## Core AI Features
 
-The application uses AI for three primary functions:
+The application uses AI for the following functions:
 
-1. **Intelligent Skill Selection**: AI analyzes job requirements and candidate experience to select the most relevant skills
-2. **Custom Cover Letter Generation**: AI creates personalized cover letters that match job requirements
-3. **Resume Tailoring**: AI customizes resume content to highlight relevant experience for specific positions
+1. **Custom Cover Letter Generation**: AI creates personalized cover letters that match job requirements
+2. **Template Enhancement**: AI processes ERB instructions in templates to generate dynamic content
+3. **Future Features**: Intelligent skill selection and resume tailoring are planned for future implementation
 
 ## OpenAI API Integration
 
@@ -32,6 +32,8 @@ The application uses AI for three primary functions:
 
 ```typescript
 // src/lib/openai.ts
+import { getAIConfig } from '@/config/ai';
+
 export type OpenAIResponse = {
   content: string;
   usage?: {
@@ -45,7 +47,9 @@ export async function callOpenAI(
   prompt: string,
   systemMessage?: string,
 ): Promise<OpenAIResponse> {
-  if (!env.OPENAI_API_KEY) {
+  const config = getAIConfig();
+
+  if (!config.apiKey) {
     throw new Error('OpenAI API key is not configured');
   }
 
@@ -61,13 +65,13 @@ export async function callOpenAI(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${config.apiKey}`,
       },
       body: JSON.stringify({
-        model: env.OPENAI_MODEL,
+        model: config.model,
         messages,
-        max_tokens: env.OPENAI_MAX_TOKENS,
-        temperature: 0.7,
+        max_tokens: config.maxTokens,
+        temperature: config.temperature,
       }),
     });
 
@@ -98,50 +102,21 @@ export async function callOpenAI(
 
 ## AI Features Implementation
 
-### 1. Intelligent Skill Selection
-
-```typescript
-export async function selectRelevantSkills(
-  jobDescription: string,
-  candidateSkills: string[],
-  jobTitle: string,
-): Promise<string[]> {
-  const systemMessage = `You are an expert at matching candidate skills to job requirements.
-Analyze the job description and select the most relevant skills from the candidate's skill list.
-Return only the skill names that are most relevant to this specific position.`;
-
-  const prompt = `Job Title: ${jobTitle}
-
-Job Description:
-${jobDescription}
-
-Available Skills:
-${candidateSkills.join(', ')}
-
-Please select the 5-8 most relevant skills for this position. Return only the skill names, separated by commas.`;
-
-  const response = await callOpenAI(prompt, systemMessage);
-  return response.content.split(',').map(skill => skill.trim());
-}
-```
-
-### 2. Custom Cover Letter Generation
+### 1. Custom Cover Letter Generation
 
 ```typescript
 export async function generateCoverLetter(
   jobDescription: string,
   companyDetails: string,
   userExperience: string,
-  selectedSkills: string[],
 ): Promise<string> {
   const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
 - Addresses the specific job requirements
-- Highlights relevant experience and selected skills
+- Highlights relevant experience
 - Shows enthusiasm for the company
 - Is professional yet engaging
 - Is between 200-300 words
-- Uses a professional tone
-- Incorporates the selected skills naturally`;
+- Uses a professional tone`;
 
   const prompt = `Please write a cover letter for the following position:
 
@@ -154,51 +129,39 @@ ${companyDetails}
 My Experience:
 ${userExperience}
 
-Selected Skills to Highlight:
-${selectedSkills.join(', ')}
-
-Please write a professional cover letter that connects my experience and skills to this specific role.`;
+Please write a professional cover letter that connects my experience to this specific role.`;
 
   const response = await callOpenAI(prompt, systemMessage);
   return response.content;
 }
 ```
 
-### 3. Resume Tailoring
+### 2. Template Enhancement
+
+The application supports AI-enhanced template processing through ERB instructions:
 
 ```typescript
-export async function tailorResume(
-  originalResume: string,
-  jobDescription: string,
-  jobTitle: string,
-  selectedSkills: string[],
-): Promise<string> {
-  const systemMessage = `You are an expert resume writer. Tailor the provided resume to match the specific job requirements.
-- Highlight relevant experience
-- Emphasize selected skills
-- Adjust language to match job description
-- Maintain professional tone
-- Keep the same structure but enhance content relevance`;
+// Example template with AI enhancement
+const template = `
+Dear {{Job Manager}},
 
-  const prompt = `Please tailor this resume for the following position:
+<%=Write a compelling opening paragraph that connects my experience with {{My Skills}} to the {{Job Title}} position at {{Job Company}}%>
 
-Job Title: ${jobTitle}
+I am writing to express my interest in the {{Job Title}} position at {{Job Company}}.
 
-Job Description:
-${jobDescription}
-
-Skills to Emphasize:
-${selectedSkills.join(', ')}
-
-Original Resume:
-${originalResume}
-
-Please provide a tailored version that highlights relevant experience and skills for this specific position.`;
-
-  const response = await callOpenAI(prompt, systemMessage);
-  return response.content;
-}
+Best regards,
+{{My Name}}
+`;
 ```
+
+### 3. Future AI Features
+
+The following AI features are planned for future implementation:
+
+- **Intelligent Skill Selection**: AI analysis of job requirements to select relevant skills
+- **Resume Tailoring**: AI customization of resume content for specific positions
+- **Job Description Analysis**: AI analysis of job descriptions to extract key requirements
+- **Interview Preparation**: AI-generated interview questions and preparation materials
 
 ## AI Integration Patterns
 
@@ -260,13 +223,27 @@ Please provide a tailored version that highlights relevant experience and skills
 ### Environment Variables
 
 ```typescript
-// src/config/env.ts
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production', 'test']),
-  OPENAI_API_KEY: z.string().min(1),
-  OPENAI_MODEL: z.string().default('gpt-4'),
-  OPENAI_MAX_TOKENS: z.string().transform(Number).default('1000'),
-});
+// src/config/ai.ts
+export type AIConfig = {
+  // API Configuration
+  apiKey: string;
+  model: string;
+  maxTokens: number;
+  temperature: number;
+
+  // Rate Limiting
+  requestsPerMinute: number;
+  requestsPerHour: number;
+
+  // Security
+  enableLogging: boolean;
+  logLevel: 'none' | 'error' | 'warn' | 'info';
+
+  // Feature Flags
+  enableAI: boolean;
+  enableStreaming: boolean;
+  enableRetry: boolean;
+};
 ```
 
 ### AI Service Integration
