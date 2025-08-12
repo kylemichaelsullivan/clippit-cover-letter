@@ -3,6 +3,7 @@
 import { memo, useState } from 'react';
 
 import { Button } from '@/components/ui/buttons';
+import { Checkbox } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faExclamationTriangle,
@@ -12,11 +13,16 @@ import {
 type ConfirmationDialogProps = {
 	isOpen: boolean;
 	onClose: () => void;
-	onConfirm: () => void;
+	onConfirm: (selectedItems?: string[]) => void;
 	title: string;
 	message: string;
 	confirmText?: string;
 	cancelText?: string;
+	availableItems?: Array<{
+		id: string;
+		label: string;
+		checked: boolean;
+	}>;
 };
 
 export const ConfirmationDialog = memo(function ConfirmationDialog({
@@ -27,14 +33,34 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 	message,
 	confirmText = 'Clear All Data',
 	cancelText = 'Cancel',
+	availableItems,
 }: ConfirmationDialogProps) {
 	const [isClearing, setIsClearing] = useState(false);
+	const [selectedItems, setSelectedItems] = useState<string[]>(
+		availableItems?.filter((item) => item.checked).map((item) => item.id) || [],
+	);
+
+	const handleItemToggle = (itemId: string, checked: boolean) => {
+		if (checked) {
+			setSelectedItems((prev) => [...prev, itemId]);
+		} else {
+			setSelectedItems((prev) => prev.filter((id) => id !== itemId));
+		}
+	};
 
 	const handleConfirm = async () => {
+		if (availableItems && selectedItems.length === 0) {
+			return;
+		}
+
 		setIsClearing(true);
 		onClose();
 		try {
-			await onConfirm();
+			if (availableItems) {
+				await onConfirm(selectedItems);
+			} else {
+				await onConfirm();
+			}
 		} finally {
 			setIsClearing(false);
 		}
@@ -57,6 +83,20 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 
 					<p className='text-gray'>{message}</p>
 
+					{availableItems && (
+						<div className='flex flex-col gap-2'>
+							{availableItems.map((item) => (
+								<Checkbox
+									key={item.id}
+									checked={selectedItems.includes(item.id)}
+									onChange={(checked) => handleItemToggle(item.id, checked)}
+									label={item.label}
+									className='text-sm'
+								/>
+							))}
+						</div>
+					)}
+
 					<div className='flex justify-end gap-3'>
 						<Button
 							onClick={handleCancel}
@@ -70,7 +110,9 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 
 						<Button
 							onClick={handleConfirm}
-							disabled={isClearing}
+							disabled={
+								isClearing || (availableItems && selectedItems.length === 0)
+							}
 							className='bg-red hover:bg-red flex items-center gap-2 px-4 py-2 text-white'
 							title={confirmText}
 							componentName='ConfirmationDialogConfirmButton'

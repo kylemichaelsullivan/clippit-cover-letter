@@ -216,6 +216,86 @@ export const useDocumentGeneration = () => {
 		await Promise.all(generationTasks);
 	};
 
+	const performSelectiveGeneration = async (selectedItems?: string[]) => {
+		if (!hasSelectedDocuments || !selectedItems || selectedItems.length === 0) {
+			return;
+		}
+
+		const generationTasks: Promise<void>[] = [];
+
+		if (selectedItems.includes('skills') && includeSkills) {
+			setIsGeneratingSkills(true);
+			const skillsTask = generateSkills()
+				.then(() => {
+					// generateSkills already handles setting the result
+				})
+				.catch((error) => {
+					console.error('Error generating skills:', error);
+					setGeneratedSkills('Error generating skills. Please try again.');
+				})
+				.finally(() => {
+					setIsGeneratingSkills(false);
+				});
+			generationTasks.push(skillsTask);
+		}
+
+		if (
+			selectedItems.includes('coverLetter') &&
+			includeCoverLetter &&
+			coverLetterTemplate
+		) {
+			setIsGeneratingCoverLetter(true);
+			const coverLetterTask = generateDocuments({
+				includeResume: false,
+				includeCoverLetter: true,
+				resumeTemplate: '',
+				coverLetterTemplate,
+				candidateDetails,
+				jobDetails,
+				skills,
+			})
+				.then((result) => {
+					setGeneratedCoverLetter(result.coverLetter);
+				})
+				.catch((error) => {
+					console.error('Error generating cover letter:', error);
+					setGeneratedCoverLetter(
+						'Error generating cover letter. Please try again.',
+					);
+				})
+				.finally(() => {
+					setIsGeneratingCoverLetter(false);
+				});
+			generationTasks.push(coverLetterTask);
+		}
+
+		if (selectedItems.includes('resume') && includeResume && resumeTemplate) {
+			setIsGeneratingResume(true);
+			const resumeTask = generateDocuments({
+				includeCoverLetter: false,
+				includeResume: true,
+				coverLetterTemplate: '',
+				resumeTemplate,
+				candidateDetails,
+				skills,
+				jobDetails,
+			})
+				.then((result) => {
+					setGeneratedResume(result.resume);
+				})
+				.catch((error) => {
+					console.error('Error generating resume:', error);
+					setGeneratedResume('Error generating resume. Please try again.');
+				})
+				.finally(() => {
+					setIsGeneratingResume(false);
+				});
+			generationTasks.push(resumeTask);
+		}
+
+		await Promise.all(generationTasks);
+	};
+
 	const performGenerateEmptyOnly = useCallback(async () => {
 		if (!hasSelectedDocuments) {
 			return;
@@ -326,6 +406,7 @@ export const useDocumentGeneration = () => {
 		handleGenerateAll,
 		performGenerateAll,
 		performGenerateAllWithReplacements,
+		performSelectiveGeneration,
 		performGenerateEmptyOnly,
 		showGenerateAllConfirmation,
 		setShowGenerateAllConfirmation,

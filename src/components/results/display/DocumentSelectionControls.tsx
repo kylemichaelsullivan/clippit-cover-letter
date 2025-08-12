@@ -7,7 +7,7 @@ import { ConfirmationDialog } from '@/components/ui/feedback';
 import { SkillsRangeSlider } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config/placeholders';
 import { useDocumentGeneration } from '@/lib/hooks/useDocumentGeneration';
-import { useAppStore, useSkillsStore } from '@/lib/stores';
+import { useAppStore, useSkillsStore, useTemplatesStore } from '@/lib/stores';
 import { DocumentOption } from './DocumentOption';
 
 type DocumentSelectionControlsProps = {
@@ -37,7 +37,8 @@ export const DocumentSelectionControls = memo(
 	function DocumentSelectionControls({
 		className,
 	}: DocumentSelectionControlsProps) {
-		const { includeSkills, setIncludeSkills } = useSkillsStore();
+		const { includeSkills, setIncludeSkills, generatedSkills } =
+			useSkillsStore();
 		const {
 			includeCoverLetter,
 			setIncludeCoverLetter,
@@ -50,12 +51,13 @@ export const DocumentSelectionControls = memo(
 			resumeInstructions,
 			setResumeInstructions,
 		} = useAppStore();
+		const { generatedCoverLetter, generatedResume } = useTemplatesStore();
 
 		const {
 			hasSelectedDocuments,
 			isGeneratingAny,
 			handleGenerateAll,
-			performGenerateAllWithReplacements,
+			performSelectiveGeneration,
 			showGenerateAllConfirmation,
 			setShowGenerateAllConfirmation,
 			checkForExistingContent,
@@ -63,6 +65,40 @@ export const DocumentSelectionControls = memo(
 
 		const existingContent = checkForExistingContent();
 		const contentList = existingContent.join(', ');
+
+		const getAvailableItems = () => {
+			const items = [];
+
+			if (includeSkills && generatedSkills && generatedSkills.trim() !== '') {
+				items.push({
+					id: 'skills',
+					label: 'Skills Summary',
+					checked: true,
+				});
+			}
+
+			if (
+				includeCoverLetter &&
+				generatedCoverLetter &&
+				generatedCoverLetter.trim() !== ''
+			) {
+				items.push({
+					id: 'coverLetter',
+					label: 'Cover Letter',
+					checked: true,
+				});
+			}
+
+			if (includeResume && generatedResume && generatedResume.trim() !== '') {
+				items.push({
+					id: 'resume',
+					label: 'Resume',
+					checked: true,
+				});
+			}
+
+			return items;
+		};
 
 		return (
 			<>
@@ -126,10 +162,11 @@ export const DocumentSelectionControls = memo(
 				<ConfirmationDialog
 					isOpen={showGenerateAllConfirmation}
 					onClose={() => setShowGenerateAllConfirmation(false)}
-					onConfirm={performGenerateAllWithReplacements}
-					title='Replace Existing Content'
-					message={`The following content already exists: ${contentList}. Generating new content will replace the current content. Are you sure you want to continue?`}
-					confirmText='Generate All'
+					onConfirm={performSelectiveGeneration}
+					title='Select Content to Regenerate'
+					message={`The following content already exists: ${contentList}. Select which content you would like to regenerate.`}
+					availableItems={getAvailableItems()}
+					confirmText='Generate Selected'
 					cancelText='Cancel'
 				/>
 			</>

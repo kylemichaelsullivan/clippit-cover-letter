@@ -614,7 +614,7 @@ button.text-2xs,
 	font-size: 1.5rem;
 	font-weight: bold;
 	font-variant: small-caps;
-	margin: 0 !important;
+	margin: 0;
 }
 
 .page-header-contact {
