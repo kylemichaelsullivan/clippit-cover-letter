@@ -5,6 +5,7 @@ import { useIsClient } from '@/lib/hooks';
 import { showToast } from '@/lib/toast';
 import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
 import { useSkillsStore } from '@/lib/stores';
+import { PDF_STYLES } from '@/config';
 import type { CandidateDetails } from '@/types';
 
 type DownloadButtonPDFProps = {
@@ -72,77 +73,7 @@ export function DownloadButtonPDF({
 						<head>
 							<title>${filename}</title>
 							<style>
-								@page {
-									size: letter;
-									margin: 1in;
-								}
-								body { 
-									font-family: Arial, sans-serif; 
-									line-height: 1.6; 
-									margin: 0;
-									font-size: 12pt;
-									width: 8.5in;
-									height: 11in;
-									background-color: #f3f4f6;
-									padding: 20px;
-									box-sizing: border-box;
-								}
-								@media print {
-									body { 
-										margin: 0;
-										size: letter;
-										background-color: white;
-										padding: 0;
-									}
-								}
-								.print-content {
-									white-space: pre-wrap;
-								}
-								.print-content h1 {
-									font-size: 1.5rem;
-									font-weight: bold;
-									margin: 0.5rem 0 0;
-									color: #1f2937;
-								}
-								.print-content h2 {
-									font-size: 1.25rem;
-									font-weight: bold;
-									margin: 0.25rem 0 0;
-									color: #1f2937;
-								}
-								.print-content h3 {
-									font-size: 1.125rem;
-									font-weight: bold;
-									margin: 0.25rem 0 0;
-									color: #374151;
-								}
-								.print-content strong {
-									font-weight: bold;
-								}
-								.print-content em {
-									font-style: italic;
-								}
-								.print-content ul {
-									margin: 0;
-									padding-left: 1rem;
-								}
-								.print-content li {
-									margin: 0;
-								}
-								.page-header {
-									text-align: center;
-									margin-bottom: 2rem;
-								}
-								.page-header-name {
-									font-size: 1.5rem;
-									font-weight: bold;
-									margin: 0 0 0.5rem 0;
-								}
-								.page-header-contact {
-									font-size: 0.875rem;
-									color: #64748b;
-									margin: 0;
-								}
+								${PDF_STYLES}
 							</style>
 						</head>
 						<body>
