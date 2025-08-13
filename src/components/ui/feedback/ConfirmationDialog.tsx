@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, useMemo } from 'react';
+import { memo, useState, useMemo, useEffect } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
@@ -36,9 +36,13 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 	availableItems,
 }: ConfirmationDialogProps) {
 	const [isClearing, setIsClearing] = useState(false);
-	const [selectedItems, setSelectedItems] = useState<string[]>(
-		availableItems?.map((item) => item.id) || [],
-	);
+	const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+	useEffect(() => {
+		if (availableItems) {
+			setSelectedItems(availableItems.map((item) => item.id));
+		}
+	}, [availableItems]);
 
 	const handleItemToggle = (itemId: string, checked: boolean) => {
 		if (checked) {

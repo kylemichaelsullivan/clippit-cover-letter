@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 import clsx from 'clsx';
-import ReactMarkdown from 'react-markdown';
+import { formatContentForPDF } from '@/lib/utils';
 
 type StyledMarkdownPreviewProps = {
 	content: string;
@@ -38,7 +38,8 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 			return <div className='text-light-gray'>{generatingText}</div>;
 		}
 
-		return <ReactMarkdown>{content}</ReactMarkdown>;
+		const processedContent = formatContentForPDF(content);
+		return <div dangerouslySetInnerHTML={{ __html: processedContent }} />;
 	};
 
 	return (

@@ -146,6 +146,7 @@ Display and preview components for showing content and results.
 **Components:**
 
 - `MarkdownPreview.tsx` - Component for rendering markdown content
+- `StyledMarkdownPreview.tsx` - Component for rendering markdown content with consistent heading hierarchy and PDF-compatible formatting
 - `PreviewDisplay.tsx` - Component for displaying previews of content
 - `ResultPanel.tsx` - Panel component for displaying results with metadata
 - `SkillsDisplay.tsx` - Component for displaying skills
@@ -153,9 +154,15 @@ Display and preview components for showing content and results.
 **Usage:**
 
 ```typescript
-import { MarkdownPreview, PreviewDisplay, ResultPanel, SkillsDisplay } from '@/components/ui/display';
+import { MarkdownPreview, StyledMarkdownPreview, PreviewDisplay, ResultPanel, SkillsDisplay } from '@/components/ui/display';
 
 <MarkdownPreview content="# Hello World" />
+<StyledMarkdownPreview
+  content={documentContent}
+  title="Resume"
+  isCompact={true}
+  isPrintDocument={true}
+/>
 <SkillsDisplay skills={skills} />
 ```
 
@@ -554,6 +561,46 @@ const AIIntegratedComponent = () => {
 - **Descriptive names**: Use descriptive names that indicate purpose
 - **Suffixes**: Use appropriate suffixes (Button, Form, Panel, etc.)
 - **Consistent naming**: Maintain consistent naming across similar components
+
+## Markdown Parsing System
+
+The application uses a unified markdown parsing system that ensures consistent heading hierarchy between the Results display and PDF generation.
+
+### Key Components
+
+- **`formatContentForPDF`** - Single function used for both Results display and PDF generation
+- **`StyledMarkdownPreview`** - Component that renders markdown content with consistent formatting
+- **Heading Hierarchy** - Maintains proper semantic structure: `#` → `h2`, `##` → `h3`, `###` → `h4`
+
+### Implementation
+
+```typescript
+// Both Results and PDF use the same parsing function
+import { formatContentForPDF } from '@/lib/utils';
+
+// Results display
+const processedContent = formatContentForPDF(content);
+return <div dangerouslySetInnerHTML={{ __html: processedContent }} />;
+
+// PDF generation
+const htmlContent = formatContentForPDF(markdownContent);
+// ... PDF generation logic
+```
+
+### Heading Mapping
+
+| Markdown | HTML Output | Purpose                                                         |
+| -------- | ----------- | --------------------------------------------------------------- |
+| `#`      | `<h2>`      | Main document sections (Summary, Skills, Experience, Education) |
+| `##`     | `<h3>`      | Sub-sections (Job titles, degree types)                         |
+| `###`    | `<h4>`      | Sub-sub-sections (skill categories)                             |
+
+### Benefits
+
+- **Consistency**: Results and PDF output are identical
+- **Simplicity**: Single parsing function eliminates complexity
+- **Maintainability**: Changes to formatting affect both outputs
+- **Semantic Structure**: Proper heading hierarchy for accessibility
 
 ## Component File Structure
 
