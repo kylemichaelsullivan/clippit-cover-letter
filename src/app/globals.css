@@ -631,6 +631,9 @@ button.text-2xs,
 
 .print-document-content h2 {
 	border-bottom: 1px solid #64748b !important;
+	page-break-after: avoid !important;
+	break-after: avoid !important;
+	orphans: 2 !important;
 }
 
 .print-document-content p {
@@ -811,6 +814,9 @@ input[data-lpignore='false'] {
 .prose-compact h2 {
 	border-bottom: 1px solid var(--color-gray);
 	font-size: 1.5rem;
+	page-break-after: avoid;
+	break-after: avoid;
+	orphans: 2;
 }
 
 .prose-compact h3 {
