@@ -72,6 +72,13 @@ describe('formatContentForPDF', () => {
 		expect(formatContentForPDF(input)).toBe(expected);
 	});
 
+	it('should convert _text_ to span with `text-shadow` class', () => {
+		const input = 'This is _highlighted_ text';
+		const expected =
+			'<p>This is <span class="text-shadow">highlighted</span> text</p>';
+		expect(formatContentForPDF(input)).toBe(expected);
+	});
+
 	it('should clean up excessive line breaks', () => {
 		const input = 'Line 1\n\n\nLine 2';
 		const expected = '<p>Line 1</p>\n<p>Line 2</p>';

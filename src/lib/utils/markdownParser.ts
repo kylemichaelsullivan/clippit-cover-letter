@@ -8,6 +8,7 @@ export const formatContentForPDF = (content: string): string => {
 		.replace(/^###\s+(.+)$/gm, '<h4>$1</h4>')
 		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 		.replace(/\*([^*]+)\*/g, '<em>$1</em>')
+		.replace(/_(.*?)_/g, '<span class="text-shadow">$1</span>')
 		.replace(/^-\s+(.+)$/gm, '<li>$1</li>');
 
 	const lines = formatted.split('\n');

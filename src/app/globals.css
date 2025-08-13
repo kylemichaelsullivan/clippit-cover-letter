@@ -594,6 +594,12 @@ button.text-2xs,
 	line-height: var(--tw-leading, var(--text-2xs--line-height));
 }
 
+/* Text Shadow */
+.text-shadow {
+	font-weight: 500;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+}
+
 .hidden-fallback {
 	opacity: 0;
 	pointer-events: none;
