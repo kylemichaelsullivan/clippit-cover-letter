@@ -5,7 +5,11 @@ import type { ReactNode } from 'react';
 
 import { CONSTANTS } from '@/config/constants';
 
-import { ThemeProvider, ConfirmationProvider } from '@/components';
+import {
+	ThemeProvider,
+	ConfirmationProvider,
+	StyleProvider,
+} from '@/components';
 import { ClientLayoutContent } from '@/components/layout';
 
 import '@/lib/fontawesome';
@@ -40,7 +44,9 @@ export default function RootLayout({
 			>
 				<ThemeProvider>
 					<ConfirmationProvider>
-						<ClientLayoutContent>{children}</ClientLayoutContent>
+						<StyleProvider>
+							<ClientLayoutContent>{children}</ClientLayoutContent>
+						</StyleProvider>
 					</ConfirmationProvider>
 				</ThemeProvider>
 			</body>

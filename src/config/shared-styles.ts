@@ -140,6 +140,11 @@ ${className} p {
 ${SHARED_PARAGRAPH}
 }
 
+${className} p + ul,
+${className} p + ol {
+	margin-top: -1rem;
+}
+
 ${className} h3 + ul,
 ${className} h4 + ul,
 ${className} h3 + ol,
@@ -155,6 +160,11 @@ ${SHARED_EMPHASIS.strong}
 
 ${className} em {
 ${SHARED_EMPHASIS.em}
+}
+
+${className} .text-shadow {
+	font-weight: 500;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
 }
 
 ${className} ul,
@@ -286,6 +296,9 @@ ${generateUIPageHeaderStyles()}
 
 .print-document-content h2 {
 	border-bottom: 1px solid #64748b !important;
+	page-break-after: avoid !important;
+	break-after: avoid !important;
+	orphans: 2 !important;
 }
 
 .print-document-content p {
@@ -298,6 +311,11 @@ ${generateUIPageHeaderStyles()}
 
 .print-document-content em {
 	color: #000000 !important;
+}
+
+.print-document-content .text-shadow {
+	font-weight: 500 !important;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.125) !important;
 }
 
 .print-document-content ul,
