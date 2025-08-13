@@ -4,6 +4,7 @@ import { memo, useState, useMemo, useEffect } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
+import { useModalClose } from '@/lib/hooks/useModalClose';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faExclamationTriangle,
@@ -37,6 +38,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 }: ConfirmationDialogProps) {
 	const [isClearing, setIsClearing] = useState(false);
 	const [selectedItems, setSelectedItems] = useState<string[]>([]);
+	const modalRef = useModalClose({ onClose, isOpen });
 
 	useEffect(() => {
 		if (availableItems) {
@@ -92,8 +94,12 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 	if (!isOpen) return null;
 
 	return (
-		<div className='ConfirmationDialog fixed inset-0 z-50 flex items-center justify-center bg-black'>
-			<div className='mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'>
+		<div className='ConfirmationDialog fixed inset-0 z-50 flex items-center justify-center'>
+			<div className='Backdrop absolute inset-0 bg-black/75'></div>
+			<div
+				className='ModalContent z-10 mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'
+				ref={modalRef}
+			>
 				<div className='flex flex-col gap-4'>
 					<div className='flex items-center gap-3'>
 						<FontAwesomeIcon icon={faExclamationTriangle} aria-hidden='true' />

@@ -1,8 +1,9 @@
 'use client';
 
-import { memo, useEffect, type MouseEvent } from 'react';
+import { memo, useEffect } from 'react';
 
 import { Button } from '@/components/ui/buttons';
+import { useModalClose } from '@/lib/hooks/useModalClose';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
@@ -17,29 +18,17 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 	isOpen,
 	onClose,
 }: MustacheReplacementModalProps) {
-	useEffect(() => {
-		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === 'Escape' && isOpen) {
-				onClose();
-			}
-		};
+	const modalRef = useModalClose({ onClose, isOpen });
 
+	useEffect(() => {
 		if (isOpen) {
-			document.addEventListener('keydown', handleEscape);
 			document.body.style.overflow = 'hidden';
 		}
 
 		return () => {
-			document.removeEventListener('keydown', handleEscape);
 			document.body.style.overflow = 'unset';
 		};
-	}, [isOpen, onClose]);
-
-	const handleBackdropClick = (event: MouseEvent) => {
-		if (event.target === event.currentTarget) {
-			onClose();
-		}
-	};
+	}, [isOpen]);
 
 	const handleCopyToClipboard = async (
 		templateName: string,
@@ -59,11 +48,11 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 	if (!isOpen) return null;
 
 	return (
-		<div
-			className='MustacheReplacementModal fixed inset-0 z-50 flex items-center justify-center bg-black px-4 backdrop-blur-sm'
-			onClick={handleBackdropClick}
-		>
-			<div className='MustacheReplacementModalContent w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg'>
+		<div className='MustacheReplacementModal fixed inset-0 z-50 flex items-center justify-center bg-black px-4 backdrop-blur-sm'>
+			<div
+				ref={modalRef}
+				className='MustacheReplacementModalContent w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg'
+			>
 				<div className='MustacheReplacementModalHeader flex items-center justify-between pb-4'>
 					<h3 className='MustacheReplacementModalTitle xs:text-lg text-md font-semibold text-black'>
 						Template Variables

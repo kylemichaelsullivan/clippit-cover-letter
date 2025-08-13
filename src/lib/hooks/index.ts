@@ -1,11 +1,12 @@
 export { useCandidateForm } from './useCandidateForm';
-export { useJobForm } from './useJobForm';
-export { useSkillsForm } from './useSkillsForm';
-export { useTemplatesForm } from './useTemplatesForm';
+export { useConfirmationStack } from './useConfirmationStack';
 export { useCoverLetterGeneration } from './useCoverLetterGeneration';
-export { useResumeGeneration } from './useResumeGeneration';
 export { useDocumentGeneration } from './useDocumentGeneration';
 export { useGenerationConfirmations } from './useGenerationConfirmations';
-export { useConfirmationStack } from './useConfirmationStack';
+export { useJobForm } from './useJobForm';
+export { useModalClose } from './useModalClose';
+export { useResumeGeneration } from './useResumeGeneration';
 export { useSkipLinkFocus } from './useSkipLinkFocus';
 export { useSkipLinkTarget } from './useSkipLinkTarget';
+export { useSkillsForm } from './useSkillsForm';
+export { useTemplatesForm } from './useTemplatesForm';
