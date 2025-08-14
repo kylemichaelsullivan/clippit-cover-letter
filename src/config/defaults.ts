@@ -61,5 +61,6 @@ export const DEFAULTS = {
 			MAX: 20,
 		},
 		TEXTAREA_ROWS: 10,
+		RESUME_FONT_SIZE: 11,
 	},
 } as const;

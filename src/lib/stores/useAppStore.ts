@@ -14,8 +14,8 @@ type AppState = {
 	setSkillsInstructions: (instructions: string) => void;
 	setCoverLetterInstructions: (instructions: string) => void;
 	setResumeInstructions: (instructions: string) => void;
-	previewViewMode: 'markdown' | 'formatted';
-	setPreviewViewMode: (mode: 'markdown' | 'formatted') => void;
+	resumeFontSize: number;
+	setResumeFontSize: (size: number) => void;
 };
 
 export const useAppStore = create<AppState>()(
@@ -41,8 +41,8 @@ export const useAppStore = create<AppState>()(
 				setResumeInstructions: (instructions) =>
 					set({ resumeInstructions: instructions }),
 
-				previewViewMode: 'formatted',
-				setPreviewViewMode: (mode) => set({ previewViewMode: mode }),
+				resumeFontSize: DEFAULTS.FORM_DEFAULTS.RESUME_FONT_SIZE,
+				setResumeFontSize: (size) => set({ resumeFontSize: size }),
 			}),
 			{
 				name: 'app-store',

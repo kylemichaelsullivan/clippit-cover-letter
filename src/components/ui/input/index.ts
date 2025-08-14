@@ -1,4 +1,5 @@
 export { Checkbox } from './Checkbox';
+export { FontSizeInput } from './FontSizeInput';
 export { MarkdownInput } from './MarkdownInput';
 export { NumberInput } from './NumberInput';
 export { RangeInputGroup } from './RangeInputGroup';
