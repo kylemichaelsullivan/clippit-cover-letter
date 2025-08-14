@@ -90,19 +90,65 @@ export const DocumentContent = memo(function DocumentContent({
 					</div>
 				) : null}
 			</div>
-			{isEditable || isGenerating ? (
+			{isGenerating ? (
 				<MarkdownInput
 					id={inputId}
-					value={isGenerating ? getGeneratingText(title) : content}
+					value={getGeneratingText(title)}
 					onChange={onContentChange || (() => {})}
 					placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 						'{title}',
 						title.toLowerCase(),
 					)}
 					componentName='DocumentContentMarkdownInput'
-					readOnly={isGenerating}
-					className={isGenerating ? 'text-light-gray' : ''}
+					readOnly={true}
+					className='text-light-gray'
 				/>
+			) : isEditable ? (
+				<div className='flex flex-col gap-4'>
+					<MarkdownInput
+						id={inputId}
+						value={content}
+						onChange={onContentChange || (() => {})}
+						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+							'{title}',
+							title.toLowerCase(),
+						)}
+						componentName='DocumentContentMarkdownInput'
+						readOnly={false}
+					/>
+					{/* Show processed preview below the editable input */}
+					{isSkills ? (
+						<FormattedPreview
+							content={content}
+							componentName='DocumentContentFormattedPreview'
+							isGenerating={false}
+							isSkills={true}
+							title={title}
+						/>
+					) : isResume || isCoverLetter ? (
+						<div className='bg-gray rounded-lg p-4'>
+							<DocumentPreview
+								content={content}
+								candidateDetails={candidateDetails}
+								fontSize={fontSize || 11}
+								className='rounded-lg'
+							/>
+						</div>
+					) : (
+						<div
+							className={`print-content border-light-gray rounded-lg border bg-white p-4`}
+						>
+							{renderPageHeader()}
+							<StyledMarkdownPreview
+								content={content}
+								componentName='DocumentContentStyledPreview'
+								isGenerating={false}
+								title={title}
+								className='p-0'
+							/>
+						</div>
+					)}
+				</div>
 			) : isSkills ? (
 				<FormattedPreview
 					content={content}
