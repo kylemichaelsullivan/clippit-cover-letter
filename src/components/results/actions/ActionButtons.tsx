@@ -16,6 +16,7 @@ type ActionButtonsProps = {
 	candidateDetails: CandidateDetails;
 	className?: string;
 	disabled?: boolean;
+	fontSize?: number;
 };
 
 export function ActionButtons({
@@ -24,6 +25,7 @@ export function ActionButtons({
 	candidateDetails,
 	className,
 	disabled = false,
+	fontSize,
 }: ActionButtonsProps) {
 	return (
 		<div
@@ -40,6 +42,7 @@ export function ActionButtons({
 				filename={filename}
 				candidateDetails={candidateDetails}
 				disabled={disabled}
+				fontSize={fontSize}
 			/>
 
 			<DownloadButtonMD

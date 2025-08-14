@@ -12,6 +12,7 @@ type StyledMarkdownPreviewProps = {
 	title?: string;
 	isCompact?: boolean;
 	isPrintDocument?: boolean;
+	fontSize?: number;
 };
 
 export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
@@ -22,6 +23,7 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 	title = '',
 	isCompact = false,
 	isPrintDocument = false,
+	fontSize,
 }: StyledMarkdownPreviewProps) {
 	const renderContent = () => {
 		if (isGenerating) {
@@ -54,6 +56,7 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 				!isPrintDocument && 'bg-white',
 				className,
 			)}
+			style={fontSize ? { fontSize: `${fontSize}pt` } : undefined}
 		>
 			{renderContent()}
 		</div>

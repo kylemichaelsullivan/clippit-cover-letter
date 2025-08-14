@@ -14,6 +14,7 @@ type DownloadButtonPDFProps = {
 	filename: string;
 	candidateDetails: CandidateDetails;
 	disabled?: boolean;
+	fontSize?: number;
 };
 
 export function DownloadButtonPDF({
@@ -22,6 +23,7 @@ export function DownloadButtonPDF({
 	filename,
 	candidateDetails,
 	disabled = false,
+	fontSize,
 }: DownloadButtonPDFProps) {
 	const isClient = useIsClient();
 	const { includeSkillGroupNames, generatedSkillsData } = useSkillsStore();
@@ -29,19 +31,15 @@ export function DownloadButtonPDF({
 	const isDisabled = !isClient || disabled || !hasContent;
 
 	const formatContentForPDFWithSkills = (content: string): string => {
-		// Check if this is a resume and contains skills
 		if (
 			title.toLowerCase().includes('resume') &&
 			generatedSkillsData.length > 0
 		) {
-			// Replace skills content based on includeSkillGroupNames setting
 			if (!includeSkillGroupNames) {
-				// Show all skills sorted alphabetically without group names
 				const allSkills = generatedSkillsData
 					.flatMap((group) => group.skills)
 					.sort();
 
-				// Replace grouped skills format with ungrouped format
 				// This handles both the original markdown and the HTML that might be in the content
 				return (
 					content
@@ -69,11 +67,17 @@ export function DownloadButtonPDF({
 					const pageHeader = generatePageHeaderHTML(candidateDetails);
 					const contentWithSkills = formatContentForPDFWithSkills(content);
 					const formattedContent = formatContentForPDF(contentWithSkills);
+					const customFontSize = fontSize || 11;
+					const pdfStyles = PDF_STYLES.replace(
+						'font-size: 11pt;',
+						`font-size: ${customFontSize}pt;`,
+					);
+
 					printWindow.document.documentElement.innerHTML = `
 						<head>
 							<title>${filename}</title>
 							<style>
-								${PDF_STYLES}
+								${pdfStyles}
 							</style>
 						</head>
 						<body>

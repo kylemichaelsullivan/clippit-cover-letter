@@ -38,7 +38,7 @@ export const Button = memo(function Button({
 					'hover:bg-blue text-blue text-2xs bg-white font-mono hover:text-white':
 						color === 'mustache',
 					// Sizes
-					'h-6 p-1 font-mono': size === 'xs',
+					'h-6 p-1 text-xs': size === 'xs',
 					'h-8 px-3 text-sm': size === 'sm',
 					'h-10 px-4 py-2': size === 'md',
 					'h-12 px-6 text-lg': size === 'lg',
