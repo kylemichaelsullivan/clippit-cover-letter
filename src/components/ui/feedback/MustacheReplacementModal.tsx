@@ -48,10 +48,11 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 	if (!isOpen) return null;
 
 	return (
-		<div className='MustacheReplacementModal fixed inset-0 z-50 flex items-center justify-center bg-black px-4 backdrop-blur-sm'>
+		<div className='MustacheReplacementModal fixed inset-0 z-50 flex items-center justify-center'>
+			<div className='Backdrop absolute inset-0 bg-black/75'></div>
 			<div
 				ref={modalRef}
-				className='MustacheReplacementModalContent w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg'
+				className='MustacheReplacementModalContent z-10 mx-4 w-full max-w-2xl rounded-lg bg-white p-6 shadow-lg'
 			>
 				<div className='MustacheReplacementModalHeader flex items-center justify-between pb-4'>
 					<h3 className='MustacheReplacementModalTitle xs:text-lg text-md font-semibold text-black'>

@@ -81,6 +81,34 @@ const formatSkillsUngrouped = (skills?: Skills): string => {
 	return sortedSkills.join(', ');
 };
 
+const formatJobOffice = (jobDetails: Job): string => {
+	return jobDetails.companyAddress || '';
+};
+
+const formatJobAddress = (jobDetails: Job): string => {
+	const parts = [];
+
+	if (jobDetails.hiringManager) {
+		parts.push(jobDetails.hiringManager);
+	}
+	if (jobDetails.companyName) {
+		parts.push(jobDetails.companyName);
+	}
+	if (jobDetails.companyAddress) {
+		parts.push(jobDetails.companyAddress);
+	}
+
+	return parts.map((part) => '<!--ADDRESS_BLOCK-->' + part).join('\n');
+};
+
+const formatMySignature = (candidateDetails: CandidateDetails): string => {
+	if (!candidateDetails.fullName) {
+		return '';
+	}
+
+	return '<!--SIGNATURE-->' + candidateDetails.fullName;
+};
+
 const createMustacheValues = (
 	candidateDetails: CandidateDetails,
 	jobDetails: Job,
@@ -128,10 +156,16 @@ const createMustacheValues = (
 				values[replacement.name] = jobDetails.hiringManager || '';
 				break;
 			case 'Job Address':
-				values[replacement.name] = jobDetails.companyAddress || '';
+				values[replacement.name] = formatJobAddress(jobDetails);
+				break;
+			case 'Job Office':
+				values[replacement.name] = formatJobOffice(jobDetails);
 				break;
 			case 'Job Description':
 				values[replacement.name] = jobDetails.jobDescription || '';
+				break;
+			case 'My Signature':
+				values[replacement.name] = formatMySignature(candidateDetails);
 				break;
 			default:
 				console.warn(`Unhandled mustache replacement: ${name}`);

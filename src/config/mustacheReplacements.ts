@@ -18,10 +18,18 @@ export const MUSTACHE_REPLACEMENTS: MustacheReplacement[] = [
 	{ name: 'My Portfolio', description: 'Candidate portfolio URL' },
 	{ name: 'My Skills', description: 'All skills grouped by category' },
 	{ name: 'Ungrouped Skills', description: 'All skills as a flat list' },
+	{
+		name: 'My Signature',
+		description: 'Candidate name with line break before it',
+	},
 	{ name: 'Job Company', description: 'Company name' },
 	{ name: 'Job Title', description: 'Job title' },
 	{ name: 'Job Manager', description: 'Hiring manager name' },
-	{ name: 'Job Address', description: 'Company address' },
+	{ name: 'Job Office', description: 'Company address (physical or online)' },
+	{
+		name: 'Job Address',
+		description: 'Formatted address block with line breaks',
+	},
 	{ name: 'Job Description', description: 'Job description text' },
 ];
 

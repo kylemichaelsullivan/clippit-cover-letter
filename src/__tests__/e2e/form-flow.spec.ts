@@ -10,8 +10,11 @@ test.describe('Form Flow', () => {
 		).toBeVisible();
 
 		// Fill candidate information
-		await page.fill('[data-testid="name-input"]', 'John Doe');
-		await page.fill('[data-testid="email-input"]', 'john@example.com');
+		await page.fill('[data-testid="name-input"]', 'Dwight Schrute');
+		await page.fill(
+			'[data-testid="email-input"]',
+			'dwight.schrute@dundermifflin.com',
+		);
 		await page.fill('[data-testid="phone-input"]', '555-123-4567');
 
 		// Navigate to next phase

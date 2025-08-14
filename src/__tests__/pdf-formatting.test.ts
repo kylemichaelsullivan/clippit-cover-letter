@@ -80,8 +80,64 @@ describe('formatContentForPDF', () => {
 	});
 
 	it('should clean up excessive line breaks', () => {
-		const input = 'Line 1\n\n\nLine 2';
-		const expected = '<p>Line 1</p>\n<p>Line 2</p>';
-		expect(formatContentForPDF(input)).toBe(expected);
+		const input = 'Line 1\n\n\n\nLine 2';
+		const result = formatContentForPDF(input);
+		expect(result).toBe('<p>Line 1</p>\n<p>Line 2</p>');
+	});
+
+	it('should preserve line breaks for address lines and similar content', () => {
+		const input = `March 15, 2020
+
+Michael Scott
+Dunder Mifflin
+Scranton, PA
+
+Re: Assistant to the Regional Manager
+
+Dear Michael Scott:
+
+As a full-stack developer with a passion for crafting intuitive user experiences, I bring a unique blend of technical skill, creative insight and a strong foundation in mentorship.
+
+Sincerely,
+Dwight Schrute`;
+
+		const result = formatContentForPDF(input);
+
+		// Check that each line is a separate paragraph
+		expect(result).toContain('<p>March 15, 2020</p>');
+		expect(result).toContain('<p>Michael Scott</p>');
+		expect(result).toContain('<p>Dunder Mifflin</p>');
+		expect(result).toContain('<p>Scranton, PA</p>');
+		expect(result).toContain('<p>Re: Assistant to the Regional Manager</p>');
+		expect(result).toContain('<p>Dear Michael Scott:</p>');
+
+		// Check that body text is combined into a paragraph
+		expect(result).toContain(
+			'<p>As a full-stack developer with a passion for crafting intuitive user experiences, I bring a unique blend of technical skill, creative insight and a strong foundation in mentorship.</p>',
+		);
+
+		// Check that closing and signature are separate paragraphs
+		expect(result).toContain('<p>Sincerely,</p>');
+		expect(result).toContain('<p>Dwight Schrute</p>');
+	});
+
+	it('should handle signature with line break correctly', () => {
+		const input = `Sincerely,\n<!--SIGNATURE-->Dwight Schrute`;
+
+		const result = formatContentForPDF(input);
+
+		// Check that signature has <br /> before the name
+		expect(result).toContain('<p>Sincerely,<br />Dwight Schrute</p>');
+	});
+
+	it('should handle address block with line breaks correctly', () => {
+		const input = `<!--ADDRESS_BLOCK-->Michael Scott\n<!--ADDRESS_BLOCK-->Dunder Mifflin\n<!--ADDRESS_BLOCK-->Scranton, PA`;
+
+		const result = formatContentForPDF(input);
+
+		// Check that address block is grouped with <br /> tags
+		expect(result).toContain(
+			'<p>Michael Scott<br />Dunder Mifflin<br />Scranton, PA</p>',
+		);
 	});
 });

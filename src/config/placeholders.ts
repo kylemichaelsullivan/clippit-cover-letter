@@ -24,9 +24,9 @@ export const PLACEHOLDERS = {
 
 	TEMPLATES: {
 		COVER_LETTER:
-			'Paste your cover letter template here...\n\nUse {{Date}}, {{My Name}}, {{My Email}}, {{My Phone}}, {{My Location}}, {{My LinkedIn}}, {{My Portfolio}}, {{My Skills}} (Grouped), {{Ungrouped Skills}}, {{Job Company}}, {{Job Title}}, {{Job Manager}}, {{Job Address}}, {{Job Description}} for dynamic content.\n\nUse <%=Prompt Instructions%> for inline AI prompt instructions.',
+			'Paste your cover letter template here...\n\nUse {{Date}}, {{My Name}}, {{My Email}}, {{My Phone}}, {{My Location}}, {{My LinkedIn}}, {{My Portfolio}}, {{My Skills}} (Grouped), {{Ungrouped Skills}}, {{Job Company}}, {{Job Title}}, {{Job Manager}}, {{Job Office}}, {{Job Address}}, {{Job Description}} for dynamic content.\n\nUse <%=Prompt Instructions%> for inline AI prompt instructions.',
 		RESUME:
-			'Paste your resume template here...\n\nUse {{Date}}, {{My Name}}, {{My Email}}, {{My Phone}}, {{My Location}}, {{My LinkedIn}}, {{My Portfolio}}, {{My Skills}} (Grouped), {{Ungrouped Skills}}, {{Job Company}}, {{Job Title}}, {{Job Manager}}, {{Job Address}}, {{Job Description}} for dynamic content.\n\nUse <%=Prompt Instructions%> for inline AI prompt instructions.',
+			'Paste your resume template here...\n\nUse {{Date}}, {{My Name}}, {{My Email}}, {{My Phone}}, {{My Location}}, {{My LinkedIn}}, {{My Portfolio}}, {{My Skills}} (Grouped), {{Ungrouped Skills}}, {{Job Company}}, {{Job Title}}, {{Job Manager}}, {{Job Office}}, {{Job Address}}, {{Job Description}} for dynamic content.\n\nUse <%=Prompt Instructions%> for inline AI prompt instructions.',
 	},
 
 	GENERAL: {

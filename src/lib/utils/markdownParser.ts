@@ -15,25 +15,17 @@ export const formatContentForPDF = (content: string): string => {
 	const result = [];
 	let inList = false;
 	let listItems = [];
-	let currentParagraph = [];
+	let i = 0;
 
-	for (const line of lines) {
+	while (i < lines.length) {
+		const line = lines[i];
+
 		if (line.trim().startsWith('<li>')) {
-			if (currentParagraph.length > 0) {
-				result.push('<p>' + currentParagraph.join(' ') + '</p>');
-				currentParagraph = [];
-			}
-
 			if (!inList) {
 				inList = true;
 			}
 			listItems.push(line);
 		} else if (line.trim().startsWith('<h')) {
-			if (currentParagraph.length > 0) {
-				result.push('<p>' + currentParagraph.join(' ') + '</p>');
-				currentParagraph = [];
-			}
-
 			if (inList) {
 				result.push('<ul>');
 				result.push(...listItems);
@@ -43,11 +35,6 @@ export const formatContentForPDF = (content: string): string => {
 			}
 			result.push(line);
 		} else if (line.trim() === '') {
-			if (currentParagraph.length > 0) {
-				result.push('<p>' + currentParagraph.join(' ') + '</p>');
-				currentParagraph = [];
-			}
-
 			if (inList) {
 				result.push('<ul>');
 				result.push(...listItems);
@@ -63,12 +50,70 @@ export const formatContentForPDF = (content: string): string => {
 				listItems = [];
 				inList = false;
 			}
-			currentParagraph.push(line.trim());
-		}
-	}
 
-	if (currentParagraph.length > 0) {
-		result.push('<p>' + currentParagraph.join(' ') + '</p>');
+			// Check if this line contains a signature marker
+			if (line.includes('<!--SIGNATURE-->')) {
+				const signatureContent = line.replace('<!--SIGNATURE-->', '').trim();
+				if (signatureContent) {
+					// Look for the previous non-empty line to combine with
+					let prevLine = '';
+					for (let j = i - 1; j >= 0; j--) {
+						if (
+							lines[j].trim() !== '' &&
+							!lines[j].trim().startsWith('<h') &&
+							!lines[j].trim().startsWith('<li>') &&
+							!lines[j].includes('<!--SIGNATURE-->') &&
+							!lines[j].includes('<!--ADDRESS_BLOCK-->')
+						) {
+							prevLine = lines[j].trim();
+							break;
+						}
+					}
+
+					if (prevLine) {
+						// Remove the previous line from result and combine
+						result.pop(); // Remove the previous paragraph
+						result.push(
+							'<p>' + prevLine + '<br />' + signatureContent + '</p>',
+						);
+					} else {
+						result.push('<p><br />' + signatureContent + '</p>');
+					}
+				}
+			} else if (line.includes('<!--ADDRESS_BLOCK-->')) {
+				// Handle address block - collect consecutive address lines
+				const addressContent = line.replace('<!--ADDRESS_BLOCK-->', '').trim();
+				if (addressContent) {
+					const addressLines = [addressContent];
+
+					// Look ahead for more address block lines
+					let nextIndex = i + 1;
+					while (
+						nextIndex < lines.length &&
+						lines[nextIndex].includes('<!--ADDRESS_BLOCK-->')
+					) {
+						const nextLine = lines[nextIndex]
+							.replace('<!--ADDRESS_BLOCK-->', '')
+							.trim();
+						if (nextLine) {
+							addressLines.push(nextLine);
+						}
+						nextIndex++;
+					}
+
+					// Skip the lines we've already processed
+					i = nextIndex - 1;
+
+					// Create the address paragraph
+					result.push('<p>' + addressLines.join('<br />') + '</p>');
+				}
+			} else {
+				// Regular line, each non-empty line becomes its own paragraph
+				result.push('<p>' + line.trim() + '</p>');
+			}
+		}
+
+		i++;
 	}
 
 	if (inList && listItems.length > 0) {
