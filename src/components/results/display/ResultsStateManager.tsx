@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { DocumentContent } from '@/components/results/panels';
 import { ActionButtons, CopyButton } from '@/components/results/actions';
 import { EmptyState } from '@/components/ui/feedback';
+import { FontSizeInput } from '@/components/ui/input';
 import {
 	useAppStore,
 	useTemplatesStore,
@@ -19,7 +20,12 @@ type ResultsStateManagerProps = {
 export const ResultsStateManager = memo(function ResultsStateManager({
 	className,
 }: ResultsStateManagerProps) {
-	const { includeCoverLetter, includeResume } = useAppStore();
+	const {
+		includeCoverLetter,
+		includeResume,
+		resumeFontSize,
+		setResumeFontSize,
+	} = useAppStore();
 	const { generatedCoverLetter, generatedResume } = useTemplatesStore();
 	const { generatedSkills, includeSkills } = useSkillsStore();
 	const { candidateDetails } = useCandidateStore();
@@ -77,11 +83,19 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						title='Resume'
 						content={generatedResume}
 						isEditable={false}
+						fontSize={resumeFontSize}
+						fontSizeInput={
+							<FontSizeInput
+								value={resumeFontSize}
+								onChange={setResumeFontSize}
+							/>
+						}
 					/>
 					<ActionButtons
 						text={generatedResume}
 						filename='resume'
 						candidateDetails={candidateDetails}
+						fontSize={resumeFontSize}
 					/>
 				</div>
 			</div>

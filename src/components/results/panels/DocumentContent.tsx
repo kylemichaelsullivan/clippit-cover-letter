@@ -1,12 +1,13 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { MarkdownInput, Checkbox } from '@/components/ui/input';
 import {
 	StyledMarkdownPreview,
 	FormattedPreview,
+	DocumentPreview,
 } from '@/components/ui/display';
 import { PLACEHOLDERS } from '@/config';
 import { useSkillsStore, useCandidateStore } from '@/lib/stores';
@@ -18,6 +19,8 @@ type DocumentContentProps = {
 	isEditable?: boolean;
 	isGenerating?: boolean;
 	className?: string;
+	fontSize?: number;
+	fontSizeInput?: ReactNode;
 };
 
 export const DocumentContent = memo(function DocumentContent({
@@ -27,6 +30,8 @@ export const DocumentContent = memo(function DocumentContent({
 	isEditable = false,
 	isGenerating = false,
 	className,
+	fontSize,
+	fontSizeInput,
 }: DocumentContentProps) {
 	const { includeSkillGroupNames, setIncludeSkillGroupNames } =
 		useSkillsStore();
@@ -50,7 +55,7 @@ export const DocumentContent = memo(function DocumentContent({
 			.join(' | ');
 
 		return (
-			<div className='page-header pb-4 text-center'>
+			<div className='page-header text-center'>
 				<h1 className='page-header-name text-2xl font-bold'>{fullName}</h1>
 				{contactInfo && (
 					<div className='page-header-contact text-sm font-light'>
@@ -62,23 +67,29 @@ export const DocumentContent = memo(function DocumentContent({
 	};
 
 	return (
-		<div className={clsx('DocumentContent', className)}>
-			<label
-				htmlFor={inputId}
-				className='DocumentContentTitle flex items-center justify-between pb-4 text-lg font-semibold text-black'
-			>
-				<span>{title}</span>
-			</label>
-			{isSkills && (
-				<div className='pb-4'>
-					<Checkbox
-						checked={includeSkillGroupNames}
-						onChange={setIncludeSkillGroupNames}
-						label='Include Group Names'
-						className='text-sm'
-					/>
-				</div>
-			)}
+		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
+			<div className='flex flex-col justify-between sm:flex-row'>
+				<label
+					htmlFor={inputId}
+					className='DocumentContentTitle flex items-center justify-between text-lg font-semibold text-black'
+				>
+					<span>{title}</span>
+				</label>
+				{isSkills ? (
+					<div>
+						<Checkbox
+							checked={includeSkillGroupNames}
+							onChange={setIncludeSkillGroupNames}
+							label='Include Group Names'
+							className='text-sm'
+						/>
+					</div>
+				) : fontSizeInput ? (
+					<div className='flex items-center justify-between'>
+						{fontSizeInput}
+					</div>
+				) : null}
+			</div>
 			{isEditable || isGenerating ? (
 				<MarkdownInput
 					id={inputId}
@@ -100,9 +111,18 @@ export const DocumentContent = memo(function DocumentContent({
 					isSkills={true}
 					title={title}
 				/>
+			) : isResume || isCoverLetter ? (
+				<div className='bg-gray rounded-lg p-4'>
+					<DocumentPreview
+						content={content}
+						candidateDetails={candidateDetails}
+						fontSize={fontSize || 11}
+						className='rounded-lg'
+					/>
+				</div>
 			) : (
 				<div
-					className={`print-content rounded-lg p-4 ${isCoverLetter || isResume ? 'print-document' : 'border-light-gray border bg-white'}`}
+					className={`print-content border-light-gray rounded-lg border bg-white p-4`}
 				>
 					{renderPageHeader()}
 					<StyledMarkdownPreview
@@ -111,8 +131,6 @@ export const DocumentContent = memo(function DocumentContent({
 						isGenerating={isGenerating}
 						title={title}
 						className='p-0'
-						isCompact={isCoverLetter || isResume}
-						isPrintDocument={isCoverLetter || isResume}
 					/>
 				</div>
 			)}
