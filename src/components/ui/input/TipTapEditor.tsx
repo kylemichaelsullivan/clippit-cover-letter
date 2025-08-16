@@ -1,0 +1,156 @@
+'use client';
+
+import dynamic from 'next/dynamic';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
+import { EditorContent, useEditor } from '@tiptap/react';
+import Placeholder from '@tiptap/extension-placeholder';
+import StarterKit from '@tiptap/starter-kit';
+import TextAlign from '@tiptap/extension-text-align';
+import { TextShadow } from '../../../lib/utils/textShadowExtension';
+import Typography from '@tiptap/extension-typography';
+
+import { TipTapToolbar } from './TipTapToolbar';
+
+const TipTapEditorContent = dynamic(() => Promise.resolve(EditorContent), {
+	ssr: false,
+});
+
+const TipTapToolbarComponent = dynamic(() => Promise.resolve(TipTapToolbar), {
+	ssr: false,
+});
+
+type TipTapEditorProps = {
+	value: string;
+	onChange: (value: string) => void;
+	placeholder?: string;
+	componentName?: string;
+	className?: string;
+	readOnly?: boolean;
+	id?: string;
+	'aria-label'?: string;
+};
+
+export function TipTapEditor({
+	value,
+	onChange,
+	placeholder = 'Start typing...',
+	componentName,
+	className = '',
+	readOnly = false,
+	id,
+	'aria-label': ariaLabel,
+}: TipTapEditorProps) {
+	const [isMounted, setIsMounted] = useState(false);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const isUpdatingRef = useRef(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	const throttledOnChange = useCallback(
+		(newValue: string) => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+			timeoutRef.current = setTimeout(() => {
+				isUpdatingRef.current = false;
+				onChange(newValue);
+			}, 150);
+		},
+		[onChange],
+	);
+
+	const editor = useEditor({
+		extensions: [
+			StarterKit,
+			Placeholder.configure({
+				placeholder: placeholder || 'Start typing...',
+			}),
+			TextAlign.configure({
+				types: ['heading', 'paragraph'],
+			}),
+			TextShadow,
+			Typography,
+		],
+		content: value,
+		editable: !readOnly,
+		immediatelyRender: false,
+		onUpdate: ({ editor }) => {
+			if (isUpdatingRef.current) return;
+			const html = editor.getHTML();
+			throttledOnChange(html);
+		},
+		editorProps: {
+			attributes: {
+				...(id && { id }),
+				...(ariaLabel && { 'aria-label': ariaLabel }),
+			},
+		},
+	});
+
+	useEffect(() => {
+		if (editor && !isUpdatingRef.current) {
+			const currentHtml = editor.getHTML();
+			if (currentHtml !== value && value !== '<p></p>' && value !== '') {
+				isUpdatingRef.current = true;
+				editor.commands.setContent(value);
+				// Reset the flag after a short delay to allow the update to complete
+				setTimeout(() => {
+					isUpdatingRef.current = false;
+				}, 50);
+			}
+		}
+	}, [editor, value]);
+
+	useEffect(() => {
+		if (editor) {
+			editor.setEditable(!readOnly);
+		}
+	}, [editor, readOnly]);
+
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+		};
+	}, []);
+
+	if (!isMounted || !editor) {
+		return (
+			<div
+				className={clsx(
+					componentName || 'TipTapEditor',
+					'border-light-gray rounded-lg border bg-white',
+					className,
+				)}
+			>
+				<div className='w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base'>
+					{value || placeholder}
+				</div>
+			</div>
+		);
+	}
+
+	return (
+		<div
+			className={clsx(
+				componentName || 'TipTapEditor',
+				'border-light-gray rounded-lg border bg-white',
+				className,
+			)}
+		>
+			{!readOnly && <TipTapToolbarComponent editor={editor} />}
+			<TipTapEditorContent
+				editor={editor}
+				className={clsx(
+					'TipTapEditorContent',
+					'w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base',
+					'focus:outline-none',
+				)}
+			/>
+		</div>
+	);
+}

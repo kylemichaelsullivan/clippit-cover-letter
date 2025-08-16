@@ -4,3 +4,6 @@ export { MarkdownInput } from './MarkdownInput';
 export { NumberInput } from './NumberInput';
 export { RangeInputGroup } from './RangeInputGroup';
 export { SkillsRangeSlider } from './SkillsRangeSlider';
+export { TipTapButton } from './TipTapButton';
+export { TipTapEditor } from './TipTapEditor';
+export { TipTapToolbar } from './TipTapToolbar';
