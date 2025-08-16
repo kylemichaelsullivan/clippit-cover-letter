@@ -3,16 +3,15 @@
 import { useState } from 'react';
 import type { KeyboardEvent, MouseEvent, ClipboardEvent } from 'react';
 
-import { Field } from '@tanstack/react-form';
-import { FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
-import { SkipLink } from '@/components/ui/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faThumbtack } from '@fortawesome/free-solid-svg-icons';
-import { PLACEHOLDERS } from '@/config';
-
 import { Confirmation, Error } from '@/components/ui/feedback';
+import { faTimes, faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { Field } from '@tanstack/react-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormFieldContainer } from '@/components/forms/core';
+import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
+import { SkipLink } from '@/components/ui/navigation';
 import { sortSkillsInGroup } from '@/lib/utils';
 
 import type { SkillGroup } from '@/types';

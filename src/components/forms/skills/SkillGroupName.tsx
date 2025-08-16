@@ -2,10 +2,10 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { FormFieldContainer } from '../core';
 import { Button } from '@/components/ui/buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormFieldContainer } from '@/components/forms/core';
 import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
 import type { SkillGroup } from '@/types';

@@ -3,17 +3,17 @@
 import { memo, useState } from 'react';
 import { Field } from '@tanstack/react-form';
 
-import { Form, FormSection } from '../core';
+import { Button } from '@/components/ui/buttons';
+import { CONSTANTS, PLACEHOLDERS } from '@/config';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, FormSection } from '@/components/forms/core';
+import { MustacheReplacementModal } from '@/components/ui/feedback';
 import { TipTapEditor } from '@/components/ui/input';
 import { TabTitle } from '@/components/ui';
-import { Button } from '@/components/ui/buttons';
-import { MustacheReplacementModal } from '@/components/ui/feedback';
-import { CONSTANTS, PLACEHOLDERS } from '@/config';
-import { useTemplatesForm } from '@/lib/hooks';
-import { usePhaseStore } from '@/lib/stores';
 import { templatesSchema, validateSchema } from '@/lib/schemas';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { usePhaseStore } from '@/lib/stores';
+import { useTemplatesForm } from '@/lib/hooks';
 
 type TemplatesFormProps = {
 	onSubmit: (
