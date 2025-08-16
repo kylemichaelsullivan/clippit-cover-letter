@@ -42,7 +42,10 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 
 	useEffect(() => {
 		if (availableItems) {
-			setSelectedItems(availableItems.map((item) => item.id));
+			const initiallySelected = availableItems
+				.filter((item) => item.checked)
+				.map((item) => item.id);
+			setSelectedItems(initiallySelected);
 		}
 	}, [availableItems]);
 

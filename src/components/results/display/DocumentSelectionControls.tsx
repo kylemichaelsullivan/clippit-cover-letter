@@ -4,11 +4,11 @@ import { memo, useMemo } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
+import { DocumentSelectionControl } from './DocumentSelectionControl';
 import { SkillsRangeSlider } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config/placeholders';
 import { useDocumentGeneration } from '@/lib/hooks/useDocumentGeneration';
 import { useAppStore, useSkillsStore, useTemplatesStore } from '@/lib/stores';
-import { DocumentOption } from './DocumentOption';
 
 type DocumentSelectionControlsProps = {
 	className?: string;
@@ -111,24 +111,21 @@ export const DocumentSelectionControls = memo(
 		return (
 			<>
 				<div
-					className={`DocumentSelectionControls flex flex-col gap-14 rounded-lg border border-black bg-white p-4 ${className || ''}`}
+					className={`DocumentSelectionControls flex flex-col gap-4 rounded-lg border border-black bg-white p-4 ${className || ''}`}
 				>
-					{/* Skills Summary Section */}
-					<div className='DocumentSelectionControl flex flex-col gap-1'>
-						<DocumentOption
+					<div className='flex flex-col gap-14'>
+						<DocumentSelectionControl
 							checked={includeSkills}
 							onChange={setIncludeSkills}
 							label='Skills Summary'
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.SKILLS_SUMMARY}
 							value={skillsInstructions}
 							onValueChange={setSkillsInstructions}
-						/>
-						<SkillsControls />
-					</div>
+						>
+							<SkillsControls />
+						</DocumentSelectionControl>
 
-					{/* Cover Letter Section */}
-					<div className='DocumentSelectionControl'>
-						<DocumentOption
+						<DocumentSelectionControl
 							checked={includeCoverLetter}
 							onChange={setIncludeCoverLetter}
 							label='Cover Letter'
@@ -136,11 +133,8 @@ export const DocumentSelectionControls = memo(
 							value={coverLetterInstructions}
 							onValueChange={setCoverLetterInstructions}
 						/>
-					</div>
 
-					{/* Resume Section */}
-					<div className='DocumentSelectionControl'>
-						<DocumentOption
+						<DocumentSelectionControl
 							checked={includeResume}
 							onChange={setIncludeResume}
 							label='Resume'
@@ -150,7 +144,6 @@ export const DocumentSelectionControls = memo(
 						/>
 					</div>
 
-					{/* Generate All Section */}
 					{hasSelectedDocuments && (
 						<div className='DocumentSelectionControl flex justify-center'>
 							<Button

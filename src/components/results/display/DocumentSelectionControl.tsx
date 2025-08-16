@@ -1,31 +1,41 @@
+'use client';
+
+import { memo, type ReactNode } from 'react';
+
+import { Checkbox } from '@/components/ui/input';
+
 type DocumentSelectionControlProps = {
 	checked: boolean;
-	label: string;
 	onChange: (checked: boolean) => void;
+	label: string;
+	placeholder: string;
+	value: string;
+	onValueChange: (value: string) => void;
+	children?: ReactNode;
 };
 
-export function DocumentSelectionControl({
+export const DocumentSelectionControl = memo(function DocumentSelectionControl({
 	checked,
-	label,
 	onChange,
+	label,
+	placeholder,
+	value,
+	onValueChange,
+	children,
 }: DocumentSelectionControlProps) {
-	const id = `include-${label.toLowerCase().replace(/\s+/g, '-')}`;
-
 	return (
-		<div className='DocumentSelectionControl flex items-center gap-2'>
-			<input
-				type='checkbox'
-				checked={checked}
-				onChange={(e) => onChange(e.target.checked)}
-				id={id}
-			/>
-			<label
-				htmlFor={id}
-				className='text-sm font-medium'
-				title={`Toggle ${label}`}
-			>
-				{label}
-			</label>
+		<div className='DocumentSelectionControl flex flex-col gap-2'>
+			<Checkbox checked={checked} onChange={onChange} label={label} />
+			<div className={checked ? '' : 'hidden'}>
+				<textarea
+					className='min-h-20 w-full'
+					placeholder={placeholder}
+					value={value}
+					aria-label={`Instructions for ${label}`}
+					onChange={(e) => onValueChange(e.target.value)}
+				/>
+				{children}
+			</div>
 		</div>
 	);
-}
+});
