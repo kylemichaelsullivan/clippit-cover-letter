@@ -8,6 +8,7 @@ import {
 	faHeading,
 	faListOl,
 	faListUl,
+	faMinus,
 	faQuoteLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
@@ -36,14 +37,16 @@ export function TipTapToolbar({ editor, className }: TipTapToolbarProps) {
 
 	const toggleBold = () => editor.chain().focus().toggleBold().run();
 	const toggleItalic = () => editor.chain().focus().toggleItalic().run();
+	const toggleTextShadow = () =>
+		editor.chain().focus().toggleMark('textShadow').run();
 	const toggleBulletList = () =>
 		editor.chain().focus().toggleBulletList().run();
 	const toggleOrderedList = () =>
 		editor.chain().focus().toggleOrderedList().run();
 	const toggleBlockquote = () =>
 		editor.chain().focus().toggleBlockquote().run();
-	const toggleTextShadow = () =>
-		editor.chain().focus().toggleMark('textShadow').run();
+	const insertPageBreak = () =>
+		editor.chain().focus().insertContent({ type: 'pageBreak' }).run();
 
 	const setHeading = (level: 1 | 2 | 3) =>
 		editor.chain().focus().toggleHeading({ level }).run();
@@ -103,12 +106,18 @@ export function TipTapToolbar({ editor, className }: TipTapToolbarProps) {
 				label='Numbered List'
 			/>
 
-			<TipTapDivider />
-
 			<TipTapButton
 				onClick={toggleBlockquote}
 				icon={faQuoteLeft}
 				label='Quote'
+			/>
+
+			<TipTapDivider />
+
+			<TipTapButton
+				onClick={insertPageBreak}
+				icon={faMinus}
+				label='Page Break'
 			/>
 		</div>
 	);

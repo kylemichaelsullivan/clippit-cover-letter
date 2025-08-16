@@ -1,12 +1,7 @@
-import type { CandidateDetails } from '@/types';
-
 /**
  * Converts markdown to HTML for PDF generation
  */
-export const formatContentForPDF = (
-	content: string,
-	_candidateDetails?: CandidateDetails,
-): string => {
+export const formatContentForPDF = (content: string): string => {
 	if (
 		content.includes('<p>') ||
 		content.includes('<h') ||
@@ -57,7 +52,6 @@ export const formatContentForPDF = (
 				listItems = [];
 				inList = false;
 			}
-			result.push('<p></p>');
 		} else {
 			if (inList) {
 				result.push('<ul>');

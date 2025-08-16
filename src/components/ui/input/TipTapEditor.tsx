@@ -6,7 +6,8 @@ import clsx from 'clsx';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
-import { TextShadow } from '../../../lib/utils/textShadowExtension';
+import { PageBreak } from '@/lib/utils/pageBreakExtension';
+import { TextShadow } from '@/lib/utils/textShadowExtension';
 import Typography from '@tiptap/extension-typography';
 
 import { TipTapToolbar } from './TipTapToolbar';
@@ -68,6 +69,7 @@ export function TipTapEditor({
 				types: ['heading', 'paragraph'],
 			}),
 			TextShadow,
+			PageBreak,
 			Typography,
 		],
 		content: value,

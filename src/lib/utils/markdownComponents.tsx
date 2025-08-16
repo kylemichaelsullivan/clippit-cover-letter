@@ -1,10 +1,6 @@
 import ReactMarkdown from 'react-markdown';
-import type { CandidateDetails } from '@/types';
 
-export const convertHtmlToMarkdown = (
-	htmlContent: string,
-	_candidateDetails?: CandidateDetails,
-): string => {
+export const convertHtmlToMarkdown = (htmlContent: string): string => {
 	const content = htmlContent;
 
 	return content

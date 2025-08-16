@@ -15,7 +15,12 @@ export function extractTipTapContent(html: string): string {
 			content = content
 				.replace(/<br class="ProseMirror-trailingBreak">/g, '')
 				.replace(/<p><br class="ProseMirror-trailingBreak"><\/p>/g, '')
-				.replace(/<p><\/p>/g, '');
+				.replace(/<p><\/p>/g, '')
+				.replace(/<p>\s*<ul[^>]*>.*?<\/ul>\s*<\/p>/gs, (match) => {
+					// Extract the ul content and return it without the wrapping p tag
+					const ulMatch = match.match(/<ul[^>]*>(.*?)<\/ul>/s);
+					return ulMatch ? `<ul>${ulMatch[1]}</ul>` : match;
+				});
 
 			return content;
 		}
