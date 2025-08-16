@@ -202,8 +202,6 @@ ${SHARED_LINKS_HOVER}
 ${className} hr {
 ${SHARED_HR}
 }
-
-
 `;
 }
 
@@ -347,7 +345,5 @@ ${generateUIPageHeaderStyles()}
 .print-document .page-header-contact {
 	color: #6b7280 !important;
 }
-
-
 `;
 }
