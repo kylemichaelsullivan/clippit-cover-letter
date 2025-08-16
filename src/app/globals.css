@@ -799,10 +799,11 @@ input[data-lpignore='false'] {
 	text-decoration: underline;
 }
 
-.tiptap.ProseMirror .is-editor-empty:first-child::before {
+.TipTapEditorContent[data-placeholder]
+	.tiptap.ProseMirror
+	p:first-child:only-child:empty::before {
 	content: attr(data-placeholder);
-	float: left;
+	display: block;
 	color: var(--color-gray);
-	height: 0;
 	pointer-events: none;
 }

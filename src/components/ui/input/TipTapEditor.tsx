@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { EditorContent, useEditor } from '@tiptap/react';
-import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import { TextShadow } from '../../../lib/utils/textShadowExtension';
@@ -65,9 +64,6 @@ export function TipTapEditor({
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
-			Placeholder.configure({
-				placeholder: placeholder || 'Start typing...',
-			}),
 			TextAlign.configure({
 				types: ['heading', 'paragraph'],
 			}),
@@ -150,6 +146,7 @@ export function TipTapEditor({
 					'w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base',
 					'focus:outline-none',
 				)}
+				data-placeholder={placeholder}
 			/>
 		</div>
 	);
