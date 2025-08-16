@@ -6,6 +6,7 @@ import { SkillGroupName, SkillTags } from './';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { SkipLinkTarget } from '@/components/ui/navigation';
 
+import type { CSSProperties } from 'react';
 import type { SkillGroup } from '@/types';
 
 type SkillsContentProps = {
@@ -45,7 +46,7 @@ export function SkillsContent({
 									key={`${group.id}-${groupIndex}`}
 									id={`skill-group-${groupIndex + 1}`}
 									className='SkillGroupCard skill-group-card border-light-gray flex flex-col gap-3 rounded-lg border bg-white p-3 sm:gap-4 sm:p-4'
-									style={{ '--group-index': groupIndex } as React.CSSProperties}
+									style={{ '--group-index': groupIndex } as CSSProperties}
 								>
 									<SkillGroupName
 										form={form}

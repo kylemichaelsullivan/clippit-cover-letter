@@ -2,7 +2,13 @@
 
 import { memo } from 'react';
 import clsx from 'clsx';
-import { formatContentForPDF } from '@/lib/utils';
+import { extractTipTapContent } from '@/lib/utils/tiptap';
+import {
+	convertHtmlToMarkdown,
+	renderMarkdownContent,
+} from '@/lib/utils/markdownComponents';
+import { renderHtmlContent } from '@/lib/utils/htmlRenderer';
+import type { CandidateDetails } from '@/types';
 
 type StyledMarkdownPreviewProps = {
 	content: string;
@@ -13,6 +19,7 @@ type StyledMarkdownPreviewProps = {
 	isCompact?: boolean;
 	isPrintDocument?: boolean;
 	fontSize?: number;
+	candidateDetails?: CandidateDetails;
 };
 
 export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
@@ -24,6 +31,7 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 	isCompact = false,
 	isPrintDocument = false,
 	fontSize,
+	candidateDetails,
 }: StyledMarkdownPreviewProps) {
 	const renderContent = () => {
 		if (isGenerating) {
@@ -40,8 +48,18 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 			return <div className='text-light-gray'>{generatingText}</div>;
 		}
 
-		const processedContent = formatContentForPDF(content);
-		return <div dangerouslySetInnerHTML={{ __html: processedContent }} />;
+		const isSkills = title.toLowerCase().includes('skills');
+
+		if (isSkills) {
+			const extractedContent = extractTipTapContent(content);
+			const markdownContent = convertHtmlToMarkdown(
+				extractedContent,
+				candidateDetails,
+			);
+			return renderMarkdownContent(markdownContent);
+		} else {
+			return renderHtmlContent(content);
+		}
 	};
 
 	return (

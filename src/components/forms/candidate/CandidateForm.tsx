@@ -3,7 +3,11 @@
 import { memo } from 'react';
 import { Field } from '@tanstack/react-form';
 
-import { Form, FormField, FormSection } from '@/components/forms/core';
+import {
+	Form,
+	FormSection,
+	HydrationSafeFormField,
+} from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
@@ -47,7 +51,7 @@ export const CandidateForm = memo(function CandidateForm({
 						}}
 					>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='fullName'
 								type='text'
 								label='Full Name'
@@ -71,7 +75,7 @@ export const CandidateForm = memo(function CandidateForm({
 						}}
 					>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='email'
 								type='email'
 								label='Email Address'
@@ -89,7 +93,7 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='phone'>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='phone'
 								type='tel'
 								label='Phone Number'
@@ -107,7 +111,7 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='location'>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='location'
 								type='text'
 								label='Location'
@@ -133,7 +137,7 @@ export const CandidateForm = memo(function CandidateForm({
 						}}
 					>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='linkedin'
 								type='text'
 								label='LinkedIn Profile'
@@ -161,7 +165,7 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='portfolio'>
 						{(field) => (
-							<FormField
+							<HydrationSafeFormField
 								id='portfolio'
 								type='url'
 								label='Portfolio Website'

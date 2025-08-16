@@ -1,6 +1,7 @@
 'use client';
 
-import { memo, useEffect, type ReactNode } from 'react';
+import { memo, useEffect } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { useSkipLinkTarget } from '@/lib/hooks/useSkipLinkTarget';
 import { registerSkipLinkTarget, unregisterSkipLinkTarget } from './SkipLink';
 
@@ -9,7 +10,7 @@ type SkipLinkTargetProps = {
 	children: ReactNode;
 	className?: string;
 	tabIndex?: number;
-	style?: React.CSSProperties;
+	style?: CSSProperties;
 };
 
 export const SkipLinkTarget = memo(function SkipLinkTarget({
@@ -33,10 +34,10 @@ export const SkipLinkTarget = memo(function SkipLinkTarget({
 
 	return (
 		<div
-			ref={targetRef}
-			id={id}
 			className={className}
 			tabIndex={tabIndex}
+			ref={targetRef}
+			id={id}
 			style={style}
 		>
 			{children}

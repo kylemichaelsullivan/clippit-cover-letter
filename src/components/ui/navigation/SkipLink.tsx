@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, type MouseEvent } from 'react';
+import { memo, type KeyboardEvent, type MouseEvent } from 'react';
 
 type SkipLinkProps = {
 	href: string;
@@ -55,7 +55,7 @@ export const SkipLink = memo(function SkipLink({
 		}
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLAnchorElement>) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLAnchorElement>) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
 			if (onClick) {

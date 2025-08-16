@@ -4,7 +4,7 @@ import { memo, useState } from 'react';
 import { Field } from '@tanstack/react-form';
 
 import { Form, FormSection } from '../core';
-import { MarkdownInput } from '@/components/ui/input';
+import { TipTapEditor } from '@/components/ui/input';
 import { TabTitle } from '@/components/ui';
 import { Button } from '@/components/ui/buttons';
 import { MustacheReplacementModal } from '@/components/ui/feedback';
@@ -73,13 +73,6 @@ export const TemplatesForm = memo(function TemplatesForm({
 								field.handleChange(value as boolean);
 								handleFieldChange('includeCoverLetter', value);
 							}}
-							value={form.getFieldValue('coverLetterContent')}
-							onValueChange={(value: string) => {
-								form.setFieldValue('coverLetterContent', value);
-								handleFieldChange('coverLetterContent', value);
-							}}
-							placeholder={PLACEHOLDERS.TEMPLATES.COVER_LETTER}
-							ariaLabel={CONSTANTS.ARIA_LABELS.COVER_LETTER_TEMPLATE}
 						>
 							<Field
 								name='coverLetterContent'
@@ -92,8 +85,8 @@ export const TemplatesForm = memo(function TemplatesForm({
 								}}
 							>
 								{(contentField) => (
-									<MarkdownInput
-										className={CONSTANTS.CLASS_NAMES.MARKDOWN_INPUT}
+									<TipTapEditor
+										className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 										value={contentField.state.value || ''}
 										onChange={(value: string) => {
 											contentField.handleChange(value);
@@ -101,7 +94,7 @@ export const TemplatesForm = memo(function TemplatesForm({
 										}}
 										placeholder={PLACEHOLDERS.TEMPLATES.COVER_LETTER}
 										aria-label={CONSTANTS.ARIA_LABELS.COVER_LETTER_TEMPLATE}
-										componentName='FormSectionMarkdownInput'
+										componentName='FormSectionTipTapEditor'
 									/>
 								)}
 							</Field>
@@ -119,13 +112,6 @@ export const TemplatesForm = memo(function TemplatesForm({
 								field.handleChange(value as boolean);
 								handleFieldChange('includeResume', value);
 							}}
-							value={form.getFieldValue('resumeContent')}
-							onValueChange={(value: string) => {
-								form.setFieldValue('resumeContent', value);
-								handleFieldChange('resumeContent', value);
-							}}
-							placeholder={PLACEHOLDERS.TEMPLATES.RESUME}
-							ariaLabel={CONSTANTS.ARIA_LABELS.RESUME_CONTENT}
 						>
 							<Field
 								name='resumeContent'
@@ -135,8 +121,8 @@ export const TemplatesForm = memo(function TemplatesForm({
 								}}
 							>
 								{(contentField) => (
-									<MarkdownInput
-										className={CONSTANTS.CLASS_NAMES.MARKDOWN_INPUT}
+									<TipTapEditor
+										className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 										value={contentField.state.value || ''}
 										onChange={(value: string) => {
 											contentField.handleChange(value);
@@ -144,7 +130,7 @@ export const TemplatesForm = memo(function TemplatesForm({
 										}}
 										placeholder={PLACEHOLDERS.TEMPLATES.RESUME}
 										aria-label={CONSTANTS.ARIA_LABELS.RESUME_CONTENT}
-										componentName='FormSectionMarkdownInput'
+										componentName='FormSectionTipTapEditor'
 									/>
 								)}
 							</Field>

@@ -1,9 +1,9 @@
 'use client';
 
-import { memo, useRef, useEffect } from 'react';
-import { formatContentForPDF } from '@/lib/utils';
-import { generatePageHeaderHTML } from '@/lib/utils';
+import { memo, useMemo } from 'react';
+import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
+import { extractTipTapContent } from '@/lib/utils/tiptap';
 import type { CandidateDetails } from '@/types';
 
 type DocumentPreviewProps = {
@@ -19,16 +19,15 @@ export const DocumentPreview = memo(function DocumentPreview({
 	fontSize = 11,
 	className = '',
 }: DocumentPreviewProps) {
-	const iframeRef = useRef<HTMLIFrameElement>(null);
-
-	useEffect(() => {
-		const iframe = iframeRef.current;
-		if (!iframe || !iframe.contentDocument) return;
-
+	const htmlContent = useMemo(() => {
 		const pageHeader = generatePageHeaderHTML(candidateDetails);
-		const formattedContent = formatContentForPDF(content);
+		const extractedContent = extractTipTapContent(content);
+		const formattedContent = formatContentForPDF(
+			extractedContent,
+			candidateDetails,
+		);
 
-		const htmlContent = `
+		return `
 			<!DOCTYPE html>
 			<html>
 				<head>
@@ -62,15 +61,11 @@ export const DocumentPreview = memo(function DocumentPreview({
 				</body>
 			</html>
 		`;
-
-		iframe.contentDocument.open();
-		iframe.contentDocument.write(htmlContent);
-		iframe.contentDocument.close();
 	}, [content, candidateDetails, fontSize]);
 
 	return (
 		<iframe
-			ref={iframeRef}
+			srcDoc={htmlContent}
 			className={`DocumentPreview w-full rounded-lg border-0 ${className}`}
 			style={{ height: '11in', minHeight: '600px' }}
 			title='Document Preview'

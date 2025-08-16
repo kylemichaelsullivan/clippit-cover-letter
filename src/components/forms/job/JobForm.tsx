@@ -6,7 +6,7 @@ import { Field } from '@tanstack/react-form';
 import { Form, FormField, FormFieldContainer } from '@/components/forms/core';
 import { TabTitle, Button } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
-import { MarkdownInput } from '@/components/ui/input';
+import { TipTapEditor } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useJobForm } from '@/lib/hooks';
@@ -44,9 +44,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 
 	const handleConfirm = async () => {
 		try {
-			// Clear job store data
 			setJobDetails(DEFAULTS.INITIAL_STATES.JOB_DETAILS);
-			// Clear localStorage for job store
 			localStorage.removeItem('job-store');
 			console.log('Job data cleared successfully');
 		} catch (error) {
@@ -86,7 +84,6 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 				>
 					{(field) => (
 						<FormField
-							id='companyName'
 							type='text'
 							label='Company Name'
 							placeholder={PLACEHOLDERS.JOB.COMPANY_NAME}
@@ -97,6 +94,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								field.handleChange(value);
 								handleFieldChange('companyName', value);
 							}}
+							id='companyName'
 						/>
 					)}
 				</Field>
@@ -110,7 +108,6 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 				>
 					{(field) => (
 						<FormField
-							id='jobTitle'
 							type='text'
 							label='Job Title'
 							placeholder={PLACEHOLDERS.JOB.JOB_TITLE}
@@ -121,6 +118,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								field.handleChange(value);
 								handleFieldChange('jobTitle', value);
 							}}
+							id='jobTitle'
 						/>
 					)}
 				</Field>
@@ -134,7 +132,6 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 				>
 					{(field) => (
 						<FormField
-							id='hiringManager'
 							type='text'
 							label='Hiring Manager'
 							placeholder={PLACEHOLDERS.JOB.HIRING_MANAGER}
@@ -145,6 +142,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								field.handleChange(value);
 								handleFieldChange('hiringManager', value);
 							}}
+							id='hiringManager'
 						/>
 					)}
 				</Field>
@@ -158,7 +156,6 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 				>
 					{(field) => (
 						<FormField
-							id='companyAddress'
 							type='text'
 							label='Company Address'
 							placeholder={PLACEHOLDERS.JOB.COMPANY_ADDRESS}
@@ -169,6 +166,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								field.handleChange(value);
 								handleFieldChange('companyAddress', value);
 							}}
+							id='companyAddress'
 						/>
 					)}
 				</Field>
@@ -188,7 +186,8 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 							>
 								<span>Job Description</span>
 							</label>
-							<MarkdownInput
+							<TipTapEditor
+								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 								value={field.state.value || ''}
 								onChange={(value: string) => {
 									field.handleChange(value);
@@ -196,8 +195,7 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								}}
 								placeholder={PLACEHOLDERS.JOB.JOB_DESCRIPTION}
 								aria-label='Job description in markdown format'
-								componentName='JobDescriptionMarkdownInput'
-								required={true}
+								componentName='JobDescriptionTipTapEditor'
 								id='jobDescription'
 							/>
 							{field.state.meta.errors?.[0] && (

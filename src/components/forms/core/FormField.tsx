@@ -42,7 +42,7 @@ type BaseFormFieldProps = {
 	suffix?: ReactNode;
 };
 
-type FormFieldProps = BaseFormFieldProps &
+export type FormFieldProps = BaseFormFieldProps &
 	Omit<InputHTMLAttributes<HTMLInputElement>, keyof BaseFormFieldProps>;
 
 export const FormField = memo(function FormField({
@@ -191,7 +191,7 @@ export const FormField = memo(function FormField({
 	};
 
 	return (
-		<FormFieldContainer>
+		<FormFieldContainer suppressHydrationWarning>
 			{label && (
 				<label
 					htmlFor={id}

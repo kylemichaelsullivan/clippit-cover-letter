@@ -27,7 +27,7 @@ export const Button = memo(function Button({
 		<button
 			className={clsx(
 				componentName || 'Button',
-				'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+				'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-10',
 				{
 					// Colors
 					'bg-blue hover:bg-light-blue text-white': color === 'primary',

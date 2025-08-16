@@ -4,6 +4,13 @@ import clsx from 'clsx';
 
 import { CONSTANTS } from '@/config';
 import { useSkillsStore } from '@/lib/stores';
+import { extractTipTapContent } from '@/lib/utils/tiptap';
+import {
+	convertHtmlToMarkdown,
+	renderMarkdownContent,
+} from '@/lib/utils/markdownComponents';
+import { renderHtmlContent } from '@/lib/utils/htmlRenderer';
+import type { CandidateDetails } from '@/types';
 
 type FormattedPreviewProps = {
 	content: string;
@@ -12,6 +19,7 @@ type FormattedPreviewProps = {
 	isGenerating?: boolean;
 	isSkills?: boolean;
 	title?: string;
+	candidateDetails?: CandidateDetails;
 };
 
 export function FormattedPreview({
@@ -21,67 +29,9 @@ export function FormattedPreview({
 	isGenerating = false,
 	isSkills = false,
 	title = '',
+	candidateDetails,
 }: FormattedPreviewProps) {
 	const { generatedSkillsData, includeSkillGroupNames } = useSkillsStore();
-
-	const formatContent = (markdown: string): string => {
-		if (isSkills) {
-			return markdown;
-		}
-
-		return (
-			markdown
-				.replace(/<strong>(.*?)<\/strong>/g, '$1')
-				.replace(/<b>(.*?)<\/b>/g, '$1')
-				.replace(/<em>(.*?)<\/em>/g, '$1')
-				.replace(/<i>(.*?)<\/i>/g, '$1')
-				.replace(/<br\s*\/?>/g, '\n')
-				.replace(/<p>(.*?)<\/p>/g, '$1\n\n')
-				.replace(/<h[1-6]>(.*?)<\/h[1-6]>/g, '$1\n\n')
-				.replace(/<ul>(.*?)<\/ul>/g, (match, content) => {
-					return content.replace(/<li>(.*?)<\/li>/g, '• $1\n');
-				})
-				.replace(/<ol>(.*?)<\/ol>/g, (match, content) => {
-					let counter = 1;
-					return content.replace(
-						/<li>(.*?)<\/li>/g,
-						() => `${counter++}. $1\n`,
-					);
-				})
-				// Remove markdown headers but keep the text
-				.replace(/^#{1,6}\s+/gm, '')
-				// Convert bold text to plain text
-				.replace(/\*\*(.*?)\*\*/g, '$1')
-				.replace(/__(.*?)__/g, '$1')
-				// Convert italic text to plain text
-				.replace(/\*(.*?)\*/g, '$1')
-				.replace(/_(.*?)_/g, '$1')
-				// Convert inline code to plain text
-				.replace(/`(.*?)`/g, '$1')
-				// Convert code blocks to plain text with proper spacing
-				.replace(/```[\s\S]*?```/g, (match) => {
-					const content = match
-						.replace(/```[\s\S]*?\n/, '')
-						.replace(/```$/, '');
-					return `\n${content}\n`;
-				})
-				// Convert blockquotes to plain text with proper spacing
-				.replace(/^>\s+/gm, '')
-				// Convert lists to plain text with proper spacing
-				.replace(/^[\s]*[-*+]\s+/gm, '• ')
-				.replace(/^[\s]*\d+\.\s+/gm, (match) => {
-					const number = match.match(/\d+/)?.[0] || '1';
-					return `${number}. `;
-				})
-				// Convert links to plain text
-				.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-				// Remove horizontal rules
-				.replace(/^---$/gm, '')
-				// Clean up excessive whitespace
-				.replace(/\n\s*\n\s*\n/g, '\n\n')
-				.trim()
-		);
-	};
 
 	const renderSkillsContent = () => {
 		if (isGenerating) {
@@ -89,7 +39,6 @@ export function FormattedPreview({
 		}
 
 		if (!includeSkillGroupNames) {
-			// Show all skills sorted alphabetically without group names
 			const allSkills = generatedSkillsData
 				.flatMap((group) => group.skills)
 				.sort();
@@ -126,8 +75,16 @@ export function FormattedPreview({
 			return <div className='text-light-gray'>{generatingText}</div>;
 		}
 
-		const formattedContent = formatContent(content);
-		return formattedContent;
+		if (isSkills) {
+			const extractedContent = extractTipTapContent(content);
+			const markdownContent = convertHtmlToMarkdown(
+				extractedContent,
+				candidateDetails,
+			);
+			return renderMarkdownContent(markdownContent);
+		} else {
+			return renderHtmlContent(content);
+		}
 	};
 
 	return (
