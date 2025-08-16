@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { useForm } from '@tanstack/react-form';
 
 import { useAppStore, useTemplatesStore } from '@/lib/stores';
@@ -34,38 +34,6 @@ export function useTemplatesForm(
 		setResumeTemplate,
 	} = useTemplatesStore();
 
-	const lastValuesRef = useRef({
-		includeCoverLetter,
-		coverLetterContent: coverLetterTemplate,
-		includeResume,
-		resumeContent: resumeTemplate,
-	});
-
-	const handleFieldChange = useCallback(
-		(fieldName: string, value: any) => {
-			switch (fieldName) {
-				case 'includeCoverLetter':
-					setIncludeCoverLetter(value);
-					break;
-				case 'includeResume':
-					setIncludeResume(value);
-					break;
-				case 'coverLetterContent':
-					setCoverLetterTemplate(value);
-					break;
-				case 'resumeContent':
-					setResumeTemplate(value);
-					break;
-			}
-		},
-		[
-			setIncludeCoverLetter,
-			setIncludeResume,
-			setCoverLetterTemplate,
-			setResumeTemplate,
-		],
-	);
-
 	const form = useForm({
 		defaultValues: {
 			includeCoverLetter,
@@ -94,47 +62,30 @@ export function useTemplatesForm(
 		},
 	});
 
-	useEffect(() => {
-		const storeValues = {
-			includeCoverLetter,
-			coverLetterContent: coverLetterTemplate,
-			includeResume,
-			resumeContent: resumeTemplate,
-		};
-
-		if (JSON.stringify(storeValues) !== JSON.stringify(form.state.values)) {
-			form.reset(storeValues);
-		}
-	}, [
-		coverLetterTemplate,
-		resumeTemplate,
-		includeCoverLetter,
-		includeResume,
-		form,
-	]);
-
-	useEffect(() => {
-		const values = form.state.values;
-		const valuesString = JSON.stringify(values);
-		const lastValuesString = JSON.stringify(lastValuesRef.current);
-
-		if (valuesString !== lastValuesString) {
-			lastValuesRef.current = values;
-			const result = templatesSchema.safeParse(values);
-			if (result.success) {
-				setIncludeCoverLetter(result.data.includeCoverLetter);
-				setIncludeResume(result.data.includeResume);
-				setCoverLetterTemplate(result.data.coverLetterContent);
-				setResumeTemplate(result.data.resumeContent);
+	const handleFieldChange = useCallback(
+		(fieldName: string, value: any) => {
+			switch (fieldName) {
+				case 'includeCoverLetter':
+					setIncludeCoverLetter(value);
+					break;
+				case 'includeResume':
+					setIncludeResume(value);
+					break;
+				case 'coverLetterContent':
+					setCoverLetterTemplate(value);
+					break;
+				case 'resumeContent':
+					setResumeTemplate(value);
+					break;
 			}
-		}
-	}, [
-		form.state.values,
-		setIncludeCoverLetter,
-		setIncludeResume,
-		setCoverLetterTemplate,
-		setResumeTemplate,
-	]);
+		},
+		[
+			setIncludeCoverLetter,
+			setIncludeResume,
+			setCoverLetterTemplate,
+			setResumeTemplate,
+		],
+	);
 
 	return { form, handleFieldChange };
 }

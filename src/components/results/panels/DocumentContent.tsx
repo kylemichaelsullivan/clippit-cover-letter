@@ -3,7 +3,7 @@
 import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { MarkdownInput, Checkbox } from '@/components/ui/input';
+import { Checkbox, MarkdownInput, TipTapEditor } from '@/components/ui/input';
 import {
 	StyledMarkdownPreview,
 	FormattedPreview,
@@ -105,17 +105,31 @@ export const DocumentContent = memo(function DocumentContent({
 				/>
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
-					<MarkdownInput
-						id={inputId}
-						value={content}
-						onChange={onContentChange || (() => {})}
-						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-							'{title}',
-							title.toLowerCase(),
-						)}
-						componentName='DocumentContentMarkdownInput'
-						readOnly={false}
-					/>
+					{isSkills ? (
+						<MarkdownInput
+							id={inputId}
+							value={content}
+							onChange={onContentChange || (() => {})}
+							placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+								'{title}',
+								title.toLowerCase(),
+							)}
+							componentName='DocumentContentMarkdownInput'
+							readOnly={false}
+						/>
+					) : (
+						<TipTapEditor
+							id={inputId}
+							value={content}
+							onChange={onContentChange || (() => {})}
+							placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+								'{title}',
+								title.toLowerCase(),
+							)}
+							componentName='DocumentContentTipTapEditor'
+							readOnly={false}
+						/>
+					)}
 					{/* Show processed preview below the editable input */}
 					{isSkills ? (
 						<FormattedPreview
@@ -124,6 +138,7 @@ export const DocumentContent = memo(function DocumentContent({
 							isGenerating={false}
 							isSkills={true}
 							title={title}
+							candidateDetails={candidateDetails}
 						/>
 					) : isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>
@@ -145,6 +160,7 @@ export const DocumentContent = memo(function DocumentContent({
 								isGenerating={false}
 								title={title}
 								className='p-0'
+								candidateDetails={candidateDetails}
 							/>
 						</div>
 					)}
@@ -156,6 +172,7 @@ export const DocumentContent = memo(function DocumentContent({
 					isGenerating={isGenerating}
 					isSkills={true}
 					title={title}
+					candidateDetails={candidateDetails}
 				/>
 			) : isResume || isCoverLetter ? (
 				<div className='bg-gray rounded-lg p-4'>
@@ -177,6 +194,7 @@ export const DocumentContent = memo(function DocumentContent({
 						isGenerating={isGenerating}
 						title={title}
 						className='p-0'
+						candidateDetails={candidateDetails}
 					/>
 				</div>
 			)}

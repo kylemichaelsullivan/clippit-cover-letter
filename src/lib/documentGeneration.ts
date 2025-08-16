@@ -1,5 +1,6 @@
 import { CONSTANTS, MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
 import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
+import { convertMarkdownToHTML } from '@/lib/utils/markdownParser';
 import type { CandidateDetails, Job, Skills } from '@/types';
 import type { MustacheReplacement } from '@/config/mustacheReplacements';
 
@@ -63,13 +64,15 @@ const formatSkillsGrouped = (skills?: Skills): string => {
 	}
 
 	const sortedGroups = getSortedSkillGroups(skills);
-	return sortedGroups
+	const markdownText = sortedGroups
 		.map((group) => {
 			if (group.skills.length === 0) return '';
 			return `**${group.name}:** ${group.skills.join(', ')}`;
 		})
 		.filter(Boolean)
 		.join('\n\n');
+
+	return convertMarkdownToHTML(markdownText);
 };
 
 const formatSkillsUngrouped = (skills?: Skills): string => {
@@ -98,15 +101,7 @@ const formatJobAddress = (jobDetails: Job): string => {
 		parts.push(jobDetails.companyAddress);
 	}
 
-	return parts.map((part) => '<!--ADDRESS_BLOCK-->' + part).join('\n');
-};
-
-const formatMySignature = (candidateDetails: CandidateDetails): string => {
-	if (!candidateDetails.fullName) {
-		return '';
-	}
-
-	return '<!--SIGNATURE-->' + candidateDetails.fullName;
+	return parts.join('<br>');
 };
 
 const createMustacheValues = (
@@ -158,14 +153,11 @@ const createMustacheValues = (
 			case 'Job Address':
 				values[replacement.name] = formatJobAddress(jobDetails);
 				break;
-			case 'Job Office':
+			case 'Job Location':
 				values[replacement.name] = formatJobOffice(jobDetails);
 				break;
 			case 'Job Description':
 				values[replacement.name] = jobDetails.jobDescription || '';
-				break;
-			case 'My Signature':
-				values[replacement.name] = formatMySignature(candidateDetails);
 				break;
 			default:
 				console.warn(`Unhandled mustache replacement: ${name}`);

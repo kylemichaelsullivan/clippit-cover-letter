@@ -71,14 +71,28 @@ export async function generateCoverLetter(
 	userExperience: string,
 ): Promise<string> {
 	const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
-- Addresses the specific job requirements
-- Highlights relevant experience
-- Shows enthusiasm for the company
-- Is professional yet engaging
+- Addresses the specific job requirements directly
+- Highlights relevant experience with concrete examples
+- Shows genuine interest in the company
+- Uses professional, natural language
 - Is between 200-300 words
-- Uses a professional tone`;
+- Avoids promotional language and editorializing
+- Uses varied sentence structure
+- Focuses on facts and specific achievements
+- Maintains a neutral, professional tone
 
-	const prompt = `Please write a cover letter for the following position:
+Avoid these AI-typical patterns:
+- Undue emphasis on symbolism ("stands as a testament", "plays a vital role")
+- Promotional language ("rich history", "breathtaking", "must-visit")
+- Editorializing ("it's important to note", "it is worth")
+- Overuse of conjunctions ("moreover", "furthermore")
+- Section summaries ("In summary", "In conclusion")
+- Negative parallelisms ("Not only... but...")
+- Rule of three overuse ("adjective, adjective, and adjective")
+- Superficial analyses ("ensuring...", "highlighting...")
+- Vague attributions ("Industry reports", "Some critics argue")`;
+
+	const prompt = `Write a cover letter for the following position:
 
 Job Description:
 ${jobDescription}
@@ -89,7 +103,7 @@ ${companyDetails}
 My Experience:
 ${userExperience}
 
-Please write a professional cover letter that connects my experience to this specific role.`;
+Write a professional cover letter that connects my experience to this specific role. Use natural language and avoid AI-typical phrases.`;
 
 	const response = await callOpenAI(prompt, systemMessage);
 	return response.content;

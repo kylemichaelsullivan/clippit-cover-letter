@@ -33,6 +33,7 @@ const SHARED_FONT_SIZES = {
 const SHARED_PARAGRAPH = `
 	line-height: 1.25;
 	margin-bottom: 0;
+	min-height: 1em;
 `;
 
 const SHARED_EMPHASIS = {
@@ -124,7 +125,6 @@ ${className} h1 {
 }
 
 ${className} h2 {
-	border-bottom: 1px solid var(--color-gray);
 	font-size: ${SHARED_FONT_SIZES.h2};
 }
 
@@ -140,18 +140,8 @@ ${className} p {
 ${SHARED_PARAGRAPH}
 }
 
-${className} p + ul,
-${className} p + ol {
-	margin-top: -1rem;
-}
-
-${className} h3 + ul,
-${className} h4 + ul,
-${className} h3 + ol,
-${className} h4 + ol,
-${className} h3 + p,
-${className} h4 + p {
-	margin-top: -1em;
+${className} li {
+	padding-top: 0.5em;
 }
 
 ${className} strong {
@@ -164,7 +154,7 @@ ${SHARED_EMPHASIS.em}
 
 ${className} .text-shadow {
 	font-weight: 500;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 ${className} ul,
@@ -212,6 +202,8 @@ ${SHARED_LINKS_HOVER}
 ${className} hr {
 ${SHARED_HR}
 }
+
+
 `;
 }
 
@@ -294,8 +286,11 @@ ${generateUIPageHeaderStyles()}
 	color: #000000 !important;
 }
 
-.print-document-content h2 {
+.print-document-content h1 {
 	border-bottom: 1px solid #64748b !important;
+}
+
+.print-document-content h2 {
 	page-break-after: avoid !important;
 	break-after: avoid !important;
 	orphans: 2 !important;
@@ -315,7 +310,7 @@ ${generateUIPageHeaderStyles()}
 
 .print-document-content .text-shadow {
 	font-weight: 500 !important;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.125) !important;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25) !important;
 }
 
 .print-document-content ul,
@@ -340,10 +335,6 @@ ${generateUIPageHeaderStyles()}
 	background-color: #f3f4f6 !important;
 }
 
-.print-document-content a {
-	color: #3b82f6 !important;
-}
-
 .print-document-content hr {
 	border-color: #f3f4f6 !important;
 }
@@ -356,5 +347,7 @@ ${generateUIPageHeaderStyles()}
 .print-document .page-header-contact {
 	color: #6b7280 !important;
 }
+
+
 `;
 }
