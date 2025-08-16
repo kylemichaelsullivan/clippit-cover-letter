@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { generateUIStyles } from '@/config/shared-styles';
 
-export function StyleProvider({ children }: { children: React.ReactNode }) {
+export function StyleProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {
 		const existingStyle = document.getElementById('shared-styles');
 		if (existingStyle) {
