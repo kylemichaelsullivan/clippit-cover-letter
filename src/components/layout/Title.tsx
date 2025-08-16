@@ -1,4 +1,4 @@
-import { CONSTANTS } from '../../config/constants';
+import { CONSTANTS } from '@/config';
 import { ThemeToggle } from '@/components/ui/buttons/ThemeToggle';
 
 export function Title() {

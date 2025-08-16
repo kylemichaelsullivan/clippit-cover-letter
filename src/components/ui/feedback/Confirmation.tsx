@@ -3,8 +3,8 @@
 import { useEffect, type MouseEvent, type ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Button } from '../buttons/Button';
-import { useConfirmationContext } from '../../providers/ConfirmationProvider';
+import { Button } from '@/components/ui/buttons';
+import { useConfirmationContext } from '@/components/providers/ConfirmationProvider';
 
 type ConfirmationProps = {
 	children: ReactNode;
