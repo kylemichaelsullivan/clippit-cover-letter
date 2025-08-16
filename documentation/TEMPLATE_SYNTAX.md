@@ -104,6 +104,43 @@ You can create custom mustache variables by using any name within `{{}}` syntax.
 5. **Use the template variables modal** to easily copy and paste variables
 6. **Whitespace is flexible** - both `<%=instruction%>` and `<%= instruction %>` work the same way
 
+## Natural Writing Guidelines
+
+When using ERB instructions for AI-generated content, follow these guidelines to ensure natural, professional output:
+
+### Language and Tone
+
+- **Use specific, concrete language** instead of vague or promotional terms
+- **Avoid editorializing** - present facts directly without commentary
+- **Use varied sentence structure** to avoid repetitive patterns
+- **Focus on facts and achievements** rather than general statements
+
+### Avoid AI-Typical Patterns
+
+- **Undue emphasis on symbolism**: "stands as a testament", "plays a vital role", "underscores its importance"
+- **Promotional language**: "rich history", "breathtaking", "must-visit", "stunning"
+- **Editorializing**: "it's important to note", "it is worth", "no discussion would be complete without"
+- **Overuse of conjunctions**: "moreover", "in addition", "furthermore"
+- **Section summaries**: "In summary", "In conclusion", "Overall"
+- **Negative parallelisms**: "Not only... but...", "It is not just about..., it's..."
+- **Rule of three overuse**: "adjective, adjective, and adjective" patterns
+- **Superficial analyses**: "ensuring...", "highlighting...", "emphasizing...", "reflecting..."
+- **Vague attributions**: "Industry reports", "Observers have cited", "Some critics argue"
+
+### Example Instructions
+
+**Good:**
+
+```
+<%=Write a compelling opening paragraph that connects my experience with {{My Skills}} to the {{Job Title}} position at {{Job Company}}. Use specific examples and natural language.%>
+```
+
+**Avoid:**
+
+```
+<%=Write a compelling opening paragraph that highlights the vital role I can play and underscores the importance of my experience while ensuring maximum impact.%>
+```
+
 ## Template Examples
 
 ### Cover Letter Template

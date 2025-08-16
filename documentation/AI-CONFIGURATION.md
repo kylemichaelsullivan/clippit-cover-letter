@@ -10,6 +10,77 @@ The application integrates with OpenAI's API to provide three primary AI-powered
 2. **Custom Cover Letter Generation**: AI creates personalized cover letters that match job requirements
 3. **Resume Tailoring**: AI customizes resume content to highlight relevant experience for specific positions
 
+## Natural Writing Guidelines
+
+To ensure AI-generated content feels natural and professional, the application follows specific guidelines to avoid common AI writing patterns:
+
+### Language and Tone Standards
+
+**Avoid these AI-typical patterns:**
+
+1. **Undue emphasis on symbolism and importance**
+
+   - Avoid: "stands as a testament", "plays a vital role", "underscores its importance", "continues to captivate", "leaves a lasting impact", "watershed moment", "key turning point", "deeply rooted", "profound heritage", "steadfast dedication"
+   - Instead: Use specific, concrete language that directly describes facts
+
+2. **Promotional language**
+
+   - Avoid: "rich cultural heritage", "rich history", "breathtaking", "must-visit", "must-see", "stunning natural beauty", "enduring legacy", "rich cultural tapestry"
+   - Instead: Use neutral, factual descriptions
+
+3. **Editorializing**
+
+   - Avoid: "it's important to note", "it is worth", "no discussion would be complete without", "in this article"
+   - Instead: Present facts directly without editorial commentary
+
+4. **Overuse of conjunctions**
+
+   - Avoid: Excessive use of "moreover", "in addition", "furthermore", "on the other hand"
+   - Instead: Use varied, natural transitions
+
+5. **Section summaries**
+
+   - Avoid: "In summary", "In conclusion", "Overall" at paragraph/section ends
+   - Instead: Let content flow naturally without forced summaries
+
+6. **Negative parallelisms**
+
+   - Avoid: "Not only... but...", "It is not just about..., it's..."
+   - Instead: Use direct, positive statements
+
+7. **Rule of three overuse**
+
+   - Avoid: Excessive use of "adjective, adjective, and adjective" patterns
+   - Instead: Vary sentence structure naturally
+
+8. **Superficial analyses**
+
+   - Avoid: "ensuring...", "highlighting...", "emphasizing...", "reflecting..."
+   - Instead: Provide specific, actionable insights
+
+9. **Vague attributions**
+   - Avoid: "Industry reports", "Observers have cited", "Some critics argue"
+   - Instead: Use specific, verifiable sources or present information directly
+
+### Style Guidelines
+
+1. **Section headings**: Use sentence case, not title case
+2. **Boldface**: Use sparingly, only for article subject names in first mention
+3. **Lists**: Prefer prose over lists when content flows naturally
+4. **Em dashes**: Use sparingly; prefer commas or parentheses
+5. **Quotation marks**: Use straight quotes (" ") not curly quotes (" ")
+6. **Apostrophes**: Use straight apostrophes (') not curly apostrophes (')
+7. **No emojis**: Avoid emoji usage in professional content
+8. **No knowledge-cutoff disclaimers**: Avoid "as of [date]" or "up to my last training update"
+
+### Content Structure
+
+1. **Avoid abrupt cutoffs**: Ensure content flows naturally to conclusion
+2. **Maintain consistent English variety**: Match the user's location/nationality
+3. **Vary sentence structure**: Avoid repetitive patterns
+4. **Use specific examples**: Provide concrete details rather than generalizations
+5. **Focus on facts**: Present information directly without unnecessary commentary
+
 ## Environment Configuration
 
 ### Quick Setup
@@ -189,14 +260,28 @@ export async function generateCoverLetter(
   userExperience: string,
 ): Promise<string> {
   const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
-- Addresses the specific job requirements
-- Highlights relevant experience
-- Shows enthusiasm for the company
-- Is professional yet engaging
+- Addresses the specific job requirements directly
+- Highlights relevant experience with concrete examples
+- Shows genuine interest in the company
+- Uses professional, natural language
 - Is between 200-300 words
-- Uses a professional tone`;
+- Avoids promotional language and editorializing
+- Uses varied sentence structure
+- Focuses on facts and specific achievements
+- Maintains a neutral, professional tone
 
-  const prompt = `Please write a cover letter for the following position:
+Avoid these AI-typical patterns:
+- Undue emphasis on symbolism ("stands as a testament", "plays a vital role")
+- Promotional language ("rich history", "breathtaking", "must-visit")
+- Editorializing ("it's important to note", "it is worth")
+- Overuse of conjunctions ("moreover", "furthermore")
+- Section summaries ("In summary", "In conclusion")
+- Negative parallelisms ("Not only... but...")
+- Rule of three overuse ("adjective, adjective, and adjective")
+- Superficial analyses ("ensuring...", "highlighting...")
+- Vague attributions ("Industry reports", "Some critics argue")`;
+
+  const prompt = `Write a cover letter for the following position:
 
 Job Description:
 ${jobDescription}
@@ -207,7 +292,7 @@ ${companyDetails}
 My Experience:
 ${userExperience}
 
-Please write a professional cover letter that connects my experience to this specific role.`;
+Write a professional cover letter that connects my experience to this specific role. Use natural language and avoid AI-typical phrases.`;
 
   const response = await callOpenAI(prompt, systemMessage);
   return response.content;
@@ -233,7 +318,7 @@ The application also supports AI-enhanced template processing through the templa
 ```
 Dear {{Job Manager}},
 
-<%=Write a compelling opening paragraph that connects my experience with {{My Skills}} to the {{Job Title}} position at {{Job Company}}%>
+<%=Write a compelling opening paragraph that connects my experience with {{My Skills}} to the {{Job Title}} position at {{Job Company}}. Use specific examples and natural language.%>
 
 I am writing to express my interest in the {{Job Title}} position at {{Job Company}}.
 
