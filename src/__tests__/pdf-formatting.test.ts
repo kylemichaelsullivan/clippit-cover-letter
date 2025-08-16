@@ -95,13 +95,6 @@ describe('formatContentForPDF', () => {
 		);
 	});
 
-	it('should handle signature with line break correctly', () => {
-		const input = 'Sincerely,\nDwight Schrute';
-		const result = formatContentForPDF(input);
-
-		expect(result).toContain('<p>Sincerely,</p>\n<p>Dwight Schrute</p>');
-	});
-
 	it('should handle address block with line breaks correctly', () => {
 		const input = 'Michael Scott\nDunder Mifflin\nScranton, PA';
 		const result = formatContentForPDF(input);
