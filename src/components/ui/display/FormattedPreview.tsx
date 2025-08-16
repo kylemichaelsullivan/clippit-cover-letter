@@ -10,7 +10,6 @@ import {
 	renderMarkdownContent,
 } from '@/lib/utils/markdownComponents';
 import { renderHtmlContent } from '@/lib/utils/htmlRenderer';
-import type { CandidateDetails } from '@/types';
 
 type FormattedPreviewProps = {
 	content: string;
@@ -19,7 +18,6 @@ type FormattedPreviewProps = {
 	isGenerating?: boolean;
 	isSkills?: boolean;
 	title?: string;
-	candidateDetails?: CandidateDetails;
 };
 
 export function FormattedPreview({
@@ -29,7 +27,6 @@ export function FormattedPreview({
 	isGenerating = false,
 	isSkills = false,
 	title = '',
-	candidateDetails,
 }: FormattedPreviewProps) {
 	const { generatedSkillsData, includeSkillGroupNames } = useSkillsStore();
 
@@ -77,10 +74,7 @@ export function FormattedPreview({
 
 		if (isSkills) {
 			const extractedContent = extractTipTapContent(content);
-			const markdownContent = convertHtmlToMarkdown(
-				extractedContent,
-				candidateDetails,
-			);
+			const markdownContent = convertHtmlToMarkdown(extractedContent);
 			return renderMarkdownContent(markdownContent);
 		} else {
 			return renderHtmlContent(content);

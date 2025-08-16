@@ -130,7 +130,6 @@ export const DocumentContent = memo(function DocumentContent({
 							readOnly={false}
 						/>
 					)}
-					{/* Show processed preview below the editable input */}
 					{isSkills ? (
 						<FormattedPreview
 							content={content}
@@ -138,7 +137,6 @@ export const DocumentContent = memo(function DocumentContent({
 							isGenerating={false}
 							isSkills={true}
 							title={title}
-							candidateDetails={candidateDetails}
 						/>
 					) : isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>
@@ -160,7 +158,6 @@ export const DocumentContent = memo(function DocumentContent({
 								isGenerating={false}
 								title={title}
 								className='p-0'
-								candidateDetails={candidateDetails}
 							/>
 						</div>
 					)}
@@ -172,7 +169,6 @@ export const DocumentContent = memo(function DocumentContent({
 					isGenerating={isGenerating}
 					isSkills={true}
 					title={title}
-					candidateDetails={candidateDetails}
 				/>
 			) : isResume || isCoverLetter ? (
 				<div className='bg-gray rounded-lg p-4'>
@@ -194,7 +190,6 @@ export const DocumentContent = memo(function DocumentContent({
 						isGenerating={isGenerating}
 						title={title}
 						className='p-0'
-						candidateDetails={candidateDetails}
 					/>
 				</div>
 			)}

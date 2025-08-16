@@ -22,10 +22,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 	const htmlContent = useMemo(() => {
 		const pageHeader = generatePageHeaderHTML(candidateDetails);
 		const extractedContent = extractTipTapContent(content);
-		const formattedContent = formatContentForPDF(
-			extractedContent,
-			candidateDetails,
-		);
+		const formattedContent = formatContentForPDF(extractedContent);
 
 		return `
 			<!DOCTYPE html>

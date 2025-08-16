@@ -8,7 +8,6 @@ import {
 	renderMarkdownContent,
 } from '@/lib/utils/markdownComponents';
 import { renderHtmlContent } from '@/lib/utils/htmlRenderer';
-import type { CandidateDetails } from '@/types';
 
 type StyledMarkdownPreviewProps = {
 	content: string;
@@ -19,7 +18,6 @@ type StyledMarkdownPreviewProps = {
 	isCompact?: boolean;
 	isPrintDocument?: boolean;
 	fontSize?: number;
-	candidateDetails?: CandidateDetails;
 };
 
 export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
@@ -31,7 +29,6 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 	isCompact = false,
 	isPrintDocument = false,
 	fontSize,
-	candidateDetails,
 }: StyledMarkdownPreviewProps) {
 	const renderContent = () => {
 		if (isGenerating) {
@@ -52,10 +49,7 @@ export const StyledMarkdownPreview = memo(function StyledMarkdownPreview({
 
 		if (isSkills) {
 			const extractedContent = extractTipTapContent(content);
-			const markdownContent = convertHtmlToMarkdown(
-				extractedContent,
-				candidateDetails,
-			);
+			const markdownContent = convertHtmlToMarkdown(extractedContent);
 			return renderMarkdownContent(markdownContent);
 		} else {
 			return renderHtmlContent(content);

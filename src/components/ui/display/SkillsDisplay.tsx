@@ -6,6 +6,7 @@ import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { TipTapEditor } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';
 import { getSortedSkillGroups } from '@/lib/utils';
+import { convertMarkdownToHTML } from '@/lib/utils/markdownParser';
 import type { Skills } from '@/types';
 
 type SkillsDisplayProps = {
@@ -23,11 +24,7 @@ export function SkillsDisplay({ skills }: SkillsDisplayProps) {
 			.filter(Boolean)
 			.join('\n\n');
 
-		return markdownText
-			.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-			.replace(/\n\n/g, '</p><p>')
-			.replace(/^/, '<p>')
-			.replace(/$/, '</p>');
+		return convertMarkdownToHTML(markdownText);
 	});
 
 	const handleTextChange = (value: string) => {
