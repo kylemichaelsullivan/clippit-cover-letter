@@ -202,6 +202,17 @@ ${SHARED_LINKS_HOVER}
 ${className} hr {
 ${SHARED_HR}
 }
+
+${className} .page-break {
+	display: block;
+	clear: both;
+	border: none;
+	break-before: page;
+	page-break-before: always;
+	height: 0;
+	padding: 0;
+	margin: 0;
+}
 `;
 }
 
@@ -309,6 +320,49 @@ ${generateUIPageHeaderStyles()}
 .print-document-content .text-shadow {
 	font-weight: 500 !important;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25) !important;
+}
+
+.print-document-content .page-break {
+	page-break-before: always !important;
+	break-before: page !important;
+	height: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	display: block !important;
+	clear: both !important;
+}
+
+/* Visual indicator for page breaks in editor (screen only) */
+.TipTapEditorContent .page-break {
+	height: 2px !important;
+	margin: 1rem 0 !important;
+	background: linear-gradient(to right, transparent, #cbd5e1, transparent) !important;
+	border-radius: 1px !important;
+}
+
+.TipTapEditorContent .page-break::before {
+	content: 'Page Break' !important;
+	display: block !important;
+	text-align: center !important;
+	font-size: 0.75rem !important;
+	color: #64748b !important;
+	margin-bottom: 0.5rem !important;
+	font-style: italic !important;
+}
+
+/* Hide visual indicators in print */
+@media print {
+	.TipTapEditorContent .page-break {
+		height: 0 !important;
+		margin: 0 !important;
+		background: none !important;
+	}
+	
+	.TipTapEditorContent .page-break::before {
+		content: none !important;
+		display: none !important;
+	}
 }
 
 .print-document-content ul,
