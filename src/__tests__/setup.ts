@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { vi } from 'vitest';
-import React from 'react';
+import { createElement } from 'react';
 
 // Mock Next.js router
 vi.mock('next/navigation', () => ({
@@ -19,7 +19,7 @@ vi.mock('next/navigation', () => ({
 // Mock Font Awesome
 vi.mock('@fortawesome/react-fontawesome', () => ({
 	FontAwesomeIcon: ({ icon, ...props }: any) =>
-		React.createElement(
+		createElement(
 			'span',
 			{
 				'data-testid': 'font-awesome-icon',
