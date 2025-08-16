@@ -8,6 +8,7 @@ import {
 	faRotate,
 	faSort,
 	faSpinner,
+	faMinus,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -19,4 +20,5 @@ library.add(
 	faRotate,
 	faSort,
 	faSpinner,
+	faMinus,
 );

@@ -1,6 +1,5 @@
 import { CONSTANTS, MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
 import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
-import { convertMarkdownToHTML } from '@/lib/utils/markdownParser';
 import type { CandidateDetails, Job, Skills } from '@/types';
 import type { MustacheReplacement } from '@/config/mustacheReplacements';
 
@@ -23,10 +22,17 @@ const replaceMustacheValues = (
 	template: string,
 	values: Record<string, string>,
 ) => {
-	return template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+	let result = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
 		const cleanKey = key.trim();
 		return values[cleanKey] || match;
 	});
+
+	result = result.replace(/<p>\s*<ul[^>]*>.*?<\/ul>\s*<\/p>/gs, (match) => {
+		const ulMatch = match.match(/<ul[^>]*>(.*?)<\/ul>/s);
+		return ulMatch ? `<ul>${ulMatch[1]}</ul>` : match;
+	});
+
+	return result;
 };
 
 const replaceERBInstructions = (
@@ -64,15 +70,15 @@ const formatSkillsGrouped = (skills?: Skills): string => {
 	}
 
 	const sortedGroups = getSortedSkillGroups(skills);
-	const markdownText = sortedGroups
+	const skillsHtml = sortedGroups
 		.map((group) => {
 			if (group.skills.length === 0) return '';
-			return `**${group.name}:** ${group.skills.join(', ')}`;
+			return `<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`;
 		})
 		.filter(Boolean)
-		.join('\n\n');
+		.join('');
 
-	return convertMarkdownToHTML(markdownText);
+	return `<ul>${skillsHtml}</ul>`;
 };
 
 const formatSkillsUngrouped = (skills?: Skills): string => {

@@ -598,6 +598,18 @@ button.text-2xs,
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
+/* Page Break */
+.page-break {
+	page-break-before: always;
+	break-before: page;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	border: none;
+	display: block;
+	clear: both;
+}
+
 .hidden-fallback {
 	opacity: 0;
 	pointer-events: none;
