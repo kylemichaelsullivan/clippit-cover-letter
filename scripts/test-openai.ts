@@ -8,7 +8,7 @@ import { callOpenAI, generateCoverLetter } from '../src/lib/openai';
 import { isAIConfigured, getAIConfig } from '../src/config/ai';
 
 async function testOpenAI() {
-	console.log('🔍 Testing OpenAI API Integration...\n');
+	console.log('🔍 Testing OpenAI API Integration…\n');
 
 	// Check configuration
 	console.log('📋 Configuration Check:');

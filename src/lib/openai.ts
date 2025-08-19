@@ -87,9 +87,9 @@ Avoid these AI-typical patterns:
 - Editorializing ("it's important to note", "it is worth")
 - Overuse of conjunctions ("moreover", "furthermore")
 - Section summaries ("In summary", "In conclusion")
-- Negative parallelisms ("Not only... but...")
+- Negative parallelisms ("Not only… but…")
 - Rule of three overuse ("adjective, adjective, and adjective")
-- Superficial analyses ("ensuring...", "highlighting...")
+- Superficial analyses ("ensuring…", "highlighting…")
 - Vague attributions ("Industry reports", "Some critics argue")`;
 
 	const prompt = `Write a cover letter for the following position:

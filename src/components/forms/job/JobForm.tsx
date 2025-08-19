@@ -6,7 +6,7 @@ import { Field } from '@tanstack/react-form';
 import { Form, FormField, FormFieldContainer } from '@/components/forms/core';
 import { TabTitle, Button } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
-import { MarkdownInput } from '@/components/ui/input';
+import { TipTapEditor } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useJobForm } from '@/lib/hooks';
@@ -183,10 +183,12 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 							<label
 								htmlFor='jobDescription'
 								className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
+								title='Job Description and Requirements'
+								aria-label='Job description and requirements in markdown format'
 							>
 								<span>Job Description</span>
 							</label>
-							<MarkdownInput
+							<TipTapEditor
 								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 								value={field.state.value || ''}
 								onChange={(value: string) => {
@@ -196,7 +198,6 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 								placeholder={PLACEHOLDERS.JOB.JOB_DESCRIPTION}
 								aria-label='Job description in markdown format'
 								componentName='JobDescriptionMarkdownInput'
-								rows={16}
 								id='jobDescription'
 							/>
 							{field.state.meta.errors?.[0] && (
