@@ -7,16 +7,22 @@ type UseResumeGenerationProps = {
 	candidateDetails: any;
 	jobDetails: any;
 	skills: any;
-	resumeTemplate: string;
 	includeResume: boolean;
+	resumeDetails?: {
+		education: any[];
+		experience: string;
+		summary: string;
+	};
+	resumeTemplate: string;
 };
 
 export const useResumeGeneration = ({
 	candidateDetails,
-	jobDetails,
-	skills,
-	resumeTemplate,
 	includeResume,
+	jobDetails,
+	resumeDetails,
+	resumeTemplate,
+	skills,
 }: UseResumeGenerationProps) => {
 	const {
 		generatedResume,
@@ -32,12 +38,13 @@ export const useResumeGeneration = ({
 
 		try {
 			const result = await generateDocuments({
-				includeResume: true,
 				includeCoverLetter: false,
-				resumeTemplate,
-				coverLetterTemplate: '',
+				includeResume: true,
 				candidateDetails,
+				coverLetterTemplate: '',
 				jobDetails,
+				resumeDetails,
+				resumeTemplate,
 				skills,
 			});
 

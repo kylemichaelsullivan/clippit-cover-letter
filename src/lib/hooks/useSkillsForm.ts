@@ -45,7 +45,6 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		[skills, setSkills],
 	);
 
-	// Form management
 	const form = useForm({
 		defaultValues: {
 			groups: skills.groups?.length
@@ -70,7 +69,6 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		},
 	});
 
-	// Initialize form with store data on mount
 	useEffect(() => {
 		if (skills && skills.groups) {
 			form.reset({
@@ -80,9 +78,8 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []); // Only run on mount - form is stable and skills are from store
+	}, []); // Only run on mount
 
-	// Sync store with form when form changes (like candidate and job forms)
 	useEffect(() => {
 		const values = form.state.values;
 		const valuesString = JSON.stringify(values);
@@ -97,7 +94,6 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		}
 	}, [form.state.values, setSkills]);
 
-	// Business logic functions
 	const sortGroupsAlphabetically = (groups: SkillGroup[]): SkillGroup[] => {
 		return sortSkillGroups(groups);
 	};
@@ -146,6 +142,16 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 			const updatedGroups = currentGroups.filter(
 				(group: SkillGroup) => group.id !== groupToRemove.id,
 			);
+
+			if (updatedGroups.length === 0) {
+				const defaultGroup: SkillGroup = {
+					id: `group-${Date.now()}`,
+					name: '',
+					skills: [],
+				};
+				updatedGroups.push(defaultGroup);
+			}
+
 			form.setFieldValue('groups', updatedGroups);
 			handleFieldChange('groups', updatedGroups);
 		}
