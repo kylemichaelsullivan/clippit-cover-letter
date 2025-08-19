@@ -1,5 +1,13 @@
-/* UNCOMMENT TO RUN THESE TESTS
 import { describe, it, expect } from 'vitest';
+
+// Delete this and uncomment the tests below when ready to run OpenAI API tests
+describe('OpenAI Real API Test', () => {
+	it('placeholder - tests commented out for later use', () => {
+		expect(true).toBe(true);
+	});
+});
+
+/* UNCOMMENT TO RUN THESE TESTS
 import { callOpenAI, generateCoverLetter } from '@/lib/openai';
 import { isAIConfigured } from '@/config/ai';
 
