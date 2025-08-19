@@ -3,14 +3,11 @@
 import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Checkbox, MarkdownInput, TipTapEditor } from '@/components/ui/input';
-import {
-	StyledMarkdownPreview,
-	FormattedPreview,
-	DocumentPreview,
-} from '@/components/ui/display';
+import { Checkbox, TipTapEditor } from '@/components/ui/input';
+import { FormattedPreview, DocumentPreview } from '@/components/ui/display';
 import { PLACEHOLDERS } from '@/config';
-import { useSkillsStore, useCandidateStore } from '@/lib/stores';
+import { renderHtmlContent } from '@/lib/utils';
+import { useCandidateStore, useSkillsStore } from '@/lib/stores';
 
 type DocumentContentProps = {
 	title: string;
@@ -42,7 +39,7 @@ export const DocumentContent = memo(function DocumentContent({
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
-		return `Generating ${title}...`;
+		return `Generating ${title}…`;
 	};
 
 	const renderPageHeader = () => {
@@ -68,7 +65,7 @@ export const DocumentContent = memo(function DocumentContent({
 
 	return (
 		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
-			<div className='flex flex-col justify-between sm:flex-row'>
+			<div className='xs:flex-row flex flex-col items-center justify-between'>
 				<label
 					htmlFor={inputId}
 					className='DocumentContentTitle flex items-center justify-between text-lg font-semibold text-black'
@@ -91,7 +88,7 @@ export const DocumentContent = memo(function DocumentContent({
 				) : null}
 			</div>
 			{isGenerating ? (
-				<MarkdownInput
+				<TipTapEditor
 					id={inputId}
 					value={getGeneratingText(title)}
 					onChange={onContentChange || (() => {})}
@@ -99,37 +96,23 @@ export const DocumentContent = memo(function DocumentContent({
 						'{title}',
 						title.toLowerCase(),
 					)}
-					componentName='DocumentContentMarkdownInput'
+					componentName='DocumentContentTipTapEditor'
 					readOnly={true}
 					className='text-light-gray'
 				/>
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
-					{isSkills ? (
-						<MarkdownInput
-							id={inputId}
-							value={content}
-							onChange={onContentChange || (() => {})}
-							placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-								'{title}',
-								title.toLowerCase(),
-							)}
-							componentName='DocumentContentMarkdownInput'
-							readOnly={false}
-						/>
-					) : (
-						<TipTapEditor
-							id={inputId}
-							value={content}
-							onChange={onContentChange || (() => {})}
-							placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-								'{title}',
-								title.toLowerCase(),
-							)}
-							componentName='DocumentContentTipTapEditor'
-							readOnly={false}
-						/>
-					)}
+					<TipTapEditor
+						value={content}
+						onChange={onContentChange || (() => {})}
+						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+							'{title}',
+							title.toLowerCase(),
+						)}
+						componentName='DocumentContentTipTapEditor'
+						readOnly={false}
+						id={inputId}
+					/>
 					{isSkills ? (
 						<FormattedPreview
 							content={content}
@@ -152,13 +135,7 @@ export const DocumentContent = memo(function DocumentContent({
 							className={`print-content border-light-gray rounded-lg border bg-white p-4`}
 						>
 							{renderPageHeader()}
-							<StyledMarkdownPreview
-								content={content}
-								componentName='DocumentContentStyledPreview'
-								isGenerating={false}
-								title={title}
-								className='p-0'
-							/>
+							<div className='p-0'>{renderHtmlContent(content)}</div>
 						</div>
 					)}
 				</div>
@@ -184,13 +161,7 @@ export const DocumentContent = memo(function DocumentContent({
 					className={`print-content border-light-gray rounded-lg border bg-white p-4`}
 				>
 					{renderPageHeader()}
-					<StyledMarkdownPreview
-						content={content}
-						componentName='DocumentContentStyledPreview'
-						isGenerating={isGenerating}
-						title={title}
-						className='p-0'
-					/>
+					<div className='p-0'>{renderHtmlContent(content)}</div>
 				</div>
 			)}
 		</div>

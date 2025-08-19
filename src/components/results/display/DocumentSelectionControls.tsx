@@ -4,11 +4,11 @@ import { memo, useMemo } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
+import { DEFAULTS, PLACEHOLDERS } from '@/config';
 import { DocumentSelectionControl } from './DocumentSelectionControl';
 import { SkillsRangeSlider } from '@/components/ui/input';
-import { PLACEHOLDERS } from '@/config/placeholders';
-import { useDocumentGeneration } from '@/lib/hooks/useDocumentGeneration';
 import { useAppStore, useSkillsStore, useTemplatesStore } from '@/lib/stores';
+import { useDocumentGeneration } from '@/lib/hooks';
 
 type DocumentSelectionControlsProps = {
 	className?: string;
@@ -120,6 +120,7 @@ export const DocumentSelectionControls = memo(
 							label='Skills Summary'
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.SKILLS_SUMMARY}
 							value={skillsInstructions}
+							title='Generate Skills Summary?'
 							onValueChange={setSkillsInstructions}
 						>
 							<SkillsControls />
@@ -131,6 +132,7 @@ export const DocumentSelectionControls = memo(
 							label='Cover Letter'
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.COVER_LETTER}
 							value={coverLetterInstructions}
+							title='Generate Cover Letter?'
 							onValueChange={setCoverLetterInstructions}
 						/>
 
@@ -140,6 +142,7 @@ export const DocumentSelectionControls = memo(
 							label='Resume'
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.RESUME}
 							value={resumeInstructions}
+							title='Generate Resume?'
 							onValueChange={setResumeInstructions}
 						/>
 					</div>
@@ -154,7 +157,7 @@ export const DocumentSelectionControls = memo(
 								title={buttonText}
 								componentName='GenerateAllButton'
 							>
-								{isGeneratingAny ? 'Generating...' : buttonText}
+								{isGeneratingAny ? DEFAULTS.GENERATING_TEXT : buttonText}
 							</Button>
 						</div>
 					)}

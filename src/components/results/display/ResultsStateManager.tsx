@@ -49,17 +49,6 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 		<div
 			className={`ResultsStateManager flex flex-col gap-6 ${className || ''}`}
 		>
-			<div className={includeSkills && generatedSkills ? '' : 'hidden'}>
-				<div className='flex flex-col gap-4'>
-					<DocumentContent
-						title='Skills Summary'
-						content={generatedSkills}
-						isEditable={false}
-					/>
-					<CopyButton text={generatedSkills} />
-				</div>
-			</div>
-
 			<div
 				className={includeCoverLetter && generatedCoverLetter ? '' : 'hidden'}
 			>
@@ -97,6 +86,17 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						candidateDetails={candidateDetails}
 						fontSize={resumeFontSize}
 					/>
+				</div>
+			</div>
+
+			<div className={includeSkills && generatedSkills ? '' : 'hidden'}>
+				<div className='flex flex-col gap-4'>
+					<DocumentContent
+						title='Skills Summary'
+						content={generatedSkills}
+						isEditable={false}
+					/>
+					<CopyButton text={generatedSkills} />
 				</div>
 			</div>
 		</div>
