@@ -13,21 +13,21 @@ import { TipTapEditor } from '@/components/ui/input';
 import { TabTitle } from '@/components/ui';
 import { templatesSchema, validateSchema } from '@/lib/schemas';
 import { usePhaseStore } from '@/lib/stores';
-import { useSummaryForm } from '@/lib/hooks';
+import { useLetterForm } from '@/lib/hooks';
 
-type SummaryFormProps = {
+type LetterFormProps = {
 	onSubmit: (includeCoverLetter: boolean, coverLetterTemplate: string) => void;
 };
 
-export const SummaryForm = memo(function SummaryForm({
+export const LetterForm = memo(function LetterForm({
 	onSubmit,
-}: SummaryFormProps) {
+}: LetterFormProps) {
 	const { currentPhase } = usePhaseStore();
 	const [showHelpModal, setShowHelpModal] = useState(false);
 
-	const { form, handleFieldChange } = useSummaryForm(onSubmit);
+	const { form, handleFieldChange } = useLetterForm(onSubmit);
 
-	if (currentPhase !== 'summary') {
+	if (currentPhase !== 'letter') {
 		return null;
 	}
 
@@ -44,11 +44,11 @@ export const SummaryForm = memo(function SummaryForm({
 	};
 
 	return (
-		<div className='SummaryForm flex flex-col gap-6'>
+		<div className='LetterForm flex flex-col gap-6'>
 			<div className='flex items-center justify-between'>
-				<TabTitle title='Summary' componentName='SummaryFormTitle' />
+				<TabTitle title='Letter' componentName='LetterFormTitle' />
 				<Button
-					componentName='SummaryFormHelpButton'
+					componentName='LetterFormHelpButton'
 					color='primary'
 					size='md'
 					title='Template Variables Help'
@@ -57,7 +57,7 @@ export const SummaryForm = memo(function SummaryForm({
 					<FontAwesomeIcon icon={faCircleQuestion} aria-hidden='true' />
 				</Button>
 			</div>
-			<Form componentName='SummaryFormContent' onSubmit={handleSubmit}>
+			<Form componentName='LetterFormContent' onSubmit={handleSubmit}>
 				<Field name='includeCoverLetter' form={form}>
 					{(field) => (
 						<FormSection

@@ -5,9 +5,9 @@ import { memo } from 'react';
 import {
 	CandidateForm,
 	JobForm,
+	LetterForm,
 	SkillsForm,
 	ResumeForm,
-	SummaryForm,
 } from '@/components/forms';
 import { ResultContent } from '@/components/results/display';
 import {
@@ -47,7 +47,7 @@ export default memo(function Page() {
 		setIncludeResume(includeResume);
 	};
 
-	const handleSummarySubmit = (
+	const handleLetterSubmit = (
 		includeCoverLetter: boolean,
 		coverLetterTemplate: string,
 	) => {
@@ -67,8 +67,8 @@ export default memo(function Page() {
 				return <SkillsForm onSubmit={handleSkillsSubmit} />;
 			case 'resume':
 				return <ResumeForm onSubmit={handleResumeSubmit} />;
-			case 'summary':
-				return <SummaryForm onSubmit={handleSummarySubmit} />;
+			case 'letter':
+				return <LetterForm onSubmit={handleLetterSubmit} />;
 			case 'job':
 				return <JobForm onSubmit={handleJobSubmit} />;
 			case 'preview':

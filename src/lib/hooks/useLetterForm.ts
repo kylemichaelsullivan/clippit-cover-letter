@@ -6,12 +6,12 @@ import { useForm } from '@tanstack/react-form';
 import { useAppStore, useTemplatesStore } from '@/lib/stores';
 import { templatesSchema } from '@/lib/schemas';
 
-export type SummaryFormValues = {
+export type LetterFormValues = {
 	includeCoverLetter: boolean;
 	coverLetterContent: string;
 };
 
-export function useSummaryForm(
+export function useLetterForm(
 	onSubmit: (includeCoverLetter: boolean, coverLetterTemplate: string) => void,
 ) {
 	const { includeCoverLetter, setIncludeCoverLetter } = useAppStore();

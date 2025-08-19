@@ -54,8 +54,8 @@ export const CONSTANTS = {
 			description: 'Enter your resume details',
 		},
 		{
-			id: 'summary',
-			name: 'Summary',
+			id: 'letter',
+			name: 'Letter',
 			description: 'Enter your cover letter template',
 		},
 		{ id: 'job', name: 'Job', description: 'Enter job information' },
@@ -83,13 +83,13 @@ export const CONSTANTS = {
 		MISSING_RESUME_TEMPLATE:
 			'Resume template is missing. Please go back to Resume and add your resume template.',
 		MISSING_COVER_LETTER_TEMPLATE:
-			'Cover letter template not provided yet. Please go back to the Summary tab to add your cover letter template.',
+			'Cover letter template not provided yet. Please go back to the Letter tab to add your cover letter template.',
 		EMPTY_SKILLS:
 			'No skill groups found. Click the button below to get started.',
 		SKILLS_NOT_GENERATED:
 			'Skills not generated yet. Please go back to the Skills tab to add Skills or click the button to generate skills.',
 		COVER_LETTER_NOT_PROVIDED:
-			'Cover letter template not provided yet. Please go back to the Summary tab to add your cover letter template.',
+			'Cover letter template not provided yet. Please go back to the Letter tab to add your cover letter template.',
 		RESUME_NOT_PROVIDED:
 			'Resume template not provided yet. Please go back to the Resume tab to add your resume template.',
 		LOADING_DOCUMENTS: 'Creating your personalized documents…',
