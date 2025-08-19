@@ -10,19 +10,20 @@ import {
 } from '@/components/ui/feedback';
 import {
 	useAppStore,
-	useJobStore,
-	useTemplatesStore,
 	useCandidateStore,
+	useJobStore,
 	usePhaseStore,
+	useResumeStore,
 	useSkillsStore,
+	useTemplatesStore,
 } from '@/lib/stores';
 import { useGenerationConfirmations } from '@/lib/hooks';
 
 import {
 	CoverLetterSection,
 	DocumentSection,
-	ResumeSection,
 	GenerationConfirmations,
+	ResumeSection,
 } from './';
 
 export const PreviewContent = memo(function PreviewContent() {
@@ -31,18 +32,20 @@ export const PreviewContent = memo(function PreviewContent() {
 	const { jobDetails } = useJobStore();
 	const { coverLetterTemplate, resumeTemplate } = useTemplatesStore();
 	const { includeCoverLetter, includeResume } = useAppStore();
+	const { resumeDetails } = useResumeStore();
 	const { skills, includeSkills, isGeneratingSkills, generatedSkills } =
 		useSkillsStore();
 
 	const generationConfirmations = useGenerationConfirmations({
 		candidateDetails,
-		jobDetails,
-		skills,
 		coverLetterTemplate,
-		resumeTemplate,
-		includeSkills,
+		jobDetails,
 		includeCoverLetter,
 		includeResume,
+		includeSkills,
+		resumeDetails,
+		resumeTemplate,
+		skills,
 	});
 
 	const { handleGenerateSkills } = generationConfirmations;
@@ -106,6 +109,7 @@ export const PreviewContent = memo(function PreviewContent() {
 								skills={skills}
 								includeResume={includeResume}
 								resumeTemplate={resumeTemplate}
+								resumeDetails={resumeDetails}
 							/>
 						</div>
 					)}

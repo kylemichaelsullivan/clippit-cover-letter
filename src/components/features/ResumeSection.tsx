@@ -7,18 +7,24 @@ import { ConfirmationDialog } from '@/components/ui/feedback';
 
 type ResumeSectionProps = {
 	candidateDetails: any;
-	jobDetails: any;
-	skills: any;
 	includeResume: boolean;
+	jobDetails: any;
+	resumeDetails?: {
+		summary: string;
+		experience: string;
+		education: any[];
+	};
 	resumeTemplate: string;
+	skills: any;
 };
 
 export const ResumeSection = ({
 	candidateDetails,
-	jobDetails,
-	skills,
 	includeResume,
+	jobDetails,
+	resumeDetails,
 	resumeTemplate,
+	skills,
 }: ResumeSectionProps) => {
 	const {
 		generatedResume,
@@ -30,10 +36,11 @@ export const ResumeSection = ({
 		handleGenerate,
 	} = useResumeGeneration({
 		candidateDetails,
-		jobDetails,
-		skills,
 		includeResume,
+		jobDetails,
+		resumeDetails,
 		resumeTemplate,
+		skills,
 	});
 
 	return (

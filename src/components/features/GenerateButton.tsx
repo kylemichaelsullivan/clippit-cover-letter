@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui';
+import { DEFAULTS } from '@/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
@@ -36,7 +37,7 @@ export const GenerateButton = function GenerateButton({
 				/>
 
 				<span className='GenerateButtonText xs:block hidden text-sm font-semibold'>
-					{isGenerating ? 'Generating...' : title}
+					{isGenerating ? DEFAULTS.GENERATING_TEXT : title}
 				</span>
 			</Button>
 		</div>
