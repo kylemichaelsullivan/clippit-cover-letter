@@ -1,6 +1,7 @@
 import { useAppStore } from './useAppStore';
 import { useCandidateStore } from './useCandidateStore';
 import { useJobStore } from './useJobStore';
+import { useResumeStore } from './useResumeStore';
 import { useSkillsStore } from './useSkillsStore';
 import { useTemplatesStore } from './useTemplatesStore';
 import { DEFAULTS } from '@/config';
@@ -12,6 +13,7 @@ export function clearAllPersistentData() {
 			'app-store',
 			'candidate-store',
 			'job-store',
+			'resume-store',
 			'skills-store',
 			'templates-store',
 		];
@@ -24,6 +26,7 @@ export function clearAllPersistentData() {
 		const appStore = useAppStore.getState();
 		const candidateStore = useCandidateStore.getState();
 		const jobStore = useJobStore.getState();
+		const resumeStore = useResumeStore.getState();
 		const skillsStore = useSkillsStore.getState();
 		const templatesStore = useTemplatesStore.getState();
 
@@ -47,6 +50,9 @@ export function clearAllPersistentData() {
 
 		// Reset job store
 		jobStore.setJobDetails(DEFAULTS.INITIAL_STATES.JOB_DETAILS);
+
+		// Reset resume store
+		resumeStore.clearResume();
 
 		// Reset skills store
 		skillsStore.setSkills({
