@@ -183,7 +183,7 @@ import { MarkdownInput, SkillsRangeSlider } from '@/components/ui/input';
 <MarkdownInput
   value={content}
   onChange={setContent}
-  placeholder="Enter markdown content..."
+  placeholder="Enter markdown content…"
 />
 
 <SkillsRangeSlider
@@ -486,7 +486,7 @@ const AIIntegratedComponent = () => {
   return (
     <div>
       {isGenerating ? (
-        <LoadingState message="AI is generating content..." />
+        <LoadingState message="AI is generating content…" />
       ) : (
         <Button onClick={handleAIAction}>
           Generate with AI

@@ -9,6 +9,24 @@ Clippit supports two types of template syntax:
 1. **Mustache Variables** (`{{variable}}`) - For dynamic content replacement
 2. **ERB Instructions** (`<%=instruction%>`) - For AI prompt instructions
 
+## Resume Template Structure
+
+The resume template follows a specific HTML structure:
+
+```html
+<h2>Summary</h2>
+{{summary}}
+
+<h2>Skills</h2>
+{{skills}}
+
+<h2>Experience</h2>
+{{experience}}
+
+<h2>Education</h2>
+{{education}}
+```
+
 ## Mustache Variables
 
 Mustache variables use the `{{variable}}` syntax and are replaced with actual values during document generation.
@@ -26,6 +44,13 @@ Mustache variables use the `{{variable}}` syntax and are replaced with actual va
 | `{{My Portfolio}}`     | Candidate portfolio URL        | portfolio.com                                                         |
 | `{{My Skills}}`        | All skills grouped by category | Management: Leadership, Team Building<br>Technical: JavaScript, React |
 | `{{Ungrouped Skills}}` | All skills as a flat list      | Leadership, Team Building, JavaScript, React                          |
+| `{{summary}}`          | Resume summary section         | Professional summary content                                          |
+| `{{skills}}`           | Skills section                 | Skills content                                                        |
+| `{{experience}}`       | Experience section             | Work experience content                                               |
+| `{{education}}`        | Education section              | Formatted education entries with degrees and institutions             |
+| `{{degree}}`           | Education degree               | Bachelor of Science                                                   |
+| `{{institution}}`      | Educational institution        | University of Michigan                                                |
+| `{{location}}`         | Education location             | Ann Arbor, MI                                                         |
 | `{{Job Company}}`      | Company name                   | Acme Corp                                                             |
 | `{{Job Title}}`        | Job title                      | Senior Software Engineer                                              |
 | `{{Job Manager}}`      | Hiring manager name            | Jane Smith                                                            |
@@ -122,9 +147,9 @@ When using ERB instructions for AI-generated content, follow these guidelines to
 - **Editorializing**: "it's important to note", "it is worth", "no discussion would be complete without"
 - **Overuse of conjunctions**: "moreover", "in addition", "furthermore"
 - **Section summaries**: "In summary", "In conclusion", "Overall"
-- **Negative parallelisms**: "Not only... but...", "It is not just about..., it's..."
+- **Negative parallelisms**: "Not only… but…", "It is not just about…, it's…"
 - **Rule of three overuse**: "adjective, adjective, and adjective" patterns
-- **Superficial analyses**: "ensuring...", "highlighting...", "emphasizing...", "reflecting..."
+- **Superficial analyses**: "ensuring…", "highlighting…", "emphasizing…", "reflecting…"
 - **Vague attributions**: "Industry reports", "Observers have cited", "Some critics argue"
 
 ### Example Instructions
