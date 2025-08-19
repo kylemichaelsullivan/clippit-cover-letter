@@ -27,7 +27,7 @@ export function ThemeToggle() {
 					? theme === 'dark'
 						? CONSTANTS.ARIA_LABELS.THEME_TOGGLE.LIGHT_TEXT
 						: CONSTANTS.ARIA_LABELS.THEME_TOGGLE.DARK_TEXT
-					: 'Loading...'
+					: 'Loading…'
 			}
 			suppressHydrationWarning
 			componentName='ThemeToggle'

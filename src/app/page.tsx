@@ -6,7 +6,8 @@ import {
 	CandidateForm,
 	JobForm,
 	SkillsForm,
-	TemplatesForm,
+	ResumeForm,
+	SummaryForm,
 } from '@/components/forms';
 import { ResultContent } from '@/components/results/display';
 import {
@@ -24,7 +25,7 @@ import { PreviewContent } from '@/components/features/PreviewContent';
 export default memo(function Page() {
 	const { currentPhase } = usePhaseStore();
 	const { setCandidateDetails } = useCandidateStore();
-	const { setSkills, includeSkills, setIncludeSkills } = useSkillsStore();
+	const { setSkills } = useSkillsStore();
 	const { setIncludeCoverLetter, setIncludeResume } = useAppStore();
 	const { setJobDetails } = useJobStore();
 	const { setCoverLetterTemplate, setResumeTemplate } = useTemplatesStore();
@@ -37,16 +38,21 @@ export default memo(function Page() {
 		setSkills(skillsData);
 	};
 
-	const handleTemplatesSubmit = (
-		includeCoverLetter: boolean,
+	const handleResumeSubmit = (
 		includeResume: boolean,
+		summary: string,
+		experience: string,
+		education: any[],
+	) => {
+		setIncludeResume(includeResume);
+	};
+
+	const handleSummarySubmit = (
+		includeCoverLetter: boolean,
 		coverLetterTemplate: string,
-		resumeTemplate: string,
 	) => {
 		setIncludeCoverLetter(includeCoverLetter);
-		setIncludeResume(includeResume);
 		setCoverLetterTemplate(coverLetterTemplate);
-		setResumeTemplate(resumeTemplate);
 	};
 
 	const handleJobSubmit = async (details: Job) => {
@@ -58,15 +64,11 @@ export default memo(function Page() {
 			case 'candidate':
 				return <CandidateForm onSubmit={handleCandidateSubmit} />;
 			case 'skills':
-				return (
-					<SkillsForm
-						onSubmit={handleSkillsSubmit}
-						includeSkills={includeSkills}
-						onIncludeSkillsChange={setIncludeSkills}
-					/>
-				);
-			case 'templates':
-				return <TemplatesForm onSubmit={handleTemplatesSubmit} />;
+				return <SkillsForm onSubmit={handleSkillsSubmit} />;
+			case 'resume':
+				return <ResumeForm onSubmit={handleResumeSubmit} />;
+			case 'summary':
+				return <SummaryForm onSubmit={handleSummarySubmit} />;
 			case 'job':
 				return <JobForm onSubmit={handleJobSubmit} />;
 			case 'preview':
