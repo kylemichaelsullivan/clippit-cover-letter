@@ -2,14 +2,9 @@
 
 import clsx from 'clsx';
 
-import { CONSTANTS } from '@/config';
+import { DEFAULTS } from '@/config';
 import { useSkillsStore } from '@/lib/stores';
-import { extractTipTapContent } from '@/lib/utils/tiptap';
-import {
-	convertHtmlToMarkdown,
-	renderMarkdownContent,
-} from '@/lib/utils/markdownComponents';
-import { renderHtmlContent } from '@/lib/utils/htmlRenderer';
+import { renderHtmlContent } from '@/lib/utils';
 
 type FormattedPreviewProps = {
 	content: string;
@@ -32,7 +27,7 @@ export function FormattedPreview({
 
 	const renderSkillsContent = () => {
 		if (isGenerating) {
-			return <div className='text-light-gray'>Generating Skills...</div>;
+			return <div className='text-light-gray'>Generating Skills…</div>;
 		}
 
 		if (!includeSkillGroupNames) {
@@ -59,33 +54,26 @@ export function FormattedPreview({
 
 	const renderContent = () => {
 		if (isGenerating) {
-			let generatingText = 'Generating...';
+			let generatingText: string = DEFAULTS.GENERATING_TEXT;
 
 			if (isSkills) {
-				generatingText = 'Generating Skills...';
+				generatingText = 'Generating Skills…';
 			} else if (title.toLowerCase().includes('cover letter')) {
-				generatingText = 'Generating Cover Letter...';
+				generatingText = 'Generating Cover Letter…';
 			} else if (title.toLowerCase().includes('resume')) {
-				generatingText = 'Generating Resume...';
+				generatingText = 'Generating Resume…';
 			}
 
 			return <div className='text-light-gray'>{generatingText}</div>;
 		}
 
-		if (isSkills) {
-			const extractedContent = extractTipTapContent(content);
-			const markdownContent = convertHtmlToMarkdown(extractedContent);
-			return renderMarkdownContent(markdownContent);
-		} else {
-			return renderHtmlContent(content);
-		}
+		return renderHtmlContent(content);
 	};
 
 	return (
 		<div
 			className={clsx(
 				componentName || 'FormattedPreview',
-				CONSTANTS.CLASS_NAMES.MARKDOWN_INPUT,
 				'min-h-64 max-w-none overflow-y-auto bg-white p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
 				isGenerating && 'text-light-gray flex items-center justify-center',
 				!isGenerating && 'whitespace-pre-wrap',

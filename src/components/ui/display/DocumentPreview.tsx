@@ -47,6 +47,74 @@ export const DocumentPreview = memo(function DocumentPreview({
 							padding: 1rem;
 						}
 						
+						/* TipTap Editor Styles */
+						.print-document-content {
+							line-height: 1.6;
+						}
+						
+						.print-document-content h1,
+						.print-document-content h2,
+						.print-document-content h3,
+						.print-document-content h4,
+						.print-document-content h5,
+						.print-document-content h6 {
+							font-weight: bold;
+							margin: 1rem 0 0.5rem 0;
+							line-height: 1.4;
+						}
+						
+						.print-document-content h1 { font-size: 1.8em; }
+						.print-document-content h2 { font-size: 1.5em; }
+						.print-document-content h3 { font-size: 1.3em; }
+						.print-document-content h4 { font-size: 1.1em; }
+						.print-document-content h5 { font-size: 1em; }
+						.print-document-content h6 { font-size: 0.9em; }
+						
+						.print-document-content p {
+							margin: 0.5rem 0;
+							line-height: 1.6;
+						}
+						
+						.print-document-content strong {
+							font-weight: bold;
+						}
+						
+						.print-document-content em {
+							font-style: italic;
+						}
+						
+						.print-document-content u {
+							text-decoration: underline;
+						}
+						
+						.print-document-content ul,
+						.print-document-content ol {
+							margin: 0.5rem 0;
+							padding-left: 2rem;
+						}
+						
+						.print-document-content li {
+							margin: 0.25rem 0;
+							line-height: 1.5;
+						}
+						
+						.print-document-content ul {
+							list-style-type: disc;
+						}
+						
+						.print-document-content ol {
+							list-style-type: decimal;
+						}
+						
+						.print-document-content br {
+							line-height: 1;
+						}
+						
+						/* Skills formatting */
+						.print-document-content ul li strong {
+							font-weight: bold;
+						}
+						
 						${generateUIStyles()}
 					</style>
 				</head>
