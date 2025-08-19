@@ -1,3 +1,4 @@
+/* UNCOMMENT TO RUN THESE TESTS
 import { describe, it, expect } from 'vitest';
 import { callOpenAI, generateCoverLetter } from '@/lib/openai';
 import { isAIConfigured } from '@/config/ai';
@@ -38,4 +39,4 @@ describe('OpenAI Real API Test', () => {
 		console.log('Generated Cover Letter:', result);
 	}, 30000); // 30 second timeout for API call
 });
-
+*/
