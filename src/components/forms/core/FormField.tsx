@@ -196,6 +196,8 @@ export const FormField = memo(function FormField({
 				<label
 					htmlFor={id}
 					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
+					title={label}
+					aria-label={`${label} field`}
 				>
 					<span>{label}</span>
 					{labelContent}

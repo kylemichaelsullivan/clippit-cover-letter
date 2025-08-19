@@ -16,6 +16,7 @@ type FormSectionProps = {
 	onValueChange?: (value: string) => void;
 	placeholder?: string;
 	ariaLabel?: string;
+	headerContent?: ReactNode;
 };
 
 export const FormSection = memo(function FormSection({
@@ -29,6 +30,7 @@ export const FormSection = memo(function FormSection({
 	onValueChange,
 	placeholder,
 	ariaLabel,
+	headerContent,
 }: FormSectionProps) {
 	if (
 		id &&
@@ -54,7 +56,12 @@ export const FormSection = memo(function FormSection({
 						onChange={(e) => onCheckedChange(e.target.checked)}
 						id={id}
 					/>
-					<label htmlFor={id} className={CONSTANTS.CLASS_NAMES.SECTION_LABEL}>
+					<label
+						htmlFor={id}
+						className={CONSTANTS.CLASS_NAMES.SECTION_LABEL}
+						title={`${title} Section`}
+						aria-label={`${title} section toggle`}
+					>
 						{title}
 					</label>
 				</div>
@@ -73,8 +80,9 @@ export const FormSection = memo(function FormSection({
 			)}
 		>
 			{title && (
-				<div className='FormSectionHeader'>
+				<div className='FormSectionHeader flex items-center justify-between'>
 					<h3 className='text-lg font-semibold text-black'>{title}</h3>
+					{headerContent}
 				</div>
 			)}
 			<div className='FormSectionContent flex flex-col gap-4'>{children}</div>
