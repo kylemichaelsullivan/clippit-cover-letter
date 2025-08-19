@@ -8,9 +8,7 @@ type GenerationConfirmationsProps = {
 	jobDetails: any;
 	skills: any;
 	coverLetterTemplate: string;
-	resumeTemplate: string;
 	includeCoverLetter: boolean;
-	includeResume: boolean;
 	includeSkills: boolean;
 	generationConfirmations?: any;
 };
@@ -20,9 +18,7 @@ export const GenerationConfirmations = ({
 	jobDetails,
 	skills,
 	coverLetterTemplate,
-	resumeTemplate,
 	includeCoverLetter,
-	includeResume,
 	includeSkills,
 	generationConfirmations,
 }: GenerationConfirmationsProps) => {
@@ -31,9 +27,7 @@ export const GenerationConfirmations = ({
 		jobDetails,
 		skills,
 		coverLetterTemplate,
-		resumeTemplate,
 		includeCoverLetter,
-		includeResume,
 		includeSkills,
 	});
 
@@ -44,9 +38,6 @@ export const GenerationConfirmations = ({
 		showCoverLetterConfirmation,
 		setShowCoverLetterConfirmation,
 		performCoverLetterGeneration,
-		showResumeConfirmation,
-		setShowResumeConfirmation,
-		performResumeGeneration,
 	} = generationConfirmations || hookResult;
 
 	return (
@@ -67,16 +58,6 @@ export const GenerationConfirmations = ({
 				onConfirm={performCoverLetterGeneration}
 				title='Replace Cover Letter'
 				message='A cover letter already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
-				confirmText='Generate New'
-				cancelText='Cancel'
-			/>
-
-			<ConfirmationDialog
-				isOpen={showResumeConfirmation}
-				onClose={() => setShowResumeConfirmation(false)}
-				onConfirm={performResumeGeneration}
-				title='Replace Resume'
-				message='A resume already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				confirmText='Generate New'
 				cancelText='Cancel'
 			/>

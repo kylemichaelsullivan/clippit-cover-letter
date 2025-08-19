@@ -30,7 +30,7 @@ describe('OpenAI API Integration', () => {
 				apiKey: 'sk-test123456789012345678901234567890',
 				model: 'gpt-4o-mini',
 				maxTokens: 2000,
-				temperature: 0.7,
+				temperature: 0.25,
 				requestsPerMinute: 60,
 				requestsPerHour: 1000,
 				enableLogging: false,
