@@ -2,8 +2,7 @@ export const CONSTANTS = {
 	APP_NAME: 'Clippit',
 
 	ARIA_LABELS: {
-		MARKDOWN_CONTENT: 'Markdown content input',
-		RESUME_CONTENT: 'Resume content in markdown format',
+		RESUME_CONTENT: 'Resume content',
 		COVER_LETTER_TEMPLATE: 'Cover letter template with mustache placeholders',
 		PHASE_TABS: 'Tabs',
 
@@ -24,7 +23,6 @@ export const CONSTANTS = {
 		FORM_CONTAINER:
 			'flex flex-col gap-4 rounded-lg bg-white p-4 shadow-md w-full sm:gap-6 sm:p-6',
 		SUBMIT_BUTTON: 'px-4 py-2',
-		MARKDOWN_INPUT: 'w-full font-mono h-64 sm:h-96 sm:text-base',
 		FORM_SECTION:
 			'flex flex-col gap-2 bg-light-gray border border-black rounded-lg p-4 shadow-sm sm:p-6',
 
@@ -51,9 +49,14 @@ export const CONSTANTS = {
 			description: 'Configure your skills and matching preferences',
 		},
 		{
-			id: 'templates',
-			name: 'Templates',
-			description: 'Enter your resume and cover letter template',
+			id: 'resume',
+			name: 'Resume',
+			description: 'Enter your resume details',
+		},
+		{
+			id: 'summary',
+			name: 'Summary',
+			description: 'Enter your cover letter template',
 		},
 		{ id: 'job', name: 'Job', description: 'Enter job information' },
 		{
@@ -72,24 +75,24 @@ export const CONSTANTS = {
 		NO_RESULTS: 'No documents were selected for generation.',
 		NO_RESULTS_INSTRUCTIONS: 'To generate documents, you need to:',
 		GENERATE_DOCUMENTS: 'Generate Documents',
-		COVER_LETTER_PREVIEW: 'Your cover letter preview will appear here...',
+		COVER_LETTER_PREVIEW: 'Your cover letter preview will appear here…',
 		NO_RESUME_TEMPLATE:
 			'Cover letter generation requested but no template provided',
 		MISSING_SKILLS:
 			'Skills are missing. Please go back to Skills and configure your skills.',
-		MISSING_COVER_LETTER_TEMPLATE:
-			'Cover letter template not provided yet. Please go back to the Templates tab to add your cover letter template.',
 		MISSING_RESUME_TEMPLATE:
-			'Resume template is missing. Please go back to Templates and add your resume template.',
+			'Resume template is missing. Please go back to Resume and add your resume template.',
+		MISSING_COVER_LETTER_TEMPLATE:
+			'Cover letter template not provided yet. Please go back to the Summary tab to add your cover letter template.',
 		EMPTY_SKILLS:
 			'No skill groups found. Click the button below to get started.',
 		SKILLS_NOT_GENERATED:
 			'Skills not generated yet. Please go back to the Skills tab to add Skills or click the button to generate skills.',
 		COVER_LETTER_NOT_PROVIDED:
-			'Cover letter template not provided yet. Please go back to the Templates tab to add your cover letter template.',
+			'Cover letter template not provided yet. Please go back to the Summary tab to add your cover letter template.',
 		RESUME_NOT_PROVIDED:
-			'Resume template not provided yet. Please go back to the Templates tab to add your resume template.',
-		LOADING_DOCUMENTS: 'Creating your personalized documents...',
+			'Resume template not provided yet. Please go back to the Resume tab to add your resume template.',
+		LOADING_DOCUMENTS: 'Creating your personalized documents…',
 		NO_SKILLS_IN_GROUP: 'No Skills',
 		ERROR_GENERATING:
 			'An error occurred while generating your documents. Please try again.',

@@ -1,4 +1,6 @@
 export const DEFAULTS = {
+	GENERATING_TEXT: 'Generating…',
+
 	TEMPLATE_FALLBACKS: {
 		fullName: '',
 		email: '',
@@ -36,6 +38,17 @@ export const DEFAULTS = {
 		TEMPLATES: {
 			coverLetter: '',
 			resume: '',
+		},
+
+		RESUME: {
+			summary: '',
+			experience: '',
+		},
+		EDUCATION: {
+			degree: '',
+			graduationYear: '',
+			institution: '',
+			location: '',
 		},
 		GENERATION: {
 			generatedSkills: '',
