@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormFieldContainer } from '@/components/forms/core';
 import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
+import { getOrdinalSuffix } from '@/lib/utils';
 import type { SkillGroup } from '@/types';
 
 type SkillGroupNameProps = {
@@ -64,6 +65,8 @@ export function SkillGroupName({
 						<label
 							htmlFor={`group-name-${groupIndex}`}
 							className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
+							title='Group Name'
+							aria-label='Group Name'
 						>
 							<span>Group Name</span>
 						</label>
@@ -85,6 +88,7 @@ export function SkillGroupName({
 							}}
 							placeholder={PLACEHOLDERS.SKILLS.GROUP_NAME}
 							className='text-sm sm:text-base'
+							aria-label={`Name for ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group`}
 							ref={(element) => {
 								if (registerFocusRef) {
 									registerFocusRef(groupIndex, element);
@@ -96,7 +100,8 @@ export function SkillGroupName({
 								color='danger'
 								size='sm'
 								onClick={onRemove}
-								title='Remove Group'
+								title={`Remove Skill Group`}
+								aria-label={`Remove ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} Skill Group`}
 								componentName='SkillGroupCardRemoveButton'
 							>
 								<FontAwesomeIcon icon={faTrash} aria-hidden='true' />

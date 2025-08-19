@@ -14,8 +14,6 @@ import type { SkillGroup } from '@/types';
 
 type SkillsSectionProps = {
 	form: any; // TanStack Form
-	includeSkills: boolean;
-	onIncludeSkillsChange: (include: boolean) => void;
 	error?: string;
 	addSkillGroup: () => void;
 	alphabetizeGroups: () => void;
@@ -25,8 +23,6 @@ type SkillsSectionProps = {
 
 export function SkillsSection({
 	form,
-	includeSkills,
-	onIncludeSkillsChange,
 	error,
 	addSkillGroup,
 	alphabetizeGroups,
@@ -41,18 +37,12 @@ export function SkillsSection({
 			<Field name='groups' form={form}>
 				{(field) => {
 					const groups = (field.state.value as SkillGroup[]) || [];
-					const skillsCount = groups.reduce(
-						(total, group) => total + (group.skills?.length || 0),
-						0,
-					);
 
 					return (
 						<>
 							<SkillsHeader
-								includeSkills={includeSkills}
-								onIncludeSkillsChange={onIncludeSkillsChange}
 								onAlphabetizeGroups={alphabetizeGroups}
-								skillsCount={skillsCount}
+								groupsCount={groups.length}
 							/>
 
 							{error && (

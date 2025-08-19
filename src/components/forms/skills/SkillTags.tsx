@@ -253,6 +253,8 @@ export function SkillTags({
 				<label
 					htmlFor={`skill-input-${groupIndex}`}
 					className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
+					title='Skill'
+					aria-label='Skill'
 				>
 					<span>Skill</span>
 				</label>
@@ -305,7 +307,7 @@ export function SkillTags({
 					<small className='text-gray'>
 						{pendingSkills.slice(0, 5).join(', ')}
 						{pendingSkills.length > 5 &&
-							` and ${pendingSkills.length - 5} more...`}
+							` and ${pendingSkills.length - 5} more…`}
 					</small>
 				</Confirmation>
 			)}

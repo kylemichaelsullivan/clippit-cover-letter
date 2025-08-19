@@ -13,14 +13,10 @@ import type { Skills } from '@/types';
 
 type SkillsFormProps = {
 	onSubmit: (skillsData: Skills) => void;
-	includeSkills: boolean;
-	onIncludeSkillsChange: (includeSkills: boolean) => void;
 };
 
 export const SkillsForm = memo(function SkillsForm({
 	onSubmit,
-	includeSkills,
-	onIncludeSkillsChange,
 }: SkillsFormProps) {
 	const { currentPhase } = usePhaseStore();
 	const { skills } = useSkillsStore();
@@ -65,7 +61,14 @@ export const SkillsForm = memo(function SkillsForm({
 	return (
 		<div className='SkillsForm flex flex-col gap-6'>
 			<TabTitle
-				title='Skills'
+				title={`Skills (${
+					skills &&
+					skills.groups &&
+					skills.groups.reduce(
+						(total, group) => total + (group.skills?.length || 0),
+						0,
+					)
+				})`}
 				componentName='SkillsFormTitle'
 				actionButton={actionButton}
 			/>
@@ -73,8 +76,6 @@ export const SkillsForm = memo(function SkillsForm({
 			<Form componentName='SkillsFormContent' onSubmit={handleSubmit}>
 				<SkillsSection
 					form={form}
-					includeSkills={includeSkills}
-					onIncludeSkillsChange={onIncludeSkillsChange}
 					error={error}
 					addSkillGroup={addSkillGroup}
 					alphabetizeGroups={alphabetizeGroups}
