@@ -3,7 +3,8 @@ export { Form, FormField, FormSection } from './core';
 export { CandidateForm } from './candidate/CandidateForm';
 export { JobForm } from './job/JobForm';
 export { SkillsForm } from './skills/SkillsForm';
-export { TemplatesForm } from './templates/TemplatesForm';
+export { ResumeForm } from './resume/ResumeForm';
+export { SummaryForm } from './summary/SummaryForm';
 
 export {
 	SkillGroupName,

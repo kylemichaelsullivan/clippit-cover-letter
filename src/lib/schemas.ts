@@ -35,7 +35,9 @@ export const templatesSchema = z.object({
 	includeCoverLetter: z.boolean(),
 	coverLetterContent: z.string(),
 	includeResume: z.boolean(),
-	resumeContent: z.string(),
+	summary: z.string(),
+	experience: z.string(),
+	education: z.string(),
 });
 
 export const jobDetailsSchema = z.object({
@@ -61,19 +63,16 @@ export function isFieldRequired(
 	fieldName: string,
 ): boolean {
 	try {
-		// Check if the schema is an object schema
 		if (schema instanceof z.ZodObject) {
 			const shape = schema.shape as Record<string, z.ZodSchema>;
 			const fieldSchema = shape[fieldName];
 
 			if (!fieldSchema) return false;
 
-			// Check if the field is optional
 			if (fieldSchema instanceof z.ZodOptional) {
 				return false;
 			}
 
-			// Check if the field has a minimum length requirement
 			if (fieldSchema instanceof z.ZodString) {
 				return fieldSchema._def.checks.some(
 					(check) => check.kind === 'min' && check.value > 0,

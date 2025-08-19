@@ -12,6 +12,21 @@ export type FormData = {
 	content: string;
 };
 
+export type ResumeDetails = {
+	summary: string;
+	experience: string;
+	education: Education[];
+};
+
+export type Education = {
+	id: string;
+	include: boolean;
+	degree: string;
+	graduationYear: string;
+	institution: string;
+	location: string;
+};
+
 export type Job = {
 	companyName: string;
 	jobTitle: string;

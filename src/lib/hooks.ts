@@ -111,7 +111,6 @@ export function useThrottledField<T>(
 	const lastUpdateRef = useRef<number>(0);
 	const pendingValueRef = useRef<T | null>(null);
 
-	// Sync local value with field value when it changes externally
 	useEffect(() => {
 		setLocalValue(field.state.value);
 	}, [field.state.value]);
@@ -121,12 +120,10 @@ export function useThrottledField<T>(
 			const now = Date.now();
 
 			if (now - lastUpdateRef.current >= throttleMs) {
-				// Update immediately if enough time has passed
 				field.handleChange(value);
 				lastUpdateRef.current = now;
 				pendingValueRef.current = null;
 			} else {
-				// Store the value to update later
 				pendingValueRef.current = value;
 			}
 		},
@@ -180,7 +177,6 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 	const [storedValue, setStoredValue] = useState<T>(initialValue);
 	const isClient = useIsClient();
 
-	// Initialize from localStorage on client
 	useEffect(() => {
 		if (isClient) {
 			try {
@@ -194,15 +190,12 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 		}
 	}, [key, isClient]);
 
-	// Return a wrapped version of useState's setter function that persists the new value to localStorage
 	const setValue = (value: T | ((val: T) => T)) => {
 		try {
-			// Allow value to be a function so we have the same API as useState
 			const valueToStore =
 				value instanceof Function ? value(storedValue) : value;
 			setStoredValue(valueToStore);
 
-			// Save to localStorage only on client
 			if (isClient) {
 				window.localStorage.setItem(key, JSON.stringify(valueToStore));
 			}
@@ -215,11 +208,17 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 }
 
 export { useCandidateForm } from './hooks/useCandidateForm';
+export { useConfirmationStack } from './hooks/useConfirmationStack';
 export { useCoverLetterGeneration } from './hooks/useCoverLetterGeneration';
 export { useDocumentGeneration } from './hooks/useDocumentGeneration';
+export { useFocusNewEducation } from './hooks/useFocusNewEducation';
 export { useFocusNewSkillGroup } from './hooks/useFocusNewSkillGroup';
 export { useGenerationConfirmations } from './hooks/useGenerationConfirmations';
 export { useJobForm } from './hooks/useJobForm';
+export { useModalClose } from './hooks/useModalClose';
 export { useResumeGeneration } from './hooks/useResumeGeneration';
+export { useSkipLinkFocus } from './hooks/useSkipLinkFocus';
+export { useSkipLinkTarget } from './hooks/useSkipLinkTarget';
 export { useSkillsForm } from './hooks/useSkillsForm';
-export { useTemplatesForm } from './hooks/useTemplatesForm';
+export { useResumeForm } from './hooks/useResumeForm';
+export { useSummaryForm } from './hooks/useSummaryForm';
