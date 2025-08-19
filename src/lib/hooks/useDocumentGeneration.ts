@@ -4,6 +4,7 @@ import { useCandidateStore } from '../stores/useCandidateStore';
 import { useJobStore } from '../stores/useJobStore';
 import { useSkillsStore } from '../stores/useSkillsStore';
 import { useTemplatesStore } from '../stores/useTemplatesStore';
+import { useResumeStore } from '../stores/useResumeStore';
 import { generateDocuments } from '../documentGeneration';
 import { useState } from 'react';
 
@@ -19,11 +20,12 @@ export const useDocumentGeneration = () => {
 		generatedSkills,
 		setGeneratedSkills,
 	} = useSkillsStore();
+	const { resumeDetails } = useResumeStore();
 	const {
 		coverLetterTemplate,
-		resumeTemplate,
 		isGeneratingCoverLetter,
 		setIsGeneratingCoverLetter,
+		resumeTemplate,
 		isGeneratingResume,
 		setIsGeneratingResume,
 		generatedCoverLetter,
@@ -69,9 +71,9 @@ export const useDocumentGeneration = () => {
 
 		return existingContent;
 	}, [
-		includeSkills,
 		includeCoverLetter,
 		includeResume,
+		includeSkills,
 		generatedSkills,
 		generatedCoverLetter,
 		generatedResume,
@@ -94,12 +96,12 @@ export const useDocumentGeneration = () => {
 			if (!generatedCoverLetter || generatedCoverLetter.trim() === '') {
 				setIsGeneratingCoverLetter(true);
 				const coverLetterTask = generateDocuments({
-					includeResume: false,
-					includeCoverLetter: true,
-					resumeTemplate: '',
-					coverLetterTemplate,
 					candidateDetails,
+					coverLetterTemplate,
+					includeCoverLetter: true,
+					includeResume: false,
 					jobDetails,
+					resumeTemplate: '',
 					skills,
 				})
 					.then((result) => {
@@ -122,13 +124,13 @@ export const useDocumentGeneration = () => {
 			if (!generatedResume || generatedResume.trim() === '') {
 				setIsGeneratingResume(true);
 				const resumeTask = generateDocuments({
+					candidateDetails,
+					coverLetterTemplate: '',
 					includeCoverLetter: false,
 					includeResume: true,
-					coverLetterTemplate: '',
-					resumeTemplate,
-					candidateDetails,
-					skills,
 					jobDetails,
+					resumeTemplate,
+					skills,
 				})
 					.then((result) => {
 						setGeneratedResume(result.resume);
@@ -173,12 +175,12 @@ export const useDocumentGeneration = () => {
 		if (includeCoverLetter && coverLetterTemplate) {
 			setIsGeneratingCoverLetter(true);
 			const coverLetterTask = generateDocuments({
-				includeResume: false,
-				includeCoverLetter: true,
-				resumeTemplate: '',
-				coverLetterTemplate,
 				candidateDetails,
+				coverLetterTemplate,
+				includeCoverLetter: true,
+				includeResume: false,
 				jobDetails,
+				resumeTemplate: '',
 				skills,
 			})
 				.then((result) => {
@@ -199,13 +201,14 @@ export const useDocumentGeneration = () => {
 		if (includeResume && resumeTemplate) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
+				candidateDetails,
+				coverLetterTemplate: '',
 				includeCoverLetter: false,
 				includeResume: true,
-				coverLetterTemplate: '',
-				resumeTemplate,
-				candidateDetails,
-				skills,
 				jobDetails,
+				resumeDetails,
+				resumeTemplate,
+				skills,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -253,12 +256,12 @@ export const useDocumentGeneration = () => {
 		) {
 			setIsGeneratingCoverLetter(true);
 			const coverLetterTask = generateDocuments({
-				includeResume: false,
-				includeCoverLetter: true,
-				resumeTemplate: '',
-				coverLetterTemplate,
 				candidateDetails,
+				coverLetterTemplate,
+				includeCoverLetter: true,
+				includeResume: false,
 				jobDetails,
+				resumeTemplate: '',
 				skills,
 			})
 				.then((result) => {
@@ -279,13 +282,14 @@ export const useDocumentGeneration = () => {
 		if (selectedItems.includes('resume') && includeResume && resumeTemplate) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
+				candidateDetails,
+				coverLetterTemplate: '',
 				includeCoverLetter: false,
 				includeResume: true,
-				coverLetterTemplate: '',
-				resumeTemplate,
-				candidateDetails,
-				skills,
 				jobDetails,
+				resumeDetails,
+				resumeTemplate,
+				skills,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -321,12 +325,12 @@ export const useDocumentGeneration = () => {
 		) {
 			setIsGeneratingCoverLetter(true);
 			const coverLetterTask = generateDocuments({
-				includeResume: false,
-				includeCoverLetter: true,
-				resumeTemplate: '',
-				coverLetterTemplate,
 				candidateDetails,
+				coverLetterTemplate,
+				includeCoverLetter: true,
+				includeResume: false,
 				jobDetails,
+				resumeTemplate: '',
 				skills,
 			})
 				.then((result) => {
@@ -351,13 +355,14 @@ export const useDocumentGeneration = () => {
 		) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
+				candidateDetails,
+				coverLetterTemplate: '',
 				includeCoverLetter: false,
 				includeResume: true,
-				coverLetterTemplate: '',
-				resumeTemplate,
-				candidateDetails,
-				skills,
 				jobDetails,
+				resumeDetails,
+				resumeTemplate,
+				skills,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -386,6 +391,7 @@ export const useDocumentGeneration = () => {
 		candidateDetails,
 		jobDetails,
 		skills,
+		resumeDetails,
 		generateSkills,
 		setIsGeneratingCoverLetter,
 		setGeneratedCoverLetter,

@@ -1,4 +1,9 @@
-import { CONSTANTS, MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
+import {
+	CONSTANTS,
+	ERB_INSTRUCTIONS,
+	MUSTACHE_REPLACEMENTS,
+	PLACEHOLDERS,
+} from '@/config';
 import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
 import type { CandidateDetails, Job, Skills } from '@/types';
 import type { MustacheReplacement } from '@/config/mustacheReplacements';
@@ -10,6 +15,11 @@ export type DocumentGenerationParams = {
 	coverLetterTemplate: string;
 	candidateDetails: CandidateDetails;
 	jobDetails: Job;
+	resumeDetails?: {
+		summary: string;
+		experience: string;
+		education: any[];
+	};
 	skills?: Skills;
 };
 
@@ -24,7 +34,10 @@ const replaceMustacheValues = (
 ) => {
 	let result = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
 		const cleanKey = key.trim();
-		return values[cleanKey] || match;
+		if (Object.prototype.hasOwnProperty.call(values, cleanKey)) {
+			return values[cleanKey];
+		}
+		return match;
 	});
 
 	result = result.replace(/<p>\s*<ul[^>]*>.*?<\/ul>\s*<\/p>/gs, (match) => {
@@ -110,9 +123,30 @@ const formatJobAddress = (jobDetails: Job): string => {
 	return parts.join('<br>');
 };
 
+const formatEducationText = (education: any[]): string => {
+	const filtered = education.filter(
+		(edu) => edu.include !== false && (edu.degree || edu.institution),
+	);
+
+	const result = filtered
+		.map((edu) => {
+			const location = edu.location ? ` | ${edu.location}` : '';
+			const entry = `<h3>${edu.degree}</h3>
+<p><span class="text-shadow">${edu.institution}</span>${location}</p>`;
+			return entry;
+		})
+		.join('\n\n');
+	return result;
+};
+
 const createMustacheValues = (
 	candidateDetails: CandidateDetails,
 	jobDetails: Job,
+	resumeDetails?: {
+		summary: string;
+		experience: string;
+		education: any[];
+	},
 	skills?: Skills,
 ): Record<string, string> => {
 	const values: Record<string, string> = {};
@@ -171,6 +205,12 @@ const createMustacheValues = (
 		}
 	});
 
+	values['skills'] = formatSkillsGrouped(skills);
+	values['summary'] = resumeDetails?.summary || '';
+	values['experience'] = resumeDetails?.experience || '';
+
+	values['education'] = formatEducationText(resumeDetails?.education || []);
+
 	return values;
 };
 
@@ -192,6 +232,7 @@ export async function generateDocuments({
 	coverLetterTemplate,
 	candidateDetails,
 	jobDetails,
+	resumeDetails,
 	skills,
 }: DocumentGenerationParams): Promise<DocumentGenerationResult> {
 	if (!includeResume && !includeCoverLetter) {
@@ -199,22 +240,13 @@ export async function generateDocuments({
 		return { resume: '', coverLetter: '' };
 	}
 
-	console.log('Starting document generation...', {
-		includeResume,
-		includeCoverLetter,
-		hasResumeTemplate: !!resumeTemplate,
-		hasCoverLetterTemplate: !!coverLetterTemplate,
-		candidateDetails,
-		jobDetails,
-		skills,
-	});
-
 	// Mock generation - in real app this would call an API
 	await new Promise((resolve) => setTimeout(resolve, 2000));
 
 	const mustacheValues = createMustacheValues(
 		candidateDetails,
 		jobDetails,
+		resumeDetails,
 		skills,
 	);
 
@@ -226,25 +258,35 @@ export async function generateDocuments({
 	let generatedResume = '';
 	let generatedCoverLetter = '';
 
-	if (includeResume && resumeTemplate) {
-		console.log('Generating resume...');
-		let processedTemplate = replaceMustacheValues(
-			resumeTemplate,
-			mustacheValues,
-		);
-		processedTemplate = replaceERBInstructions(
-			processedTemplate,
-			erbInstructions,
-			mustacheValues,
-		);
-		generatedResume = processedTemplate;
+	if (includeResume) {
+		console.log('Generating resume…');
+
+		const summaryContent = resumeDetails?.summary || '';
+		const experienceContent = resumeDetails?.experience || '';
+		const skillsContent = formatSkillsGrouped(skills);
+
+		const educationContent = resumeDetails?.education
+			? formatEducationText(resumeDetails.education)
+			: '';
+
+		const educationSection = educationContent
+			? `\n<h2>Education</h2>\n${educationContent}`
+			: '';
+
+		generatedResume = `<h2>Summary</h2>
+${summaryContent}
+
+<h2>Skills</h2>
+${skillsContent}
+
+<h2>Experience</h2>
+${experienceContent}${educationSection}`;
+
 		console.log('Resume generated successfully');
-	} else if (includeResume && !resumeTemplate) {
-		console.warn('Resume generation requested but no template provided');
 	}
 
 	if (includeCoverLetter && coverLetterTemplate) {
-		console.log('Generating cover letter...');
+		console.log('Generating cover letter…');
 		let processedTemplate = replaceMustacheValues(
 			coverLetterTemplate,
 			mustacheValues,
@@ -258,6 +300,7 @@ export async function generateDocuments({
 		console.log('Cover letter generated successfully');
 	} else if (includeCoverLetter && !coverLetterTemplate) {
 		console.warn(CONSTANTS.MESSAGES.NO_RESUME_TEMPLATE);
+		generatedCoverLetter = PLACEHOLDERS.TEMPLATES.COVER_LETTER;
 	}
 
 	console.log('Document generation completed');

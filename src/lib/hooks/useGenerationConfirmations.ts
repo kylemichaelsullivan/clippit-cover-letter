@@ -5,24 +5,30 @@ import { generateDocuments } from '@/lib/documentGeneration';
 
 type UseGenerationConfirmationsProps = {
 	candidateDetails: any;
-	jobDetails: any;
-	skills: any;
 	coverLetterTemplate: string;
-	resumeTemplate: string;
 	includeCoverLetter: boolean;
 	includeResume: boolean;
 	includeSkills: boolean;
+	jobDetails: any;
+	resumeDetails?: {
+		summary: string;
+		experience: string;
+		education: any[];
+	};
+	resumeTemplate: string;
+	skills: any;
 };
 
 export const useGenerationConfirmations = ({
 	candidateDetails,
-	jobDetails,
-	skills,
 	coverLetterTemplate,
-	resumeTemplate,
 	includeCoverLetter,
 	includeResume,
 	includeSkills,
+	jobDetails,
+	resumeDetails,
+	resumeTemplate,
+	skills,
 }: UseGenerationConfirmationsProps) => {
 	const {
 		generatedCoverLetter,
@@ -37,7 +43,6 @@ export const useGenerationConfirmations = ({
 
 	const { generatedSkills, generateSkills } = useSkillsStore();
 
-	// Confirmation dialog states
 	const [showCoverLetterConfirmation, setShowCoverLetterConfirmation] =
 		useState(false);
 	const [showResumeConfirmation, setShowResumeConfirmation] = useState(false);
@@ -48,12 +53,12 @@ export const useGenerationConfirmations = ({
 
 		try {
 			const result = await generateDocuments({
-				includeResume: false,
 				includeCoverLetter: true,
-				resumeTemplate: '',
-				coverLetterTemplate,
+				includeResume: false,
 				candidateDetails,
+				coverLetterTemplate,
 				jobDetails,
+				resumeTemplate: '',
 				skills,
 			});
 
@@ -73,12 +78,13 @@ export const useGenerationConfirmations = ({
 
 		try {
 			const result = await generateDocuments({
-				includeResume: true,
-				includeCoverLetter: false,
-				resumeTemplate,
-				coverLetterTemplate: '',
 				candidateDetails,
+				coverLetterTemplate: '',
+				includeCoverLetter: false,
+				includeResume: true,
 				jobDetails,
+				resumeDetails,
+				resumeTemplate,
 				skills,
 			});
 
@@ -126,7 +132,6 @@ export const useGenerationConfirmations = ({
 			return;
 		}
 
-		// Check if there's existing generated skills content
 		const hasExistingSkills = generatedSkills && generatedSkills.trim() !== '';
 
 		if (hasExistingSkills) {
@@ -134,27 +139,22 @@ export const useGenerationConfirmations = ({
 			return;
 		}
 
-		// If no existing content, generate directly
 		await performSkillsGeneration();
 	};
 
 	return {
-		// Confirmation states
 		showCoverLetterConfirmation,
 		setShowCoverLetterConfirmation,
 		showResumeConfirmation,
 		setShowResumeConfirmation,
 		showSkillsConfirmation,
 		setShowSkillsConfirmation,
-		// Generation functions
 		performCoverLetterGeneration,
 		performResumeGeneration,
 		performSkillsGeneration,
-		// Handler functions
 		handleGenerateCoverLetter,
 		handleGenerateResume,
 		handleGenerateSkills,
-		// Generation states
 		isGeneratingCoverLetter,
 		isGeneratingResume,
 	};

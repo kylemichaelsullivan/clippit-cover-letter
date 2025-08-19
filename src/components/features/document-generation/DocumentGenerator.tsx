@@ -11,6 +11,7 @@ import {
 	useJobStore,
 	useTemplatesStore,
 	useCandidateStore,
+	useResumeStore,
 	useSkillsStore,
 } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
@@ -31,6 +32,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 		setGeneratedResume,
 	} = useTemplatesStore();
 	const { candidateDetails } = useCandidateStore();
+	const { resumeDetails } = useResumeStore();
 	const { skills } = useSkillsStore();
 
 	const handleGenerateDocuments = async () => {
@@ -52,7 +54,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 		}
 
 		setIsGeneratingCoverLetter(true);
-		const loadingToast = showToast.loading('Generating cover letter...');
+		const loadingToast = showToast.loading('Generating cover letter…');
 
 		try {
 			const result = await generateDocuments({
@@ -86,7 +88,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 		}
 
 		setIsGeneratingResume(true);
-		const loadingToast = showToast.loading('Generating resume...');
+		const loadingToast = showToast.loading('Generating resume…');
 
 		try {
 			const result = await generateDocuments({
@@ -96,6 +98,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 				coverLetterTemplate: '',
 				candidateDetails,
 				jobDetails,
+				resumeDetails,
 				skills,
 			});
 
