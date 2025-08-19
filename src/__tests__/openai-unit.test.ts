@@ -160,7 +160,7 @@ describe('OpenAI API Integration', () => {
 					{
 						message: {
 							content:
-								'Dear Hiring Manager,\n\nI am writing to express my interest...',
+								'Dear Hiring Manager,\n\nI am writing to express my interest…',
 						},
 					},
 				],
