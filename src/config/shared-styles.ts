@@ -4,7 +4,7 @@
 const SHARED_PROSE_CORE = `
 	white-space: pre-wrap;
 	color: var(--color-black);
-	line-height: 1;
+	line-height: 1.2;
 `;
 
 const SHARED_PROSE_RESET = `
@@ -14,9 +14,8 @@ const SHARED_PROSE_RESET = `
 
 const SHARED_HEADINGS = `
 	color: var(--color-black);
-	font-weight: 700;
-	line-height: 1.125;
-	margin-bottom: 0;
+	line-height: 1.2;
+	margin: 0;
 `;
 
 const SHARED_HEADING_VARIANTS = `
@@ -31,9 +30,7 @@ const SHARED_FONT_SIZES = {
 };
 
 const SHARED_PARAGRAPH = `
-	line-height: 1.25;
-	margin-bottom: 0;
-	min-height: 1em;
+	margin: 0;
 `;
 
 const SHARED_EMPHASIS = {
@@ -47,37 +44,19 @@ const SHARED_EMPHASIS = {
 };
 
 const SHARED_LISTS = `
-	line-height: 1;
-	padding-left: 1.5em;
-	margin-bottom: 0;
+	margin: 0;
 `;
 
 const SHARED_LIST_ITEMS = `
-	margin-bottom: 0;
+	margin: 0.5rem 0 0;
 `;
 
 const SHARED_BLOCKQUOTE = `
-	border-left: 4px solid var(--color-blue);
+	border-left: 3px solid var(--color-light-gray);
 	color: var(--color-gray);
 	font-style: italic;
-	padding-left: 1em;
-	margin: 0.75em 0;
-`;
-
-const SHARED_CODE = `
-	background-color: var(--color-light-gray);
-	border-radius: 0.25rem;
-	font-family: var(--font-geist-mono), 'Courier New', monospace;
-	font-size: 0.875em;
-	padding: 0.125rem 0.25rem;
-`;
-
-const SHARED_PRE = `
-	background-color: var(--color-light-gray);
-	border-radius: 0.5rem;
-	padding: 1em;
-	margin: 0.75em 0;
-	overflow-x: auto;
+	padding-left: 1rem;
+	margin: 0;
 `;
 
 const SHARED_LINKS = `
@@ -95,7 +74,6 @@ const SHARED_HR = `
 	margin: 1em 0;
 `;
 
-// Generate styles for a specific class name
 function generateProseStyles(className: string): string {
 	return `
 ${className} {
@@ -122,14 +100,26 @@ ${SHARED_HEADING_VARIANTS}
 
 ${className} h1 {
 	font-size: ${SHARED_FONT_SIZES.h1};
+	font-weight: 700;
 }
 
 ${className} h2 {
 	font-size: ${SHARED_FONT_SIZES.h2};
+	font-weight: 700;
+	border-bottom: 1px solid var(--color-gray);
+}
+
+${className} * + h2 {
+	padding-top: 1rem;
 }
 
 ${className} h3 {
 	font-size: ${SHARED_FONT_SIZES.h3};
+	font-weight: 600;
+}
+
+${className} * + h3 {
+	padding-top: 0.5rem;
 }
 
 ${className} h4 {
@@ -138,10 +128,6 @@ ${className} h4 {
 
 ${className} p {
 ${SHARED_PARAGRAPH}
-}
-
-${className} li {
-	padding-top: 0.5em;
 }
 
 ${className} strong {
@@ -162,34 +148,25 @@ ${className} ol {
 ${SHARED_LISTS}
 }
 
+${className} ul {
+	list-style: disc;
+	padding-left: 1.5rem;
+}
+
+${className} ol {
+	list-style: decimal;
+	padding-left: 2rem;
+}
+
 ${className} li {
 ${SHARED_LIST_ITEMS}
-}
-
-${className} ul li {
-	list-style-type: disc;
-}
-
-${className} ol li {
-	list-style-type: decimal;
 }
 
 ${className} blockquote {
 ${SHARED_BLOCKQUOTE}
 }
 
-${className} code {
-${SHARED_CODE}
-}
 
-${className} pre {
-${SHARED_PRE}
-}
-
-${className} pre code {
-	background-color: transparent;
-	padding: 0;
-}
 
 ${className} a {
 ${SHARED_LINKS}
@@ -274,7 +251,6 @@ export function generateUIPageHeaderStyles(): string {
 	return generatePageHeaderStyles('.page-header', '0 0 2rem 0');
 }
 
-// Generate UI-specific styles that extend the shared styles
 export function generateUIStyles(): string {
 	return `
 ${generateProseCompactStyles()}
@@ -307,6 +283,7 @@ ${generateUIPageHeaderStyles()}
 
 .print-document-content p {
 	color: #000000 !important;
+	min-height: 1em;
 }
 
 .print-document-content strong {

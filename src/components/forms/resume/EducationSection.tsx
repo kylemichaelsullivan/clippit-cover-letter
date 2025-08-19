@@ -27,7 +27,7 @@ export function EducationSection({
 	const { registerFocusRef, focusNewEducation } = useFocusNewEducation();
 
 	return (
-		<div className={`EducationSection p-4 sm:p-6`}>
+		<div className='EducationSection'>
 			<Field name='education' form={form}>
 				{() => {
 					return (
@@ -44,7 +44,7 @@ export function EducationSection({
 							/>
 
 							<SkipLinkTarget
-								className='flex justify-center pt-2'
+								className='flex justify-center pt-4'
 								id='AddEducationButton'
 							>
 								<Button

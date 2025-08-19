@@ -4,6 +4,8 @@ import { DocumentSection } from './DocumentSection';
 import { ResumeNotProvidedMessage } from '@/components/ui/feedback';
 import { useResumeGeneration } from '@/lib/hooks';
 import { ConfirmationDialog } from '@/components/ui/feedback';
+import { useTemplatesStore } from '@/lib/stores';
+import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
 
 type ResumeSectionProps = {
 	candidateDetails: any;
@@ -41,6 +43,14 @@ export const ResumeSection = ({
 		resumeDetails,
 		resumeTemplate,
 		skills,
+	});
+
+	const { setIsGeneratingResume } = useTemplatesStore();
+
+	useGenerationTimeout({
+		isGenerating: isGeneratingResume,
+		setIsGenerating: setIsGeneratingResume,
+		timeoutMessage: 'Resume generation timed out. Please try again.',
 	});
 
 	return (

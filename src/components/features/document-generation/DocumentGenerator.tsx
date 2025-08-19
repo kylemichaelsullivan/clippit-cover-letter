@@ -16,6 +16,7 @@ import {
 } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
 import { showToast } from '@/lib/toast';
+import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
 
 export const DocumentGenerator = memo(function DocumentGenerator() {
 	const { currentPhase } = usePhaseStore();
@@ -34,6 +35,15 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	const { candidateDetails } = useCandidateStore();
 	const { resumeDetails } = useResumeStore();
 	const { skills } = useSkillsStore();
+
+	useGenerationTimeout({
+		isGenerating: isGeneratingCoverLetter || isGeneratingResume,
+		setIsGenerating: () => {
+			setIsGeneratingCoverLetter(false);
+			setIsGeneratingResume(false);
+		},
+		timeoutMessage: 'Document generation timed out. Please try again.',
+	});
 
 	const handleGenerateDocuments = async () => {
 		if (!includeCoverLetter && !includeResume) {

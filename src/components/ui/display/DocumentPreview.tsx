@@ -73,6 +73,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 						.print-document-content p {
 							margin: 0.5rem 0;
 							line-height: 1.6;
+							min-height: 1em;
 						}
 						
 						.print-document-content strong {

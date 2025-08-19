@@ -4,6 +4,8 @@ import { DocumentSection } from './DocumentSection';
 import { CoverLetterNotProvidedMessage } from '@/components/ui/feedback';
 import { useCoverLetterGeneration } from '@/lib/hooks';
 import { ConfirmationDialog } from '@/components/ui/feedback';
+import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
+import { useTemplatesStore } from '@/lib/stores';
 
 type CoverLetterSectionProps = {
 	candidateDetails: any;
@@ -34,6 +36,14 @@ export const CoverLetterSection = ({
 		skills,
 		includeCoverLetter,
 		coverLetterTemplate,
+	});
+
+	const { setIsGeneratingCoverLetter } = useTemplatesStore();
+
+	useGenerationTimeout({
+		isGenerating: isGeneratingCoverLetter,
+		setIsGenerating: setIsGeneratingCoverLetter,
+		timeoutMessage: 'Cover letter generation timed out. Please try again.',
 	});
 
 	return (

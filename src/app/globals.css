@@ -691,6 +691,20 @@ button.text-2xs,
 	padding: 0;
 }
 
+/* Education Card */
+.EducationCard .FormFieldContainer .FormFieldLabel {
+	padding: 0.75rem 0;
+}
+
+.EducationCard .EducationItemRemoveButton {
+	position: absolute;
+	width: 4rem;
+	height: 2.5rem;
+	top: 0.25rem;
+	right: 0;
+	padding: 0;
+}
+
 /* Reserve space for LastPass icon */
 input[data-lpignore='false'] {
 	padding-right: 24px !important;
@@ -749,17 +763,26 @@ input[data-lpignore='false'] {
 }
 
 .tiptap.ProseMirror h1 {
-	border-bottom: 1px solid var(--color-gray);
 	font-size: 1.875rem;
 }
 
 .tiptap.ProseMirror h2 {
+	border-bottom: 1px solid var(--color-gray);
 	font-size: 1.5rem;
+	font-variant: small-caps;
+}
+
+.tiptap.ProseMirror * + h2 {
+	padding-top: 1rem;
 }
 
 .tiptap.ProseMirror h3 {
 	font-size: 1.25rem;
 	font-weight: 600;
+}
+
+.tiptap.ProseMirror * + h3 {
+	padding-top: 0.5rem;
 }
 
 .tiptap.ProseMirror ul,

@@ -41,10 +41,7 @@ export const PreviewContent = memo(function PreviewContent() {
 		coverLetterTemplate,
 		jobDetails,
 		includeCoverLetter,
-		includeResume,
 		includeSkills,
-		resumeDetails,
-		resumeTemplate,
 		skills,
 	});
 
@@ -121,10 +118,8 @@ export const PreviewContent = memo(function PreviewContent() {
 				jobDetails={jobDetails}
 				skills={skills}
 				coverLetterTemplate={coverLetterTemplate}
-				resumeTemplate={resumeTemplate}
 				includeSkills={includeSkills}
 				includeCoverLetter={includeCoverLetter}
-				includeResume={includeResume}
 				generationConfirmations={generationConfirmations}
 			/>
 		</>
