@@ -146,7 +146,7 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 							componentName='ConfirmationDialogConfirmButton'
 						>
 							{isClearing ? (
-								'Clearing...'
+								'Clearing…'
 							) : (
 								<>
 									<FontAwesomeIcon icon={faTrash} aria-hidden='true' />

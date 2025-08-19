@@ -5,6 +5,7 @@ import { faRefresh, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 type EmptyStateVariant =
 	| 'cover-letter-not-provided'
+	| 'empty-education'
 	| 'empty-skills'
 	| 'error'
 	| 'loading'
@@ -35,13 +36,20 @@ export function EmptyState({
 	variant,
 	missingTemplatesConfig,
 }: EmptyStateProps) {
-	const getContent = () => {
+			const getContent = () => {
 		switch (variant) {
 			case 'cover-letter-not-provided':
 				return {
 					title: 'Cover Letter Template Missing',
 					description: CONSTANTS.MESSAGES.COVER_LETTER_NOT_PROVIDED,
 					className: 'EmptyState text-gray text-center',
+				};
+			case 'empty-education':
+				return {
+					title: 'No Education Configured',
+					description: 'Add your educational background to include in your resume.',
+					className:
+						'EmptyState text-gray py-4 text-center text-sm sm:py-6 sm:text-base',
 				};
 			case 'empty-skills':
 				return {
@@ -233,6 +241,10 @@ export function MissingTemplatesMessage(props: MissingTemplatesConfig) {
 	return (
 		<EmptyState variant='missing-templates' missingTemplatesConfig={props} />
 	);
+}
+
+export function EmptyEducationMessage() {
+	return <EmptyState variant='empty-education' />;
 }
 
 export function EmptySkillsMessage() {

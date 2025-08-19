@@ -2,6 +2,7 @@ export { Confirmation } from './Confirmation';
 export { ConfirmationDialog } from './ConfirmationDialog';
 export {
 	CoverLetterNotProvidedMessage,
+	EmptyEducationMessage,
 	EmptySkillsMessage,
 	EmptyState,
 	ErrorMessage,
