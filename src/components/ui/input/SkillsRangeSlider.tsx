@@ -63,7 +63,11 @@ export const SkillsRangeSlider = memo(function SkillsRangeSlider({
 	return (
 		<div className='SkillsRangeSlider bg-light-gray flex flex-col gap-3 rounded-lg p-4 shadow-md'>
 			<div className='flex items-center justify-between'>
-				<label className='flex items-center justify-start gap-1 text-base font-medium text-black sm:text-lg'>
+				<label
+					className='flex items-center justify-start gap-1 text-base font-medium text-black sm:text-lg'
+					title='Skills'
+					aria-label='Skills'
+				>
 					<span>Skills</span>
 					<span className='xs:block hidden'>to Use</span>
 				</label>

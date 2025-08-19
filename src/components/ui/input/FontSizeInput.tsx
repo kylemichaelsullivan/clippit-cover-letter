@@ -30,7 +30,13 @@ export const FontSizeInput = memo(function FontSizeInput({
 
 	return (
 		<div className={`FontSizeInput flex items-center gap-2 ${className}`}>
-			<label className='text-sm font-medium'>Base Font:</label>
+			<label
+				className='text-sm font-medium'
+				title='Base Font Size'
+				aria-label='Base font size for resume'
+			>
+				Base Font:
+			</label>
 			<div className='FormField flex'>
 				<input
 					type='number'

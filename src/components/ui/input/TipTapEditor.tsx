@@ -34,7 +34,7 @@ type TipTapEditorProps = {
 export function TipTapEditor({
 	value,
 	onChange,
-	placeholder = 'Start typing...',
+	placeholder = 'Start typing…',
 	componentName,
 	className = '',
 	readOnly = false,
