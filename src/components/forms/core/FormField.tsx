@@ -43,7 +43,11 @@ type BaseFormFieldProps = {
 };
 
 export type FormFieldProps = BaseFormFieldProps &
-	Omit<InputHTMLAttributes<HTMLInputElement>, keyof BaseFormFieldProps>;
+	Omit<
+		InputHTMLAttributes<HTMLInputElement> &
+			TextareaHTMLAttributes<HTMLTextAreaElement>,
+		keyof BaseFormFieldProps
+	>;
 
 export const FormField = memo(function FormField({
 	id,
