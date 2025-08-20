@@ -2,7 +2,6 @@
 
 // Prose styles that are used by both PDF and UI
 const SHARED_PROSE_CORE = `
-	white-space: pre-wrap;
 	color: var(--color-black);
 `;
 
@@ -125,6 +124,10 @@ ${className} h4 {
 
 ${className} p {
 ${SHARED_PARAGRAPH}
+}
+
+${className} h2 + p {
+	margin-top: 0;
 }
 
 ${className} strong {

@@ -14,7 +14,7 @@ export const formatContentForPDF = (content: string): string => {
 		// Not JSON, assume it's already HTML or plain text
 	}
 
-	return content;
+	return content.replace(/<p><\/p>/g, '<p><br></p>');
 };
 
 /**
@@ -34,7 +34,7 @@ const convertNodeToHTML = (node: any): string => {
 
 	switch (node.type) {
 		case 'paragraph':
-			if (!node.content || node.content.length === 0) return '<p></p>';
+			if (!node.content || node.content.length === 0) return '<p><br></p>';
 			return `<p>${node.content.map(convertNodeToHTML).join('')}</p>`;
 
 		case 'heading':

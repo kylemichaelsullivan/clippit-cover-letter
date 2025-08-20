@@ -29,6 +29,26 @@ export const DocumentPreview = memo(function DocumentPreview({
 			<html>
 				<head>
 					<style>
+						:root {
+							--white: #ffffff;
+							--red: #dc2626;
+							--green: #10b981;
+							--light-blue: #60a5fa;
+							--blue: #3b82f6;
+							--light-gray: #cbd5e1;
+							--gray: #64748b;
+							--black: #0f172a;
+							--color-white: var(--white);
+							--color-red: var(--red);
+							--color-green: var(--green);
+							--color-light-blue: var(--light-blue);
+							--color-blue: var(--blue);
+							--color-light-gray: var(--light-gray);
+							--color-gray: var(--gray);
+							--color-black: var(--black);
+							--font-geist-mono: 'Courier New', monospace;
+						}
+						
 						html {
 							font-size: ${fontSize}pt;
 							padding: 1rem 0;
@@ -47,75 +67,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 							padding: 1rem;
 						}
 						
-						/* TipTap Editor Styles */
-						.print-document-content {
-							line-height: 1.6;
-						}
-						
-						.print-document-content h1,
-						.print-document-content h2,
-						.print-document-content h3,
-						.print-document-content h4,
-						.print-document-content h5,
-						.print-document-content h6 {
-							font-weight: bold;
-							margin: 1rem 0 0.5rem 0;
-							line-height: 1.4;
-						}
-						
-						.print-document-content h1 { font-size: 1.8em; }
-						.print-document-content h2 { font-size: 1.5em; }
-						.print-document-content h3 { font-size: 1.3em; }
-						.print-document-content h4 { font-size: 1.1em; }
-						.print-document-content h5 { font-size: 1em; }
-						.print-document-content h6 { font-size: 0.9em; }
-						
-						.print-document-content p {
-							margin: 0.5rem 0;
-							line-height: 1.6;
-							min-height: 1em;
-						}
-						
-						.print-document-content strong {
-							font-weight: bold;
-						}
-						
-						.print-document-content em {
-							font-style: italic;
-						}
-						
-						.print-document-content u {
-							text-decoration: underline;
-						}
-						
-						.print-document-content ul,
-						.print-document-content ol {
-							margin: 0.5rem 0;
-							padding-left: 2rem;
-						}
-						
-						.print-document-content li {
-							margin: 0.25rem 0;
-							line-height: 1.5;
-						}
-						
-						.print-document-content ul {
-							list-style-type: disc;
-						}
-						
-						.print-document-content ol {
-							list-style-type: decimal;
-						}
-						
-						.print-document-content br {
-							line-height: 1;
-						}
-						
-						/* Skills formatting */
-						.print-document-content ul li strong {
-							font-weight: bold;
-						}
-						
+						/* Use shared styles for consistent formatting */
 						${generateUIStyles()}
 					</style>
 				</head>

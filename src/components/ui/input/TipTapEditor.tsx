@@ -121,11 +121,19 @@ export function TipTapEditor({
 			<div
 				className={clsx(
 					componentName || 'TipTapEditor',
-					'border-light-gray rounded-lg border bg-white',
+					componentName === 'DocumentContentTipTapEditor'
+						? ''
+						: 'border-light-gray rounded-lg border bg-white',
 					className,
 				)}
 			>
-				<div className='w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base'>
+				<div
+					className={clsx(
+						componentName === 'DocumentContentTipTapEditor'
+							? 'w-full max-w-none overflow-y-auto text-sm sm:text-base'
+							: 'w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base',
+					)}
+				>
 					{value || placeholder}
 				</div>
 			</div>
@@ -136,7 +144,9 @@ export function TipTapEditor({
 		<div
 			className={clsx(
 				componentName || 'TipTapEditor',
-				'border-light-gray rounded-lg border bg-white',
+				componentName === 'DocumentContentTipTapEditor'
+					? ''
+					: 'border-light-gray rounded-lg border bg-white',
 				className,
 			)}
 		>
@@ -145,8 +155,9 @@ export function TipTapEditor({
 				editor={editor}
 				className={clsx(
 					'TipTapEditorContent',
-					'w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base',
-					'focus:outline-none',
+					componentName === 'DocumentContentTipTapEditor'
+						? 'focus:outline-none'
+						: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base',
 				)}
 				data-placeholder={placeholder}
 			/>
