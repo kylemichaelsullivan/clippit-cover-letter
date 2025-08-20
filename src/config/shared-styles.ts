@@ -4,7 +4,6 @@
 const SHARED_PROSE_CORE = `
 	white-space: pre-wrap;
 	color: var(--color-black);
-	line-height: 1.2;
 `;
 
 const SHARED_PROSE_RESET = `
@@ -30,6 +29,7 @@ const SHARED_FONT_SIZES = {
 };
 
 const SHARED_PARAGRAPH = `
+	line-height: 1.2;
 	margin: 0;
 `;
 
@@ -44,10 +44,12 @@ const SHARED_EMPHASIS = {
 };
 
 const SHARED_LISTS = `
+	line-height: 1.2;
 	margin: 0;
 `;
 
 const SHARED_LIST_ITEMS = `
+	line-height: 1.2;
 	margin: 0.5rem 0 0;
 `;
 
@@ -55,6 +57,7 @@ const SHARED_BLOCKQUOTE = `
 	border-left: 3px solid var(--color-light-gray);
 	color: var(--color-gray);
 	font-style: italic;
+	line-height: 1.2;
 	padding-left: 1rem;
 	margin: 0;
 `;
@@ -66,12 +69,6 @@ const SHARED_LINKS = `
 
 const SHARED_LINKS_HOVER = `
 	color: var(--color-light-blue);
-`;
-
-const SHARED_HR = `
-	border: none;
-	border-top: 1px solid var(--color-light-gray);
-	margin: 1em 0;
 `;
 
 function generateProseStyles(className: string): string {
@@ -166,18 +163,12 @@ ${className} blockquote {
 ${SHARED_BLOCKQUOTE}
 }
 
-
-
 ${className} a {
 ${SHARED_LINKS}
 }
 
 ${className} a:hover {
 ${SHARED_LINKS_HOVER}
-}
-
-${className} hr {
-${SHARED_HR}
 }
 
 ${className} .page-break {
@@ -283,7 +274,6 @@ ${generateUIPageHeaderStyles()}
 
 .print-document-content p {
 	color: #000000 !important;
-	min-height: 1em;
 }
 
 .print-document-content strong {
