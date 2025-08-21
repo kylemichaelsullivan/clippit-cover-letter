@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
-import { useTemplatesStore } from '@/lib/stores';
+import { useTemplatesStore, useSkillsStore } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
 
 type UseCoverLetterGenerationProps = {
 	candidateDetails: any;
 	jobDetails: any;
 	skills: any;
-	coverLetterTemplate: string;
 	includeCoverLetter: boolean;
+	coverLetterTemplate: string;
 };
 
 export const useCoverLetterGeneration = ({
 	candidateDetails,
-	jobDetails,
-	skills,
-	coverLetterTemplate,
 	includeCoverLetter,
+	jobDetails,
+	coverLetterTemplate,
+	skills,
 }: UseCoverLetterGenerationProps) => {
 	const {
 		generatedCoverLetter,
@@ -24,6 +24,7 @@ export const useCoverLetterGeneration = ({
 		isGeneratingCoverLetter,
 		setIsGeneratingCoverLetter,
 	} = useTemplatesStore();
+	const { includeSkillGroupNames } = useSkillsStore();
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -32,13 +33,13 @@ export const useCoverLetterGeneration = ({
 
 		try {
 			const result = await generateDocuments({
-				includeResume: false,
 				includeCoverLetter: true,
-				resumeTemplate: '',
-				coverLetterTemplate,
+				includeResume: false,
 				candidateDetails,
+				coverLetterTemplate,
 				jobDetails,
 				skills,
+				includeSkillGroupNames,
 			});
 
 			setGeneratedCoverLetter(result.coverLetter);

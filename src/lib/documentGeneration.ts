@@ -11,16 +11,16 @@ import type { MustacheReplacement } from '@/config/mustacheReplacements';
 export type DocumentGenerationParams = {
 	includeResume: boolean;
 	includeCoverLetter: boolean;
-	resumeTemplate: string;
 	coverLetterTemplate: string;
 	candidateDetails: CandidateDetails;
 	jobDetails: Job;
 	resumeDetails?: {
 		summary: string;
-		experience: string;
+		experience: any[];
 		education: any[];
 	};
 	skills?: Skills;
+	includeSkillGroupNames?: boolean;
 };
 
 export type DocumentGenerationResult = {
@@ -139,15 +139,38 @@ const formatEducationText = (education: any[]): string => {
 	return result;
 };
 
+const formatExperienceText = (experience?: any[]): string => {
+	if (!experience || experience.length === 0) {
+		return '';
+	}
+
+	return experience
+		.filter((exp) => exp.include !== false && (exp.title || exp.company))
+		.map((exp) => {
+			const dateRange =
+				exp.start && exp.end ? ` | ${exp.start} - ${exp.end}` : '';
+			const bulletsText =
+				exp.bullets && exp.bullets.length > 0
+					? exp.bullets.map((bullet: string) => `<li>${bullet}</li>`).join('')
+					: '';
+			const bulletsHtml = bulletsText ? `<ul>${bulletsText}</ul>` : '';
+
+			return `<h3>${exp.title}</h3>
+<p><span class="text-shadow">${exp.company}</span>${dateRange}</p>${bulletsHtml}`;
+		})
+		.join('\n\n');
+};
+
 const createMustacheValues = (
 	candidateDetails: CandidateDetails,
 	jobDetails: Job,
 	resumeDetails?: {
 		summary: string;
-		experience: string;
+		experience: any[];
 		education: any[];
 	},
 	skills?: Skills,
+	includeSkillGroupNames?: boolean,
 ): Record<string, string> => {
 	const values: Record<string, string> = {};
 
@@ -176,6 +199,11 @@ const createMustacheValues = (
 				values[replacement.name] = candidateDetails.portfolio || '';
 				break;
 			case 'My Skills':
+				values[replacement.name] = includeSkillGroupNames
+					? formatSkillsGrouped(skills)
+					: formatSkillsUngrouped(skills);
+				break;
+			case 'Grouped Skills':
 				values[replacement.name] = formatSkillsGrouped(skills);
 				break;
 			case 'Ungrouped Skills':
@@ -207,7 +235,7 @@ const createMustacheValues = (
 
 	values['skills'] = formatSkillsGrouped(skills);
 	values['summary'] = resumeDetails?.summary || '';
-	values['experience'] = resumeDetails?.experience || '';
+	values['experience'] = formatExperienceText(resumeDetails?.experience);
 
 	values['education'] = formatEducationText(resumeDetails?.education || []);
 
@@ -228,12 +256,12 @@ const createERBInstructions = (): Record<string, string> => {
 export async function generateDocuments({
 	includeResume,
 	includeCoverLetter,
-	resumeTemplate,
 	coverLetterTemplate,
 	candidateDetails,
 	jobDetails,
 	resumeDetails,
 	skills,
+	includeSkillGroupNames,
 }: DocumentGenerationParams): Promise<DocumentGenerationResult> {
 	if (!includeResume && !includeCoverLetter) {
 		console.log('No documents selected for generation');
@@ -248,6 +276,7 @@ export async function generateDocuments({
 		jobDetails,
 		resumeDetails,
 		skills,
+		includeSkillGroupNames,
 	);
 
 	const erbInstructions = createERBInstructions();
@@ -262,7 +291,7 @@ export async function generateDocuments({
 		console.log('Generating resume…');
 
 		const summaryContent = resumeDetails?.summary || '';
-		const experienceContent = resumeDetails?.experience || '';
+		const experienceContent = formatExperienceText(resumeDetails?.experience);
 		const skillsContent = formatSkillsGrouped(skills);
 
 		const educationContent = resumeDetails?.education

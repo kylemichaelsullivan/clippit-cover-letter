@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useTemplatesStore } from '@/lib/stores';
+import { useTemplatesStore, useSkillsStore } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
 
 type UseResumeGenerationProps = {
@@ -10,10 +10,9 @@ type UseResumeGenerationProps = {
 	includeResume: boolean;
 	resumeDetails?: {
 		education: any[];
-		experience: string;
+		experience: any[];
 		summary: string;
 	};
-	resumeTemplate: string;
 };
 
 export const useResumeGeneration = ({
@@ -21,7 +20,6 @@ export const useResumeGeneration = ({
 	includeResume,
 	jobDetails,
 	resumeDetails,
-	resumeTemplate,
 	skills,
 }: UseResumeGenerationProps) => {
 	const {
@@ -30,6 +28,7 @@ export const useResumeGeneration = ({
 		isGeneratingResume,
 		setIsGeneratingResume,
 	} = useTemplatesStore();
+	const { includeSkillGroupNames } = useSkillsStore();
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -44,8 +43,8 @@ export const useResumeGeneration = ({
 				coverLetterTemplate: '',
 				jobDetails,
 				resumeDetails,
-				resumeTemplate,
 				skills,
+				includeSkillGroupNames,
 			});
 
 			setGeneratedResume(result.resume);

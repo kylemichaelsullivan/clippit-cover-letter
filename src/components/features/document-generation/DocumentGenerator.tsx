@@ -24,7 +24,6 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	const { jobDetails } = useJobStore();
 	const {
 		coverLetterTemplate,
-		resumeTemplate,
 		isGeneratingCoverLetter,
 		setIsGeneratingCoverLetter,
 		isGeneratingResume,
@@ -34,7 +33,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	} = useTemplatesStore();
 	const { candidateDetails } = useCandidateStore();
 	const { resumeDetails } = useResumeStore();
-	const { skills } = useSkillsStore();
+	const { skills, includeSkillGroupNames } = useSkillsStore();
 
 	useGenerationTimeout({
 		isGenerating: isGeneratingCoverLetter || isGeneratingResume,
@@ -71,10 +70,10 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 				includeCoverLetter: true,
 				includeResume: false,
 				coverLetterTemplate,
-				resumeTemplate,
 				candidateDetails,
 				jobDetails,
 				skills,
+				includeSkillGroupNames,
 			});
 
 			setGeneratedCoverLetter(result.coverLetter);
@@ -104,12 +103,12 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 			const result = await generateDocuments({
 				includeResume: true,
 				includeCoverLetter: false,
-				resumeTemplate,
 				coverLetterTemplate: '',
 				candidateDetails,
 				jobDetails,
 				resumeDetails,
 				skills,
+				includeSkillGroupNames,
 			});
 
 			setGeneratedResume(result.resume);

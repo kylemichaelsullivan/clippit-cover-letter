@@ -19,13 +19,13 @@ export const useDocumentGeneration = () => {
 		setIsGeneratingSkills,
 		generatedSkills,
 		setGeneratedSkills,
+		includeSkillGroupNames,
 	} = useSkillsStore();
 	const { resumeDetails } = useResumeStore();
 	const {
 		coverLetterTemplate,
 		isGeneratingCoverLetter,
 		setIsGeneratingCoverLetter,
-		resumeTemplate,
 		isGeneratingResume,
 		setIsGeneratingResume,
 		generatedCoverLetter,
@@ -101,8 +101,8 @@ export const useDocumentGeneration = () => {
 					includeCoverLetter: true,
 					includeResume: false,
 					jobDetails,
-					resumeTemplate: '',
 					skills,
+					includeSkillGroupNames,
 				})
 					.then((result) => {
 						setGeneratedCoverLetter(result.coverLetter);
@@ -120,7 +120,7 @@ export const useDocumentGeneration = () => {
 			}
 		}
 
-		if (includeResume && resumeTemplate) {
+		if (includeResume) {
 			if (!generatedResume || generatedResume.trim() === '') {
 				setIsGeneratingResume(true);
 				const resumeTask = generateDocuments({
@@ -129,8 +129,8 @@ export const useDocumentGeneration = () => {
 					includeCoverLetter: false,
 					includeResume: true,
 					jobDetails,
-					resumeTemplate,
 					skills,
+					includeSkillGroupNames,
 				})
 					.then((result) => {
 						setGeneratedResume(result.resume);
@@ -180,8 +180,8 @@ export const useDocumentGeneration = () => {
 				includeCoverLetter: true,
 				includeResume: false,
 				jobDetails,
-				resumeTemplate: '',
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedCoverLetter(result.coverLetter);
@@ -198,7 +198,7 @@ export const useDocumentGeneration = () => {
 			generationTasks.push(coverLetterTask);
 		}
 
-		if (includeResume && resumeTemplate) {
+		if (includeResume) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
 				candidateDetails,
@@ -207,8 +207,8 @@ export const useDocumentGeneration = () => {
 				includeResume: true,
 				jobDetails,
 				resumeDetails,
-				resumeTemplate,
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -261,8 +261,8 @@ export const useDocumentGeneration = () => {
 				includeCoverLetter: true,
 				includeResume: false,
 				jobDetails,
-				resumeTemplate: '',
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedCoverLetter(result.coverLetter);
@@ -279,7 +279,7 @@ export const useDocumentGeneration = () => {
 			generationTasks.push(coverLetterTask);
 		}
 
-		if (selectedItems.includes('resume') && includeResume && resumeTemplate) {
+		if (selectedItems.includes('resume') && includeResume) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
 				candidateDetails,
@@ -288,8 +288,8 @@ export const useDocumentGeneration = () => {
 				includeResume: true,
 				jobDetails,
 				resumeDetails,
-				resumeTemplate,
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -330,8 +330,8 @@ export const useDocumentGeneration = () => {
 				includeCoverLetter: true,
 				includeResume: false,
 				jobDetails,
-				resumeTemplate: '',
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedCoverLetter(result.coverLetter);
@@ -348,11 +348,7 @@ export const useDocumentGeneration = () => {
 			generationTasks.push(coverLetterTask);
 		}
 
-		if (
-			includeResume &&
-			resumeTemplate &&
-			(!generatedResume || generatedResume.trim() === '')
-		) {
+		if (includeResume && (!generatedResume || generatedResume.trim() === '')) {
 			setIsGeneratingResume(true);
 			const resumeTask = generateDocuments({
 				candidateDetails,
@@ -361,8 +357,8 @@ export const useDocumentGeneration = () => {
 				includeResume: true,
 				jobDetails,
 				resumeDetails,
-				resumeTemplate,
 				skills,
+				includeSkillGroupNames,
 			})
 				.then((result) => {
 					setGeneratedResume(result.resume);
@@ -384,7 +380,6 @@ export const useDocumentGeneration = () => {
 		includeCoverLetter,
 		includeResume,
 		coverLetterTemplate,
-		resumeTemplate,
 		generatedSkills,
 		generatedCoverLetter,
 		generatedResume,
@@ -397,6 +392,7 @@ export const useDocumentGeneration = () => {
 		setGeneratedCoverLetter,
 		setIsGeneratingResume,
 		setGeneratedResume,
+		includeSkillGroupNames,
 	]);
 
 	const handleGenerateAll = useCallback(async () => {
