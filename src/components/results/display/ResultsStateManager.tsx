@@ -3,13 +3,12 @@
 import { memo } from 'react';
 
 import { DocumentContent } from '@/components/results/panels';
-import { ActionButtons, CopyButton } from '@/components/results/actions';
+import { ActionButtons } from '@/components/results/actions';
 import { EmptyState } from '@/components/ui/feedback';
 import { FontSizeInput } from '@/components/ui/input';
 import {
 	useAppStore,
 	useTemplatesStore,
-	useSkillsStore,
 	useCandidateStore,
 } from '@/lib/stores';
 
@@ -27,13 +26,10 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 		setResumeFontSize,
 	} = useAppStore();
 	const { generatedCoverLetter, generatedResume } = useTemplatesStore();
-	const { generatedSkills, includeSkills } = useSkillsStore();
 	const { candidateDetails } = useCandidateStore();
 
-	const hasSelectedDocuments =
-		includeSkills || includeCoverLetter || includeResume;
+	const hasSelectedDocuments = includeCoverLetter || includeResume;
 	const hasGeneratedContent =
-		(includeSkills && generatedSkills) ||
 		(includeCoverLetter && generatedCoverLetter) ||
 		(includeResume && generatedResume);
 
@@ -86,17 +82,6 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						candidateDetails={candidateDetails}
 						fontSize={resumeFontSize}
 					/>
-				</div>
-			</div>
-
-			<div className={includeSkills && generatedSkills ? '' : 'hidden'}>
-				<div className='flex flex-col gap-4'>
-					<DocumentContent
-						title='Skills Summary'
-						content={generatedSkills}
-						isEditable={false}
-					/>
-					<CopyButton text={generatedSkills} />
 				</div>
 			</div>
 		</div>

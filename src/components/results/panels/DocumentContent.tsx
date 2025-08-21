@@ -3,11 +3,11 @@
 import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Checkbox, TipTapEditor } from '@/components/ui/input';
-import { FormattedPreview, DocumentPreview } from '@/components/ui/display';
+import { TipTapEditor } from '@/components/ui/input';
+import { DocumentPreview } from '@/components/ui/display';
 import { PLACEHOLDERS } from '@/config';
 import { renderHtmlContent } from '@/lib/utils';
-import { useCandidateStore, useSkillsStore } from '@/lib/stores';
+import { useCandidateStore } from '@/lib/stores';
 
 type DocumentContentProps = {
 	title: string;
@@ -30,12 +30,10 @@ export const DocumentContent = memo(function DocumentContent({
 	fontSize,
 	fontSizeInput,
 }: DocumentContentProps) {
-	const { includeSkillGroupNames, setIncludeSkillGroupNames } =
-		useSkillsStore();
 	const { candidateDetails } = useCandidateStore();
-	const isSkills = title.toLowerCase().includes('skills');
 	const isCoverLetter = title.toLowerCase().includes('cover letter');
 	const isResume = title.toLowerCase().includes('resume');
+	const isSkills = title.toLowerCase().includes('skills');
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
@@ -72,16 +70,7 @@ export const DocumentContent = memo(function DocumentContent({
 				>
 					<span>{title}</span>
 				</label>
-				{isSkills ? (
-					<div>
-						<Checkbox
-							checked={includeSkillGroupNames}
-							onChange={setIncludeSkillGroupNames}
-							label='Include Group Names'
-							className='text-sm'
-						/>
-					</div>
-				) : fontSizeInput ? (
+				{fontSizeInput ? (
 					<div className='flex items-center justify-between'>
 						{fontSizeInput}
 					</div>
@@ -96,7 +85,6 @@ export const DocumentContent = memo(function DocumentContent({
 						'{title}',
 						title.toLowerCase(),
 					)}
-					componentName='DocumentContentTipTapEditor'
 					readOnly={true}
 					className='text-light-gray'
 				/>
@@ -109,19 +97,12 @@ export const DocumentContent = memo(function DocumentContent({
 							'{title}',
 							title.toLowerCase(),
 						)}
-						componentName='DocumentContentTipTapEditor'
 						readOnly={false}
 						id={inputId}
+						componentName={isSkills ? 'DocumentContentTipTapEditor' : undefined}
+						className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 					/>
-					{isSkills ? (
-						<FormattedPreview
-							content={content}
-							componentName='DocumentContentFormattedPreview'
-							isGenerating={false}
-							isSkills={true}
-							title={title}
-						/>
-					) : isResume || isCoverLetter ? (
+					{isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>
 							<DocumentPreview
 								content={content}
@@ -139,14 +120,6 @@ export const DocumentContent = memo(function DocumentContent({
 						</div>
 					)}
 				</div>
-			) : isSkills ? (
-				<FormattedPreview
-					content={content}
-					componentName='DocumentContentFormattedPreview'
-					isGenerating={isGenerating}
-					isSkills={true}
-					title={title}
-				/>
 			) : isResume || isCoverLetter ? (
 				<div className='bg-gray rounded-lg p-4'>
 					<DocumentPreview
