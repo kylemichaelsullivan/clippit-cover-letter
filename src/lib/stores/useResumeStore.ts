@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { DEFAULTS } from '@/config';
-import type { Education, ResumeDetails } from '@/types';
+import type { Education, Experience, ResumeDetails } from '@/types';
 
 type ResumeState = {
 	resumeDetails: ResumeDetails;
@@ -12,6 +12,10 @@ type ResumeState = {
 	addEducation: (education: Education) => void;
 	removeEducation: (index: number) => void;
 	updateEducation: (index: number, education: Education) => void;
+	setExperience: (experience: Experience[]) => void;
+	addExperience: (experience: Experience) => void;
+	removeExperience: (index: number) => void;
+	updateExperience: (index: number, experience: Experience) => void;
 	clearResume: () => void;
 };
 
@@ -21,7 +25,17 @@ export const useResumeStore = create<ResumeState>()(
 			(set) => ({
 				resumeDetails: {
 					summary: DEFAULTS.INITIAL_STATES.RESUME.summary,
-					experience: DEFAULTS.INITIAL_STATES.RESUME.experience,
+					experience: [
+						{
+							id: crypto.randomUUID(),
+							include: true,
+							title: '',
+							company: '',
+							start: '',
+							end: '',
+							bullets: [],
+						},
+					],
 					education: [
 						{
 							id: crypto.randomUUID(),
@@ -98,11 +112,76 @@ export const useResumeStore = create<ResumeState>()(
 						};
 					}),
 
+				setExperience: (experience) =>
+					set((state) => ({
+						resumeDetails: {
+							...state.resumeDetails,
+							experience,
+						},
+					})),
+
+				addExperience: (experience) =>
+					set((state) => ({
+						resumeDetails: {
+							...state.resumeDetails,
+							experience: [...state.resumeDetails.experience, experience],
+						},
+					})),
+
+				removeExperience: (index) =>
+					set((state) => {
+						const updatedExperience = state.resumeDetails.experience.filter(
+							(_, i) => i !== index,
+						);
+
+						if (updatedExperience.length === 0) {
+							updatedExperience.push({
+								id: crypto.randomUUID(),
+								include: true,
+								title: '',
+								company: '',
+								start: '',
+								end: '',
+								bullets: [],
+							});
+						}
+
+						return {
+							resumeDetails: {
+								...state.resumeDetails,
+								experience: updatedExperience,
+							},
+						};
+					}),
+
+				updateExperience: (index, experience) =>
+					set((state) => {
+						const updatedExperience = [...state.resumeDetails.experience];
+						updatedExperience[index] = experience;
+
+						return {
+							resumeDetails: {
+								...state.resumeDetails,
+								experience: updatedExperience,
+							},
+						};
+					}),
+
 				clearResume: () =>
 					set({
 						resumeDetails: {
 							summary: DEFAULTS.INITIAL_STATES.RESUME.summary,
-							experience: DEFAULTS.INITIAL_STATES.RESUME.experience,
+							experience: [
+								{
+									id: crypto.randomUUID(),
+									include: true,
+									title: '',
+									company: '',
+									start: '',
+									end: '',
+									bullets: [],
+								},
+							],
 							education: [
 								{
 									id: crypto.randomUUID(),

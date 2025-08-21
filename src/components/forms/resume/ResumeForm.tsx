@@ -9,7 +9,7 @@ import { usePhaseStore } from '@/lib/stores';
 import { useResumeForm } from '@/lib/hooks';
 import {
 	Summary,
-	Experience,
+	ExperienceSection,
 	EducationSection,
 	SortEducationButton,
 } from './index';
@@ -18,7 +18,7 @@ type ResumeFormProps = {
 	onSubmit: (
 		includeResume: boolean,
 		summary: string,
-		experience: string,
+		experience: any[],
 		education: any[],
 	) => void;
 };
@@ -33,6 +33,8 @@ export const ResumeForm = memo(function ResumeForm({
 		handleFieldChange,
 		addEducation,
 		removeEducation,
+		addExperience,
+		removeExperience,
 		sortEducationByYear,
 	} = useResumeForm(onSubmit);
 
@@ -66,17 +68,14 @@ export const ResumeForm = memo(function ResumeForm({
 					</Field>
 
 					<Field name='experience' form={form}>
-						{(experienceField) => (
-							<FormSection
-								id='experience'
-								title='Experience'
-								checked={experienceField.state.value ? true : false}
-								onCheckedChange={(value: boolean) => {
-									experienceField.handleChange(value ? ' ' : '');
-									handleFieldChange('experience', value ? ' ' : '');
-								}}
-							>
-								<Experience form={form} handleFieldChange={handleFieldChange} />
+						{() => (
+							<FormSection id='experience' title='Experience'>
+								<ExperienceSection
+									form={form}
+									addExperience={addExperience}
+									removeExperience={removeExperience}
+									handleFieldChange={handleFieldChange}
+								/>
 							</FormSection>
 						)}
 					</Field>

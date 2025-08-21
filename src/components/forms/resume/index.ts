@@ -1,8 +1,12 @@
+export { Bullet } from './Bullet';
+export { Bullets } from './Bullets';
 export { EducationContent } from './EducationContent';
 export { EducationHeader } from './EducationHeader';
 export { EducationItem } from './EducationItem';
 export { EducationSection } from './EducationSection';
-export { Experience } from './Experience';
+export { ExperienceContent } from './ExperienceContent';
+export { ExperienceItem } from './ExperienceItem';
+export { ExperienceSection } from './ExperienceSection';
 export { ResumeForm } from './ResumeForm';
 export { SortEducationButton } from './SortEducationButton';
 export { Summary } from './Summary';

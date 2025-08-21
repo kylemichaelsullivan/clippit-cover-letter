@@ -3,14 +3,14 @@
 import { useCallback } from 'react';
 import { useForm } from '@tanstack/react-form';
 
-import { useAppStore, useResumeStore, useTemplatesStore } from '@/lib/stores';
+import { useAppStore, useResumeStore } from '@/lib/stores';
 import { DEFAULTS } from '@/config';
-import type { Education } from '@/types';
+import type { Education, Experience } from '@/types';
 
 export type ResumeFormValues = {
 	includeResume: boolean;
 	summary: string;
-	experience: string;
+	experience: Experience[];
 	education: Education[];
 };
 
@@ -23,115 +23,42 @@ const createDefaultEducation = (): Education => ({
 	location: '',
 });
 
-const formatEducationText = (education: Education[]): string => {
-	return education
-		.filter((edu) => edu.include !== false && (edu.degree || edu.institution))
-		.map((edu) => {
-			const locationText = edu.location ? ` | ${edu.location}` : '';
-			return `<h3>${edu.degree}</h3>
-<p><span class="text-shadow">${edu.institution}</span>${locationText}</p>`;
-		})
-		.join('\n\n');
-};
-
-const createResumeTemplate = (
-	summary: string,
-	experience: string,
-	education: Education[],
-): string => {
-	return `<h2>Summary</h2>
-{{summary}}
-
-<h2>Skills</h2>
-{{skills}}
-
-<h2>Experience</h2>
-{{experience}}
-
-<h2>Education</h2>
-{{education}}`;
-};
-
-const parseResumeTemplate = (template: string) => {
-	const sections = {
-		summary: '',
-		experience: '',
-		education: [] as Education[],
-	};
-	const lines = template.split('\n');
-	let currentSection: 'summary' | 'experience' | 'education' = 'summary';
-	let sectionContent: string[] = [];
-
-	for (const line of lines) {
-		const trimmedLine = line.trim();
-		const lowerLine = trimmedLine.toLowerCase();
-
-		if (lowerLine.startsWith('<h2>summary</h2>')) {
-			if (currentSection === 'summary')
-				sections.summary = sectionContent.join('\n').trim();
-			currentSection = 'summary';
-			sectionContent = [];
-		} else if (lowerLine.startsWith('<h2>skills</h2>')) {
-			if (currentSection === 'summary')
-				sections.summary = sectionContent.join('\n').trim();
-			currentSection = 'summary';
-			sectionContent = [];
-		} else if (lowerLine.startsWith('<h2>experience</h2>')) {
-			if (currentSection === 'summary')
-				sections.summary = sectionContent.join('\n').trim();
-			currentSection = 'experience';
-			sectionContent = [];
-		} else if (lowerLine.startsWith('<h2>education</h2>')) {
-			if (currentSection === 'summary')
-				sections.summary = sectionContent.join('\n').trim();
-			else if (currentSection === 'experience')
-				sections.experience = sectionContent.join('\n').trim();
-			currentSection = 'education';
-			sectionContent = [];
-		} else if (trimmedLine) {
-			sectionContent.push(line);
-		}
-	}
-
-	if (currentSection === 'summary')
-		sections.summary = sectionContent.join('\n').trim();
-	else if (currentSection === 'experience')
-		sections.experience = sectionContent.join('\n').trim();
-
-	return sections;
-};
+const createDefaultExperience = (): Experience => ({
+	id: crypto.randomUUID(),
+	include: true,
+	title: '',
+	company: '',
+	start: '',
+	end: '',
+	bullets: [],
+});
 
 export function useResumeForm(
 	onSubmit: (
 		includeResume: boolean,
 		summary: string,
-		experience: string,
+		experience: Experience[],
 		education: Education[],
 	) => void,
 ) {
 	const { includeResume, setIncludeResume } = useAppStore();
-	const { resumeDetails, setResumeDetails, setEducation } = useResumeStore();
-	const { resumeTemplate, setResumeTemplate } = useTemplatesStore();
-
-	const existingSections = parseResumeTemplate(resumeTemplate);
+	const { resumeDetails, setResumeDetails, setEducation, setExperience } =
+		useResumeStore();
 	const initialEducation =
 		resumeDetails.education.length > 0
 			? resumeDetails.education
-			: existingSections.education.length > 0
-				? existingSections.education
-				: [createDefaultEducation()];
+			: [createDefaultEducation()];
+
+	const initialExperience =
+		resumeDetails.experience.length > 0
+			? resumeDetails.experience
+			: [createDefaultExperience()];
 
 	const form = useForm({
 		defaultValues: {
 			includeResume,
-			summary:
-				resumeDetails.summary ||
-				existingSections.summary ||
-				DEFAULTS.INITIAL_STATES.RESUME.summary,
-			experience:
-				resumeDetails.experience ||
-				existingSections.experience ||
-				DEFAULTS.INITIAL_STATES.RESUME.experience,
+			summary: resumeDetails.summary || DEFAULTS.INITIAL_STATES.RESUME.summary,
+			experience: initialExperience,
 			education: initialEducation,
 		},
 		onSubmit: async ({ value }) => {
@@ -141,9 +68,6 @@ export function useResumeForm(
 				experience: value.experience,
 				education: value.education,
 			});
-			setResumeTemplate(
-				createResumeTemplate(value.summary, value.experience, value.education),
-			);
 			onSubmit(
 				value.includeResume,
 				value.summary,
@@ -160,15 +84,8 @@ export function useResumeForm(
 				experience: values.experience || '',
 				education: values.education || [],
 			});
-			setResumeTemplate(
-				createResumeTemplate(
-					values.summary || '',
-					values.experience || '',
-					values.education || [],
-				),
-			);
 		},
-		[setResumeDetails, setResumeTemplate],
+		[setResumeDetails],
 	);
 
 	const handleFieldChange = useCallback(
@@ -196,6 +113,18 @@ export function useResumeForm(
 		return currentEducation.length;
 	}, [form, setEducation, updateTemplate]);
 
+	const addExperience = useCallback(() => {
+		const currentExperience = form.getFieldValue('experience') || [];
+		const newExperience = createDefaultExperience();
+		const updatedExperience = [...currentExperience, newExperience];
+
+		form.setFieldValue('experience', updatedExperience);
+		setExperience(updatedExperience);
+		updateTemplate({ ...form.state.values, experience: updatedExperience });
+
+		return currentExperience.length;
+	}, [form, setExperience, updateTemplate]);
+
 	const removeEducation = useCallback(
 		(educationIndex: number) => {
 			const currentEducation = form.getFieldValue('education') || [];
@@ -212,6 +141,24 @@ export function useResumeForm(
 			updateTemplate({ ...form.state.values, education: updatedEducation });
 		},
 		[form, setEducation, updateTemplate],
+	);
+
+	const removeExperience = useCallback(
+		(experienceIndex: number) => {
+			const currentExperience = form.getFieldValue('experience') || [];
+			let updatedExperience = currentExperience.filter(
+				(_: Experience, index: number) => index !== experienceIndex,
+			);
+
+			if (updatedExperience.length === 0) {
+				updatedExperience = [createDefaultExperience()];
+			}
+
+			form.setFieldValue('experience', updatedExperience);
+			setExperience(updatedExperience);
+			updateTemplate({ ...form.state.values, experience: updatedExperience });
+		},
+		[form, setExperience, updateTemplate],
 	);
 
 	const sortEducationByYear = useCallback(() => {
@@ -237,6 +184,8 @@ export function useResumeForm(
 		handleFieldChange,
 		addEducation,
 		removeEducation,
+		addExperience,
+		removeExperience,
 		sortEducationByYear,
 	};
 }

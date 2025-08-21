@@ -1,10 +1,12 @@
 export type CandidateDetails = {
-	fullName: string;
 	email: string;
-	phone?: string;
-	location?: string;
+	fullName: string;
 	linkedin?: string;
+	location?: string;
+	logo?: string;
+	phone?: string;
 	portfolio?: string;
+	signature?: string;
 };
 
 export type FormData = {
@@ -14,7 +16,7 @@ export type FormData = {
 
 export type ResumeDetails = {
 	summary: string;
-	experience: string;
+	experience: Experience[];
 	education: Education[];
 };
 
@@ -25,6 +27,16 @@ export type Education = {
 	graduationYear: string;
 	institution: string;
 	location: string;
+};
+
+export type Experience = {
+	id: string;
+	include: boolean;
+	title: string;
+	company: string;
+	start: string;
+	end: string;
+	bullets: string[];
 };
 
 export type Job = {
