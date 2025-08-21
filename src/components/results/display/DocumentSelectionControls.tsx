@@ -6,46 +6,22 @@ import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
 import { DocumentSelectionControl } from './DocumentSelectionControl';
-import { SkillsRangeSlider } from '@/components/ui/input';
-import { useAppStore, useSkillsStore, useTemplatesStore } from '@/lib/stores';
+import { useAppStore, useTemplatesStore } from '@/lib/stores';
 import { useDocumentGeneration } from '@/lib/hooks';
 
 type DocumentSelectionControlsProps = {
 	className?: string;
 };
 
-const SkillsControls = memo(function SkillsControls() {
-	const { skills, setSkillsRange } = useSkillsStore();
-	const { includeSkills } = useSkillsStore();
-
-	if (!skills?.groups?.length) {
-		return null;
-	}
-
-	return (
-		<div className={includeSkills ? '' : 'hidden'}>
-			<SkillsRangeSlider
-				minSkills={skills.minSkillsToUse}
-				maxSkills={skills.maxSkillsToUse}
-				onRangeChange={setSkillsRange}
-			/>
-		</div>
-	);
-});
-
 export const DocumentSelectionControls = memo(
 	function DocumentSelectionControls({
 		className,
 	}: DocumentSelectionControlsProps) {
-		const { includeSkills, setIncludeSkills, generatedSkills } =
-			useSkillsStore();
 		const {
 			includeCoverLetter,
 			setIncludeCoverLetter,
 			includeResume,
 			setIncludeResume,
-			skillsInstructions,
-			setSkillsInstructions,
 			coverLetterInstructions,
 			setCoverLetterInstructions,
 			resumeInstructions,
@@ -65,14 +41,6 @@ export const DocumentSelectionControls = memo(
 
 		const availableItems = useMemo(() => {
 			const items = [];
-
-			if (includeSkills && generatedSkills && generatedSkills.trim() !== '') {
-				items.push({
-					id: 'skills',
-					label: 'Skills Summary',
-					checked: true,
-				});
-			}
 
 			if (
 				includeCoverLetter &&
@@ -96,8 +64,6 @@ export const DocumentSelectionControls = memo(
 
 			return items;
 		}, [
-			includeSkills,
-			generatedSkills,
 			includeCoverLetter,
 			generatedCoverLetter,
 			includeResume,
@@ -114,18 +80,6 @@ export const DocumentSelectionControls = memo(
 					className={`DocumentSelectionControls flex flex-col gap-4 rounded-lg border border-black bg-white p-4 ${className || ''}`}
 				>
 					<div className='flex flex-col gap-14'>
-						<DocumentSelectionControl
-							checked={includeSkills}
-							onChange={setIncludeSkills}
-							label='Skills Summary'
-							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.SKILLS_SUMMARY}
-							value={skillsInstructions}
-							title='Generate Skills Summary?'
-							onValueChange={setSkillsInstructions}
-						>
-							<SkillsControls />
-						</DocumentSelectionControl>
-
 						<DocumentSelectionControl
 							checked={includeCoverLetter}
 							onChange={setIncludeCoverLetter}

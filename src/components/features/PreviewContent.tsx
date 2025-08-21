@@ -4,10 +4,7 @@ import { memo } from 'react';
 
 import { DocumentSelectionControls } from '@/components/results/display';
 import { TabTitle } from '@/components/ui';
-import {
-	EmptyState,
-	SkillsNotConfiguredMessage,
-} from '@/components/ui/feedback';
+import { EmptyState } from '@/components/ui/feedback';
 import {
 	useAppStore,
 	useCandidateStore,
@@ -19,12 +16,7 @@ import {
 } from '@/lib/stores';
 import { useGenerationConfirmations } from '@/lib/hooks';
 
-import {
-	CoverLetterSection,
-	DocumentSection,
-	GenerationConfirmations,
-	ResumeSection,
-} from './';
+import { CoverLetterSection, GenerationConfirmations, ResumeSection } from './';
 
 export const PreviewContent = memo(function PreviewContent() {
 	const { currentPhase } = usePhaseStore();
@@ -33,34 +25,23 @@ export const PreviewContent = memo(function PreviewContent() {
 	const { coverLetterTemplate } = useTemplatesStore();
 	const { includeCoverLetter, includeResume } = useAppStore();
 	const { resumeDetails } = useResumeStore();
-	const {
-		skills,
-		includeSkills,
-		isGeneratingSkills,
-		generatedSkills,
-		setGeneratedSkills,
-	} = useSkillsStore();
+	const { skills } = useSkillsStore();
 
 	const generationConfirmations = useGenerationConfirmations({
 		candidateDetails,
 		coverLetterTemplate,
 		jobDetails,
 		includeCoverLetter,
-		includeSkills,
+		includeSkills: false,
 		skills,
 	});
-
-	const { handleGenerateSkills } = generationConfirmations;
 
 	if (currentPhase !== 'preview') {
 		return null;
 	}
 
 	const hasData = candidateDetails && jobDetails;
-	const hasSelectedDocuments =
-		includeSkills || includeCoverLetter || includeResume;
-
-	const skillsContent = generatedSkills || '';
+	const hasSelectedDocuments = includeCoverLetter || includeResume;
 
 	return (
 		<>
@@ -78,26 +59,6 @@ export const PreviewContent = memo(function PreviewContent() {
 
 					{hasData && hasSelectedDocuments && (
 						<div className='flex flex-col gap-8'>
-							{includeSkills && (
-								<DocumentSection
-									title='Skills Summary'
-									content={skillsContent}
-									isEditable={true}
-									onContentChange={setGeneratedSkills}
-									isGenerating={isGeneratingSkills}
-									onGenerate={handleGenerateSkills}
-									componentName='GenerateSkillsButton'
-									generateTitle='Generate Skills'
-									fallbackMessage={<SkillsNotConfiguredMessage />}
-									hasContent={
-										!!generatedSkills && generatedSkills.trim() !== ''
-									}
-									disabled={
-										!skills?.groups?.some((group) => group.skills.length > 0)
-									}
-								/>
-							)}
-
 							<CoverLetterSection
 								candidateDetails={candidateDetails}
 								jobDetails={jobDetails}
@@ -123,7 +84,7 @@ export const PreviewContent = memo(function PreviewContent() {
 				jobDetails={jobDetails}
 				skills={skills}
 				coverLetterTemplate={coverLetterTemplate}
-				includeSkills={includeSkills}
+				includeSkills={false}
 				includeCoverLetter={includeCoverLetter}
 				generationConfirmations={generationConfirmations}
 			/>
