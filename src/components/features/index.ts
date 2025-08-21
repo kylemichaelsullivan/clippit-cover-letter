@@ -6,3 +6,4 @@ export { GenerationConfirmations } from './GenerationConfirmations';
 export { PreviewContent } from './PreviewContent';
 export { ResumeSection } from './ResumeSection';
 export { ResultsGenerator } from './document-generation/ResultsGenerator';
+export { SkillsSummarySection } from './SkillsSummarySection';

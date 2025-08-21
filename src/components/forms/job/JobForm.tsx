@@ -3,15 +3,17 @@
 import { memo, useState } from 'react';
 import { Field } from '@tanstack/react-form';
 
-import { Form, FormField } from '@/components/forms/core';
+import { Form, FormField, FormSection } from '@/components/forms/core';
 import { TabTitle, Button } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
+import { SkillsRangeSlider } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useJobForm } from '@/lib/hooks';
-import { usePhaseStore, useJobStore } from '@/lib/stores';
+import { usePhaseStore, useJobStore, useSkillsStore } from '@/lib/stores';
 import { PLACEHOLDERS, DEFAULTS } from '@/config';
 import { jobDetailsSchema, validateSchema } from '@/lib/schemas';
+import { SkillsSummarySection } from '@/components/features';
 import type { Job } from '@/types';
 
 type JobFormProps = {
@@ -21,6 +23,7 @@ type JobFormProps = {
 export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 	const { currentPhase } = usePhaseStore();
 	const { setJobDetails } = useJobStore();
+	const { skills, setSkillsRange } = useSkillsStore();
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
 	const { form, handleFieldChange } = useJobForm(onSubmit);
@@ -196,6 +199,22 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 					)}
 				</Field>
 			</Form>
+
+			<FormSection title='Select Skills'>
+				<div className='flex flex-col gap-4'>
+					{skills?.groups?.length > 0 && (
+						<div className='flex flex-col gap-2'>
+							<SkillsRangeSlider
+								minSkills={skills.minSkillsToUse}
+								maxSkills={skills.maxSkillsToUse}
+								onRangeChange={setSkillsRange}
+							/>
+						</div>
+					)}
+
+					<SkillsSummarySection />
+				</div>
+			</FormSection>
 
 			<ConfirmationDialog
 				isOpen={showConfirmation}
