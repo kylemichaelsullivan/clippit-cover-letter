@@ -1,0 +1,288 @@
+'use client';
+
+import { memo, useRef, useCallback, useMemo, useEffect } from 'react';
+import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+
+import { FormFieldContainer } from '@/components/forms/core';
+import { isFieldRequired } from '@/lib/schemas';
+import { showToast } from '@/lib/toast';
+import { useCandidateStore } from '@/lib/stores';
+
+type ImageInputProps = {
+	id: string;
+	label?: string;
+	placeholder?: string;
+	field?: any; // TanStack Form field
+	schema?: any; // Zod schema for required field detection
+	fieldName?: string; // Field name in the schema
+	onChange?: (value: string) => void;
+	accept?: string;
+	className?: string;
+};
+
+type ImagePreviewProps = {
+	imageSrc: string;
+	onChange: () => void;
+	onRemove: () => void;
+};
+
+const ImagePreview = memo(function ImagePreview({
+	imageSrc,
+	onChange,
+	onRemove,
+}: ImagePreviewProps) {
+	return (
+		<div className='ImagePreview group border-gray force-white-bg relative flex items-center justify-center rounded-lg border p-2 hover:border-black hover:shadow-sm'>
+			<img
+				src={imageSrc}
+				className='h-24 w-24 object-cover'
+				alt='Image Preview'
+			/>
+
+			<button
+				type='button'
+				className='focus:ring-blue absolute inset-0 z-10 flex items-center justify-center rounded-se bg-transparent font-bold text-transparent opacity-0 transition-all duration-200 hover:bg-black hover:text-white hover:opacity-100 focus:bg-black focus:text-white focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none'
+				aria-label='Change Image'
+				title='Change Image'
+				onClick={onChange}
+			>
+				<span className='font-medium'>Change Image</span>
+			</button>
+
+			<button
+				type='button'
+				className='RemoveImageButton hover:bg-red focus:bg-red focus:ring-red absolute -top-1 -right-1 z-20 rounded-full bg-transparent p-1.5 text-transparent opacity-0 transition-all duration-200 group-focus-within:text-white group-focus-within:opacity-100 group-hover:text-white group-hover:opacity-100 hover:text-white focus:text-white focus:ring-2 focus:ring-offset-2 focus:outline-none'
+				aria-label='Remove Image'
+				title='Remove Image'
+				onClick={onRemove}
+			>
+				<FontAwesomeIcon
+					icon={faXmark}
+					className='h-2.5 w-2.5'
+					aria-hidden='true'
+				/>
+			</button>
+		</div>
+	);
+});
+
+type UploadButtonProps = {
+	placeholder: string;
+	onClick: () => void;
+	hasError?: boolean;
+	className?: string;
+};
+
+const UploadButton = memo(function UploadButton({
+	placeholder,
+	onClick,
+	hasError = false,
+	className = '',
+}: UploadButtonProps) {
+	const buttonClasses = useMemo(
+		() =>
+			clsx(
+				'flex min-h-24 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-sm transition-all duration-200',
+				'border-light-gray text-gray hover:border-blue hover:bg-light-gray',
+				'focus:border-blue focus:bg-light-gray focus:ring-blue focus:ring-2 focus:ring-offset-2 focus:outline-none',
+				hasError && 'border-red',
+				className,
+			),
+		[hasError, className],
+	);
+
+	return (
+		<button type='button' onClick={onClick} className={`${buttonClasses}`}>
+			<div className='flex flex-col items-center gap-3'>
+				<FontAwesomeIcon
+					icon={faCloudArrowUp}
+					className='text-gray h-8 w-8'
+					aria-hidden='true'
+				/>
+				<div className='flex flex-col items-center gap-1'>
+					<span className='font-medium'>{placeholder}</span>
+					<span className='text-gray text-xs'>Click to browse images</span>
+				</div>
+			</div>
+		</button>
+	);
+});
+
+export const ImageInput = memo(function ImageInput({
+	id,
+	label,
+	placeholder = 'Upload Image',
+	field,
+	schema,
+	fieldName,
+	onChange,
+	accept = 'image/*',
+	className = '',
+}: ImageInputProps) {
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const { candidateDetails, setCandidateField } = useCandidateStore();
+
+	const getCurrentValue = useCallback(() => {
+		if (field) return field.state.value;
+		if (fieldName && fieldName in candidateDetails) {
+			return candidateDetails[
+				fieldName as keyof typeof candidateDetails
+			] as string;
+		}
+		return '';
+	}, [field, fieldName, candidateDetails]);
+
+	const handleFileChange = useCallback(
+		(event: React.ChangeEvent<HTMLInputElement>) => {
+			const file = event.target.files?.[0];
+			if (!file) return;
+
+			if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+				showToast.error(
+					'Please select a valid image file (PNG, JPG, GIF, etc.). SVG files are not supported.',
+				);
+				return;
+			}
+
+			const maxSize = 5 * 1024 * 1024; // 5MB
+			if (file.size > maxSize) {
+				showToast.error(
+					'Image file is too large. Please select a file smaller than 5MB.',
+				);
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const result = e.target?.result as string;
+
+				if (field) {
+					field.handleChange(result);
+				}
+
+				if (fieldName && fieldName in candidateDetails) {
+					setCandidateField(fieldName as keyof typeof candidateDetails, result);
+				}
+
+				if (onChange) {
+					onChange(result);
+				}
+			};
+			reader.onerror = (error) => {
+				console.error('Error reading file:', error);
+				showToast.error('Failed to read image file. Please try again.');
+			};
+			reader.readAsDataURL(file);
+		},
+		[field, fieldName, candidateDetails, setCandidateField, onChange],
+	);
+
+	const handleRemoveFile = useCallback(() => {
+		if (field) {
+			field.handleChange('');
+		}
+
+		if (fieldName && fieldName in candidateDetails) {
+			setCandidateField(fieldName as keyof typeof candidateDetails, '');
+		}
+
+		if (onChange) {
+			onChange('');
+		}
+
+		if (fileInputRef.current) {
+			fileInputRef.current.value = '';
+		}
+	}, [field, fieldName, candidateDetails, setCandidateField, onChange]);
+
+	const handleClick = useCallback(() => {
+		fileInputRef.current?.click();
+	}, []);
+
+	const inputValue = getCurrentValue();
+	const fieldError = field ? field.state.meta.errors?.[0] : undefined;
+	const isRequired = useMemo(
+		() =>
+			schema && fieldName
+				? isFieldRequired(schema, fieldName as string)
+				: false,
+		[schema, fieldName],
+	);
+
+	// Sync field with store value on mount
+	useEffect(() => {
+		if (field && fieldName && fieldName in candidateDetails) {
+			const storeValue = candidateDetails[
+				fieldName as keyof typeof candidateDetails
+			] as string;
+			if (storeValue && !field.state.value) {
+				field.handleChange(storeValue);
+			}
+		}
+	}, [field, fieldName, candidateDetails]);
+
+	// Sync store with field value when field changes
+	useEffect(() => {
+		if (field && fieldName && field.state.value) {
+			const currentStoreValue = candidateDetails[
+				fieldName as keyof typeof candidateDetails
+			] as string;
+			if (field.state.value !== currentStoreValue) {
+				setCandidateField(
+					fieldName as keyof typeof candidateDetails,
+					field.state.value,
+				);
+			}
+		}
+	}, [field?.state.value, fieldName, candidateDetails, setCandidateField]);
+
+	return (
+		<FormFieldContainer suppressHydrationWarning>
+			{label && (
+				<label
+					htmlFor={id}
+					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
+					title={label}
+					aria-label={`${label} field`}
+				>
+					<span>{label}</span>
+				</label>
+			)}
+
+			<div className='flex flex-col gap-3'>
+				<input
+					type='file'
+					className='hidden'
+					accept={accept}
+					aria-describedby={fieldError ? `${id}-error` : undefined}
+					required={isRequired}
+					onChange={handleFileChange}
+					ref={fileInputRef}
+				/>
+
+				{inputValue ? (
+					<ImagePreview
+						imageSrc={inputValue}
+						onChange={handleClick}
+						onRemove={handleRemoveFile}
+					/>
+				) : (
+					<UploadButton
+						placeholder={placeholder}
+						onClick={handleClick}
+						hasError={!!fieldError}
+						className={className}
+					/>
+				)}
+			</div>
+
+			{fieldError && (
+				<p id={`${id}-error`} className='FormFieldError text-red pt-1 text-sm'>
+					{fieldError}
+				</p>
+			)}
+		</FormFieldContainer>
+	);
+});

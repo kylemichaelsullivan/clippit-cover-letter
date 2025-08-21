@@ -9,6 +9,7 @@ import {
 	HydrationSafeFormField,
 } from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
+import { ImageInput } from '@/components/ui/input';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
 import type { CandidateDetails } from '@/types';
@@ -177,6 +178,44 @@ export const CandidateForm = memo(function CandidateForm({
 									field.handleChange(value);
 									handleFieldChange('portfolio', value);
 								}}
+							/>
+						)}
+					</Field>
+				</FormSection>
+
+				<FormSection title='Branding'>
+					<Field form={form} name='logo'>
+						{(field) => (
+							<ImageInput
+								label='Logo'
+								placeholder={PLACEHOLDERS.CANDIDATE.LOGO}
+								field={field}
+								schema={candidateDetailsSchema}
+								fieldName='logo'
+								onChange={(value: string) => {
+									field.handleChange(value);
+									handleFieldChange('logo', value);
+								}}
+								accept='image/*'
+								id='logo'
+							/>
+						)}
+					</Field>
+
+					<Field form={form} name='signature'>
+						{(field) => (
+							<ImageInput
+								label='Signature'
+								placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
+								field={field}
+								schema={candidateDetailsSchema}
+								fieldName='signature'
+								onChange={(value: string) => {
+									field.handleChange(value);
+									handleFieldChange('signature', value);
+								}}
+								accept='image/*'
+								id='signature'
 							/>
 						)}
 					</Field>
