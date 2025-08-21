@@ -145,7 +145,17 @@ describe('useResumeStore', () => {
 
 		setResumeDetails({
 			summary: 'Test summary',
-			experience: 'Test experience',
+			experience: [
+				{
+					id: 'test-exp-id',
+					include: true,
+					title: 'Test Title',
+					company: 'Test Company',
+					start: '2020',
+					end: '2022',
+					bullets: ['Test bullet'],
+				},
+			],
 			education: [
 				{
 					id: 'test-id',
@@ -162,7 +172,16 @@ describe('useResumeStore', () => {
 
 		const { resumeDetails } = useResumeStore.getState();
 		expect(resumeDetails.summary).toBe('');
-		expect(resumeDetails.experience).toBe('');
+		expect(resumeDetails.experience).toHaveLength(1);
+		expect(resumeDetails.experience[0]).toEqual({
+			id: expect.any(String),
+			include: true,
+			title: '',
+			company: '',
+			start: '',
+			end: '',
+			bullets: [],
+		});
 		expect(resumeDetails.education).toHaveLength(1);
 		expect(resumeDetails.education[0]).toEqual({
 			id: expect.any(String),
