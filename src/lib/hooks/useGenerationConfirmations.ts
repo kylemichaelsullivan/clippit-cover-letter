@@ -33,6 +33,7 @@ export const useGenerationConfirmations = ({
 		generateSkills,
 		isGeneratingSkills,
 		setIsGeneratingSkills,
+		includeSkillGroupNames,
 	} = useSkillsStore();
 
 	const [showCoverLetterConfirmation, setShowCoverLetterConfirmation] =
@@ -49,8 +50,8 @@ export const useGenerationConfirmations = ({
 				candidateDetails,
 				coverLetterTemplate,
 				jobDetails,
-				resumeTemplate: '',
 				skills,
+				includeSkillGroupNames,
 			});
 
 			setGeneratedCoverLetter(result.coverLetter);

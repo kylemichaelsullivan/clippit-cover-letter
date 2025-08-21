@@ -3,6 +3,7 @@ export { useConfirmationStack } from './useConfirmationStack';
 export { useCoverLetterGeneration } from './useCoverLetterGeneration';
 export { useDocumentGeneration } from './useDocumentGeneration';
 export { useFocusNewEducation } from './useFocusNewEducation';
+export { useFocusNewExperience } from './useFocusNewExperience';
 export { useFocusNewSkillGroup } from './useFocusNewSkillGroup';
 export { useGenerationConfirmations } from './useGenerationConfirmations';
 export { useGenerationTimeout } from './useGenerationTimeout';
