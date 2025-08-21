@@ -10,9 +10,11 @@ export const DEFAULTS = {
 		linkedin: '',
 		location: '',
 		logo: '',
+		logoInclude: true,
 		phone: '',
 		portfolio: '',
 		signature: '',
+		signatureInclude: true,
 		jobTitle: '',
 	},
 
@@ -25,7 +27,9 @@ export const DEFAULTS = {
 			linkedin: '',
 			portfolio: '',
 			logo: '',
+			logoInclude: true,
 			signature: '',
+			signatureInclude: true,
 		},
 		SKILLS: {
 			groups: [{ id: '', name: '', skills: [] }],

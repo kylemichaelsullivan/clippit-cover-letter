@@ -45,6 +45,18 @@ export function useCandidateForm(
 				case 'portfolio':
 					setCandidateField('portfolio', value);
 					break;
+				case 'logo':
+					setCandidateField('logo', value);
+					break;
+				case 'logoInclude':
+					setCandidateField('logoInclude', value);
+					break;
+				case 'signature':
+					setCandidateField('signature', value);
+					break;
+				case 'signatureInclude':
+					setCandidateField('signatureInclude', value);
+					break;
 			}
 		},
 		[setCandidateField],

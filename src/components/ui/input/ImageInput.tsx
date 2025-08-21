@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { FormFieldContainer } from '@/components/forms/core';
+import { Checkbox } from '@/components/ui/input';
 import { isFieldRequired } from '@/lib/schemas';
 import { showToast } from '@/lib/toast';
 import { useCandidateStore } from '@/lib/stores';
@@ -20,6 +21,9 @@ type ImageInputProps = {
 	onChange?: (value: string) => void;
 	accept?: string;
 	className?: string;
+	includeField?: any; // TanStack Form field for include checkbox
+	includeFieldName?: string;
+	onIncludeChange?: (value: boolean) => void;
 };
 
 type ImagePreviewProps = {
@@ -53,7 +57,7 @@ const ImagePreview = memo(function ImagePreview({
 
 			<button
 				type='button'
-				className='RemoveImageButton hover:bg-red focus:bg-red focus:ring-red absolute -top-1 -right-1 z-20 rounded-full bg-transparent p-1.5 text-transparent opacity-0 transition-all duration-200 group-focus-within:text-white group-focus-within:opacity-100 group-hover:text-white group-hover:opacity-100 hover:text-white focus:text-white focus:ring-2 focus:ring-offset-2 focus:outline-none'
+				className='RemoveImageButton hover:bg-red focus:bg-red focus:ring-red border-gray absolute top-px right-px z-20 rounded-full border bg-transparent p-1.5 text-transparent opacity-0 transition-all duration-200 group-focus-within:text-white group-focus-within:opacity-100 group-hover:text-white group-hover:opacity-100 hover:text-white focus:text-white focus:ring-2 focus:ring-offset-2 focus:outline-none'
 				aria-label='Remove Image'
 				title='Remove Image'
 				onClick={onRemove}
@@ -120,6 +124,9 @@ export const ImageInput = memo(function ImageInput({
 	onChange,
 	accept = 'image/*',
 	className = '',
+	includeField,
+	includeFieldName,
+	onIncludeChange,
 }: ImageInputProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { candidateDetails, setCandidateField } = useCandidateStore();
@@ -211,7 +218,16 @@ export const ImageInput = memo(function ImageInput({
 		[schema, fieldName],
 	);
 
-	// Sync field with store value on mount
+	const getIncludeValue = useCallback(() => {
+		if (includeField) return includeField.state.value;
+		if (includeFieldName && includeFieldName in candidateDetails) {
+			return candidateDetails[
+				includeFieldName as keyof typeof candidateDetails
+			] as boolean;
+		}
+		return true;
+	}, [includeField, includeFieldName, candidateDetails]);
+
 	useEffect(() => {
 		if (field && fieldName && fieldName in candidateDetails) {
 			const storeValue = candidateDetails[
@@ -223,7 +239,6 @@ export const ImageInput = memo(function ImageInput({
 		}
 	}, [field, fieldName, candidateDetails]);
 
-	// Sync store with field value when field changes
 	useEffect(() => {
 		if (field && fieldName && field.state.value) {
 			const currentStoreValue = candidateDetails[
@@ -236,19 +251,43 @@ export const ImageInput = memo(function ImageInput({
 				);
 			}
 		}
-	}, [field?.state.value, fieldName, candidateDetails, setCandidateField]);
+	}, [field, fieldName, candidateDetails, setCandidateField]);
 
 	return (
 		<FormFieldContainer suppressHydrationWarning>
 			{label && (
-				<label
-					htmlFor={id}
-					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
-					title={label}
-					aria-label={`${label} field`}
-				>
-					<span>{label}</span>
-				</label>
+				<div className='flex items-center gap-2 pb-1'>
+					{includeField && (
+						<Checkbox
+							checked={Boolean(getIncludeValue() ?? true)}
+							onChange={(checked) => {
+								if (includeField) {
+									includeField.handleChange(checked);
+								}
+								if (includeFieldName && includeFieldName in candidateDetails) {
+									setCandidateField(
+										includeFieldName as keyof typeof candidateDetails,
+										checked,
+									);
+								}
+								if (onIncludeChange) {
+									onIncludeChange(checked);
+								}
+							}}
+							label=''
+							title={`Include ${label}?`}
+							aria-label={`Include ${label} in document`}
+						/>
+					)}
+					<label
+						htmlFor={id}
+						className='FormFieldLabel text-base font-medium text-black'
+						title={label}
+						aria-label={`${label} field`}
+					>
+						{label}
+					</label>
+				</div>
 			)}
 
 			<div className='flex flex-col gap-3'>

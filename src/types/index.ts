@@ -4,9 +4,11 @@ export type CandidateDetails = {
 	linkedin?: string;
 	location?: string;
 	logo?: string;
+	logoInclude?: boolean;
 	phone?: string;
 	portfolio?: string;
 	signature?: string;
+	signatureInclude?: boolean;
 };
 
 export type FormData = {

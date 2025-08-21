@@ -7,7 +7,10 @@ import type { CandidateDetails } from '@/types';
 type CandidateState = {
 	candidateDetails: CandidateDetails;
 	setCandidateDetails: (details: CandidateDetails) => void;
-	setCandidateField: (field: keyof CandidateDetails, value: string) => void;
+	setCandidateField: (
+		field: keyof CandidateDetails,
+		value: string | boolean,
+	) => void;
 	getCandidateDetails: () => CandidateDetails;
 };
 

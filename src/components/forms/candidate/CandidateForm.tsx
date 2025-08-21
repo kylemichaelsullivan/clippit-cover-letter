@@ -186,37 +186,57 @@ export const CandidateForm = memo(function CandidateForm({
 				<FormSection title='Branding'>
 					<Field form={form} name='logo'>
 						{(field) => (
-							<ImageInput
-								label='Logo'
-								placeholder={PLACEHOLDERS.CANDIDATE.LOGO}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='logo'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('logo', value);
-								}}
-								accept='image/*'
-								id='logo'
-							/>
+							<Field form={form} name='logoInclude'>
+								{(includeField) => (
+									<ImageInput
+										field={field}
+										includeField={includeField}
+										label='Logo'
+										fieldName='logo'
+										includeFieldName='logoInclude'
+										placeholder={PLACEHOLDERS.CANDIDATE.LOGO}
+										schema={candidateDetailsSchema}
+										onChange={(value: string) => {
+											field.handleChange(value);
+											handleFieldChange('logo', value);
+										}}
+										onIncludeChange={(value: boolean) => {
+											includeField.handleChange(value);
+											handleFieldChange('logoInclude', value);
+										}}
+										accept='image/*'
+										id='logo'
+									/>
+								)}
+							</Field>
 						)}
 					</Field>
 
 					<Field form={form} name='signature'>
 						{(field) => (
-							<ImageInput
-								label='Signature'
-								placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='signature'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('signature', value);
-								}}
-								accept='image/*'
-								id='signature'
-							/>
+							<Field form={form} name='signatureInclude'>
+								{(includeField) => (
+									<ImageInput
+										field={field}
+										includeField={includeField}
+										label='Signature'
+										fieldName='signature'
+										includeFieldName='signatureInclude'
+										placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
+										schema={candidateDetailsSchema}
+										onChange={(value: string) => {
+											field.handleChange(value);
+											handleFieldChange('signature', value);
+										}}
+										onIncludeChange={(value: boolean) => {
+											includeField.handleChange(value);
+											handleFieldChange('signatureInclude', value);
+										}}
+										accept='image/*'
+										id='signature'
+									/>
+								)}
+							</Field>
 						)}
 					</Field>
 				</FormSection>
