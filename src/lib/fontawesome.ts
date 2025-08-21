@@ -1,24 +1,28 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-	faSun,
-	faMoon,
 	faChevronLeft,
 	faChevronRight,
-	faTrash,
+	faCloudArrowUp,
+	faMinus,
+	faMoon,
 	faRotate,
 	faSort,
 	faSpinner,
-	faMinus,
+	faSun,
+	faTrash,
+	faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
-	faSun,
-	faMoon,
 	faChevronLeft,
 	faChevronRight,
-	faTrash,
+	faCloudArrowUp,
+	faMinus,
+	faMoon,
 	faRotate,
 	faSort,
 	faSpinner,
-	faMinus,
+	faSun,
+	faTrash,
+	faXmark,
 );

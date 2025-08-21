@@ -5,7 +5,6 @@ import { DEFAULTS } from '@/config';
 
 type TemplatesState = {
 	coverLetterTemplate: string;
-	resumeTemplate: string;
 	isGeneratingCoverLetter: boolean;
 	isGeneratingResume: boolean;
 	setIsGeneratingCoverLetter: (generating: boolean) => void;
@@ -15,7 +14,6 @@ type TemplatesState = {
 	setGeneratedCoverLetter: (result: string) => void;
 	setGeneratedResume: (result: string) => void;
 	setCoverLetterTemplate: (template: string) => void;
-	setResumeTemplate: (content: string) => void;
 };
 
 export const useTemplatesStore = create<TemplatesState>()(
@@ -23,7 +21,6 @@ export const useTemplatesStore = create<TemplatesState>()(
 		persist(
 			(set) => ({
 				coverLetterTemplate: DEFAULTS.INITIAL_STATES.TEMPLATES.coverLetter,
-				resumeTemplate: DEFAULTS.INITIAL_STATES.TEMPLATES.resume,
 				isGeneratingCoverLetter: false,
 				isGeneratingResume: false,
 				setIsGeneratingCoverLetter: (generating) =>
@@ -38,7 +35,6 @@ export const useTemplatesStore = create<TemplatesState>()(
 				setGeneratedResume: (result) => set({ generatedResume: result }),
 				setCoverLetterTemplate: (template) =>
 					set({ coverLetterTemplate: template }),
-				setResumeTemplate: (template) => set({ resumeTemplate: template }),
 			}),
 			{
 				name: 'templates-store',

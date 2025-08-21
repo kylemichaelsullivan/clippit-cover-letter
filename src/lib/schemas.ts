@@ -17,6 +17,8 @@ export const candidateDetailsSchema = z.object({
 			message: 'LinkedIn slug should not include the word "LinkedIn"',
 		}),
 	portfolio: z.string(),
+	logo: z.string(),
+	signature: z.string(),
 });
 
 export const skillsSchema = z.object({

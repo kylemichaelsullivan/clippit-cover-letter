@@ -15,13 +15,14 @@ import type {
 } from 'react';
 
 type FormFieldType =
-	| 'text'
 	| 'email'
-	| 'tel'
-	| 'url'
+	| 'number'
 	| 'password'
 	| 'select'
-	| 'textarea';
+	| 'tel'
+	| 'text'
+	| 'textarea'
+	| 'url';
 
 type BaseFormFieldProps = {
 	id: string;

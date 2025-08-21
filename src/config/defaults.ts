@@ -2,16 +2,18 @@ export const DEFAULTS = {
 	GENERATING_TEXT: 'Generating…',
 
 	TEMPLATE_FALLBACKS: {
-		fullName: '',
-		email: '',
-		phone: '',
-		location: '',
-		linkedin: '',
-		portfolio: '',
-		companyName: '',
-		jobTitle: '',
-		hiringManager: '',
 		companyAddress: '',
+		companyName: '',
+		email: '',
+		fullName: '',
+		hiringManager: '',
+		linkedin: '',
+		location: '',
+		logo: '',
+		phone: '',
+		portfolio: '',
+		signature: '',
+		jobTitle: '',
 	},
 
 	INITIAL_STATES: {
@@ -22,6 +24,8 @@ export const DEFAULTS = {
 			location: '',
 			linkedin: '',
 			portfolio: '',
+			logo: '',
+			signature: '',
 		},
 		SKILLS: {
 			groups: [{ id: '', name: '', skills: [] }],
@@ -37,7 +41,6 @@ export const DEFAULTS = {
 		},
 		TEMPLATES: {
 			coverLetter: '',
-			resume: '',
 		},
 
 		RESUME: {
@@ -49,6 +52,13 @@ export const DEFAULTS = {
 			graduationYear: '',
 			institution: '',
 			location: '',
+		},
+		EXPERIENCE: {
+			title: '',
+			company: '',
+			start: '',
+			end: '',
+			bullets: [],
 		},
 		GENERATION: {
 			generatedSkills: '',

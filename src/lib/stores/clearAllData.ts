@@ -77,7 +77,7 @@ export function clearAllPersistentData() {
 		templatesStore.setCoverLetterTemplate(
 			DEFAULTS.INITIAL_STATES.TEMPLATES.coverLetter,
 		);
-		templatesStore.setResumeTemplate(DEFAULTS.INITIAL_STATES.TEMPLATES.resume);
+
 		templatesStore.setGeneratedCoverLetter(
 			DEFAULTS.INITIAL_STATES.GENERATION.generatedCoverLetter,
 		);

@@ -13,10 +13,9 @@ type ResumeSectionProps = {
 	jobDetails: any;
 	resumeDetails?: {
 		summary: string;
-		experience: string;
+		experience: any[];
 		education: any[];
 	};
-	resumeTemplate: string;
 	skills: any;
 };
 
@@ -25,7 +24,6 @@ export const ResumeSection = ({
 	includeResume,
 	jobDetails,
 	resumeDetails,
-	resumeTemplate,
 	skills,
 }: ResumeSectionProps) => {
 	const {
@@ -41,7 +39,6 @@ export const ResumeSection = ({
 		includeResume,
 		jobDetails,
 		resumeDetails,
-		resumeTemplate,
 		skills,
 	});
 
@@ -66,7 +63,7 @@ export const ResumeSection = ({
 					componentName='GenerateResumeButton'
 					generateTitle='Generate Resume'
 					fallbackMessage={<ResumeNotProvidedMessage />}
-					hasContent={!!resumeTemplate}
+					hasContent={!!resumeDetails}
 				/>
 			</div>
 

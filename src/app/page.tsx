@@ -28,7 +28,7 @@ export default memo(function Page() {
 	const { setSkills } = useSkillsStore();
 	const { setIncludeCoverLetter, setIncludeResume } = useAppStore();
 	const { setJobDetails } = useJobStore();
-	const { setCoverLetterTemplate, setResumeTemplate } = useTemplatesStore();
+	const { setCoverLetterTemplate } = useTemplatesStore();
 
 	const handleCandidateSubmit = (details: CandidateDetails) => {
 		setCandidateDetails(details);
@@ -38,12 +38,7 @@ export default memo(function Page() {
 		setSkills(skillsData);
 	};
 
-	const handleResumeSubmit = (
-		includeResume: boolean,
-		summary: string,
-		experience: string,
-		education: any[],
-	) => {
+	const handleResumeSubmit = (includeResume: boolean) => {
 		setIncludeResume(includeResume);
 	};
 

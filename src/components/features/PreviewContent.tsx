@@ -30,11 +30,16 @@ export const PreviewContent = memo(function PreviewContent() {
 	const { currentPhase } = usePhaseStore();
 	const { candidateDetails } = useCandidateStore();
 	const { jobDetails } = useJobStore();
-	const { coverLetterTemplate, resumeTemplate } = useTemplatesStore();
+	const { coverLetterTemplate } = useTemplatesStore();
 	const { includeCoverLetter, includeResume } = useAppStore();
 	const { resumeDetails } = useResumeStore();
-	const { skills, includeSkills, isGeneratingSkills, generatedSkills } =
-		useSkillsStore();
+	const {
+		skills,
+		includeSkills,
+		isGeneratingSkills,
+		generatedSkills,
+		setGeneratedSkills,
+	} = useSkillsStore();
 
 	const generationConfirmations = useGenerationConfirmations({
 		candidateDetails,
@@ -77,7 +82,8 @@ export const PreviewContent = memo(function PreviewContent() {
 								<DocumentSection
 									title='Skills Summary'
 									content={skillsContent}
-									isEditable={false}
+									isEditable={true}
+									onContentChange={setGeneratedSkills}
 									isGenerating={isGeneratingSkills}
 									onGenerate={handleGenerateSkills}
 									componentName='GenerateSkillsButton'
@@ -105,7 +111,6 @@ export const PreviewContent = memo(function PreviewContent() {
 								jobDetails={jobDetails}
 								skills={skills}
 								includeResume={includeResume}
-								resumeTemplate={resumeTemplate}
 								resumeDetails={resumeDetails}
 							/>
 						</div>
