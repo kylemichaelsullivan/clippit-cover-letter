@@ -33,29 +33,30 @@ Mustache variables use the `{{variable}}` syntax and are replaced with actual va
 
 ### Available Variables
 
-| Variable               | Description                    | Example                                                               |
-| ---------------------- | ------------------------------ | --------------------------------------------------------------------- |
-| `{{Date}}`             | Current date                   | January 15, 2024                                                      |
-| `{{My Name}}`          | Candidate full name            | John Doe                                                              |
-| `{{My Email}}`         | Candidate email address        | john@example.com                                                      |
-| `{{My Phone}}`         | Candidate phone number         | (555) 123-4567                                                        |
-| `{{My Location}}`      | Candidate location             | San Francisco, CA                                                     |
-| `{{My LinkedIn}}`      | Candidate LinkedIn profile     | linkedin.com/in/johndoe                                               |
-| `{{My Portfolio}}`     | Candidate portfolio URL        | portfolio.com                                                         |
-| `{{My Skills}}`        | All skills grouped by category | Management: Leadership, Team Building<br>Technical: JavaScript, React |
-| `{{Ungrouped Skills}}` | All skills as a flat list      | Leadership, Team Building, JavaScript, React                          |
-| `{{summary}}`          | Resume summary section         | Professional summary content                                          |
-| `{{skills}}`           | Skills section                 | Skills content                                                        |
-| `{{experience}}`       | Experience section             | Work experience content                                               |
-| `{{education}}`        | Education section              | Formatted education entries with degrees and institutions             |
-| `{{degree}}`           | Education degree               | Bachelor of Science                                                   |
-| `{{institution}}`      | Educational institution        | University of Michigan                                                |
-| `{{location}}`         | Education location             | Ann Arbor, MI                                                         |
-| `{{Job Company}}`      | Company name                   | Acme Corp                                                             |
-| `{{Job Title}}`        | Job title                      | Senior Software Engineer                                              |
-| `{{Job Manager}}`      | Hiring manager name            | Jane Smith                                                            |
-| `{{Job Address}}`      | Company address                | 123 Main St, San Francisco, CA                                        |
-| `{{Job Description}}`  | Job description text           | We are looking for...                                                 |
+| Variable               | Description                                     | Example                                                               |
+| ---------------------- | ----------------------------------------------- | --------------------------------------------------------------------- |
+| `{{Date}}`             | Current date                                    | January 15, 2024                                                      |
+| `{{My Name}}`          | Candidate full name                             | John Doe                                                              |
+| `{{My Email}}`         | Candidate email address                         | john@example.com                                                      |
+| `{{My Phone}}`         | Candidate phone number                          | (555) 123-4567                                                        |
+| `{{My Location}}`      | Candidate location                              | San Francisco, CA                                                     |
+| `{{My LinkedIn}}`      | Candidate LinkedIn profile                      | linkedin.com/in/johndoe                                               |
+| `{{My Portfolio}}`     | Candidate portfolio URL                         | portfolio.com                                                         |
+| `{{My Skills}}`        | All skills (grouped/ungrouped based on setting) | Management: Leadership, Team Building<br>Technical: JavaScript, React |
+| `{{Grouped Skills}}`   | All skills grouped by category                  | Management: Leadership, Team Building<br>Technical: JavaScript, React |
+| `{{Ungrouped Skills}}` | All skills as a flat list                       | Leadership, Team Building, JavaScript, React                          |
+| `{{summary}}`          | Resume summary section                          | Professional summary content                                          |
+| `{{skills}}`           | Skills section                                  | Skills content                                                        |
+| `{{experience}}`       | Experience section                              | Work experience content                                               |
+| `{{education}}`        | Education section                               | Formatted education entries with degrees and institutions             |
+| `{{degree}}`           | Education degree                                | Bachelor of Science                                                   |
+| `{{institution}}`      | Educational institution                         | University of Michigan                                                |
+| `{{location}}`         | Education location                              | Ann Arbor, MI                                                         |
+| `{{Job Company}}`      | Company name                                    | Acme Corp                                                             |
+| `{{Job Title}}`        | Job title                                       | Senior Software Engineer                                              |
+| `{{Job Manager}}`      | Hiring manager name                             | Jane Smith                                                            |
+| `{{Job Address}}`      | Company address                                 | 123 Main St, San Francisco, CA                                        |
+| `{{Job Description}}`  | Job description text                            | We are looking for...                                                 |
 
 ### Example Usage
 
