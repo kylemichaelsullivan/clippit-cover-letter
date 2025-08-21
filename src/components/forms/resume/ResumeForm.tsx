@@ -48,7 +48,7 @@ export const ResumeForm = memo(function ResumeForm({
 
 	return (
 		<div className='ResumeForm flex flex-col gap-6'>
-			<TabTitle title='Resume' componentName='ResumeFormTitle' />
+			<TabTitle title='Resume Details' componentName='ResumeFormTitle' />
 			<Form componentName='ResumeFormContent' onSubmit={handleSubmit}>
 				<div className='flex flex-col gap-6'>
 					<Field name='summary' form={form}>

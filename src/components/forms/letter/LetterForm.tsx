@@ -46,7 +46,10 @@ export const LetterForm = memo(function LetterForm({
 	return (
 		<div className='LetterForm flex flex-col gap-6'>
 			<div className='flex items-center justify-between'>
-				<TabTitle title='Letter' componentName='LetterFormTitle' />
+				<TabTitle
+					title='Cover Letter Template'
+					componentName='LetterFormTitle'
+				/>
 				<Button
 					componentName='LetterFormHelpButton'
 					color='primary'
