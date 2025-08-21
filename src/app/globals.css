@@ -84,9 +84,14 @@ select {
 	border: 1px solid var(--color-black);
 	border-radius: 0.5rem;
 	color: var(--color-black);
-	font-size: 0.875rem;
 	padding: 0.5rem 0.75rem;
 	transition: border-color 0.2s ease;
+}
+
+input:not([class*='text-']),
+textarea:not([class*='text-']),
+select:not([class*='text-']) {
+	font-size: 0.875rem;
 }
 
 input:focus,
@@ -173,7 +178,7 @@ button {
 	cursor: pointer;
 }
 
-button:hover:not(:disabled) {
+button:hover:not(:disabled, .RemoveImageButton) {
 	background-color: var(--color-gray);
 	border-color: var(--color-gray);
 	color: var(--color-white);
@@ -585,13 +590,6 @@ button:active {
 	line-height: var(--tw-leading, var(--text-2xs--line-height));
 }
 
-/* Ensure our custom text size takes precedence over Tailwind defaults */
-button.text-2xs,
-.Button.text-2xs {
-	font-size: var(--text-2xs);
-	line-height: var(--tw-leading, var(--text-2xs--line-height));
-}
-
 /* Text Shadow */
 .text-shadow {
 	font-weight: 500;
@@ -654,6 +652,10 @@ button.text-2xs,
 	border-bottom-right-radius: 0.5rem;
 }
 
+.ImagePreview {
+	background-color: #ffffff !important;
+}
+
 .PhaseSwitcherButton {
 	border: 2px solid transparent;
 }
@@ -705,6 +707,20 @@ button.text-2xs,
 	padding: 0;
 }
 
+/* Experience Card */
+.ExperienceCard .FormFieldContainer .FormFieldLabel {
+	padding: 0.75rem 0;
+}
+
+.ExperienceCard .ExperienceItemRemoveButton {
+	position: absolute;
+	width: 4rem;
+	height: 2.5rem;
+	top: 0.25rem;
+	right: 0;
+	padding: 0;
+}
+
 /* Reserve space for LastPass icon */
 input[data-lpignore='false'] {
 	padding-right: 24px !important;
@@ -731,44 +747,8 @@ input[data-lpignore='false'] {
 }
 
 /* DocumentContentTipTapEditor - Match DocumentContentFormattedPreview styling */
-.DocumentContentTipTapEditor {
-	min-height: 64px;
-	max-width: none;
-	overflow-y: auto;
-	background-color: white;
-	padding: 1rem;
-	font-size: 0.875rem;
-	line-height: 1.625;
-}
-
-@media (min-width: 640px) {
-	.DocumentContentTipTapEditor {
-		min-height: 96px;
-		font-size: 1rem;
-	}
-}
-
-.DocumentContentTipTapEditor .TipTapEditorContent {
-	min-height: inherit;
-	max-width: none;
-	overflow-y: auto;
-	padding: 0;
-	font-size: inherit;
-	line-height: inherit;
-}
-
 .DocumentContentTipTapEditor .tiptap.ProseMirror {
 	white-space: pre-wrap;
-}
-
-/* Ensure TipTap content matches FormattedPreview content styling */
-.DocumentContentTipTapEditor .tiptap.ProseMirror p {
-	margin: 0;
-	line-height: inherit;
-}
-
-.DocumentContentTipTapEditor .tiptap.ProseMirror div {
-	line-height: inherit;
 }
 
 /* TipTap Editor in Form Sections */
