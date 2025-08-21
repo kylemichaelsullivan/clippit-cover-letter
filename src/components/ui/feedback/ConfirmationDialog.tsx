@@ -97,10 +97,10 @@ export const ConfirmationDialog = memo(function ConfirmationDialog({
 	if (!isOpen) return null;
 
 	return (
-		<div className='ConfirmationDialog fixed inset-0 z-50 flex items-center justify-center'>
+		<div className='ConfirmationDialog fixed inset-0 z-50 flex items-center justify-center p-4'>
 			<div className='Backdrop absolute inset-0 bg-black/75'></div>
 			<div
-				className='ModalContent z-10 mx-4 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'
+				className='ModalContent z-10 w-full max-w-md rounded-lg bg-white p-6 shadow-lg'
 				ref={modalRef}
 			>
 				<div className='flex flex-col gap-4'>

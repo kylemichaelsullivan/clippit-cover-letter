@@ -25,6 +25,7 @@ type TipTapEditorProps = {
 	onChange: (value: string) => void;
 	placeholder?: string;
 	componentName?: string;
+	isDocument?: boolean;
 	className?: string;
 	readOnly?: boolean;
 	id?: string;
@@ -36,6 +37,7 @@ export function TipTapEditor({
 	onChange,
 	placeholder = 'Start typing…',
 	componentName,
+	isDocument = false,
 	className = '',
 	readOnly = false,
 	id,
@@ -121,17 +123,17 @@ export function TipTapEditor({
 			<div
 				className={clsx(
 					componentName || 'TipTapEditor',
-					componentName === 'DocumentContentTipTapEditor'
-						? ''
-						: 'border-light-gray rounded-lg border bg-white',
+					'border-light-gray rounded-lg border bg-white',
+					isDocument &&
+						'min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
 					className,
 				)}
 			>
 				<div
 					className={clsx(
-						componentName === 'DocumentContentTipTapEditor'
-							? 'w-full max-w-none overflow-y-auto text-sm sm:text-base'
-							: 'w-full max-w-none overflow-y-auto p-4 text-sm sm:text-base',
+						isDocument
+							? 'w-full max-w-none overflow-y-auto text-sm text-black sm:text-base'
+							: 'w-full max-w-none overflow-y-auto p-4 text-sm text-black sm:text-base',
 					)}
 				>
 					{value || placeholder}
@@ -144,9 +146,9 @@ export function TipTapEditor({
 		<div
 			className={clsx(
 				componentName || 'TipTapEditor',
-				componentName === 'DocumentContentTipTapEditor'
-					? ''
-					: 'border-light-gray rounded-lg border bg-white',
+				'border-light-gray rounded-lg border bg-white',
+				isDocument &&
+					'min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
 				className,
 			)}
 		>
@@ -155,7 +157,7 @@ export function TipTapEditor({
 				editor={editor}
 				className={clsx(
 					'TipTapEditorContent',
-					componentName === 'DocumentContentTipTapEditor'
+					isDocument
 						? 'focus:outline-none'
 						: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base',
 				)}

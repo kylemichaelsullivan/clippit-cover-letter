@@ -3,6 +3,7 @@ export { ConfirmationDialog } from './ConfirmationDialog';
 export {
 	CoverLetterNotProvidedMessage,
 	EmptyEducationMessage,
+	EmptyExperienceMessage,
 	EmptySkillsMessage,
 	EmptyState,
 	ErrorMessage,

@@ -1,6 +1,7 @@
 'use client';
 
-import { memo, type ChangeEvent, useRef } from 'react';
+import { memo } from 'react';
+import { FormField } from '@/components/forms/core';
 
 type FontSizeInputProps = {
 	value: number;
@@ -13,9 +14,8 @@ export const FontSizeInput = memo(function FontSizeInput({
 	onChange,
 	className = '',
 }: FontSizeInputProps) {
-	const inputRef = useRef<HTMLInputElement>(null);
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const newSize = parseInt(e.target.value, 10);
+	const handleChange = (newValue: string) => {
+		const newSize = parseInt(newValue, 10);
 		if (!isNaN(newSize)) {
 			onChange(newSize);
 		}
@@ -32,27 +32,24 @@ export const FontSizeInput = memo(function FontSizeInput({
 		<div className={`FontSizeInput flex items-center gap-2 ${className}`}>
 			<label
 				className='text-sm font-medium'
+				htmlFor='font-size-input'
 				title='Base Font Size'
 				aria-label='Base font size for resume'
 			>
-				Base Font:
+				Base Font
 			</label>
-			<div className='FormField flex'>
-				<input
-					type='number'
-					min={8}
-					max={16}
-					value={value.toString()}
-					onChange={handleChange}
-					onBlur={handleBlur}
-					className='w-16 rounded-r-none border-r-0 text-center'
-					aria-label='Resume font size (points)'
-					ref={inputRef}
-				/>
-				<span className='input-suffix text-gray flex items-center rounded-r-md border border-l-0 border-black bg-white px-3 text-sm'>
-					pt
-				</span>
-			</div>
+			<FormField
+				id='font-size-input'
+				type='number'
+				value={value.toString()}
+				onChange={handleChange}
+				onBlur={handleBlur}
+				min={8}
+				max={16}
+				className='w-16 text-center'
+				aria-label='Resume font size (points)'
+				suffix='pt'
+			/>
 		</div>
 	);
 });

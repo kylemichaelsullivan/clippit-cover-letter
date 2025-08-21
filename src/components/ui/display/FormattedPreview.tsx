@@ -6,28 +6,39 @@ import { DEFAULTS } from '@/config';
 import { useSkillsStore } from '@/lib/stores';
 import { renderHtmlContent } from '@/lib/utils';
 
+type FormattedPreviewVariant = 'default' | 'skills' | 'cover-letter' | 'resume';
+
 type FormattedPreviewProps = {
 	content: string;
-	componentName?: string;
+	variant?: FormattedPreviewVariant;
 	className?: string;
 	isGenerating?: boolean;
-	isSkills?: boolean;
-	title?: string;
 };
 
 export function FormattedPreview({
 	content,
-	componentName,
+	variant = 'default',
 	className = '',
 	isGenerating = false,
-	isSkills = false,
-	title = '',
 }: FormattedPreviewProps) {
 	const { generatedSkillsData, includeSkillGroupNames } = useSkillsStore();
 
+	const getGeneratingText = (): string => {
+		switch (variant) {
+			case 'skills':
+				return 'Generating Skills…';
+			case 'cover-letter':
+				return 'Generating Cover Letter…';
+			case 'resume':
+				return 'Generating Resume…';
+			default:
+				return DEFAULTS.GENERATING_TEXT;
+		}
+	};
+
 	const renderSkillsContent = () => {
 		if (isGenerating) {
-			return <div className='text-light-gray'>Generating Skills…</div>;
+			return <div className='text-light-gray'>{getGeneratingText()}</div>;
 		}
 
 		if (!includeSkillGroupNames) {
@@ -54,17 +65,7 @@ export function FormattedPreview({
 
 	const renderContent = () => {
 		if (isGenerating) {
-			let generatingText: string = DEFAULTS.GENERATING_TEXT;
-
-			if (isSkills) {
-				generatingText = 'Generating Skills…';
-			} else if (title.toLowerCase().includes('cover letter')) {
-				generatingText = 'Generating Cover Letter…';
-			} else if (title.toLowerCase().includes('resume')) {
-				generatingText = 'Generating Resume…';
-			}
-
-			return <div className='text-light-gray'>{generatingText}</div>;
+			return <div className='text-light-gray'>{getGeneratingText()}</div>;
 		}
 
 		return renderHtmlContent(content);
@@ -73,14 +74,14 @@ export function FormattedPreview({
 	return (
 		<div
 			className={clsx(
-				componentName || 'FormattedPreview',
-				'min-h-64 max-w-none overflow-y-auto bg-white p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
+				'FormattedPreview',
+				'min-h-64 max-w-none overflow-y-auto bg-white p-4 text-sm leading-relaxed text-black sm:min-h-96 sm:text-base',
 				isGenerating && 'text-light-gray flex items-center justify-center',
 				!isGenerating && 'whitespace-pre-wrap',
 				className,
 			)}
 		>
-			{isSkills ? renderSkillsContent() : renderContent()}
+			{variant === 'skills' ? renderSkillsContent() : renderContent()}
 		</div>
 	);
 }

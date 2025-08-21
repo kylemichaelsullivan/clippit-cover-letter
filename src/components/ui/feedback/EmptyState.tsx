@@ -6,6 +6,7 @@ import { faRefresh, faSpinner } from '@fortawesome/free-solid-svg-icons';
 type EmptyStateVariant =
 	| 'cover-letter-not-provided'
 	| 'empty-education'
+	| 'empty-experience'
 	| 'empty-skills'
 	| 'error'
 	| 'loading'
@@ -19,10 +20,8 @@ type EmptyStateVariant =
 
 type MissingTemplatesConfig = {
 	includeSkills: boolean;
-	includeResume: boolean;
 	includeCoverLetter: boolean;
 	generatedSkills: string;
-	resumeTemplate: string;
 	coverLetter: string;
 	onGenerate?: () => void;
 };
@@ -36,7 +35,7 @@ export function EmptyState({
 	variant,
 	missingTemplatesConfig,
 }: EmptyStateProps) {
-			const getContent = () => {
+	const getContent = () => {
 		switch (variant) {
 			case 'cover-letter-not-provided':
 				return {
@@ -47,7 +46,15 @@ export function EmptyState({
 			case 'empty-education':
 				return {
 					title: 'No Education Configured',
-					description: 'Add your educational background to include in your resume.',
+					description:
+						'Add your educational background to include in your resume.',
+					className:
+						'EmptyState text-gray py-4 text-center text-sm sm:py-6 sm:text-base',
+				};
+			case 'empty-experience':
+				return {
+					title: 'No Experience Configured',
+					description: 'Add your work experience to include in your resume.',
 					className:
 						'EmptyState text-gray py-4 text-center text-sm sm:py-6 sm:text-base',
 				};
@@ -159,17 +166,14 @@ export function EmptyState({
 	if (variant === 'missing-templates' && missingTemplatesConfig) {
 		const {
 			includeSkills,
-			includeResume,
 			includeCoverLetter,
 			generatedSkills,
-			resumeTemplate,
 			coverLetter,
 			onGenerate,
 		} = missingTemplatesConfig;
 		const hasMissingTemplates =
 			(includeSkills && !generatedSkills) ||
-			(includeCoverLetter && !coverLetter) ||
-			(includeResume && !resumeTemplate);
+			(includeCoverLetter && !coverLetter);
 
 		return (
 			<div className={content.className}>
@@ -189,14 +193,6 @@ export function EmptyState({
 					}
 				>
 					⚠️ {CONSTANTS.MESSAGES.MISSING_COVER_LETTER_TEMPLATE}
-				</p>
-
-				<p
-					className={
-						includeResume && !resumeTemplate ? 'text-gray text-sm' : 'hidden'
-					}
-				>
-					⚠️ {CONSTANTS.MESSAGES.MISSING_RESUME_TEMPLATE}
 				</p>
 
 				{onGenerate && (
@@ -245,6 +241,10 @@ export function MissingTemplatesMessage(props: MissingTemplatesConfig) {
 
 export function EmptyEducationMessage() {
 	return <EmptyState variant='empty-education' />;
+}
+
+export function EmptyExperienceMessage() {
+	return <EmptyState variant='empty-experience' />;
 }
 
 export function EmptySkillsMessage() {

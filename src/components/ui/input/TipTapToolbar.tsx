@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { TipTapButton } from './TipTapButton';
 
 function TipTapDivider() {
-	return <div className='bg-light-gray mx-1 h-6 w-px' />;
+	return <div className='bg-light-gray h-6 w-px' />;
 }
 
 type TipTapToolbarProps = {
