@@ -2,6 +2,7 @@
 
 import { memo, useRef, useCallback, useMemo, useEffect } from 'react';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
@@ -39,9 +40,12 @@ const ImagePreview = memo(function ImagePreview({
 }: ImagePreviewProps) {
 	return (
 		<div className='ImagePreview group border-gray force-white-bg relative flex items-center justify-center rounded-lg border p-2 hover:border-black hover:shadow-sm'>
-			<img
+			<Image
 				src={imageSrc}
 				className='h-24 w-24 object-cover'
+				width={96}
+				height={96}
+				unoptimized={imageSrc.startsWith('data:')}
 				alt='Image Preview'
 			/>
 

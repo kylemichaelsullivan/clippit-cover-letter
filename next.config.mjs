@@ -16,6 +16,18 @@ const nextConfig = {
 		// Add any client-side environment variables here if needed
 		// Example: NEXT_PUBLIC_ANALYTICS_ID: process.env.NEXT_PUBLIC_ANALYTICS_ID,
 	},
+	// Image configuration
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
+		],
+		// Allow data URLs for uploaded images
+		domains: [],
+		unoptimized: false,
+	},
 	// HMR optimization for development
 	experimental: {
 		// Improve HMR performance with complex contexts
