@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 
 import { useSkillsStore } from '@/lib/stores';
@@ -47,22 +47,35 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		},
 	});
 
-	// Sync form with store only on mount
+	const skillsRef = useRef(skills);
+	const formRef = useRef(form);
+
 	useEffect(() => {
-		if (skills && skills.groups) {
-			const groupsWithInclude = skills.groups.map((group) => ({
+		skillsRef.current = skills;
+	}, [skills]);
+
+	useEffect(() => {
+		formRef.current = form;
+	}, [form]);
+
+	// Sync form with store on mount
+	useEffect(() => {
+		const currentSkills = skillsRef.current;
+		const currentForm = formRef.current;
+
+		if (currentSkills && currentSkills.groups) {
+			const groupsWithInclude = currentSkills.groups.map((group) => ({
 				...group,
 				include: group.include !== undefined ? group.include : true,
 			}));
 
-			form.reset({
+			currentForm.reset({
 				groups: groupsWithInclude,
-				minSkillsToUse: skills.minSkillsToUse || 5,
-				maxSkillsToUse: skills.maxSkillsToUse || 10,
+				minSkillsToUse: currentSkills.minSkillsToUse || 5,
+				maxSkillsToUse: currentSkills.maxSkillsToUse || 10,
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []); // Only run on mount
+	}, []);
 
 	const sortGroupsAlphabetically = (groups: SkillGroup[]): SkillGroup[] => {
 		return sortSkillGroups(groups);

@@ -60,6 +60,7 @@ export function clearAllPersistentData() {
 			groups: [
 				{
 					id: `group-${Date.now()}`,
+					include: true,
 					name: '',
 					skills: [],
 				},

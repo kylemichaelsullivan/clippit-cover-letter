@@ -8,7 +8,6 @@ type UseGenerationConfirmationsProps = {
 	candidateDetails: any;
 	coverLetterTemplate: string;
 	includeCoverLetter: boolean;
-	includeSkills: boolean;
 	jobDetails: any;
 	skills: any;
 };
@@ -17,7 +16,6 @@ export const useGenerationConfirmations = ({
 	candidateDetails,
 	coverLetterTemplate,
 	includeCoverLetter,
-	includeSkills,
 	jobDetails,
 	skills,
 }: UseGenerationConfirmationsProps) => {
@@ -90,10 +88,6 @@ export const useGenerationConfirmations = ({
 	};
 
 	const handleGenerateSkills = async () => {
-		if (!includeSkills) {
-			return;
-		}
-
 		const hasExistingSkills = generatedSkills && generatedSkills.trim() !== '';
 
 		if (hasExistingSkills) {

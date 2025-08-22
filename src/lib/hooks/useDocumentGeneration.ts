@@ -1,14 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import { generateDocuments } from '../documentGeneration';
 import { useAppStore } from '../stores/useAppStore';
 import { useCandidateStore } from '../stores/useCandidateStore';
 import { useJobStore } from '../stores/useJobStore';
 import { useSkillsStore } from '../stores/useSkillsStore';
 import { useTemplatesStore } from '../stores/useTemplatesStore';
 import { useResumeStore } from '../stores/useResumeStore';
-import { generateDocuments } from '../documentGeneration';
-import { useState } from 'react';
+import type { SelectableItems } from '@/types';
 
-export const useDocumentGeneration = () => {
+export const useDocumentGeneration = (excludeSkills = false) => {
 	const { includeCoverLetter, includeResume } = useAppStore();
 	const { candidateDetails } = useCandidateStore();
 	const { jobDetails } = useJobStore();
@@ -36,15 +36,12 @@ export const useDocumentGeneration = () => {
 
 	const [showGenerateAllConfirmation, setShowGenerateAllConfirmation] =
 		useState(false);
-	const [existingContentForDialog, setExistingContentForDialog] = useState<
-		Array<{
-			id: string;
-			label: string;
-			checked: boolean;
-		}>
-	>([]);
+	const [existingContentForDialog, setExistingContentForDialog] =
+		useState<SelectableItems>([]);
 
-	const includeSkills = skills.groups.some((group) => group.skills.length > 0);
+	const includeSkills =
+		!excludeSkills &&
+		skills.groups.some((group) => group.skills.length > 0 && group.include);
 	const hasSelectedDocuments =
 		includeSkills || includeCoverLetter || includeResume;
 	const isGeneratingAny =
