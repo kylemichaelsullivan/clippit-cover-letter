@@ -35,6 +35,7 @@ export const useSkillsStore = create<SkillsState>()(
 					groups: [
 						{
 							id: `group-${Date.now()}`,
+							include: true,
 							name: '',
 							skills: [],
 						},
@@ -74,12 +75,13 @@ export const useSkillsStore = create<SkillsState>()(
 						await new Promise((resolve) => setTimeout(resolve, 1000));
 
 						const sortedGroups = getSortedSkillGroups(state.skills);
+
 						const skillsData = sortedGroups
+							.filter((group) => group.skills.length > 0 && group.include)
 							.map((group) => ({
 								name: group.name,
 								skills: group.skills,
-							}))
-							.filter((group) => group.skills.length > 0);
+							}));
 
 						if (skillsData.length === 0) {
 							set({
@@ -90,7 +92,6 @@ export const useSkillsStore = create<SkillsState>()(
 							return;
 						}
 
-						// For backward compatibility, also generate the HTML string
 						const skillsText = skillsData
 							.map((group) =>
 								state.includeSkillGroupNames

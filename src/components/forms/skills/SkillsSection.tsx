@@ -1,6 +1,7 @@
 'use client';
 
 import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 import { SkillsHeader, SkillsContent } from './';
 import { Button } from '@/components/ui/buttons';
 import { SkipLinkTarget } from '@/components/ui/navigation';
@@ -9,8 +10,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Error } from '@/components/ui/feedback';
 import { CONSTANTS } from '@/config';
 import { useFocusNewSkillGroup } from '@/lib/hooks';
-
-import type { SkillGroup } from '@/types';
+import { useSkillsStore } from '@/lib/stores';
 
 type SkillsSectionProps = {
 	form: any; // TanStack Form
@@ -18,31 +18,32 @@ type SkillsSectionProps = {
 	addSkillGroup: () => void;
 	alphabetizeGroups: () => void;
 	removeSkillGroup: (groupIndex: number) => void;
-	handleFieldChange?: (fieldName: string, value: any) => void;
 };
 
-export function SkillsSection({
+export const SkillsSection = memo(function SkillsSection({
 	form,
 	error,
 	addSkillGroup,
 	alphabetizeGroups,
 	removeSkillGroup,
-	handleFieldChange,
 }: SkillsSectionProps) {
-	const { registerFocusRef, focusNewGroup } = useFocusNewSkillGroup();
+	const { focusNewGroup, registerFocusRef } = useFocusNewSkillGroup();
+	const { skills } = useSkillsStore();
+
 	return (
 		<section
 			className={`SkillsSection ${CONSTANTS.CLASS_NAMES.FORM_SECTION} p-4 sm:p-6`}
 		>
 			<Field name='groups' form={form}>
-				{(field) => {
-					const groups = (field.state.value as SkillGroup[]) || [];
-
+				{() => {
 					return (
 						<>
 							<SkillsHeader
 								onAlphabetizeGroups={alphabetizeGroups}
-								groupsCount={groups.length}
+								groupsCount={skills.groups?.length || 0}
+								activeGroupsCount={
+									skills.groups?.filter((group) => group.include).length || 0
+								}
 							/>
 
 							{error && (
@@ -52,7 +53,6 @@ export function SkillsSection({
 							<SkillsContent
 								form={form}
 								removeSkillGroup={removeSkillGroup}
-								handleFieldChange={handleFieldChange}
 								registerFocusRef={registerFocusRef}
 							/>
 
@@ -81,4 +81,4 @@ export function SkillsSection({
 			</Field>
 		</section>
 	);
-}
+});

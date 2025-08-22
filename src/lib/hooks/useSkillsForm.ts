@@ -1,57 +1,35 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 
 import { useSkillsStore } from '@/lib/stores';
 import { skillsSchema } from '@/lib/schemas';
 import { sortSkillGroups } from '@/lib/utils';
 
-import type { Skills, SkillGroup } from '@/types';
+import type { Skills, SkillGroup, SkillGroupItems } from '@/types';
 
 export type SkillsFormValues = {
-	groups: Array<{
-		id: string;
-		name: string;
-		skills: string[];
-	}>;
+	groups: SkillGroupItems;
 	minSkillsToUse: number;
 	maxSkillsToUse: number;
 };
 
 export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 	const { setSkills, skills } = useSkillsStore();
-	const lastValuesRef = useRef(skills);
 	const [error, setError] = useState<string>('');
-
-	const handleFieldChange = useCallback(
-		(fieldName: string, value: any) => {
-			const currentSkills = { ...skills };
-
-			switch (fieldName) {
-				case 'groups':
-					currentSkills.groups = value;
-					break;
-				case 'minSkillsToUse':
-					currentSkills.minSkillsToUse = value;
-					break;
-				case 'maxSkillsToUse':
-					currentSkills.maxSkillsToUse = value;
-					break;
-			}
-
-			setSkills(currentSkills);
-		},
-		[skills, setSkills],
-	);
 
 	const form = useForm({
 		defaultValues: {
 			groups: skills.groups?.length
-				? skills.groups
+				? skills.groups.map((group) => ({
+						...group,
+						include: group.include !== undefined ? group.include : true,
+					}))
 				: [
 						{
 							id: `group-${Date.now()}`,
+							include: true,
 							name: '',
 							skills: [],
 						},
@@ -69,10 +47,16 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		},
 	});
 
+	// Sync form with store only on mount
 	useEffect(() => {
 		if (skills && skills.groups) {
+			const groupsWithInclude = skills.groups.map((group) => ({
+				...group,
+				include: group.include !== undefined ? group.include : true,
+			}));
+
 			form.reset({
-				groups: skills.groups,
+				groups: groupsWithInclude,
 				minSkillsToUse: skills.minSkillsToUse || 5,
 				maxSkillsToUse: skills.maxSkillsToUse || 10,
 			});
@@ -80,26 +64,12 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []); // Only run on mount
 
-	useEffect(() => {
-		const values = form.state.values;
-		const valuesString = JSON.stringify(values);
-		const lastValuesString = JSON.stringify(lastValuesRef.current);
-
-		if (valuesString !== lastValuesString) {
-			lastValuesRef.current = values;
-			const result = skillsSchema.safeParse(values);
-			if (result.success) {
-				setSkills(result.data);
-			}
-		}
-	}, [form.state.values, setSkills]);
-
 	const sortGroupsAlphabetically = (groups: SkillGroup[]): SkillGroup[] => {
 		return sortSkillGroups(groups);
 	};
 
 	const addSkillGroup = () => {
-		const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
+		const currentGroups = skills.groups || [];
 
 		if (currentGroups.length >= 25) {
 			setError('Maximum of 25 Skill Groups allowed.');
@@ -116,27 +86,38 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 
 		const newGroup: SkillGroup = {
 			id: `group-${Date.now()}`,
+			include: true,
 			name: '',
 			skills: [],
 		};
 		const updatedGroups = [...currentGroups, newGroup];
+
+		setSkills({
+			...skills,
+			groups: updatedGroups,
+		});
+
 		form.setFieldValue('groups', updatedGroups);
-		handleFieldChange('groups', updatedGroups);
 
 		return updatedGroups.length - 1;
 	};
 
 	const alphabetizeGroups = () => {
-		const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
+		const currentGroups = skills.groups || [];
 		if (currentGroups.length > 1) {
 			const sortedGroups = sortGroupsAlphabetically(currentGroups);
+
+			setSkills({
+				...skills,
+				groups: sortedGroups,
+			});
+
 			form.setFieldValue('groups', sortedGroups);
-			handleFieldChange('groups', sortedGroups);
 		}
 	};
 
 	const removeSkillGroup = (groupIndex: number) => {
-		const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
+		const currentGroups = skills.groups || [];
 		const groupToRemove = currentGroups[groupIndex];
 		if (groupToRemove) {
 			const updatedGroups = currentGroups.filter(
@@ -146,14 +127,19 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 			if (updatedGroups.length === 0) {
 				const defaultGroup: SkillGroup = {
 					id: `group-${Date.now()}`,
+					include: true,
 					name: '',
 					skills: [],
 				};
 				updatedGroups.push(defaultGroup);
 			}
 
+			setSkills({
+				...skills,
+				groups: updatedGroups,
+			});
+
 			form.setFieldValue('groups', updatedGroups);
-			handleFieldChange('groups', updatedGroups);
 		}
 	};
 
@@ -161,7 +147,6 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		form,
 		error,
 		setError,
-		handleFieldChange,
 		addSkillGroup,
 		alphabetizeGroups,
 		removeSkillGroup,

@@ -11,17 +11,6 @@ export type CandidateDetails = {
 	signatureInclude?: boolean;
 };
 
-export type FormData = {
-	title: string;
-	content: string;
-};
-
-export type ResumeDetails = {
-	summary: string;
-	experience: Experience[];
-	education: Education[];
-};
-
 export type Education = {
 	id: string;
 	include: boolean;
@@ -41,6 +30,11 @@ export type Experience = {
 	bullets: string[];
 };
 
+export type FormData = {
+	title: string;
+	content: string;
+};
+
 export type Job = {
 	companyName: string;
 	jobTitle: string;
@@ -55,8 +49,32 @@ export type Phase = {
 	description: string;
 };
 
+export type ResumeDetails = {
+	summary: string;
+	experience: Experience[];
+	education: Education[];
+};
+
+export type SelectableItem = {
+	id: string;
+	label: string;
+	checked: boolean;
+};
+
+export type SelectableItems = SelectableItem[];
+
+export type SkillGroupItem = {
+	id: string;
+	include: boolean;
+	name: string;
+	skills: string[];
+};
+
+export type SkillGroupItems = SkillGroupItem[];
+
 export type SkillGroup = {
 	id: string;
+	include: boolean;
 	name: string;
 	skills: string[];
 };

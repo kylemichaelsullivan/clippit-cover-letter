@@ -27,6 +27,7 @@ export const skillsSchema = z.object({
 	groups: z.array(
 		z.object({
 			id: z.string(),
+			include: z.boolean(),
 			name: z.string(),
 			skills: z.array(z.string()),
 		}),

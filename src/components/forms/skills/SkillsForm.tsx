@@ -3,11 +3,11 @@
 import { memo } from 'react';
 
 import { Form } from '@/components/forms/core';
-import { SkillsSection } from './';
 import { TabTitle } from '@/components/ui';
-import { DownloadButtonMD } from '@/components/results/actions';
-import { useSkillsForm } from '@/lib/hooks';
+import { DownloadButtonMD } from '@/components/documents/actions';
+import { SkillsSection } from './';
 import { usePhaseStore, useSkillsStore } from '@/lib/stores';
+import { useSkillsForm } from '@/lib/hooks';
 import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
 
@@ -21,14 +21,8 @@ export const SkillsForm = memo(function SkillsForm({
 	const { currentPhase } = usePhaseStore();
 	const { skills } = useSkillsStore();
 
-	const {
-		form,
-		error,
-		handleFieldChange,
-		addSkillGroup,
-		alphabetizeGroups,
-		removeSkillGroup,
-	} = useSkillsForm(onSubmit);
+	const { form, error, addSkillGroup, alphabetizeGroups, removeSkillGroup } =
+		useSkillsForm(onSubmit);
 
 	if (currentPhase !== 'skills') {
 		return null;
@@ -80,7 +74,6 @@ export const SkillsForm = memo(function SkillsForm({
 					addSkillGroup={addSkillGroup}
 					alphabetizeGroups={alphabetizeGroups}
 					removeSkillGroup={removeSkillGroup}
-					handleFieldChange={handleFieldChange}
 				/>
 			</Form>
 		</div>

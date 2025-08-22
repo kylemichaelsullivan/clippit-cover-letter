@@ -1,21 +1,23 @@
 'use client';
 
 import { Field } from '@tanstack/react-form';
-
-import { Button } from '@/components/ui/buttons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormFieldContainer } from '@/components/forms/core';
+import { Checkbox } from '@/components/ui/input';
+import { Button } from '@/components/ui/buttons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
 import { getOrdinalSuffix } from '@/lib/utils';
+import { useSkillsStore } from '@/lib/stores';
+import { useCallback, memo, useState, useEffect, useMemo } from 'react';
+
 import type { SkillGroup } from '@/types';
 
 type SkillGroupNameProps = {
 	form: any; // TanStack Form
 	groupIndex: number;
 	onRemove?: () => void;
-	handleFieldChange?: (fieldName: string, value: any) => void;
 	registerFocusRef?: (
 		groupIndex: number,
 		inputElement: HTMLInputElement | null,
@@ -24,25 +26,60 @@ type SkillGroupNameProps = {
 
 const hasDuplicateGroupName = (
 	groups: SkillGroup[],
-	currentGroupIndex: number,
+	currentIndex: number,
 	newName: string,
 ): boolean => {
+	if (!newName.trim()) return false;
+
 	const normalizedNewName = newName.toLowerCase().trim();
 	return groups.some(
 		(group, index) =>
-			index !== currentGroupIndex &&
+			index !== currentIndex &&
 			group.name.toLowerCase().trim() === normalizedNewName,
 	);
 };
 
-export function SkillGroupName({
+export const SkillGroupName = memo(function SkillGroupName({
 	form,
 	groupIndex,
 	onRemove,
-	handleFieldChange,
 	registerFocusRef,
 }: SkillGroupNameProps) {
-	const currentGroups = (form.getFieldValue('groups') as SkillGroup[]) || [];
+	const { setSkills } = useSkillsStore();
+
+	const currentGroups = useMemo(() => {
+		return (form.getFieldValue('groups') as SkillGroup[]) || [];
+	}, [form]);
+
+	const [localInclude, setLocalInclude] = useState(() => {
+		const group = currentGroups[groupIndex];
+		return group?.include !== undefined ? group.include : true;
+	});
+
+	useEffect(() => {
+		const group = currentGroups[groupIndex];
+		if (group && group.include !== undefined) {
+			setLocalInclude(group.include);
+		}
+	}, [currentGroups, groupIndex]);
+
+	const updateIncludeState = useCallback(
+		(checked: boolean) => {
+			setLocalInclude(checked);
+
+			const currentSkills = useSkillsStore.getState().skills;
+			const updatedSkills = {
+				...currentSkills,
+				groups: currentSkills.groups.map((group, index) =>
+					index === groupIndex ? { ...group, include: checked } : group,
+				),
+			};
+			setSkills(updatedSkills);
+
+			form.setFieldValue(`groups.${groupIndex}.include`, checked);
+		},
+		[groupIndex, setSkills, form],
+	);
 
 	return (
 		<Field
@@ -62,14 +99,25 @@ export function SkillGroupName({
 
 				return (
 					<FormFieldContainer className='relative pb-3'>
-						<label
-							htmlFor={`group-name-${groupIndex}`}
-							className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
-							title='Group Name'
-							aria-label='Group Name'
-						>
-							<span>Group Name</span>
-						</label>
+						<div className='flex items-center gap-2'>
+							<Checkbox
+								checked={localInclude}
+								onChange={(checked) => {
+									updateIncludeState(checked);
+								}}
+								label=''
+								title={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group?`}
+								aria-label={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group in document`}
+							/>
+							<label
+								htmlFor={`group-name-${groupIndex}`}
+								className='FormFieldLabel text-base font-medium text-black'
+								title='Group Name'
+								aria-label='Group Name'
+							>
+								Group Name
+							</label>
+						</div>
 						<input
 							id={`group-name-${groupIndex}`}
 							type='text'
@@ -77,14 +125,6 @@ export function SkillGroupName({
 							onChange={(e) => {
 								const value = e.target.value;
 								field.handleChange(value);
-								if (handleFieldChange) {
-									const updatedGroups = [...currentGroups];
-									updatedGroups[groupIndex] = {
-										...updatedGroups[groupIndex],
-										name: value,
-									};
-									handleFieldChange('groups', updatedGroups);
-								}
 							}}
 							placeholder={PLACEHOLDERS.SKILLS.GROUP_NAME}
 							className='text-sm sm:text-base'
@@ -117,4 +157,4 @@ export function SkillGroupName({
 			}}
 		</Field>
 	);
-}
+});

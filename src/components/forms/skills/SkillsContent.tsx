@@ -1,6 +1,7 @@
 'use client';
 
 import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 
 import { SkillGroupName, SkillTags } from './';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
@@ -12,17 +13,15 @@ import type { SkillGroup } from '@/types';
 type SkillsContentProps = {
 	form: any; // TanStack Form
 	removeSkillGroup: (groupIndex: number) => void;
-	handleFieldChange?: (fieldName: string, value: any) => void;
 	registerFocusRef?: (
 		groupIndex: number,
 		inputElement: HTMLInputElement | null,
 	) => void;
 };
 
-export function SkillsContent({
+export const SkillsContent = memo(function SkillsContent({
 	form,
 	removeSkillGroup,
-	handleFieldChange,
 	registerFocusRef,
 }: SkillsContentProps) {
 	return (
@@ -43,22 +42,20 @@ export function SkillsContent({
 
 							return (
 								<SkipLinkTarget
-									key={`${group.id}-${groupIndex}`}
-									id={`skill-group-${groupIndex + 1}`}
 									className='SkillGroupCard skill-group-card border-light-gray flex flex-col gap-3 rounded-lg border bg-white p-3 sm:gap-4 sm:p-4'
+									id={`skill-group-${groupIndex + 1}`}
+									key={`${group.id}-${groupIndex}`}
 									style={{ '--group-index': groupIndex } as CSSProperties}
 								>
 									<SkillGroupName
 										form={form}
 										groupIndex={groupIndex}
 										onRemove={handleRemoveSkillGroup}
-										handleFieldChange={handleFieldChange}
 										registerFocusRef={registerFocusRef}
 									/>
 									<SkillTags
 										form={form}
 										groupIndex={groupIndex}
-										handleFieldChange={handleFieldChange}
 										isLastGroup={groupIndex === groups.length - 1}
 									/>
 								</SkipLinkTarget>
@@ -69,4 +66,4 @@ export function SkillsContent({
 			}}
 		</Field>
 	);
-}
+});
