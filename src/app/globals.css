@@ -742,20 +742,16 @@ input[data-lpignore='false'] {
 	outline: none;
 	border: none;
 	background: transparent;
+	white-space: pre-wrap;
 	min-height: inherit;
 	margin: 0;
 }
 
-/* DocumentContentTipTapEditor - Match DocumentContentFormattedPreview styling */
-.DocumentContentTipTapEditor .tiptap.ProseMirror {
-	white-space: pre-wrap;
-}
-
 /* TipTap Editor in Form Sections */
 .FormSection .TipTapEditorContent {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
+	flex: 1;
 }
 
 .FormSection .TipTapEditorContent .tiptap.ProseMirror {
