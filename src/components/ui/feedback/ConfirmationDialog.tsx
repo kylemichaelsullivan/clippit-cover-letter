@@ -10,6 +10,7 @@ import {
 	faExclamationTriangle,
 	faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import type { SelectableItems } from '@/types';
 
 type ConfirmationDialogProps = {
 	isOpen: boolean;
@@ -19,11 +20,7 @@ type ConfirmationDialogProps = {
 	message: string;
 	confirmText?: string;
 	cancelText?: string;
-	availableItems?: Array<{
-		id: string;
-		label: string;
-		checked: boolean;
-	}>;
+	availableItems?: SelectableItems;
 };
 
 export const ConfirmationDialog = memo(function ConfirmationDialog({

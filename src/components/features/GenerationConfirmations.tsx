@@ -9,7 +9,6 @@ type GenerationConfirmationsProps = {
 	skills: any;
 	coverLetterTemplate: string;
 	includeCoverLetter: boolean;
-	includeSkills: boolean;
 	generationConfirmations?: any;
 };
 
@@ -19,7 +18,6 @@ export const GenerationConfirmations = ({
 	skills,
 	coverLetterTemplate,
 	includeCoverLetter,
-	includeSkills,
 	generationConfirmations,
 }: GenerationConfirmationsProps) => {
 	const hookResult = useGenerationConfirmations({
@@ -28,7 +26,6 @@ export const GenerationConfirmations = ({
 		skills,
 		coverLetterTemplate,
 		includeCoverLetter,
-		includeSkills,
 	});
 
 	const {

@@ -1,7 +1,6 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
@@ -37,7 +36,7 @@ export const DocumentSelectionControls = memo(
 			showGenerateAllConfirmation,
 			setShowGenerateAllConfirmation,
 			existingContentForDialog,
-		} = useDocumentGeneration();
+		} = useDocumentGeneration(true); // excludeSkills = true for Preview page
 
 		const availableItems = useMemo(() => {
 			const items = [];

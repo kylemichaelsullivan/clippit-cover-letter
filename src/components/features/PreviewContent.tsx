@@ -32,7 +32,6 @@ export const PreviewContent = memo(function PreviewContent() {
 		coverLetterTemplate,
 		jobDetails,
 		includeCoverLetter,
-		includeSkills: false,
 		skills,
 	});
 
@@ -84,7 +83,6 @@ export const PreviewContent = memo(function PreviewContent() {
 				jobDetails={jobDetails}
 				skills={skills}
 				coverLetterTemplate={coverLetterTemplate}
-				includeSkills={false}
 				includeCoverLetter={includeCoverLetter}
 				generationConfirmations={generationConfirmations}
 			/>

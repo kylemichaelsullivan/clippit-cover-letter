@@ -28,27 +28,22 @@ export function ActionButtons({
 	fontSize,
 }: ActionButtonsProps) {
 	return (
-		<div
-			className={clsx(
-				'ActionButtons border-gray flex flex-wrap gap-2 border-t pt-3 sm:flex-row sm:justify-end sm:gap-2 sm:pt-4',
-				className,
-			)}
-		>
+		<div className={clsx('ActionButtons flex flex-wrap gap-2 pt-2', className)}>
 			<CopyButton text={text} disabled={disabled} />
 
 			<DownloadButtonPDF
 				content={text}
 				title='PDF'
+				fontSize={fontSize}
 				filename={filename}
 				candidateDetails={candidateDetails}
 				disabled={disabled}
-				fontSize={fontSize}
 			/>
 
 			<DownloadButtonMD
 				content={text}
-				size='flex'
 				title='MD'
+				size='flex'
 				filename={filename}
 				disabled={disabled}
 			/>

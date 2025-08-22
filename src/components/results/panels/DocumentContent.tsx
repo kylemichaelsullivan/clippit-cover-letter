@@ -78,65 +78,65 @@ export const DocumentContent = memo(function DocumentContent({
 			</div>
 			{isGenerating ? (
 				<TipTapEditor
-					id={inputId}
+					className='text-light-gray'
 					value={getGeneratingText(title)}
-					onChange={onContentChange || (() => {})}
 					placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 						'{title}',
 						title.toLowerCase(),
 					)}
 					readOnly={true}
-					className='text-light-gray'
+					onChange={onContentChange || (() => {})}
+					id={inputId}
 				/>
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
 					<TipTapEditor
+						componentName={isSkills ? 'DocumentContentTipTapEditor' : undefined}
+						className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 						value={content}
-						onChange={onContentChange || (() => {})}
 						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 							'{title}',
 							title.toLowerCase(),
 						)}
 						readOnly={false}
+						onChange={onContentChange || (() => {})}
 						id={inputId}
-						componentName={isSkills ? 'DocumentContentTipTapEditor' : undefined}
-						className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 					/>
 					{isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>
 							<DocumentPreview
+								className='rounded-lg'
 								content={content}
 								candidateDetails={candidateDetails}
 								fontSize={fontSize || 11}
-								className='rounded-lg'
 							/>
 						</div>
-					) : (
+					) : !isSkills ? (
 						<div
 							className={`print-content border-light-gray rounded-lg border bg-white p-4`}
 						>
 							{renderPageHeader()}
 							<div className='p-0'>{renderHtmlContent(content)}</div>
 						</div>
-					)}
+					) : null}
 				</div>
 			) : isResume || isCoverLetter ? (
 				<div className='bg-gray rounded-lg p-4'>
 					<DocumentPreview
+						className='rounded-lg'
 						content={content}
 						candidateDetails={candidateDetails}
 						fontSize={fontSize || 11}
-						className='rounded-lg'
 					/>
 				</div>
-			) : (
+			) : !isSkills ? (
 				<div
 					className={`print-content border-light-gray rounded-lg border bg-white p-4`}
 				>
 					{renderPageHeader()}
 					<div className='p-0'>{renderHtmlContent(content)}</div>
 				</div>
-			)}
+			) : null}
 		</div>
 	);
 });
