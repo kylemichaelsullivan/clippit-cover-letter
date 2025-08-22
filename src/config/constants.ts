@@ -39,6 +39,12 @@ export const CONSTANTS = {
 
 	PHASES: [
 		{
+			id: 'welcome',
+			name: 'Welcome',
+			description:
+				'Welcome to Clippit: AI-powered cover letter and resume generation (still in development)',
+		},
+		{
 			id: 'candidate',
 			name: 'Candidate',
 			description: 'Enter your information',

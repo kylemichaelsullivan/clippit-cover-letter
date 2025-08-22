@@ -57,7 +57,7 @@ export const DEFAULTS = {
 			jobDescription: '',
 			jobTitle: '',
 		},
-		PHASE: 'candidate',
+		PHASE: 'welcome',
 		RESUME: {
 			experience: '',
 			summary: '',

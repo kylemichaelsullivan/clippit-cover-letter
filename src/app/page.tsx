@@ -3,6 +3,7 @@
 import { memo } from 'react';
 
 import {
+	WelcomeForm,
 	CandidateForm,
 	JobForm,
 	LetterForm,
@@ -56,6 +57,8 @@ export default memo(function Page() {
 
 	const renderPhaseContent = () => {
 		switch (currentPhase) {
+			case 'welcome':
+				return <WelcomeForm />;
 			case 'candidate':
 				return <CandidateForm onSubmit={handleCandidateSubmit} />;
 			case 'skills':
@@ -71,7 +74,7 @@ export default memo(function Page() {
 			case 'results':
 				return <ResultContent />;
 			default:
-				return <CandidateForm onSubmit={handleCandidateSubmit} />;
+				return <WelcomeForm />;
 		}
 	};
 
