@@ -25,26 +25,40 @@ type ImageInputProps = {
 	includeField?: any; // TanStack Form field for include checkbox
 	includeFieldName?: string;
 	onIncludeChange?: (value: boolean) => void;
+	aspectRatio?: 'square' | 'wide' | 'tall';
 };
 
 type ImagePreviewProps = {
 	imageSrc: string;
 	onChange: () => void;
 	onRemove: () => void;
+	aspectRatio?: 'square' | 'wide' | 'tall';
 };
 
 const ImagePreview = memo(function ImagePreview({
 	imageSrc,
 	onChange,
 	onRemove,
+	aspectRatio = 'square',
 }: ImagePreviewProps) {
+	const imageClasses = useMemo(() => {
+		switch (aspectRatio) {
+			case 'wide':
+				return 'h-16 w-32 object-contain';
+			case 'tall':
+				return 'h-32 w-16 object-contain';
+			default:
+				return 'h-24 w-24 object-cover';
+		}
+	}, [aspectRatio]);
+
 	return (
 		<div className='ImagePreview group border-gray force-white-bg relative flex items-center justify-center rounded-lg border p-2 hover:border-black hover:shadow-sm'>
 			<Image
 				src={imageSrc}
-				className='h-24 w-24 object-cover'
-				width={96}
-				height={96}
+				className={imageClasses}
+				width={aspectRatio === 'wide' ? 128 : aspectRatio === 'tall' ? 64 : 96}
+				height={aspectRatio === 'wide' ? 64 : aspectRatio === 'tall' ? 128 : 96}
 				unoptimized={imageSrc.startsWith('data:')}
 				alt='Image Preview'
 			/>
@@ -131,6 +145,7 @@ export const ImageInput = memo(function ImageInput({
 	includeField,
 	includeFieldName,
 	onIncludeChange,
+	aspectRatio = 'square',
 }: ImageInputProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { candidateDetails, setCandidateField } = useCandidateStore();
@@ -310,6 +325,7 @@ export const ImageInput = memo(function ImageInput({
 						imageSrc={inputValue}
 						onChange={handleClick}
 						onRemove={handleRemoveFile}
+						aspectRatio={aspectRatio}
 					/>
 				) : (
 					<UploadButton

@@ -193,6 +193,7 @@ export const CandidateForm = memo(function CandidateForm({
 										includeField={includeField}
 										label='Logo'
 										fieldName='logo'
+										aspectRatio='square'
 										includeFieldName='logoInclude'
 										placeholder={PLACEHOLDERS.CANDIDATE.LOGO}
 										schema={candidateDetailsSchema}
@@ -214,29 +215,20 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='signature'>
 						{(field) => (
-							<Field form={form} name='signatureInclude'>
-								{(includeField) => (
-									<ImageInput
-										field={field}
-										includeField={includeField}
-										label='Signature'
-										fieldName='signature'
-										includeFieldName='signatureInclude'
-										placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
-										schema={candidateDetailsSchema}
-										onChange={(value: string) => {
-											field.handleChange(value);
-											handleFieldChange('signature', value);
-										}}
-										onIncludeChange={(value: boolean) => {
-											includeField.handleChange(value);
-											handleFieldChange('signatureInclude', value);
-										}}
-										accept='image/*'
-										id='signature'
-									/>
-								)}
-							</Field>
+							<ImageInput
+								field={field}
+								label='Signature'
+								fieldName='signature'
+								aspectRatio='wide'
+								placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
+								schema={candidateDetailsSchema}
+								onChange={(value: string) => {
+									field.handleChange(value);
+									handleFieldChange('signature', value);
+								}}
+								accept='image/*'
+								id='signature'
+							/>
 						)}
 					</Field>
 				</FormSection>
