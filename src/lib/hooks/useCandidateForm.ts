@@ -54,9 +54,6 @@ export function useCandidateForm(
 				case 'signature':
 					setCandidateField('signature', value);
 					break;
-				case 'signatureInclude':
-					setCandidateField('signatureInclude', value);
-					break;
 			}
 		},
 		[setCandidateField],

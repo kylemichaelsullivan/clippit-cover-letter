@@ -198,6 +198,11 @@ const createMustacheValues = (
 			case 'My Portfolio':
 				values[replacement.name] = candidateDetails.portfolio || '';
 				break;
+			case 'My Signature':
+				values[replacement.name] = candidateDetails.signature
+					? `<img src="${candidateDetails.signature}" class="signature-image" alt="Signature" />`
+					: candidateDetails.fullName || '';
+				break;
 			case 'My Skills':
 				values[replacement.name] = includeSkillGroupNames
 					? formatSkillsGrouped(skills)

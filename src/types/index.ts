@@ -8,7 +8,6 @@ export type CandidateDetails = {
 	phone?: string;
 	portfolio?: string;
 	signature?: string;
-	signatureInclude?: boolean;
 };
 
 export type Education = {

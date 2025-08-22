@@ -16,6 +16,7 @@ export const MUSTACHE_REPLACEMENTS: MustacheReplacement[] = [
 	{ name: 'My Location', description: 'Candidate location' },
 	{ name: 'My LinkedIn', description: 'Candidate LinkedIn profile' },
 	{ name: 'My Portfolio', description: 'Candidate portfolio URL' },
+	{ name: 'My Signature', description: 'Candidate signature' },
 	{ name: 'My Skills', description: 'All skills grouped by category' },
 	{ name: 'Grouped Skills', description: 'All skills grouped by category' },
 	{ name: 'Ungrouped Skills', description: 'All skills as a flat list' },

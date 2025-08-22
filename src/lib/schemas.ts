@@ -20,7 +20,6 @@ export const candidateDetailsSchema = z.object({
 	logo: z.string(),
 	logoInclude: z.boolean().optional(),
 	signature: z.string(),
-	signatureInclude: z.boolean().optional(),
 });
 
 export const skillsSchema = z.object({
