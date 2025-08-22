@@ -1,14 +1,31 @@
 // Shared style generators that can be used in both PDF generation and UI display
 
 // Prose styles that are used by both PDF and UI
-const SHARED_PROSE_CORE = `
-	color: var(--color-black);
-`;
-
-const SHARED_PROSE_RESET = `
-	padding: 0;
+const SHARED_BLOCKQUOTE = `
+	border-left: 3px solid var(--color-light-gray);
+	color: var(--color-gray);
+	font-style: italic;
+	line-height: 1.2;
+	padding-left: 1rem;
 	margin: 0;
 `;
+
+const SHARED_EMPHASIS = {
+	em: `
+		font-style: italic;
+	`,
+	strong: `
+		color: var(--color-black);
+		font-weight: 700;
+	`,
+};
+
+const SHARED_FONT_SIZES = {
+	h1: '1.875rem',
+	h2: '1.5rem',
+	h3: '1.25rem',
+	h4: '1.125rem',
+};
 
 const SHARED_HEADINGS = `
 	color: var(--color-black);
@@ -20,27 +37,14 @@ const SHARED_HEADING_VARIANTS = `
 	font-variant: small-caps;
 `;
 
-const SHARED_FONT_SIZES = {
-	h1: '1.875rem',
-	h2: '1.5rem',
-	h3: '1.25rem',
-	h4: '1.125rem',
-};
-
-const SHARED_PARAGRAPH = `
-	line-height: 1.2;
-	margin: 0;
+const SHARED_LINKS = `
+	color: var(--color-blue);
+	text-decoration: underline;
 `;
 
-const SHARED_EMPHASIS = {
-	strong: `
-		color: var(--color-black);
-		font-weight: 700;
-	`,
-	em: `
-		font-style: italic;
-	`,
-};
+const SHARED_LINKS_HOVER = `
+	color: var(--color-light-blue);
+`;
 
 const SHARED_LISTS = `
 	line-height: 1.2;
@@ -52,22 +56,143 @@ const SHARED_LIST_ITEMS = `
 	margin: 0.5rem 0 0;
 `;
 
-const SHARED_BLOCKQUOTE = `
-	border-left: 3px solid var(--color-light-gray);
+const SHARED_PAGE_HEADER_CONTACT = `
 	color: var(--color-gray);
-	font-style: italic;
-	line-height: 1.2;
-	padding-left: 1rem;
+	font-size: 0.875rem;
 	margin: 0;
 `;
 
-const SHARED_LINKS = `
-	color: var(--color-blue);
-	text-decoration: underline;
+const SHARED_PAGE_HEADER_CORE = `
+	padding: 0;
+	text-align: center;
 `;
 
-const SHARED_LINKS_HOVER = `
-	color: var(--color-light-blue);
+const SHARED_PAGE_HEADER_NAME = `
+	font-weight: bold;
+	margin: 0;
+	text-transform: uppercase;
+`;
+
+const SHARED_PARAGRAPH = `
+	line-height: 1.2;
+	margin: 0;
+`;
+
+const SHARED_PROSE_CORE = `
+	color: var(--color-black);
+`;
+
+const SHARED_PROSE_RESET = `
+	margin: 0;
+	padding: 0;
+`;
+
+const SHARED_PAGE_BREAK = `
+	display: block;
+	clear: both;
+	border: none;
+	break-before: page;
+	page-break-before: always;
+	height: 0;
+	padding: 0;
+	margin: 0;
+`;
+
+// Print document styles constants
+const PRINT_DOCUMENT_CORE = `
+	background-color: var(--color-white);
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_HEADINGS = `
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_H1_BORDER = `
+	border-bottom: 1px solid var(--color-gray);
+`;
+
+const PRINT_DOCUMENT_H2_BREAK = `
+	break-after: avoid;
+	orphans: 2;
+	page-break-after: avoid;
+`;
+
+const PRINT_DOCUMENT_TEXT = `
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_TEXT_SHADOW = `
+	font-weight: 500;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+`;
+
+const PRINT_DOCUMENT_PAGE_BREAK = `
+${SHARED_PAGE_BREAK}
+	background: none;
+`;
+
+const PRINT_DOCUMENT_LISTS = `
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_BLOCKQUOTE = `
+	color: var(--color-gray);
+`;
+
+const PRINT_DOCUMENT_CODE = `
+	background-color: var(--color-light-gray);
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_PRE = `
+	background-color: var(--color-light-gray);
+`;
+
+const PRINT_DOCUMENT_HR = `
+	border-color: var(--color-light-gray);
+`;
+
+const PRINT_DOCUMENT_PAGE_HEADER_NAME = `
+	color: var(--color-black);
+`;
+
+const PRINT_DOCUMENT_PAGE_HEADER_CONTACT = `
+	color: var(--color-gray);
+`;
+
+// TipTap editor page break styles
+const TIPTAP_PAGE_BREAK_VISUAL = `
+	background: linear-gradient(to right, transparent, var(--color-light-gray), transparent);
+	border-radius: 1px;
+	height: 2px;
+	margin: 1rem 0;
+`;
+
+const TIPTAP_PAGE_BREAK_LABEL = `
+	display: block;
+	content: 'Page Break';
+	color: var(--color-gray);
+	font-size: 0.75rem;
+	font-style: italic;
+	margin-bottom: 0.5rem;
+	text-align: center;
+`;
+
+const TIPTAP_PAGE_BREAK_PRINT = `
+	background: none;
+	height: 0;
+	margin: 0;
+`;
+
+const TIPTAP_PAGE_BREAK_LABEL_PRINT = `
+	content: none;
+	display: none;
+`;
+
+const SIGNATURE_IMAGE = `
+	width: auto;
+	max-height: 3em;
 `;
 
 function generateProseStyles(className: string): string {
@@ -175,14 +300,7 @@ ${SHARED_LINKS_HOVER}
 }
 
 ${className} .page-break {
-	display: block;
-	clear: both;
-	border: none;
-	break-before: page;
-	page-break-before: always;
-	height: 0;
-	padding: 0;
-	margin: 0;
+${SHARED_PAGE_BREAK}
 }
 `;
 }
@@ -199,23 +317,123 @@ export function generatePrintContentStyles(): string {
 	return generateProseStyles('.print-content');
 }
 
-// Page header styles
-const SHARED_PAGE_HEADER_CORE = `
-	text-align: center;
-	padding: 0;
-`;
+function generatePrintDocumentStyles(className: string): string {
+	return `
+${className} {
+${PRINT_DOCUMENT_CORE}
+}
 
-const SHARED_PAGE_HEADER_NAME = `
-	font-weight: bold;
-	text-transform: uppercase;
-	margin: 0;
-`;
+${className} h1,
+${className} h2,
+${className} h3,
+${className} h4,
+${className} h5,
+${className} h6 {
+${PRINT_DOCUMENT_HEADINGS}
+}
 
-const SHARED_PAGE_HEADER_CONTACT = `
-	color: var(--color-gray);
-	font-size: 0.875rem;
-	margin: 0;
+${className} h1 {
+${PRINT_DOCUMENT_H1_BORDER}
+}
+
+${className} h2 {
+${PRINT_DOCUMENT_H2_BREAK}
+}
+
+${className} p {
+${PRINT_DOCUMENT_TEXT}
+}
+
+${className} strong {
+${PRINT_DOCUMENT_TEXT}
+}
+
+${className} em {
+${PRINT_DOCUMENT_TEXT}
+}
+
+${className} .text-shadow {
+${PRINT_DOCUMENT_TEXT_SHADOW}
+}
+
+${className} .page-break {
+${PRINT_DOCUMENT_PAGE_BREAK}
+}
+
+${className} ul,
+${className} ol {
+${PRINT_DOCUMENT_LISTS}
+}
+
+${className} li {
+${PRINT_DOCUMENT_LISTS}
+}
+
+${className} blockquote {
+${PRINT_DOCUMENT_BLOCKQUOTE}
+}
+
+${className} code {
+${PRINT_DOCUMENT_CODE}
+}
+
+${className} pre {
+${PRINT_DOCUMENT_PRE}
+}
+
+${className} hr {
+${PRINT_DOCUMENT_HR}
+}
 `;
+}
+
+function generatePrintPageHeaderStyles(className: string): string {
+	return `
+${className} .page-header-name {
+${PRINT_DOCUMENT_PAGE_HEADER_NAME}
+}
+
+${className} .page-header-contact {
+${PRINT_DOCUMENT_PAGE_HEADER_CONTACT}
+}
+`;
+}
+
+export function generatePrintDocumentContent(): string {
+	return `
+${generatePrintDocumentStyles('.print-document-content')}
+${generatePrintPageHeaderStyles('.print-document')}
+.signature-image {
+${SIGNATURE_IMAGE}
+}
+`;
+}
+
+function generateTipTapPageBreakStylesInternal(className: string): string {
+	return `
+${className} .page-break {
+${TIPTAP_PAGE_BREAK_VISUAL}
+}
+
+${className} .page-break::before {
+${TIPTAP_PAGE_BREAK_LABEL}
+}
+
+@media print {
+	${className} .page-break {
+${TIPTAP_PAGE_BREAK_PRINT}
+	}
+	
+	${className} .page-break::before {
+${TIPTAP_PAGE_BREAK_LABEL_PRINT}
+	}
+}
+`;
+}
+
+export function generateTipTapPageBreakStyles(): string {
+	return generateTipTapPageBreakStylesInternal('.TipTapEditorContent');
+}
 
 function generatePageHeaderStyles(
 	className: string,
@@ -250,124 +468,7 @@ export function generateUIStyles(): string {
 ${generateProseCompactStyles()}
 ${generatePrintContentStyles()}
 ${generateUIPageHeaderStyles()}
-
-.print-document-content {
-	background-color: #ffffff !important;
-	color: #000000 !important;
-}
-
-.print-document-content h1,
-.print-document-content h2,
-.print-document-content h3,
-.print-document-content h4,
-.print-document-content h5,
-.print-document-content h6 {
-	color: #000000 !important;
-}
-
-.print-document-content h1 {
-	border-bottom: 1px solid #64748b !important;
-}
-
-.print-document-content h2 {
-	page-break-after: avoid !important;
-	break-after: avoid !important;
-	orphans: 2 !important;
-}
-
-.print-document-content p {
-	color: #000000 !important;
-}
-
-.print-document-content strong {
-	color: #000000 !important;
-}
-
-.print-document-content em {
-	color: #000000 !important;
-}
-
-.print-document-content .text-shadow {
-	font-weight: 500 !important;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25) !important;
-}
-
-.print-document-content .page-break {
-	page-break-before: always !important;
-	break-before: page !important;
-	height: 0 !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	border: none !important;
-	display: block !important;
-	clear: both !important;
-}
-
-/* Visual indicator for page breaks in editor (screen only) */
-.TipTapEditorContent .page-break {
-	height: 2px !important;
-	margin: 1rem 0 !important;
-	background: linear-gradient(to right, transparent, #cbd5e1, transparent) !important;
-	border-radius: 1px !important;
-}
-
-.TipTapEditorContent .page-break::before {
-	content: 'Page Break' !important;
-	display: block !important;
-	text-align: center !important;
-	font-size: 0.75rem !important;
-	color: #64748b !important;
-	margin-bottom: 0.5rem !important;
-	font-style: italic !important;
-}
-
-/* Hide visual indicators in print */
-@media print {
-	.TipTapEditorContent .page-break {
-		height: 0 !important;
-		margin: 0 !important;
-		background: none !important;
-	}
-	
-	.TipTapEditorContent .page-break::before {
-		content: none !important;
-		display: none !important;
-	}
-}
-
-.print-document-content ul,
-.print-document-content ol {
-	color: #000000 !important;
-}
-
-.print-document-content li {
-	color: #000000 !important;
-}
-
-.print-document-content blockquote {
-	color: #374151 !important;
-}
-
-.print-document-content code {
-	background-color: #f3f4f6 !important;
-	color: #000000 !important;
-}
-
-.print-document-content pre {
-	background-color: #f3f4f6 !important;
-}
-
-.print-document-content hr {
-	border-color: #f3f4f6 !important;
-}
-
-/* Print-friendly page header styles */
-.print-document .page-header-name {
-	color: #000000 !important;
-}
-
-.print-document .page-header-contact {
-	color: #6b7280 !important;
-}
+${generatePrintDocumentContent()}
+${generateTipTapPageBreakStyles()}
 `;
 }
