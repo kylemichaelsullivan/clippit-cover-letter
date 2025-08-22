@@ -1,55 +1,35 @@
 export const DEFAULTS = {
 	GENERATING_TEXT: 'Generating…',
 
-	TEMPLATE_FALLBACKS: {
-		companyAddress: '',
-		companyName: '',
-		email: '',
-		fullName: '',
-		hiringManager: '',
-		linkedin: '',
-		location: '',
-		logo: '',
-		logoInclude: true,
-		phone: '',
-		portfolio: '',
-		signature: '',
-		signatureInclude: true,
-		jobTitle: '',
+	FORM_DEFAULTS: {
+		INCLUDE_COVER_LETTER: true,
+		INCLUDE_RESUME: true,
+		INCLUDE_SKILL_GROUP_NAMES: true,
+		INCLUDE_SKILLS: true,
+		RESUME_FONT_SIZE: 11,
+		SKILLS_RANGE: {
+			MAX: 20,
+			MIN: 0,
+		},
+		TEXTAREA_ROWS: 10,
 	},
 
 	INITIAL_STATES: {
 		CANDIDATE_DETAILS: {
-			fullName: '',
 			email: '',
-			phone: '',
-			location: '',
+			fullName: '',
 			linkedin: '',
-			portfolio: '',
+			location: '',
 			logo: '',
 			logoInclude: true,
+			phone: '',
+			portfolio: '',
 			signature: '',
-			signatureInclude: true,
 		},
-		SKILLS: {
-			groups: [{ id: '', name: '', skills: [] }],
-			minSkillsToUse: 5,
-			maxSkillsToUse: 10,
-		},
-		JOB_DETAILS: {
-			companyName: '',
-			jobTitle: '',
-			jobDescription: '',
-			hiringManager: '',
-			companyAddress: '',
-		},
-		TEMPLATES: {
-			coverLetter: '',
-		},
-
-		RESUME: {
-			summary: '',
-			experience: '',
+		DOCUMENT_INSTRUCTIONS: {
+			coverLetterInstructions: '',
+			resumeInstructions: '',
+			skillsInstructions: '',
 		},
 		EDUCATION: {
 			degree: '',
@@ -58,36 +38,53 @@ export const DEFAULTS = {
 			location: '',
 		},
 		EXPERIENCE: {
-			title: '',
-			company: '',
-			start: '',
-			end: '',
 			bullets: [],
+			company: '',
+			end: '',
+			start: '',
+			title: '',
 		},
 		GENERATION: {
-			generatedSkills: '',
 			generatedCoverLetter: '',
 			generatedResume: '',
+			generatedSkills: '',
 			isGenerating: false,
 		},
+		JOB_DETAILS: {
+			companyAddress: '',
+			companyName: '',
+			hiringManager: '',
+			jobDescription: '',
+			jobTitle: '',
+		},
 		PHASE: 'candidate',
-		DOCUMENT_INSTRUCTIONS: {
-			skillsInstructions: '',
-			coverLetterInstructions: '',
-			resumeInstructions: '',
+		RESUME: {
+			experience: '',
+			summary: '',
+		},
+		SKILLS: {
+			groups: [{ id: '', include: true, name: '', skills: [] }],
+			maxSkillsToUse: 10,
+			minSkillsToUse: 5,
+		},
+		TEMPLATES: {
+			coverLetter: '',
 		},
 	},
 
-	FORM_DEFAULTS: {
-		INCLUDE_SKILLS: true,
-		INCLUDE_COVER_LETTER: true,
-		INCLUDE_RESUME: true,
-		INCLUDE_SKILL_GROUP_NAMES: true,
-		SKILLS_RANGE: {
-			MIN: 0,
-			MAX: 20,
-		},
-		TEXTAREA_ROWS: 10,
-		RESUME_FONT_SIZE: 11,
+	TEMPLATE_FALLBACKS: {
+		companyAddress: '',
+		companyName: '',
+		email: '',
+		fullName: '',
+		hiringManager: '',
+		jobTitle: '',
+		linkedin: '',
+		location: '',
+		logo: '',
+		logoInclude: true,
+		phone: '',
+		portfolio: '',
+		signature: '',
 	},
 } as const;
