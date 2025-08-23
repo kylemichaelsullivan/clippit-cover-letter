@@ -73,6 +73,21 @@ const SHARED_PAGE_HEADER_NAME = `
 	text-transform: uppercase;
 `;
 
+const SHARED_PAGE_LOGO = `
+	position: absolute;
+	bottom: 0rem;
+	right: 1rem;
+	z-index: 10;
+`;
+
+const SHARED_PAGE_LOGO_IMAGE = `
+	object-fit: contain;
+	width: auto;
+	height: auto;
+	max-width: 2rem;
+	max-height: 2rem;
+`;
+
 const SHARED_PARAGRAPH = `
 	line-height: 1.2;
 	margin: 0;
@@ -405,6 +420,14 @@ ${generatePrintDocumentStyles('.print-document-content')}
 ${generatePrintPageHeaderStyles('.print-document')}
 .signature-image {
 ${SIGNATURE_IMAGE}
+}
+
+.page-logo {
+${SHARED_PAGE_LOGO}
+}
+
+.page-logo-image {
+${SHARED_PAGE_LOGO_IMAGE}
 }
 `;
 }

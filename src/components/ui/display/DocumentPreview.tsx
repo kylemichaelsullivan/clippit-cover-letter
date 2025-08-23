@@ -72,7 +72,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 					</style>
 				</head>
 				<body>
-					<div style="background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
+					<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
 						${pageHeader}
 						<div class="print-content print-document-content">${formattedContent}</div>
 					</div>

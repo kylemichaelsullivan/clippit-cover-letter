@@ -40,20 +40,15 @@ export function DownloadButtonPDF({
 					.flatMap((group) => group.skills)
 					.sort();
 
-				// This handles both the original markdown and the HTML that might be in the content
-				return (
-					content
-						// Replace grouped skills in markdown format
-						.replace(
-							/\*\*([^:]+):\*\* ([^<]+)/g,
-							'**Skills:** ' + allSkills.join(', '),
-						)
-						// Replace grouped skills in HTML format
-						.replace(
-							/<strong>([^<]+):<\/strong> ([^<]+)/g,
-							'<strong>Skills:</strong> ' + allSkills.join(', '),
-						)
-				);
+				return content
+					.replace(
+						/\*\*([^:]+):\*\* ([^<]+)/g,
+						'**Skills:** ' + allSkills.join(', '),
+					)
+					.replace(
+						/<strong>([^<]+):<\/strong> ([^<]+)/g,
+						'<strong>Skills:</strong> ' + allSkills.join(', '),
+					);
 			}
 		}
 		return content;
@@ -81,7 +76,7 @@ export function DownloadButtonPDF({
 							</style>
 						</head>
 						<body>
-							<div style="background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
+							<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
 								${pageHeader}
 								<div class="print-content">${formattedContent}</div>
 							</div>
