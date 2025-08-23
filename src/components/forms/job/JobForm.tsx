@@ -5,7 +5,7 @@ import { Field } from '@tanstack/react-form';
 import { Form, FormField, FormSection } from '@/components/forms/core';
 import { TabTitle, Button } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
-import { SkillsRangeSlider, TipTapEditor } from '@/components/ui/input';
+import { SkillsRangeSlider } from '@/components/ui/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useJobForm } from '@/lib/hooks';
@@ -180,23 +180,21 @@ export const JobForm = memo(function JobForm({ onSubmit }: JobFormProps) {
 					}}
 				>
 					{(field) => (
-						<div className='FormFieldContainer'>
-							<label htmlFor='jobDescription' className='FormFieldLabel'>
-								Job Description
-							</label>
-							<TipTapEditor
-								value={field.state.value || ''}
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('jobDescription', value);
-								}}
-								placeholder={PLACEHOLDERS.JOB.JOB_DESCRIPTION}
-								id='jobDescription'
-								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-								aria-label='Job description'
-								componentName='JobDescriptionEditor'
-							/>
-						</div>
+						<FormField
+							type='textarea'
+							className='min-h-64 sm:min-h-96'
+							label='Job Description'
+							field={field}
+							fieldName='jobDescription'
+							placeholder={PLACEHOLDERS.JOB.JOB_DESCRIPTION}
+							schema={jobDetailsSchema}
+							rows={8}
+							onChange={(value: string) => {
+								field.handleChange(value);
+								handleFieldChange('jobDescription', value);
+							}}
+							id='jobDescription'
+						/>
 					)}
 				</Field>
 			</Form>

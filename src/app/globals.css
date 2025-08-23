@@ -744,19 +744,21 @@ input[data-lpignore='false'] {
 	background: transparent;
 	white-space: pre-wrap;
 	min-height: inherit;
+	max-height: 400px;
 	margin: 0;
+	overflow-y: auto;
 }
 
-/* TipTap Editor in Form Sections */
-.FormSection .TipTapEditorContent {
+/* TipTap Editor Content - ensure it fills its container */
+.TipTapEditorContent {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
+	min-height: 0;
 }
 
 .FormSection .TipTapEditorContent .tiptap.ProseMirror {
-	min-height: 200px;
-	max-height: 400px;
+	min-height: 300px;
 	overflow-y: auto;
 }
 
@@ -858,4 +860,26 @@ input[data-lpignore='false'] {
 	display: block;
 	color: var(--color-gray);
 	pointer-events: none;
+}
+
+.signature-placeholder {
+	display: inline-block;
+	background-color: var(--color-light-gray);
+	border: 1px dashed var(--color-gray);
+	border-radius: 0.25rem;
+	padding: 0.25rem 0.5rem;
+	font-size: 0.875rem;
+	color: var(--color-gray);
+	font-style: italic;
+	user-select: none;
+	cursor: default;
+}
+
+.signature-placeholder::before {
+	content: '{{My Signature}}';
+}
+
+.tiptap.ProseMirror .signature-image {
+	width: auto;
+	max-height: 3em;
 }
