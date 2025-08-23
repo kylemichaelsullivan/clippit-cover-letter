@@ -9,7 +9,7 @@ import {
 	HydrationSafeFormField,
 } from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
-import { ImageInput } from '@/components/ui/input';
+import { ImageInput, SignatureInput } from '@/components/ui/input';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
 import type { CandidateDetails } from '@/types';
@@ -215,18 +215,16 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='signature'>
 						{(field) => (
-							<ImageInput
+							<SignatureInput
 								field={field}
 								label='Signature'
 								fieldName='signature'
-								aspectRatio='wide'
 								placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
 								schema={candidateDetailsSchema}
 								onChange={(value: string) => {
 									field.handleChange(value);
 									handleFieldChange('signature', value);
 								}}
-								accept='image/*'
 								id='signature'
 							/>
 						)}

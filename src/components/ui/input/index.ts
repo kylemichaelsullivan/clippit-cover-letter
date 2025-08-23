@@ -1,5 +1,6 @@
 export { Checkbox } from './Checkbox';
 export { ImageInput } from './ImageInput';
+export { SignatureInput } from './SignatureInput';
 export { FontSizeInput } from './FontSizeInput';
 export { NumberInput } from './NumberInput';
 export { RangeInputGroup } from './RangeInputGroup';

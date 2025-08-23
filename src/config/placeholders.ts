@@ -7,7 +7,7 @@ export const PLACEHOLDERS = {
 		LOGO: 'Upload your logo (JPG, PNG, WEBP)',
 		PHONE: '(123) 456-7890',
 		PORTFOLIO: 'https://yourportfolio.com',
-		SIGNATURE: 'Upload your signature (JPG, PNG, WEBP)',
+		SIGNATURE: 'Draw your signature',
 	},
 
 	DOCUMENT_INSTRUCTIONS: {
