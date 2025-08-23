@@ -20,6 +20,8 @@ export const candidateDetailsSchema = z.object({
 	logo: z.string(),
 	logoInclude: z.boolean().optional(),
 	signature: z.string(),
+	portfolioQRCode: z.boolean().optional(),
+	signatureUseImage: z.boolean().optional(),
 });
 
 export const skillsSchema = z.object({

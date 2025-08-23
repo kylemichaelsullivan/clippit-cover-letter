@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { isFieldRequired } from '@/lib/schemas';
 import { FormFieldContainer } from './FormFieldContainer';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 
 import type {
 	InputHTMLAttributes,
@@ -102,11 +103,9 @@ export const FormField = memo(function FormField({
 		inputRef.current?.focus();
 	};
 
-	// Use field value if available, otherwise use direct value
 	const inputValue = field ? field.state.value : value;
 	const fieldError = field ? field.state.meta.errors?.[0] : error;
 
-	// Determine if field is required based on schema
 	const isRequired =
 		schema && fieldName ? isFieldRequired(schema, fieldName as string) : false;
 
@@ -198,15 +197,14 @@ export const FormField = memo(function FormField({
 	return (
 		<FormFieldContainer suppressHydrationWarning>
 			{label && (
-				<label
+				<FormFieldLabel
 					htmlFor={id}
-					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
+					labelContent={labelContent}
 					title={label}
 					aria-label={`${label} field`}
 				>
-					<span>{label}</span>
-					{labelContent}
-				</label>
+					{label}
+				</FormFieldLabel>
 			)}
 			{renderInput()}
 			{fieldError && (

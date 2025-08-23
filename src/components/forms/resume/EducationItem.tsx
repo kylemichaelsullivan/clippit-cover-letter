@@ -2,12 +2,13 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
 import { FormFieldContainer } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS, DEFAULTS } from '@/config';
+import { Button } from '@/components/ui/buttons';
 import { getOrdinalSuffix } from '@/lib/utils';
 
 type EducationItemProps = {
@@ -33,11 +34,12 @@ export function EducationItem({
 			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2'>
 				{onRemove && (
 					<Button
+						componentName='EducationItemRemoveButton'
 						color='danger'
 						size='sm'
+						positioned
 						onClick={onRemove}
 						title='Remove Education'
-						componentName='EducationItemRemoveButton z-10'
 					>
 						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 					</Button>
@@ -62,14 +64,14 @@ export function EducationItem({
 								/>
 							)}
 						</Field>
-						<label
+						<FormFieldLabel
 							htmlFor={`education-degree-${educationIndex}`}
-							className='FormFieldLabel text-base font-medium text-black'
 							title='Degree or Qualification'
 							aria-label='Degree or qualification earned'
+							spaced
 						>
 							Degree
-						</label>
+						</FormFieldLabel>
 					</div>
 					<Field name={`education.${educationIndex}.degree`} form={form}>
 						{(field) => (
@@ -101,13 +103,13 @@ export function EducationItem({
 				<Field name={`education.${educationIndex}.graduationYear`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='Year of Graduation'
 								aria-label='Year of graduation or completion'
+								spaced
 							>
 								Graduation Year
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(
@@ -133,13 +135,13 @@ export function EducationItem({
 				<Field name={`education.${educationIndex}.institution`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='Educational Institution'
 								aria-label='Name of educational institution or school'
+								spaced
 							>
 								Institution
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(
@@ -166,13 +168,13 @@ export function EducationItem({
 				<Field name={`education.${educationIndex}.location`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='Institution Location'
 								aria-label='City and state or country of institution'
+								spaced
 							>
 								Location
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(

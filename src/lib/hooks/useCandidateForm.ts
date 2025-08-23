@@ -15,6 +15,11 @@ export type CandidateFormValues = {
 	location: string;
 	linkedin: string;
 	portfolio: string;
+	logo: string;
+	logoInclude: boolean;
+	signature: string;
+	portfolioQRCode: boolean;
+	signatureUseImage: boolean;
 };
 
 export function useCandidateForm(
@@ -53,6 +58,12 @@ export function useCandidateForm(
 					break;
 				case 'signature':
 					setCandidateField('signature', value);
+					break;
+				case 'portfolioQRCode':
+					setCandidateField('portfolioQRCode', value);
+					break;
+				case 'signatureUseImage':
+					setCandidateField('signatureUseImage', value);
 					break;
 			}
 		},

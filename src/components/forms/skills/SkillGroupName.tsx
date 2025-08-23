@@ -4,6 +4,7 @@ import { Field } from '@tanstack/react-form';
 import { FormFieldContainer } from '@/components/forms/core';
 import { Checkbox } from '@/components/ui/input';
 import { Button } from '@/components/ui/buttons';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS } from '@/config';
@@ -109,14 +110,14 @@ export const SkillGroupName = memo(function SkillGroupName({
 								title={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group?`}
 								aria-label={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group in document`}
 							/>
-							<label
+							<FormFieldLabel
 								htmlFor={`group-name-${groupIndex}`}
-								className='FormFieldLabel text-base font-medium text-black'
 								title='Group Name'
 								aria-label='Group Name'
+								spaced
 							>
 								Group Name
-							</label>
+							</FormFieldLabel>
 						</div>
 						<input
 							id={`group-name-${groupIndex}`}
@@ -139,6 +140,7 @@ export const SkillGroupName = memo(function SkillGroupName({
 							<Button
 								color='danger'
 								size='sm'
+								positioned
 								onClick={onRemove}
 								title={`Remove Skill Group`}
 								aria-label={`Remove ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} Skill Group`}

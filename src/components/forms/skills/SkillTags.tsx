@@ -9,6 +9,7 @@ import { faTimes, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { Field } from '@tanstack/react-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormFieldContainer } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
 import { SkipLink } from '@/components/ui/navigation';
@@ -216,14 +217,28 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 		<>
 			<div className='SkillTags flex flex-col gap-2' id='skills-tags'>
 				<FormFieldContainer className='relative pb-1'>
-					<label
+					<FormFieldLabel
 						htmlFor={`skill-input-${groupIndex}`}
-						className='FormFieldLabel flex items-center justify-between text-base font-medium text-black'
 						title='Skill'
 						aria-label='Skill'
+						labelContent={
+							<Button
+								componentName='SkillTagsAddButton'
+								color='success'
+								size='sm'
+								positioned
+								aria-label='Add Skill'
+								title='Add Skill'
+								onClick={handleAddClick}
+								disabled={!inputValue.trim()}
+							>
+								<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
+							</Button>
+						}
+						spaced
 					>
-						<span>Skill</span>
-					</label>
+						Skill
+					</FormFieldLabel>
 					<input
 						id={`skill-input-${groupIndex}`}
 						type='text'
@@ -234,17 +249,6 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 						onPaste={handleInputPaste}
 						className='text-sm sm:text-base'
 					/>
-					<Button
-						componentName='SkillTagsAddButton'
-						color='success'
-						size='sm'
-						aria-label='Add Skill'
-						title='Add Skill'
-						onClick={handleAddClick}
-						disabled={!inputValue.trim()}
-					>
-						<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
-					</Button>
 				</FormFieldContainer>
 
 				{error && <Error componentName='SkillTagsError'>{error}</Error>}

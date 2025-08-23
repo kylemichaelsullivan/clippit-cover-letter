@@ -2,12 +2,13 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
 import { FormFieldContainer } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS, DEFAULTS } from '@/config';
+import { Button } from '@/components/ui/buttons';
 import { getOrdinalSuffix } from '@/lib/utils';
 import { Bullets } from './Bullets';
 
@@ -34,11 +35,12 @@ export function ExperienceItem({
 			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2'>
 				{onRemove && (
 					<Button
+						componentName='ExperienceItemRemoveButton'
 						color='danger'
 						size='sm'
+						positioned
 						onClick={onRemove}
 						title='Remove Experience'
-						componentName='ExperienceItemRemoveButton z-10'
 					>
 						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 					</Button>
@@ -63,14 +65,14 @@ export function ExperienceItem({
 								/>
 							)}
 						</Field>
-						<label
+						<FormFieldLabel
 							htmlFor={`experience-title-${experienceIndex}`}
-							className='FormFieldLabel text-base font-medium text-black'
 							title='Job Title'
 							aria-label='Job title or position'
+							spaced
 						>
 							Title
-						</label>
+						</FormFieldLabel>
 					</div>
 					<Field name={`experience.${experienceIndex}.title`} form={form}>
 						{(field) => (
@@ -102,13 +104,12 @@ export function ExperienceItem({
 				<Field name={`experience.${experienceIndex}.company`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='Company Name'
 								aria-label='Name of the company or organization'
 							>
 								Company
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(
@@ -132,13 +133,12 @@ export function ExperienceItem({
 				<Field name={`experience.${experienceIndex}.start`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='Start Date'
 								aria-label='Start date of employment'
 							>
 								Start
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(
@@ -161,13 +161,12 @@ export function ExperienceItem({
 				<Field name={`experience.${experienceIndex}.end`} form={form}>
 					{(field) => (
 						<FormFieldContainer>
-							<label
-								className='FormFieldLabel text-base font-medium text-black'
+							<FormFieldLabel
 								title='End Date'
 								aria-label='End date of employment or Present'
 							>
 								End
-							</label>
+							</FormFieldLabel>
 							<input
 								type='text'
 								value={String(

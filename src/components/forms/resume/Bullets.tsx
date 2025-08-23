@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Bullet } from './Bullet';
 import { PLACEHOLDERS } from '@/config';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 
 type BulletsProps = {
 	form: any; // TanStack Form
@@ -44,20 +45,21 @@ export function Bullets({
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<div className='flex items-center justify-between'>
-				<label className='FormFieldLabel text-base font-medium text-black'>
-					Bullets
-				</label>
-				<Button
-					color='secondary'
-					componentName='AddBulletButton'
-					size='sm'
-					title='Add Bullet Point'
-					onClick={addBullet}
-				>
-					<FontAwesomeIcon icon={faPlus} aria-hidden='true' />
-				</Button>
-			</div>
+			<FormFieldLabel
+				labelContent={
+					<Button
+						color='success'
+						componentName='AddBulletButton'
+						size='sm'
+						title='Add Bullet Point'
+						onClick={addBullet}
+					>
+						<FontAwesomeIcon icon={faPlus} aria-hidden='true' />
+					</Button>
+				}
+			>
+				Bullets
+			</FormFieldLabel>
 
 			<Field name={`experience.${experienceIndex}.bullets`} form={form}>
 				{(field) => {

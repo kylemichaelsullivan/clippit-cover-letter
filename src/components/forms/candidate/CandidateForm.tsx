@@ -9,7 +9,8 @@ import {
 	HydrationSafeFormField,
 } from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
-import { ImageInput, SignatureInput } from '@/components/ui/input';
+import { ImageInput, SignatureInput, Checkbox } from '@/components/ui/input';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
 import type { CandidateDetails } from '@/types';
@@ -166,24 +167,92 @@ export const CandidateForm = memo(function CandidateForm({
 
 					<Field form={form} name='portfolio'>
 						{(field) => (
-							<HydrationSafeFormField
-								id='portfolio'
-								type='url'
-								label='Portfolio Website'
-								placeholder={PLACEHOLDERS.CANDIDATE.PORTFOLIO}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='portfolio'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('portfolio', value);
-								}}
-							/>
+							<Field form={form} name='portfolioQRCode'>
+								{(qrField) => (
+									<div className='FormFieldContainer'>
+										<div className='flex items-center gap-2 pb-1'>
+											<Checkbox
+												checked={Boolean(qrField.state.value ?? true)}
+												onChange={(checked) => {
+													qrField.handleChange(checked);
+													handleFieldChange('portfolioQRCode', checked);
+												}}
+												label=''
+												title='Add QR Code to Documents?'
+												aria-label='Add QR Code to Documents'
+											/>
+											<FormFieldLabel
+												htmlFor='portfolio'
+												title='Portfolio Website'
+												aria-label='Portfolio Website field'
+											>
+												Portfolio Website
+											</FormFieldLabel>
+										</div>
+										<HydrationSafeFormField
+											id='portfolio'
+											type='url'
+											label=''
+											placeholder={PLACEHOLDERS.CANDIDATE.PORTFOLIO}
+											field={field}
+											schema={candidateDetailsSchema}
+											fieldName='portfolio'
+											onChange={(value: string) => {
+												field.handleChange(value);
+												handleFieldChange('portfolio', value);
+											}}
+										/>
+									</div>
+								)}
+							</Field>
 						)}
 					</Field>
 				</FormSection>
 
 				<FormSection title='Branding'>
+					<Field form={form} name='signature'>
+						{(field) => (
+							<Field form={form} name='signatureUseImage'>
+								{(imageField) => (
+									<div className='FormFieldContainer'>
+										<div className='flex items-center gap-2 pb-1'>
+											<Checkbox
+												label=''
+												checked={Boolean(imageField.state.value ?? false)}
+												title='Use Signature Image?'
+												aria-label='Use Signature Image if available'
+												onChange={(checked) => {
+													imageField.handleChange(checked);
+													handleFieldChange('signatureUseImage', checked);
+												}}
+												id='signature-use-image'
+											/>
+											<FormFieldLabel
+												htmlFor='signature-use-image'
+												title='Signature'
+												aria-label='Signature field'
+											>
+												Signature
+											</FormFieldLabel>
+										</div>
+										<SignatureInput
+											field={field}
+											label=''
+											fieldName='signature'
+											placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
+											schema={candidateDetailsSchema}
+											onChange={(value: string) => {
+												field.handleChange(value);
+												handleFieldChange('signature', value);
+											}}
+											id='signature'
+										/>
+									</div>
+								)}
+							</Field>
+						)}
+					</Field>
+
 					<Field form={form} name='logo'>
 						{(field) => (
 							<Field form={form} name='logoInclude'>
@@ -210,23 +279,6 @@ export const CandidateForm = memo(function CandidateForm({
 									/>
 								)}
 							</Field>
-						)}
-					</Field>
-
-					<Field form={form} name='signature'>
-						{(field) => (
-							<SignatureInput
-								field={field}
-								label='Signature'
-								fieldName='signature'
-								placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
-								schema={candidateDetailsSchema}
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('signature', value);
-								}}
-								id='signature'
-							/>
 						)}
 					</Field>
 				</FormSection>
