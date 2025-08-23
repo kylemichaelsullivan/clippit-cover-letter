@@ -103,21 +103,25 @@ const formatSkillsUngrouped = (skills?: Skills): string => {
 	return sortedSkills.join(', ');
 };
 
-const formatJobOffice = (jobDetails: Job): string => {
+const formatJobLocation = (jobDetails: Job): string => {
 	return jobDetails.companyAddress || '';
 };
 
 const formatJobAddress = (jobDetails: Job): string => {
 	const parts = [];
 
-	if (jobDetails.hiringManager) {
-		parts.push(jobDetails.hiringManager);
+	const hiringManager = jobDetails.hiringManager || 'Hiring Manager';
+	const companyName = jobDetails.companyName || 'Company Name';
+	const companyAddress = jobDetails.companyAddress || 'Company Address';
+
+	if (hiringManager) {
+		parts.push(hiringManager);
 	}
 	if (jobDetails.companyName) {
-		parts.push(jobDetails.companyName);
+		parts.push(companyName);
 	}
 	if (jobDetails.companyAddress) {
-		parts.push(jobDetails.companyAddress);
+		parts.push(companyAddress);
 	}
 
 	return parts.join('<br>');
@@ -215,19 +219,19 @@ const createMustacheValues = (
 				values[replacement.name] = formatSkillsUngrouped(skills);
 				break;
 			case 'Job Company':
-				values[replacement.name] = jobDetails.companyName || '';
+				values[replacement.name] = jobDetails.companyName || 'Job Company';
 				break;
 			case 'Job Title':
-				values[replacement.name] = jobDetails.jobTitle || '';
+				values[replacement.name] = jobDetails.jobTitle || 'Job Title';
 				break;
 			case 'Job Manager':
-				values[replacement.name] = jobDetails.hiringManager || '';
+				values[replacement.name] = jobDetails.hiringManager || 'Job Manager';
 				break;
 			case 'Job Address':
 				values[replacement.name] = formatJobAddress(jobDetails);
 				break;
 			case 'Job Location':
-				values[replacement.name] = formatJobOffice(jobDetails);
+				values[replacement.name] = formatJobLocation(jobDetails);
 				break;
 			case 'Job Description':
 				values[replacement.name] = jobDetails.jobDescription || '';
