@@ -253,6 +253,15 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 
 				{error && <Error componentName='SkillTagsError'>{error}</Error>}
 
+				{isLastGroup ? (
+					<SkipLink href='#AddSkillGroupButton' destination='Add Group' />
+				) : (
+					<SkipLink
+						href={`#skill-group-${groupIndex + 2}`}
+						destination='Next Group'
+					/>
+				)}
+
 				<Field
 					name={`groups.${groupIndex}.skills`}
 					form={form}
@@ -290,15 +299,6 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 						);
 					}}
 				</Field>
-
-				{isLastGroup ? (
-					<SkipLink href='#AddSkillGroupButton' destination='Add Group' />
-				) : (
-					<SkipLink
-						href={`#skill-group-${groupIndex + 2}`}
-						destination='Next Group'
-					/>
-				)}
 			</div>
 
 			<ConfirmationDialog
