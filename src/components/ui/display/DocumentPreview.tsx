@@ -4,6 +4,7 @@ import { memo, useMemo } from 'react';
 import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
 import { extractTipTapContent } from '@/lib/utils/tiptap';
+import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
 import type { CandidateDetails } from '@/types';
 
 type DocumentPreviewProps = {
@@ -23,6 +24,10 @@ export const DocumentPreview = memo(function DocumentPreview({
 		const pageHeader = generatePageHeaderHTML(candidateDetails);
 		const extractedContent = extractTipTapContent(content);
 		const formattedContent = formatContentForPDF(extractedContent);
+		const contentWithSignature = replaceSignaturePlaceholders(
+			formattedContent,
+			candidateDetails,
+		);
 
 		return `
 			<!DOCTYPE html>
@@ -74,7 +79,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 				<body>
 					<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
 						${pageHeader}
-						<div class="print-content print-document-content">${formattedContent}</div>
+						<div class="print-content print-document-content">${contentWithSignature}</div>
 					</div>
 				</body>
 			</html>

@@ -619,7 +619,6 @@ button:active {
 
 /* Print Document Styles - Always show print-friendly colors */
 .print-document {
-	background-color: #ffffff !important;
 	border-color: #d1d5db !important;
 }
 
@@ -652,7 +651,7 @@ button:active {
 	border-bottom-right-radius: 0.5rem;
 }
 
-.ImagePreview {
+.force-white-bg {
 	background-color: #ffffff !important;
 }
 
@@ -676,49 +675,6 @@ button:active {
 .skill-group-card {
 	/* Fallback for browsers that don't support typed attr() */
 	order: var(--group-index, 0);
-}
-
-/* Skills button positioning */
-.SkillGroupCard .FormFieldContainer .FormFieldLabel {
-	padding: 0.75rem 0;
-}
-
-.SkillGroupCard .SkillGroupCardRemoveButton,
-.SkillGroupCard .SkillTagsAddButton {
-	position: absolute;
-	width: 4rem;
-	height: 2.5rem;
-	top: 0.25rem;
-	right: 0;
-	padding: 0;
-}
-
-/* Education Card */
-.EducationCard .FormFieldContainer .FormFieldLabel {
-	padding: 0.75rem 0;
-}
-
-.EducationCard .EducationItemRemoveButton {
-	position: absolute;
-	width: 4rem;
-	height: 2.5rem;
-	top: 0.25rem;
-	right: 0;
-	padding: 0;
-}
-
-/* Experience Card */
-.ExperienceCard .FormFieldContainer .FormFieldLabel {
-	padding: 0.75rem 0;
-}
-
-.ExperienceCard .ExperienceItemRemoveButton {
-	position: absolute;
-	width: 4rem;
-	height: 2.5rem;
-	top: 0.25rem;
-	right: 0;
-	padding: 0;
 }
 
 /* Reserve space for LastPass icon */
@@ -820,7 +776,8 @@ input[data-lpignore='false'] {
 }
 
 .tiptap.ProseMirror li {
-	margin: 0.5rem 0 0;
+	padding-top: 0.5rem;
+	margin: 0;
 }
 
 .tiptap.ProseMirror blockquote {

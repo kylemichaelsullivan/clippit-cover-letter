@@ -9,6 +9,7 @@ type CheckboxProps = {
 	className?: string;
 	title?: string;
 	'aria-label'?: string;
+	id?: string;
 };
 
 export const Checkbox = memo(function Checkbox({
@@ -18,6 +19,7 @@ export const Checkbox = memo(function Checkbox({
 	className = '',
 	title,
 	'aria-label': ariaLabel,
+	id,
 }: CheckboxProps) {
 	title = title || label;
 	ariaLabel = ariaLabel || title || label;
@@ -26,10 +28,11 @@ export const Checkbox = memo(function Checkbox({
 		<input
 			type='checkbox'
 			className='cursor-pointer'
-			checked={checked}
-			onChange={(e) => onChange(e.target.checked)}
 			title={title}
+			checked={checked}
 			aria-label={ariaLabel}
+			onChange={(e) => onChange(e.target.checked)}
+			id={id}
 		/>
 	);
 

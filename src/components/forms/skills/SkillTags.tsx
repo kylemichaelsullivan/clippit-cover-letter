@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import type { KeyboardEvent, ClipboardEvent, MouseEvent } from 'react';
 
 import { Button } from '@/components/ui/buttons';
@@ -161,7 +161,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 		setError('');
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setInputValue(e.target.value);
 		setError('');
 	};

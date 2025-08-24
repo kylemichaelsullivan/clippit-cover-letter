@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { DEFAULTS } from '@/config';
 import { useSkillsStore } from '@/lib/stores';
 import { renderHtmlContent } from '@/lib/utils';
+import type { CandidateDetails } from '@/types';
 
 type FormattedPreviewVariant = 'default' | 'skills' | 'cover-letter' | 'resume';
 
@@ -13,6 +14,7 @@ type FormattedPreviewProps = {
 	variant?: FormattedPreviewVariant;
 	className?: string;
 	isGenerating?: boolean;
+	candidateDetails?: CandidateDetails;
 };
 
 export function FormattedPreview({
@@ -20,6 +22,7 @@ export function FormattedPreview({
 	variant = 'default',
 	className = '',
 	isGenerating = false,
+	candidateDetails,
 }: FormattedPreviewProps) {
 	const { generatedSkillsData, includeSkillGroupNames } = useSkillsStore();
 
@@ -68,14 +71,14 @@ export function FormattedPreview({
 			return <div className='text-light-gray'>{getGeneratingText()}</div>;
 		}
 
-		return renderHtmlContent(content);
+		return renderHtmlContent(content, candidateDetails);
 	};
 
 	return (
 		<div
 			className={clsx(
 				'FormattedPreview',
-				'min-h-64 max-w-none overflow-y-auto bg-white p-4 text-sm leading-relaxed text-black sm:min-h-96 sm:text-base',
+				'force-white-bg min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed text-black sm:min-h-96 sm:text-base',
 				isGenerating && 'text-light-gray flex items-center justify-center',
 				!isGenerating && 'whitespace-pre-wrap',
 				className,

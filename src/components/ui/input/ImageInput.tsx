@@ -1,6 +1,13 @@
 'use client';
 
-import { memo, useRef, useCallback, useMemo, useEffect } from 'react';
+import {
+	memo,
+	useRef,
+	useCallback,
+	useMemo,
+	useEffect,
+	type ChangeEvent,
+} from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +15,7 @@ import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { FormFieldContainer } from '@/components/forms/core';
 import { Checkbox } from '@/components/ui/input';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { isFieldRequired } from '@/lib/schemas';
 import { showToast } from '@/lib/toast';
 import { useCandidateStore } from '@/lib/stores';
@@ -59,8 +67,8 @@ const ImagePreview = memo(function ImagePreview({
 				className={imageClasses}
 				width={aspectRatio === 'wide' ? 128 : aspectRatio === 'tall' ? 64 : 96}
 				height={aspectRatio === 'wide' ? 64 : aspectRatio === 'tall' ? 128 : 96}
-				unoptimized={imageSrc.startsWith('data:')}
 				alt='Image Preview'
+				unoptimized={imageSrc.startsWith('data:')}
 			/>
 
 			<button
@@ -119,8 +127,8 @@ const UploadButton = memo(function UploadButton({
 		<button type='button' onClick={onClick} className={`${buttonClasses}`}>
 			<div className='flex flex-col items-center gap-3'>
 				<FontAwesomeIcon
-					icon={faCloudArrowUp}
 					className='text-gray h-8 w-8'
+					icon={faCloudArrowUp}
 					aria-hidden='true'
 				/>
 				<div className='flex flex-col items-center gap-1'>
@@ -133,19 +141,19 @@ const UploadButton = memo(function UploadButton({
 });
 
 export const ImageInput = memo(function ImageInput({
-	id,
 	label,
-	placeholder = 'Upload Image',
-	field,
-	schema,
-	fieldName,
-	onChange,
-	accept = 'image/*',
 	className = '',
+	field,
+	placeholder = 'Upload Image',
+	fieldName,
+	schema,
 	includeField,
 	includeFieldName,
-	onIncludeChange,
+	accept = 'image/*',
 	aspectRatio = 'square',
+	onChange,
+	onIncludeChange,
+	id,
 }: ImageInputProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const { candidateDetails, setCandidateField } = useCandidateStore();
@@ -161,7 +169,7 @@ export const ImageInput = memo(function ImageInput({
 	}, [field, fieldName, candidateDetails]);
 
 	const handleFileChange = useCallback(
-		(event: React.ChangeEvent<HTMLInputElement>) => {
+		(event: ChangeEvent<HTMLInputElement>) => {
 			const file = event.target.files?.[0];
 			if (!file) return;
 
@@ -279,6 +287,9 @@ export const ImageInput = memo(function ImageInput({
 					{includeField && (
 						<Checkbox
 							checked={Boolean(getIncludeValue() ?? true)}
+							label=''
+							title={`Include ${label}?`}
+							aria-label={`Include ${label} in document`}
 							onChange={(checked) => {
 								if (includeField) {
 									includeField.handleChange(checked);
@@ -293,19 +304,16 @@ export const ImageInput = memo(function ImageInput({
 									onIncludeChange(checked);
 								}
 							}}
-							label=''
-							title={`Include ${label}?`}
-							aria-label={`Include ${label} in document`}
+							id={`${id}-include`}
 						/>
 					)}
-					<label
-						htmlFor={id}
-						className='FormFieldLabel text-base font-medium text-black'
+					<FormFieldLabel
+						htmlFor={includeField ? `${id}-include` : id}
 						title={label}
 						aria-label={`${label} field`}
 					>
 						{label}
-					</label>
+					</FormFieldLabel>
 				</div>
 			)}
 
@@ -313,8 +321,8 @@ export const ImageInput = memo(function ImageInput({
 				<input
 					type='file'
 					className='hidden'
-					accept={accept}
 					aria-describedby={fieldError ? `${id}-error` : undefined}
+					accept={accept}
 					required={isRequired}
 					onChange={handleFileChange}
 					ref={fileInputRef}
@@ -323,22 +331,22 @@ export const ImageInput = memo(function ImageInput({
 				{inputValue ? (
 					<ImagePreview
 						imageSrc={inputValue}
+						aspectRatio={aspectRatio}
 						onChange={handleClick}
 						onRemove={handleRemoveFile}
-						aspectRatio={aspectRatio}
 					/>
 				) : (
 					<UploadButton
-						placeholder={placeholder}
-						onClick={handleClick}
-						hasError={!!fieldError}
 						className={className}
+						placeholder={placeholder}
+						hasError={!!fieldError}
+						onClick={handleClick}
 					/>
 				)}
 			</div>
 
 			{fieldError && (
-				<p id={`${id}-error`} className='FormFieldError text-red pt-1 text-sm'>
+				<p className='FormFieldError text-red pt-1 text-sm' id={`${id}-error`}>
 					{fieldError}
 				</p>
 			)}

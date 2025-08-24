@@ -4,16 +4,17 @@ import { memo } from 'react';
 import clsx from 'clsx';
 
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonColor } from '@/types';
 
-type ButtonColor = 'primary' | 'secondary' | 'success' | 'danger' | 'mustache';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'flex';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-	color?: ButtonColor;
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+	color?: ButtonColor | 'mustache';
 	size?: ButtonSize;
 	componentName?: string;
 	children: ReactNode;
 	tabIndex?: number;
+	positioned?: boolean;
 };
 
 export const Button = memo(function Button({
@@ -21,6 +22,8 @@ export const Button = memo(function Button({
 	size = 'md',
 	componentName,
 	children,
+	positioned = false,
+	className,
 	...props
 }: ButtonProps) {
 	return (
@@ -43,7 +46,10 @@ export const Button = memo(function Button({
 					'h-10 px-4 py-2': size === 'md',
 					'h-12 px-6 text-lg': size === 'lg',
 					'h-8 flex-1 px-3 text-sm': size === 'flex',
+					// Positioning
+					'absolute top-1 right-0 w-16 p-0': positioned,
 				},
+				className,
 			)}
 			{...props}
 		>

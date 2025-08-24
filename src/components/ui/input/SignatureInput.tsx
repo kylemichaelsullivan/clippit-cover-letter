@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { FormFieldContainer } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { isFieldRequired } from '@/lib/schemas';
 import { showToast } from '@/lib/toast';
 import { useCandidateStore } from '@/lib/stores';
@@ -15,9 +16,9 @@ type SignatureInputProps = {
 	id: string;
 	label?: string;
 	placeholder?: string;
-	field?: any; // TanStack Form field
-	schema?: any; // Zod schema for required field detection
-	fieldName?: string; // Field name in the schema
+	field?: any;
+	schema?: any;
+	fieldName?: string;
 	onChange?: (value: string) => void;
 	className?: string;
 };
@@ -106,56 +107,43 @@ export const SignatureInput = memo(function SignatureInput({
 	return (
 		<FormFieldContainer className={className}>
 			{label && (
-				<label
+				<FormFieldLabel
 					htmlFor={id}
-					className='FormFieldLabel flex items-center justify-between pb-1 text-sm font-medium text-black'
 					title={label}
 					aria-label={`${label} field`}
+					labelContent={isRequired && <span className='text-red'>*</span>}
 				>
-					<span>{label}</span>
-					{isRequired && <span className='text-red'>*</span>}
-				</label>
+					{label}
+				</FormFieldLabel>
 			)}
 			<div className='SignatureInput flex flex-col gap-4'>
 				{currentValue ? (
-					<div className='SignaturePreview border-gray force-white-bg relative flex flex-col items-center justify-center rounded-lg border p-4'>
+					<div className='SignaturePreview border-gray force-bg-white relative flex flex-col items-center justify-center rounded-lg border p-4'>
 						<Image
 							src={currentValue}
-							alt='Signature Preview'
+							className='h-16 w-auto max-w-full object-contain'
 							width={200}
 							height={64}
-							className='h-16 w-auto max-w-full object-contain'
 							unoptimized={currentValue.startsWith('data:')}
+							alt='Signature Preview'
 						/>
 						<div className='mt-3 flex gap-2'>
 							<button
 								type='button'
+								className='bg-red hover:bg-red focus:ring-red flex items-center gap-2 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 								onClick={handleRemove}
-								className='bg-red hover:bg-red-dark focus:ring-red flex items-center gap-2 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 							>
 								<FontAwesomeIcon icon={faTrash} className='h-3 w-3' />
 								Remove
 							</button>
-							<button
-								type='button'
-								onClick={() => {
-									if (signatureRef.current) {
-										signatureRef.current.clear();
-									}
-								}}
-								className='bg-gray hover:bg-gray-dark focus:ring-gray flex items-center gap-2 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
-							>
-								<FontAwesomeIcon icon={faEraser} className='h-3 w-3' />
-								Redraw
-							</button>
 						</div>
 					</div>
 				) : (
-					<div className='SignatureCanvas border-gray force-white-bg rounded-lg border p-4'>
+					<div className='SignatureCanvas border-gray rounded-lg border p-4'>
 						<div className='text-gray mb-3 text-center text-sm'>
 							{placeholder}
 						</div>
-						<div className='border-gray rounded border bg-white'>
+						<div className='border-gray force-white-bg rounded border'>
 							<SignatureCanvas
 								ref={signatureRef}
 								canvasProps={{
@@ -169,14 +157,14 @@ export const SignatureInput = memo(function SignatureInput({
 							<button
 								type='button'
 								onClick={handleSave}
-								className='bg-blue hover:bg-blue-dark focus:ring-blue flex-1 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
+								className='bg-blue hover:bg-blue focus:ring-blue flex-1 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 							>
 								Save Signature
 							</button>
 							<button
 								type='button'
 								onClick={handleClear}
-								className='bg-gray hover:bg-gray-dark focus:ring-gray rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
+								className='bg-gray hover:bg-gray focus:ring-gray rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 							>
 								<FontAwesomeIcon icon={faEraser} className='h-3 w-3' />
 							</button>

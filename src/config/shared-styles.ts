@@ -88,6 +88,13 @@ const SHARED_PAGE_LOGO_IMAGE = `
 	max-height: 2rem;
 `;
 
+const SHARED_PAGE_QR_CODE = `
+	position: absolute;
+	bottom: 1rem;
+	left: 1rem;
+	z-index: 10;
+`;
+
 const SHARED_PARAGRAPH = `
 	line-height: 1.2;
 	margin: 0;
@@ -428,6 +435,10 @@ ${SHARED_PAGE_LOGO}
 
 .page-logo-image {
 ${SHARED_PAGE_LOGO_IMAGE}
+}
+
+.page-qr-code {
+${SHARED_PAGE_QR_CODE}
 }
 `;
 }
