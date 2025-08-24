@@ -25,6 +25,8 @@ export const DEFAULTS = {
 			phone: '',
 			portfolio: '',
 			signature: '',
+			portfolioQRCode: true,
+			signatureUseImage: false,
 		},
 		DOCUMENT_INSTRUCTIONS: {
 			coverLetterInstructions: '',
@@ -86,5 +88,7 @@ export const DEFAULTS = {
 		phone: '',
 		portfolio: '',
 		signature: '',
+		portfolioQRCode: true,
+		signatureUseImage: false,
 	},
 } as const;

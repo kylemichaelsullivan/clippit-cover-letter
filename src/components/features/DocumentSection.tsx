@@ -7,15 +7,15 @@ import { GenerateButton } from './GenerateButton';
 
 type DocumentSectionProps = {
 	title: string;
-	content: string;
-	isEditable: boolean;
-	onContentChange?: (content: string) => void;
-	isGenerating: boolean;
-	onGenerate: () => void;
 	componentName: string;
+	content: string;
 	generateTitle: string;
 	fallbackMessage: ReactNode;
-	hasContent: boolean;
+	isEditable: boolean;
+	isGenerating: boolean;
+	onGenerate: () => void;
+	onContentChange?: (content: string) => void;
+	headerElement?: ReactNode;
 	disabled?: boolean;
 };
 
@@ -29,26 +29,29 @@ export const DocumentSection = function DocumentSection({
 	componentName,
 	generateTitle,
 	fallbackMessage,
-	hasContent,
 	disabled = false,
+	headerElement,
 }: DocumentSectionProps) {
+	const hasContent = !!content && content.trim() !== '';
+
 	return (
 		<div className='flex flex-col gap-2'>
 			{hasContent ? (
 				<>
 					<DocumentContent
 						title={title}
+						headerElement={headerElement}
 						content={content}
 						isEditable={isEditable}
-						onContentChange={onContentChange}
 						isGenerating={isGenerating}
+						onContentChange={onContentChange}
 					/>
 
 					<GenerateButton
-						isGenerating={isGenerating}
-						onClick={onGenerate}
 						componentName={componentName}
 						title={generateTitle}
+						isGenerating={isGenerating}
+						onClick={onGenerate}
 						disabled={disabled}
 					/>
 				</>
@@ -56,10 +59,10 @@ export const DocumentSection = function DocumentSection({
 				<div className='flex flex-col gap-4'>
 					{fallbackMessage}
 					<GenerateButton
-						isGenerating={isGenerating}
-						onClick={onGenerate}
 						componentName={componentName}
 						title={generateTitle}
+						isGenerating={isGenerating}
+						onClick={onGenerate}
 						disabled={disabled}
 					/>
 				</div>

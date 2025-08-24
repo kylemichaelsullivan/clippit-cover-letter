@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { DEFAULTS } from '@/config';
-import { getSortedSkillGroups } from '@/lib/utils';
+import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
 import type { Skills } from '@/types';
 
 type SkillsGroup = {
@@ -18,6 +18,7 @@ type SkillsState = {
 	setIncludeSkills: (include: boolean) => void;
 	includeSkillGroupNames: boolean;
 	setIncludeSkillGroupNames: (include: boolean) => void;
+	toggleSkillGroupNames: (checked: boolean) => void;
 	generatedSkills: string;
 	setGeneratedSkills: (result: string) => void;
 	generatedSkillsData: SkillsGroup[];
@@ -34,10 +35,10 @@ export const useSkillsStore = create<SkillsState>()(
 				skills: {
 					groups: [
 						{
-							id: `group-${Date.now()}`,
-							include: true,
 							name: '',
+							include: true,
 							skills: [],
+							id: `group-${Date.now()}`,
 						},
 					],
 					minSkillsToUse: 5,
@@ -62,6 +63,30 @@ export const useSkillsStore = create<SkillsState>()(
 				setIncludeSkills: (include) => set({ includeSkills: include }),
 				setIncludeSkillGroupNames: (include) =>
 					set({ includeSkillGroupNames: include }),
+				toggleSkillGroupNames: (checked) => {
+					const state = get();
+					set({ includeSkillGroupNames: checked });
+
+					if (state.generatedSkillsData.length > 0) {
+						let updatedSkillsText: string;
+
+						if (checked) {
+							// Group by category with names
+							updatedSkillsText = state.generatedSkillsData
+								.map(
+									(group) =>
+										`<strong>${group.name}:</strong> ${group.skills.join(', ')}`,
+								)
+								.join('<br>');
+						} else {
+							// Alphabetize all skills across all groups
+							const allSkills = sortAllSkills(state.skills);
+							updatedSkillsText = allSkills.join(', ');
+						}
+
+						set({ generatedSkills: updatedSkillsText });
+					}
+				},
 				setGeneratedSkills: (result) => set({ generatedSkills: result }),
 				setGeneratedSkillsData: (data) => set({ generatedSkillsData: data }),
 				setIsGeneratingSkills: (generating) =>

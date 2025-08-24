@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 
+import { Checkbox } from '@/components/ui/input';
 import { DocumentSection } from './DocumentSection';
 import {
 	ConfirmationDialog,
@@ -11,8 +12,14 @@ import { useGenerationConfirmations } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
 
 export const SkillsSummarySection = memo(function SkillsSummarySection() {
-	const { skills, isGeneratingSkills, generatedSkills, setGeneratedSkills } =
-		useSkillsStore();
+	const {
+		skills,
+		isGeneratingSkills,
+		generatedSkills,
+		setGeneratedSkills,
+		includeSkillGroupNames,
+		toggleSkillGroupNames,
+	} = useSkillsStore();
 
 	const generationConfirmations = useGenerationConfirmations({
 		candidateDetails: null,
@@ -44,14 +51,19 @@ export const SkillsSummarySection = memo(function SkillsSummarySection() {
 		<>
 			<div className='flex flex-col gap-4'>
 				<DocumentSection
+					componentName='GenerateSkillsSummaryButton'
 					title='Skills Summary'
-					content={generatedSkills || ''}
-					isEditable={true}
-					onContentChange={setGeneratedSkills}
-					isGenerating={isGeneratingSkills}
-					onGenerate={handleGenerateSkills}
-					componentName='GenerateSkillsButton'
-					generateTitle='Generate Skills'
+					content={generatedSkills}
+					generateTitle='Generate Skills Summary'
+					headerElement={
+						<Checkbox
+							checked={includeSkillGroupNames}
+							onChange={toggleSkillGroupNames}
+							label='Group by Category'
+							title='Group Skills by Category?'
+							aria-label='Toggle Skill Group names in Skills Summary'
+						/>
+					}
 					fallbackMessage={
 						hasSkillsWithInclude ? (
 							<SkillsNotConfiguredMessage />
@@ -62,19 +74,22 @@ export const SkillsSummarySection = memo(function SkillsSummarySection() {
 							</div>
 						)
 					}
-					hasContent={!!generatedSkills && generatedSkills.trim() !== ''}
 					disabled={!hasSkillsWithInclude}
+					isEditable={!isGeneratingSkills}
+					isGenerating={isGeneratingSkills}
+					onContentChange={setGeneratedSkills}
+					onGenerate={handleGenerateSkills}
 				/>
 			</div>
 
 			<ConfirmationDialog
-				isOpen={showSkillsConfirmation}
-				onClose={() => setShowSkillsConfirmation(false)}
-				onConfirm={performSkillsGeneration}
 				title='Replace Skills Summary'
 				message='A skills summary already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				confirmText='Generate New'
 				cancelText='Cancel'
+				isOpen={showSkillsConfirmation}
+				onClose={() => setShowSkillsConfirmation(false)}
+				onConfirm={performSkillsGeneration}
 			/>
 		</>
 	);

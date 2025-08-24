@@ -54,27 +54,26 @@ export const ResumeSection = ({
 		<>
 			<div className={includeResume ? '' : 'hidden'}>
 				<DocumentSection
+					componentName='GenerateResumeButton'
 					title='Resume'
 					content={generatedResume}
-					isEditable={!isGeneratingResume}
-					onContentChange={setGeneratedResume}
-					isGenerating={isGeneratingResume}
-					onGenerate={handleGenerate}
-					componentName='GenerateResumeButton'
 					generateTitle='Generate Resume'
 					fallbackMessage={<ResumeNotProvidedMessage />}
-					hasContent={!!resumeDetails}
+					isEditable={!isGeneratingResume}
+					isGenerating={isGeneratingResume}
+					onContentChange={setGeneratedResume}
+					onGenerate={handleGenerate}
 				/>
 			</div>
 
 			<ConfirmationDialog
-				isOpen={showConfirmation}
-				onClose={() => setShowConfirmation(false)}
-				onConfirm={performGeneration}
 				title='Replace Resume'
 				message='A resume already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				confirmText='Generate New'
 				cancelText='Cancel'
+				isOpen={showConfirmation}
+				onConfirm={performGeneration}
+				onClose={() => setShowConfirmation(false)}
 			/>
 		</>
 	);
