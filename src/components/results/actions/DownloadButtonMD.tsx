@@ -5,6 +5,7 @@ import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/buttons';
 import { useIsClient } from '@/lib/hooks';
 import { showToast } from '@/lib/toast';
+import type { ButtonColor } from '@/types';
 
 type DownloadButtonMDProps = {
 	content: string;
@@ -12,7 +13,7 @@ type DownloadButtonMDProps = {
 	filename: string;
 	disabled?: boolean;
 	showIcon?: boolean;
-	color?: 'primary' | 'secondary' | 'success' | 'danger';
+	color?: ButtonColor;
 	size?: 'sm' | 'flex';
 	tabIndex?: number;
 };

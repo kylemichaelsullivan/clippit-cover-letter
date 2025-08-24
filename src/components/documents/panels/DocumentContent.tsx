@@ -113,10 +113,12 @@ export const DocumentContent = memo(function DocumentContent({
 						</div>
 					) : (
 						<div
-							className={`print-content border-light-gray rounded-lg border bg-white p-4`}
+							className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
 						>
 							{renderPageHeader()}
-							<div className='p-0'>{renderHtmlContent(content)}</div>
+							<div className='p-0'>
+								{renderHtmlContent(content, candidateDetails)}
+							</div>
 						</div>
 					)}
 				</div>
@@ -131,10 +133,12 @@ export const DocumentContent = memo(function DocumentContent({
 				</div>
 			) : (
 				<div
-					className={`print-content border-light-gray rounded-lg border bg-white p-4`}
+					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
 				>
 					{renderPageHeader()}
-					<div className='p-0'>{renderHtmlContent(content)}</div>
+					<div className='p-0'>
+						{renderHtmlContent(content, candidateDetails)}
+					</div>
 				</div>
 			)}
 		</div>

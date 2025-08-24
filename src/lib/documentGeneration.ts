@@ -114,15 +114,9 @@ const formatJobAddress = (jobDetails: Job): string => {
 	const companyName = jobDetails.companyName || 'Company Name';
 	const companyAddress = jobDetails.companyAddress || 'Company Address';
 
-	if (hiringManager) {
-		parts.push(hiringManager);
-	}
-	if (jobDetails.companyName) {
-		parts.push(companyName);
-	}
-	if (jobDetails.companyAddress) {
-		parts.push(companyAddress);
-	}
+	parts.push(hiringManager);
+	parts.push(companyName);
+	parts.push(companyAddress);
 
 	return parts.join('<br>');
 };
@@ -203,9 +197,10 @@ const createMustacheValues = (
 				values[replacement.name] = candidateDetails.portfolio || '';
 				break;
 			case 'My Signature':
-				values[replacement.name] = candidateDetails.signature
-					? `<img src="${candidateDetails.signature}" class="signature-image" alt="Signature" />`
-					: candidateDetails.fullName || '';
+				values[replacement.name] =
+					candidateDetails.signatureUseImage && candidateDetails.signature
+						? `<img src="${candidateDetails.signature}" class="signature-image" alt="Signature" />`
+						: candidateDetails.fullName || '';
 				break;
 			case 'My Skills':
 				values[replacement.name] = includeSkillGroupNames
@@ -301,7 +296,9 @@ export async function generateDocuments({
 
 		const summaryContent = resumeDetails?.summary || '';
 		const experienceContent = formatExperienceText(resumeDetails?.experience);
-		const skillsContent = formatSkillsGrouped(skills);
+		const skillsContent = includeSkillGroupNames
+			? formatSkillsGrouped(skills)
+			: formatSkillsUngrouped(skills);
 
 		const educationContent = resumeDetails?.education
 			? formatEducationText(resumeDetails.education)

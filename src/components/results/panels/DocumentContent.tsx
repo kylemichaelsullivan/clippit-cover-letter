@@ -18,6 +18,7 @@ type DocumentContentProps = {
 	className?: string;
 	fontSize?: number;
 	fontSizeInput?: ReactNode;
+	headerElement?: ReactNode;
 };
 
 export const DocumentContent = memo(function DocumentContent({
@@ -29,6 +30,7 @@ export const DocumentContent = memo(function DocumentContent({
 	className,
 	fontSize,
 	fontSizeInput,
+	headerElement,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
 	const isCoverLetter = title.toLowerCase().includes('cover letter');
@@ -70,11 +72,14 @@ export const DocumentContent = memo(function DocumentContent({
 				>
 					<span>{title}</span>
 				</label>
-				{fontSizeInput ? (
-					<div className='flex items-center justify-between'>
-						{fontSizeInput}
-					</div>
-				) : null}
+				<div className='flex items-center gap-3'>
+					{headerElement}
+					{fontSizeInput ? (
+						<div className='flex items-center justify-between'>
+							{fontSizeInput}
+						</div>
+					) : null}
+				</div>
 			</div>
 			{isGenerating ? (
 				<TipTapEditor
@@ -113,10 +118,12 @@ export const DocumentContent = memo(function DocumentContent({
 						</div>
 					) : !isSkills ? (
 						<div
-							className={`print-content border-light-gray rounded-lg border bg-white p-4`}
+							className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
 						>
 							{renderPageHeader()}
-							<div className='p-0'>{renderHtmlContent(content)}</div>
+							<div className='p-0'>
+								{renderHtmlContent(content, candidateDetails)}
+							</div>
 						</div>
 					) : null}
 				</div>
@@ -131,10 +138,12 @@ export const DocumentContent = memo(function DocumentContent({
 				</div>
 			) : !isSkills ? (
 				<div
-					className={`print-content border-light-gray rounded-lg border bg-white p-4`}
+					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
 				>
 					{renderPageHeader()}
-					<div className='p-0'>{renderHtmlContent(content)}</div>
+					<div className='p-0'>
+						{renderHtmlContent(content, candidateDetails)}
+					</div>
 				</div>
 			) : null}
 		</div>
