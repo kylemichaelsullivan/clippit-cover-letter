@@ -32,6 +32,18 @@ export const SkillsForm = memo(function SkillsForm({
 		form.handleSubmit();
 	};
 
+	const includedSkillsCount =
+		skills?.groups?.reduce(
+			(total, group) => total + (group.include ? group.skills?.length || 0 : 0),
+			0,
+		) || 0;
+
+	const totalSkillsCount =
+		skills?.groups?.reduce(
+			(total, group) => total + (group.skills?.length || 0),
+			0,
+		) || 0;
+
 	const actionButton =
 		skills && skills.groups && skills.groups.length > 0 ? (
 			<DownloadButtonMD
@@ -55,14 +67,7 @@ export const SkillsForm = memo(function SkillsForm({
 	return (
 		<div className='SkillsForm flex flex-col gap-6'>
 			<TabTitle
-				title={`Skills (${
-					skills &&
-					skills.groups &&
-					skills.groups.reduce(
-						(total, group) => total + (group.skills?.length || 0),
-						0,
-					)
-				})`}
+				title={`Skills (${includedSkillsCount}/${totalSkillsCount})`}
 				componentName='SkillsFormTitle'
 				actionButton={actionButton}
 			/>

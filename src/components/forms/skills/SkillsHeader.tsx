@@ -27,11 +27,12 @@ export function SkillsHeader({
 			<div className='flex gap-2'>
 				{onAlphabetizeGroups && (
 					<Button
+						componentName='AlphabetizeSkillsButton'
 						color='secondary'
-						size='xs'
-						onClick={onAlphabetizeGroups}
+						size='sm'
+						className='min-w-8 px-4'
 						title='Alphabetize Skill Group Names'
-						componentName='AlphabetizeSkillsButton border-black'
+						onClick={onAlphabetizeGroups}
 					>
 						<FontAwesomeIcon icon={faSort} aria-hidden='true' />
 						<span className='hidden sm:inline'>Alphabetize</span>

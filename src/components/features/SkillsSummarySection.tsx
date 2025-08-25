@@ -57,18 +57,18 @@ export const SkillsSummarySection = memo(function SkillsSummarySection() {
 					generateTitle='Generate Skills Summary'
 					headerElement={
 						<Checkbox
-							checked={includeSkillGroupNames}
-							onChange={toggleSkillGroupNames}
 							label='Group by Category'
+							checked={includeSkillGroupNames}
 							title='Group Skills by Category?'
 							aria-label='Toggle Skill Group names in Skills Summary'
+							onChange={toggleSkillGroupNames}
 						/>
 					}
 					fallbackMessage={
 						hasSkillsWithInclude ? (
 							<SkillsNotConfiguredMessage />
 						) : (
-							<div className='text-gray text-sm'>
+							<div className='text-sm text-black'>
 								No skills available. Please go to the Skills tab and add some
 								skills first.
 							</div>
@@ -84,7 +84,7 @@ export const SkillsSummarySection = memo(function SkillsSummarySection() {
 
 			<ConfirmationDialog
 				title='Replace Skills Summary'
-				message='A skills summary already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
+				message='A Skills Summary already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				confirmText='Generate New'
 				cancelText='Cancel'
 				isOpen={showSkillsConfirmation}

@@ -107,8 +107,8 @@ export const SkillGroupName = memo(function SkillGroupName({
 									updateIncludeState(checked);
 								}}
 								label=''
-								title={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group?`}
-								aria-label={`Include ${groupIndex + 1}${getOrdinalSuffix(groupIndex + 1)} skill group in document`}
+								title={`Include ${currentValue}?`}
+								aria-label={`Include ${currentValue} Skill Group?`}
 							/>
 							<FormFieldLabel
 								htmlFor={`group-name-${groupIndex}`}

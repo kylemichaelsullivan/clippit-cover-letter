@@ -75,13 +75,13 @@ export const useSkillsStore = create<SkillsState>()(
 							updatedSkillsText = state.generatedSkillsData
 								.map(
 									(group) =>
-										`<strong>${group.name}:</strong> ${group.skills.join(', ')}`,
+										`<p><strong>${group.name}:</strong> ${group.skills.join(', ')}</p>`,
 								)
-								.join('<br>');
+								.join('');
 						} else {
 							// Alphabetize all skills across all groups
 							const allSkills = sortAllSkills(state.skills);
-							updatedSkillsText = allSkills.join(', ');
+							updatedSkillsText = `<p>${allSkills.join(', ')}</p>`;
 						}
 
 						set({ generatedSkills: updatedSkillsText });
@@ -120,10 +120,10 @@ export const useSkillsStore = create<SkillsState>()(
 						const skillsText = skillsData
 							.map((group) =>
 								state.includeSkillGroupNames
-									? `<strong>${group.name}:</strong> ${group.skills.join(', ')}`
-									: group.skills.join(', '),
+									? `<p><strong>${group.name}:</strong> ${group.skills.join(', ')}</p>`
+									: `<p>${group.skills.join(', ')}</p>`,
 							)
-							.join('<br>');
+							.join('');
 
 						set({
 							generatedSkills: skillsText,
