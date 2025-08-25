@@ -10,6 +10,7 @@ type BulletProps = {
 	onChange: (value: string) => void;
 	onRemove: () => void;
 	placeholder?: string;
+	onDoubleClick?: () => void;
 };
 
 export function Bullet({
@@ -17,19 +18,24 @@ export function Bullet({
 	onChange,
 	onRemove,
 	placeholder,
+	onDoubleClick,
 }: BulletProps) {
 	return (
-		<div className='flex items-start gap-2'>
+		<div
+			className='Bullet flex w-full min-w-0 items-start gap-2'
+			onDoubleClick={onDoubleClick}
+		>
 			<input
 				type='search'
 				value={value}
-				className='text-2xs flex-1 sm:text-base'
+				className='bullet-input min-w-0 flex-1'
 				placeholder={placeholder || PLACEHOLDERS.EXPERIENCE?.BULLET}
 				onChange={(e) => onChange(e.target.value)}
 			/>
 			{value.trim() === '' && (
 				<Button
 					componentName='RemoveBulletButton'
+					className='flex-shrink-0'
 					color='danger'
 					size='xs'
 					title='Remove Bullet Point'
