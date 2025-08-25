@@ -31,7 +31,7 @@ export function EducationItem({
 }: EducationItemProps) {
 	return (
 		<div className='EducationItem flex flex-col gap-3'>
-			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2'>
+			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2'>
 				{onRemove && (
 					<Button
 						componentName='EducationItemRemoveButton'
@@ -39,7 +39,7 @@ export function EducationItem({
 						size='sm'
 						positioned
 						onClick={onRemove}
-						title='Remove Education'
+						title='Remove this Education'
 					>
 						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 					</Button>
@@ -59,7 +59,7 @@ export function EducationItem({
 										);
 									}}
 									label=''
-									title={`Include in Resume?`}
+									title={`Include this in Resume?`}
 									aria-label={`Include ${educationIndex + 1}${getOrdinalSuffix(educationIndex + 1)} education entry in Resume`}
 								/>
 							)}

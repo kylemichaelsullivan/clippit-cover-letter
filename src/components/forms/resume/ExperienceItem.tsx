@@ -32,7 +32,7 @@ export function ExperienceItem({
 }: ExperienceItemProps) {
 	return (
 		<div className='ExperienceItem flex flex-col gap-3'>
-			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2'>
+			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2'>
 				{onRemove && (
 					<Button
 						componentName='ExperienceItemRemoveButton'
@@ -40,7 +40,7 @@ export function ExperienceItem({
 						size='sm'
 						positioned
 						onClick={onRemove}
-						title='Remove Experience'
+						title='Remove this Experience'
 					>
 						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
 					</Button>
@@ -60,7 +60,7 @@ export function ExperienceItem({
 										);
 									}}
 									label=''
-									title={`Include in Resume?`}
+									title={`Include this in Resume?`}
 									aria-label={`Include ${experienceIndex + 1}${getOrdinalSuffix(experienceIndex + 1)} experience entry in Resume`}
 								/>
 							)}
