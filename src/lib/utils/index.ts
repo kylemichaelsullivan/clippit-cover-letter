@@ -4,5 +4,6 @@ export * from './ordinal';
 export * from './pdfFormatter';
 export * from './pageBreakExtension';
 export * from './pageHeader';
+export * from './qrCode';
 export * from './skillsSorting';
 export * from './tiptap';

@@ -1,5 +1,6 @@
 export { Bullet } from './Bullet';
 export { Bullets } from './Bullets';
+export { DraggableBullet } from './DraggableBullet';
 export { EducationContent } from './EducationContent';
 export { EducationHeader } from './EducationHeader';
 export { EducationItem } from './EducationItem';
