@@ -6,53 +6,67 @@ import clsx from 'clsx';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { ButtonColor } from '@/types';
 
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'flex';
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'flex' | 'tiptap' | 'sort';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+	children: ReactNode;
+	componentName?: string;
 	color?: ButtonColor | 'mustache';
 	size?: ButtonSize;
-	componentName?: string;
-	children: ReactNode;
-	tabIndex?: number;
 	positioned?: boolean;
+	tabIndex?: number;
 };
 
 export const Button = memo(function Button({
+	children,
+	componentName,
 	color = 'primary',
 	size = 'md',
-	componentName,
-	children,
-	positioned = false,
 	className,
+	positioned = false,
 	...props
 }: ButtonProps) {
+	const baseStyles =
+		'flex cursor-pointer items-center justify-center gap-2 rounded-lg border font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-35';
+
+	const colorStyles = {
+		'bg-blue border-blue hover:bg-light-blue hover:border-light-blue text-white':
+			color === 'primary',
+		'bg-light-gray border-light-gray hover:bg-gray hover:border-gray text-black hover:text-white':
+			color === 'secondary',
+		'bg-green border-green hover:bg-gray text-white': color === 'success',
+		'bg-red border-red hover:bg-gray text-white': color === 'danger',
+		'text-blue text-2xs hover:bg-blue hover:border-blue border-white bg-white font-mono hover:text-white':
+			color === 'mustache',
+		'shadow hover:bg-black hover:text-white': size === 'tiptap',
+	};
+
+	const sizeStyles = {
+		'h-6 p-1 text-xs': size === 'xs',
+		'h-8 px-3 text-sm': size === 'sm',
+		'h-10 px-4 py-2': size === 'md',
+		'h-12 px-6 text-lg': size === 'lg',
+		'h-8 flex-1 px-3 text-sm': size === 'flex',
+		'h-8 min-w-8 px-4 text-sm': size === 'sort',
+		'h-8 w-10 p-0': size === 'tiptap',
+	};
+
+	const positioningStyles = {
+		relative: size === 'tiptap',
+		'absolute top-1 right-0 w-16 p-0': positioned,
+	};
+
+	const buttonClassName = clsx(
+		componentName || 'Button',
+		baseStyles,
+		colorStyles,
+		sizeStyles,
+		positioningStyles,
+		className,
+	);
+
 	return (
-		<button
-			className={clsx(
-				componentName || 'Button',
-				'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-10',
-				{
-					// Colors
-					'bg-blue hover:bg-light-blue text-white': color === 'primary',
-					'bg-light-gray hover:bg-gray border text-black hover:text-white':
-						color === 'secondary',
-					'bg-green text-white': color === 'success',
-					'bg-red text-white': color === 'danger',
-					'hover:bg-blue text-blue text-2xs bg-white font-mono hover:text-white':
-						color === 'mustache',
-					// Sizes
-					'h-6 p-1 text-xs': size === 'xs',
-					'h-8 px-3 text-sm': size === 'sm',
-					'h-10 px-4 py-2': size === 'md',
-					'h-12 px-6 text-lg': size === 'lg',
-					'h-8 flex-1 px-3 text-sm': size === 'flex',
-					// Positioning
-					'absolute top-1 right-0 w-16 p-0': positioned,
-				},
-				className,
-			)}
-			{...props}
-		>
+		<button className={buttonClassName} {...props}>
 			{children}
 		</button>
 	);

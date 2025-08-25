@@ -13,16 +13,16 @@ type FormattedPreviewProps = {
 	content: string;
 	variant?: FormattedPreviewVariant;
 	className?: string;
-	isGenerating?: boolean;
 	candidateDetails?: CandidateDetails;
+	isGenerating?: boolean;
 };
 
 export function FormattedPreview({
 	content,
 	variant = 'default',
 	className = '',
-	isGenerating = false,
 	candidateDetails,
+	isGenerating = false,
 }: FormattedPreviewProps) {
 	const { generatedSkillsData, includeSkillGroupNames } = useSkillsStore();
 
@@ -41,34 +41,38 @@ export function FormattedPreview({
 
 	const renderSkillsContent = () => {
 		if (isGenerating) {
-			return <div className='text-light-gray'>{getGeneratingText()}</div>;
+			return (
+				<div className='text-light-gray text-center text-base sm:text-lg'>
+					{getGeneratingText()}
+				</div>
+			);
 		}
 
 		if (!includeSkillGroupNames) {
 			const allSkills = generatedSkillsData
 				.flatMap((group) => group.skills)
 				.sort();
-			return (
-				<div className='flex flex-col gap-4'>
-					<div className='skills-group'>{allSkills.join(', ')}</div>
-				</div>
-			);
+			return <p>{allSkills.join(', ')}</p>;
 		}
 
 		return (
-			<div className='flex flex-col gap-4'>
+			<>
 				{generatedSkillsData.map((group, index) => (
-					<div key={index} className='skills-group'>
+					<p key={index}>
 						<strong>{group.name}:</strong> {group.skills.join(', ')}
-					</div>
+					</p>
 				))}
-			</div>
+			</>
 		);
 	};
 
 	const renderContent = () => {
 		if (isGenerating) {
-			return <div className='text-light-gray'>{getGeneratingText()}</div>;
+			return (
+				<div className='text-light-gray text-center text-base sm:text-lg'>
+					{getGeneratingText()}
+				</div>
+			);
 		}
 
 		return renderHtmlContent(content, candidateDetails);
@@ -79,7 +83,8 @@ export function FormattedPreview({
 			className={clsx(
 				'FormattedPreview',
 				'force-white-bg min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed text-black sm:min-h-96 sm:text-base',
-				isGenerating && 'text-light-gray flex items-center justify-center',
+				isGenerating &&
+					'text-light-gray flex min-h-64 items-center justify-center sm:min-h-96',
 				!isGenerating && 'whitespace-pre-wrap',
 				className,
 			)}

@@ -63,7 +63,7 @@ export function EmptyState({
 					title: 'No Skills Configured',
 					description: CONSTANTS.MESSAGES.EMPTY_SKILLS,
 					className:
-						'EmptyState text-gray py-4 text-center text-sm sm:py-6 sm:text-base',
+						'EmptyState text-black py-4 text-center text-sm sm:py-6 sm:text-base',
 				};
 			case 'error':
 				return {
@@ -118,7 +118,7 @@ export function EmptyState({
 				return {
 					title: 'No Skills',
 					description: CONSTANTS.MESSAGES.NO_SKILLS_IN_GROUP,
-					className: 'EmptyState text-gray text-center text-sm',
+					className: 'EmptyState text-black text-center text-sm',
 				};
 			case 'resume-not-provided':
 				return {
@@ -130,7 +130,7 @@ export function EmptyState({
 				return {
 					title: 'Skills Not Generated',
 					description: CONSTANTS.MESSAGES.SKILLS_NOT_GENERATED,
-					className: 'EmptyState text-gray text-center max-w-md self-center',
+					className: 'EmptyState text-black text-center max-w-md self-center',
 				};
 			default:
 				return {
