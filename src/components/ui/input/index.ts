@@ -1,4 +1,5 @@
 export { Checkbox } from './Checkbox';
+export { DatePicker } from './DatePicker';
 export { ImageInput } from './ImageInput';
 export { SignatureInput } from './SignatureInput';
 export { FontSizeInput } from './FontSizeInput';
