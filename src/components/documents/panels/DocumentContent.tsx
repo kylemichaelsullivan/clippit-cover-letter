@@ -33,7 +33,6 @@ export const DocumentContent = memo(function DocumentContent({
 	const { candidateDetails } = useCandidateStore();
 	const isCoverLetter = title.toLowerCase().includes('cover letter');
 	const isResume = title.toLowerCase().includes('resume');
-	const isSkills = title.toLowerCase().includes('skills');
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
@@ -77,30 +76,24 @@ export const DocumentContent = memo(function DocumentContent({
 				) : null}
 			</div>
 			{isGenerating ? (
-				<TipTapEditor
-					id={inputId}
-					value={getGeneratingText(title)}
-					onChange={onContentChange || (() => {})}
-					placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-						'{title}',
-						title.toLowerCase(),
-					)}
-					readOnly={true}
-					className='text-light-gray'
-				/>
+				<div className='DocumentContentGenerating print-content print-document border-light-gray force-white-bg rounded-lg border p-4'>
+					<div className='DocumentContentGeneratingText text-light-gray min-h-64 w-full p-4 font-mono sm:min-h-96 sm:text-base'>
+						{getGeneratingText(title)}
+					</div>
+				</div>
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
 					<TipTapEditor
+						className='print-document min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
+						componentName='DocumentContentTipTapEditor'
 						value={content}
-						onChange={onContentChange || (() => {})}
 						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 							'{title}',
 							title.toLowerCase(),
 						)}
-						readOnly={false}
+						onChange={onContentChange || (() => {})}
 						id={inputId}
-						componentName={isSkills ? 'DocumentContentTipTapEditor' : undefined}
-						className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
+						contentPadding='sm'
 					/>
 					{isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>

@@ -1,10 +1,11 @@
 'use client';
 
-import { memo, type ReactNode } from 'react';
+import { memo, type ReactNode, useState } from 'react';
 import clsx from 'clsx';
 
-import { TipTapEditor } from '@/components/ui/input';
 import { DocumentPreview } from '@/components/ui/display';
+import { TipTapEditor } from '@/components/ui/input';
+import { ViewToggle } from '@/components/ui/buttons';
 import { PLACEHOLDERS } from '@/config';
 import { renderHtmlContent } from '@/lib/utils';
 import { useCandidateStore } from '@/lib/stores';
@@ -33,9 +34,9 @@ export const DocumentContent = memo(function DocumentContent({
 	headerElement,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
+	const [isTipTapView, setIsTipTapView] = useState(false);
 	const isCoverLetter = title.toLowerCase().includes('cover letter');
 	const isResume = title.toLowerCase().includes('resume');
-	const isSkills = title.toLowerCase().includes('skills');
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
@@ -63,6 +64,10 @@ export const DocumentContent = memo(function DocumentContent({
 		);
 	};
 
+	const handleToggleView = () => {
+		setIsTipTapView(!isTipTapView);
+	};
+
 	return (
 		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
 			<div className='xs:flex-row flex flex-col items-center justify-between'>
@@ -79,56 +84,67 @@ export const DocumentContent = memo(function DocumentContent({
 							{fontSizeInput}
 						</div>
 					) : null}
+					{isEditable && (isResume || isCoverLetter) && (
+						<ViewToggle
+							isTipTapView={isTipTapView}
+							onToggle={handleToggleView}
+						/>
+					)}
 				</div>
 			</div>
 			{isGenerating ? (
-				<TipTapEditor
-					className='text-light-gray'
-					value={getGeneratingText(title)}
-					placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-						'{title}',
-						title.toLowerCase(),
-					)}
-					readOnly={true}
-					onChange={onContentChange || (() => {})}
-					id={inputId}
-				/>
+				<div className='ResultsDocumentContentGenerating print-content print-document border-light-gray force-white-bg rounded-lg border'>
+					<div className='ResultsDocumentContentGeneratingText text-light-gray min-h-64 w-full p-4 font-mono sm:min-h-96 sm:text-base'>
+						{getGeneratingText(title)}
+					</div>
+				</div>
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
-					<TipTapEditor
-						componentName={isSkills ? 'DocumentContentTipTapEditor' : undefined}
-						className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-						value={content}
-						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
-							'{title}',
-							title.toLowerCase(),
-						)}
-						readOnly={false}
-						onChange={onContentChange || (() => {})}
-						id={inputId}
-					/>
 					{isResume || isCoverLetter ? (
-						<div className='bg-gray rounded-lg p-4'>
-							<DocumentPreview
-								className='rounded-lg'
-								content={content}
-								candidateDetails={candidateDetails}
-								fontSize={fontSize || 11}
+						isTipTapView ? (
+							<div className='print-document border-light-gray force-white-bg rounded-lg border'>
+								<TipTapEditor
+									value={content}
+									onChange={onContentChange || (() => {})}
+									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+										'{title}',
+										title.toLowerCase(),
+									)}
+									id={inputId}
+									componentName='DocumentContentTipTapEditor'
+									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
+									contentPadding='sm'
+								/>
+							</div>
+						) : (
+							<div className='print-content print-document border-light-gray force-white-bg rounded-lg border p-2'>
+								<DocumentPreview
+									className='rounded-lg'
+									content={content}
+									candidateDetails={candidateDetails}
+									fontSize={fontSize || 11}
+								/>
+							</div>
+						)
+					) : (
+						<div className='print-document border-light-gray force-white-bg rounded-lg border'>
+							<TipTapEditor
+								value={content}
+								onChange={onContentChange || (() => {})}
+								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
+									'{title}',
+									title.toLowerCase(),
+								)}
+								id={inputId}
+								componentName='DocumentContentTipTapEditor'
+								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
+								contentPadding='sm'
 							/>
 						</div>
-					) : !isSkills ? (
-						<div
-							className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
-						>
-							{renderPageHeader()}
-							<div className='p-0'>
-								{renderHtmlContent(content, candidateDetails)}
-							</div>
-						</div>
-					) : null}
+					)}
 				</div>
 			) : isResume || isCoverLetter ? (
-				<div className='bg-gray rounded-lg p-4'>
+				<div className='print-content print-document border-light-gray force-white-bg rounded-lg border p-2'>
 					<DocumentPreview
 						className='rounded-lg'
 						content={content}
@@ -136,16 +152,16 @@ export const DocumentContent = memo(function DocumentContent({
 						fontSize={fontSize || 11}
 					/>
 				</div>
-			) : !isSkills ? (
+			) : (
 				<div
-					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
+					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-2`}
 				>
 					{renderPageHeader()}
 					<div className='p-0'>
 						{renderHtmlContent(content, candidateDetails)}
 					</div>
 				</div>
-			) : null}
+			)}
 		</div>
 	);
 });
