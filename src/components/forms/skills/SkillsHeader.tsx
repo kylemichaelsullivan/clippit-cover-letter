@@ -29,8 +29,7 @@ export function SkillsHeader({
 					<Button
 						componentName='AlphabetizeSkillsButton'
 						color='secondary'
-						size='sm'
-						className='min-w-8 px-4'
+						size='sort'
 						title='Alphabetize Skill Group Names'
 						onClick={onAlphabetizeGroups}
 					>

@@ -6,11 +6,12 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import { Button } from '@/components/ui/buttons/Button';
 import { FormFieldContainer } from '@/components/forms/core';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { useCandidateStore } from '@/lib/stores';
 import { isFieldRequired } from '@/lib/schemas';
 import { showToast } from '@/lib/toast';
-import { useCandidateStore } from '@/lib/stores';
 
 type SignatureInputProps = {
 	id: string;
@@ -127,20 +128,21 @@ export const SignatureInput = memo(function SignatureInput({
 							unoptimized={currentValue.startsWith('data:')}
 							alt='Signature Preview'
 						/>
-						<div className='mt-3 flex gap-2'>
-							<button
+						<div className='flex gap-2 pt-3'>
+							<Button
 								type='button'
-								className='bg-red hover:bg-red focus:ring-red flex items-center gap-2 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
+								color='danger'
+								size='sm'
 								onClick={handleRemove}
 							>
 								<FontAwesomeIcon icon={faTrash} className='h-3 w-3' />
 								Remove
-							</button>
+							</Button>
 						</div>
 					</div>
 				) : (
 					<div className='SignatureCanvas border-gray rounded-lg border p-4'>
-						<div className='text-gray mb-3 text-center text-sm'>
+						<div className='text-gray pb-3 text-center text-sm'>
 							{placeholder}
 						</div>
 						<div className='border-gray force-white-bg rounded border'>
@@ -153,21 +155,24 @@ export const SignatureInput = memo(function SignatureInput({
 								penColor='#3b82f6'
 							/>
 						</div>
-						<div className='mt-3 flex gap-2'>
-							<button
+						<div className='flex gap-2 pt-3'>
+							<Button
 								type='button'
+								className='flex-1'
+								color='primary'
+								size='sm'
 								onClick={handleSave}
-								className='bg-blue hover:bg-blue focus:ring-blue flex-1 rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 							>
 								Save Signature
-							</button>
-							<button
+							</Button>
+							<Button
 								type='button'
+								color='secondary'
+								size='sm'
 								onClick={handleClear}
-								className='bg-gray hover:bg-gray focus:ring-gray rounded px-3 py-1.5 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none'
 							>
 								<FontAwesomeIcon icon={faEraser} className='h-3 w-3' />
-							</button>
+							</Button>
 						</div>
 					</div>
 				)}

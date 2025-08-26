@@ -13,11 +13,11 @@ export function SortEducationButton({
 }: SortEducationButtonProps) {
 	return (
 		<Button
+			componentName='SortEducationButton'
 			color='secondary'
-			size='xs'
-			onClick={onSortByYear}
+			size='sort'
 			title='Sort by Graduation Year'
-			componentName='SortEducationButton border-black'
+			onClick={onSortByYear}
 		>
 			<FontAwesomeIcon icon={faSort} aria-hidden='true' />
 			<span className='hidden sm:inline'>Sort</span>

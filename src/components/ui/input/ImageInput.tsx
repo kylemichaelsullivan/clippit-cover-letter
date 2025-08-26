@@ -14,8 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import { FormFieldContainer } from '@/components/forms/core';
-import { Checkbox } from '@/components/ui/input';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { Button } from '@/components/ui/buttons/Button';
+import { Checkbox } from '@/components/ui/input';
 import { isFieldRequired } from '@/lib/schemas';
 import { showToast } from '@/lib/toast';
 import { useCandidateStore } from '@/lib/stores';
@@ -23,17 +24,17 @@ import { useCandidateStore } from '@/lib/stores';
 type ImageInputProps = {
 	id: string;
 	label?: string;
-	placeholder?: string;
 	field?: any; // TanStack Form field
 	schema?: any; // Zod schema for required field detection
 	fieldName?: string; // Field name in the schema
-	onChange?: (value: string) => void;
+	placeholder?: string;
 	accept?: string;
 	className?: string;
 	includeField?: any; // TanStack Form field for include checkbox
 	includeFieldName?: string;
-	onIncludeChange?: (value: boolean) => void;
 	aspectRatio?: 'square' | 'wide' | 'tall';
+	onChange?: (value: string) => void;
+	onIncludeChange?: (value: boolean) => void;
 };
 
 type ImagePreviewProps = {
@@ -61,7 +62,7 @@ const ImagePreview = memo(function ImagePreview({
 	}, [aspectRatio]);
 
 	return (
-		<div className='ImagePreview group border-gray force-white-bg relative flex items-center justify-center rounded-lg border p-2 hover:border-black hover:shadow-sm'>
+		<div className='ImagePreview group border-gray relative flex items-center justify-center rounded-lg border p-2 hover:border-black hover:shadow-sm'>
 			<Image
 				src={imageSrc}
 				className={imageClasses}
@@ -71,19 +72,23 @@ const ImagePreview = memo(function ImagePreview({
 				unoptimized={imageSrc.startsWith('data:')}
 			/>
 
-			<button
+			<Button
 				type='button'
-				className='focus:ring-blue absolute inset-0 z-10 flex items-center justify-center rounded-se bg-transparent font-bold text-transparent opacity-0 transition-all duration-200 hover:bg-black hover:text-white hover:opacity-100 focus:bg-black focus:text-white focus:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none'
+				color='secondary'
+				size='sm'
+				className='absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-se bg-transparent font-bold text-transparent opacity-0 transition-all duration-200 hover:bg-black hover:text-white hover:opacity-100 focus:bg-black focus:text-white focus:opacity-100'
 				aria-label='Change Image'
 				title='Change Image'
 				onClick={onChange}
 			>
 				<span className='font-medium'>Change Image</span>
-			</button>
+			</Button>
 
-			<button
+			<Button
 				type='button'
-				className='RemoveImageButton hover:bg-red focus:bg-red focus:ring-red border-gray absolute top-px right-px z-20 rounded-full border bg-transparent p-1.5 text-transparent opacity-0 transition-all duration-200 group-focus-within:text-white group-focus-within:opacity-100 group-hover:text-white group-hover:opacity-100 hover:text-white focus:text-white focus:ring-2 focus:ring-offset-2 focus:outline-none'
+				color='danger'
+				size='sm'
+				className='RemoveImageButton border-gray absolute top-px right-px z-20 rounded-full border bg-transparent p-1.5 text-transparent opacity-0 transition-all duration-200 group-focus-within:text-white group-focus-within:opacity-100 group-hover:text-white group-hover:opacity-100 hover:text-white focus:text-white'
 				aria-label='Remove Image'
 				title='Remove Image'
 				onClick={onRemove}
@@ -93,7 +98,7 @@ const ImagePreview = memo(function ImagePreview({
 					className='h-2.5 w-2.5'
 					aria-hidden='true'
 				/>
-			</button>
+			</Button>
 		</div>
 	);
 });
@@ -116,7 +121,7 @@ const UploadButton = memo(function UploadButton({
 			clsx(
 				'flex min-h-24 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed px-4 py-8 text-sm transition-all duration-200',
 				'border-light-gray text-gray hover:border-blue hover:bg-light-gray',
-				'focus:border-blue focus:bg-light-gray focus:ring-blue focus:ring-2 focus:ring-offset-2 focus:outline-none',
+				'focus:border-blue focus:bg-light-gray',
 				hasError && 'border-red',
 				className,
 			),
@@ -124,7 +129,7 @@ const UploadButton = memo(function UploadButton({
 	);
 
 	return (
-		<button type='button' onClick={onClick} className={`${buttonClasses}`}>
+		<Button type='button' onClick={onClick} className={`${buttonClasses}`}>
 			<div className='flex flex-col items-center gap-3'>
 				<FontAwesomeIcon
 					className='text-gray h-8 w-8'
@@ -136,7 +141,7 @@ const UploadButton = memo(function UploadButton({
 					<span className='text-gray text-xs'>Click to browse images</span>
 				</div>
 			</div>
-		</button>
+		</Button>
 	);
 });
 
@@ -144,9 +149,9 @@ export const ImageInput = memo(function ImageInput({
 	label,
 	className = '',
 	field,
-	placeholder = 'Upload Image',
 	fieldName,
 	schema,
+	placeholder = 'Upload Image',
 	includeField,
 	includeFieldName,
 	accept = 'image/*',

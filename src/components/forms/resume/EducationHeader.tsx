@@ -21,7 +21,7 @@ export function EducationHeader({ onSortByYear }: EducationHeaderProps) {
 				{onSortByYear && (
 					<Button
 						color='secondary'
-						size='xs'
+						size='sort'
 						onClick={onSortByYear}
 						title='Sort by Graduation Year'
 						componentName='SortEducationButton'

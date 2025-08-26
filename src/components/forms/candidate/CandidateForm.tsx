@@ -178,8 +178,8 @@ export const CandidateForm = memo(function CandidateForm({
 													handleFieldChange('portfolioQRCode', checked);
 												}}
 												label=''
-												title='Add QR Code to Documents?'
-												aria-label='Add QR Code to Documents'
+												title='Include QR Code in Documents?'
+												aria-label='Include QR Code in Documents'
 											/>
 											<FormFieldLabel
 												htmlFor='portfolio'
