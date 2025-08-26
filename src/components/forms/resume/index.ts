@@ -10,4 +10,5 @@ export { ExperienceItem } from './ExperienceItem';
 export { ExperienceSection } from './ExperienceSection';
 export { ResumeForm } from './ResumeForm';
 export { SortEducationButton } from './SortEducationButton';
+export { SortExperienceButton } from './SortExperienceButton';
 export { Summary } from './Summary';

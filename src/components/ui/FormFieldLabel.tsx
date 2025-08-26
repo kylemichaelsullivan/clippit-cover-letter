@@ -26,7 +26,7 @@ export const FormFieldLabel = memo(function FormFieldLabel({
 				componentName || 'FormFieldLabel',
 				'text-base font-medium text-black',
 				{
-					'pb-1 sm:py-3': !spaced,
+					'sm:py-3': !spaced,
 					'py-3': spaced,
 					'flex items-center justify-between': labelContent,
 				},

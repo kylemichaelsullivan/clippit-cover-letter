@@ -179,6 +179,85 @@ export function useResumeForm(
 		updateTemplate({ ...form.state.values, education: sortedEducation });
 	}, [form, setEducation, updateTemplate]);
 
+	const sortExperienceByDate = useCallback(() => {
+		const currentExperience = form.getFieldValue('experience') || [];
+		const sortedExperience = [...currentExperience].sort((a, b) => {
+			// Parse end dates
+			const endDateA = a.end;
+			const endDateB = b.end;
+
+			// Handle "Present" as later than any month/year
+			if (endDateA === 'Present' && endDateB !== 'Present') return -1;
+			if (endDateA !== 'Present' && endDateB === 'Present') return 1;
+			if (endDateA === 'Present' && endDateB === 'Present') {
+				// Both are "Present", sort by start date descending
+				return compareDates(b.start, a.start);
+			}
+
+			// Compare end dates first (descending)
+			const endComparison = compareDates(endDateB, endDateA);
+			if (endComparison !== 0) return endComparison;
+
+			// If end dates are equal, sort by start date descending
+			return compareDates(b.start, a.start);
+		});
+
+		form.setFieldValue('experience', sortedExperience);
+		setExperience(sortedExperience);
+		updateTemplate({ ...form.state.values, experience: sortedExperience });
+	}, [form, setExperience, updateTemplate]);
+
+	// Helper function to compare dates
+	const compareDates = (dateA: string, dateB: string) => {
+		// Handle empty dates
+		if (!dateA && !dateB) return 0;
+		if (!dateA) return 1;
+		if (!dateB) return -1;
+
+		// Parse dates in "Month Year" format
+		const parseDate = (dateStr: string) => {
+			const parts = dateStr.split(' ');
+			if (parts.length !== 2) return null;
+
+			const month = parts[0];
+			const year = parseInt(parts[1], 10);
+
+			if (Number.isNaN(year)) return null;
+
+			const monthIndex = [
+				'January',
+				'February',
+				'March',
+				'April',
+				'May',
+				'June',
+				'July',
+				'August',
+				'September',
+				'October',
+				'November',
+				'December',
+			].indexOf(month);
+
+			if (monthIndex === -1) return null;
+
+			return { year, month: monthIndex };
+		};
+
+		const parsedA = parseDate(dateA);
+		const parsedB = parseDate(dateB);
+
+		if (!parsedA && !parsedB) return 0;
+		if (!parsedA) return 1;
+		if (!parsedB) return -1;
+
+		// Compare by year first, then by month
+		if (parsedA.year !== parsedB.year) {
+			return parsedA.year - parsedB.year; // Descending (newer years first)
+		}
+		return parsedA.month - parsedB.month; // Descending (newer months first)
+	};
+
 	return {
 		form,
 		handleFieldChange,
@@ -187,5 +266,6 @@ export function useResumeForm(
 		addExperience,
 		removeExperience,
 		sortEducationByYear,
+		sortExperienceByDate,
 	};
 }

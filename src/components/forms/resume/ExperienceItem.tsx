@@ -2,7 +2,7 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { Checkbox } from '@/components/ui/input';
+import { Checkbox, DatePicker } from '@/components/ui/input';
 import { FormFieldContainer } from '@/components/forms/core';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -132,57 +132,35 @@ export function ExperienceItem({
 
 				<Field name={`experience.${experienceIndex}.start`} form={form}>
 					{(field) => (
-						<FormFieldContainer>
-							<FormFieldLabel
-								title='Start Date'
-								aria-label='Start date of employment'
-							>
-								Start
-							</FormFieldLabel>
-							<input
-								type='text'
-								value={String(
-									field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start,
-								)}
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-									handleFieldChange?.(
-										`experience.${experienceIndex}.start`,
-										e.target.value,
-									);
-								}}
-								placeholder={PLACEHOLDERS.EXPERIENCE?.START}
-								className='text-sm sm:text-base'
-							/>
-						</FormFieldContainer>
+						<DatePicker
+							label='Start'
+							value={String(
+								field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start,
+							)}
+							onChange={(value) => {
+								field.handleChange(value);
+								handleFieldChange?.(
+									`experience.${experienceIndex}.start`,
+									value,
+								);
+							}}
+						/>
 					)}
 				</Field>
 
 				<Field name={`experience.${experienceIndex}.end`} form={form}>
 					{(field) => (
-						<FormFieldContainer>
-							<FormFieldLabel
-								title='End Date'
-								aria-label='End date of employment or Present'
-							>
-								End
-							</FormFieldLabel>
-							<input
-								type='text'
-								value={String(
-									field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end,
-								)}
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-									handleFieldChange?.(
-										`experience.${experienceIndex}.end`,
-										e.target.value,
-									);
-								}}
-								placeholder={PLACEHOLDERS.EXPERIENCE?.END}
-								className='text-sm sm:text-base'
-							/>
-						</FormFieldContainer>
+						<DatePicker
+							label='End'
+							value={String(
+								field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end,
+							)}
+							onChange={(value) => {
+								field.handleChange(value);
+								handleFieldChange?.(`experience.${experienceIndex}.end`, value);
+							}}
+							isEndDate={true}
+						/>
 					)}
 				</Field>
 			</div>

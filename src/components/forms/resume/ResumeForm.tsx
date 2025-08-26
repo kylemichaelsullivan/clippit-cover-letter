@@ -12,14 +12,15 @@ import {
 	ExperienceSection,
 	EducationSection,
 	SortEducationButton,
+	SortExperienceButton,
 } from './index';
 
 type ResumeFormProps = {
 	onSubmit: (
 		includeResume: boolean,
 		summary: string,
-		experience: any[],
 		education: any[],
+		experience: any[],
 	) => void;
 };
 
@@ -36,6 +37,7 @@ export const ResumeForm = memo(function ResumeForm({
 		addExperience,
 		removeExperience,
 		sortEducationByYear,
+		sortExperienceByDate,
 	} = useResumeForm(onSubmit);
 
 	if (currentPhase !== 'resume') {
@@ -54,13 +56,13 @@ export const ResumeForm = memo(function ResumeForm({
 					<Field name='summary' form={form}>
 						{(summaryField) => (
 							<FormSection
-								id='summary'
 								title='Summary'
 								checked={summaryField.state.value ? true : false}
 								onCheckedChange={(value: boolean) => {
 									summaryField.handleChange(value ? ' ' : '');
 									handleFieldChange('summary', value ? ' ' : '');
 								}}
+								id='summary'
 							>
 								<Summary form={form} handleFieldChange={handleFieldChange} />
 							</FormSection>
@@ -69,12 +71,18 @@ export const ResumeForm = memo(function ResumeForm({
 
 					<Field name='experience' form={form}>
 						{() => (
-							<FormSection id='experience' title='Experience'>
+							<FormSection
+								title='Experience'
+								headerContent={
+									<SortExperienceButton onSortByDate={sortExperienceByDate} />
+								}
+								id='experience'
+							>
 								<ExperienceSection
 									form={form}
+									handleFieldChange={handleFieldChange}
 									addExperience={addExperience}
 									removeExperience={removeExperience}
-									handleFieldChange={handleFieldChange}
 								/>
 							</FormSection>
 						)}
@@ -83,11 +91,11 @@ export const ResumeForm = memo(function ResumeForm({
 					<Field name='education' form={form}>
 						{() => (
 							<FormSection
-								id='education'
 								title='Education'
 								headerContent={
 									<SortEducationButton onSortByYear={sortEducationByYear} />
 								}
+								id='education'
 							>
 								<EducationSection
 									form={form}
