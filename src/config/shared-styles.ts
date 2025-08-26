@@ -53,7 +53,7 @@ const SHARED_LISTS = `
 
 const SHARED_LIST_ITEMS = `
 	line-height: 1.2;
-	margin: 0.5rem 0 0;
+	padding: 0.5rem 0 0;
 `;
 
 const SHARED_PAGE_HEADER_CONTACT = `
@@ -423,6 +423,10 @@ ${PRINT_DOCUMENT_PAGE_HEADER_CONTACT}
 
 export function generatePrintDocumentContent(): string {
 	return `
+html {
+	padding: 0;
+}
+
 ${generatePrintDocumentStyles('.print-document-content')}
 ${generatePrintPageHeaderStyles('.print-document')}
 .signature-image {

@@ -56,13 +56,8 @@ body {
 	color: var(--color-black);
 }
 
-button,
 label {
 	cursor: pointer;
-}
-
-button {
-	border: 1px solid;
 }
 
 label {
@@ -88,10 +83,31 @@ select {
 	transition: border-color 0.2s ease;
 }
 
-input:not([class*='text-']),
-textarea:not([class*='text-']),
-select:not([class*='text-']) {
-	font-size: 0.875rem;
+/* Bullet component responsive font sizing */
+.Bullet {
+	container-type: inline-size;
+}
+
+.Bullet .bullet-input {
+	font-size: var(--text-2xs);
+}
+
+@container (min-width: 640px) {
+	.Bullet .bullet-input {
+		font-size: 0.75rem; /* text-xs */
+	}
+}
+
+@container (min-width: 768px) {
+	.Bullet .bullet-input {
+		font-size: 0.875rem; /* text-sm */
+	}
+}
+
+@container (min-width: 1024px) {
+	.Bullet .bullet-input {
+		font-size: 1rem; /* text-base */
+	}
 }
 
 input:focus,
@@ -165,32 +181,6 @@ a {
 
 a:hover {
 	text-decoration: underline;
-}
-
-button {
-	background-color: var(--color-light-gray);
-	border: 1px solid var(--color-light-gray);
-	border-radius: 0.5rem;
-	color: var(--color-black);
-	font-weight: 500;
-	padding: 0.75rem 1.5rem;
-	transition: all 0.2s ease;
-	cursor: pointer;
-}
-
-button:hover:not(:disabled, .RemoveImageButton) {
-	background-color: var(--color-gray);
-	border-color: var(--color-gray);
-	color: var(--color-white);
-}
-
-button:disabled {
-	cursor: not-allowed;
-	opacity: 0.5;
-}
-
-button:active {
-	transform: translateY(0);
 }
 
 /* Utility Classes */
@@ -655,6 +645,11 @@ button:active {
 	background-color: #ffffff !important;
 }
 
+/* Ensure text is visible in dark mode for print-content */
+.print-content {
+	color: var(--color-black) !important;
+}
+
 .PhaseSwitcherButton {
 	border: 2px solid transparent;
 }
@@ -665,10 +660,6 @@ button:active {
 
 .SkillsRangeSlider input {
 	padding-inline: 0.25em;
-}
-
-.SkillTag button {
-	padding: 0.25rem;
 }
 
 /* Skills Tab Order using modern typed attr() with fallback */
@@ -703,6 +694,29 @@ input[data-lpignore='false'] {
 	max-height: 400px;
 	margin: 0;
 	overflow-y: auto;
+}
+
+/* Generating text styles - ensure proper padding */
+.DocumentContent .DocumentContentGeneratingText,
+.ResultsDocumentContent .ResultsDocumentContentGeneratingText {
+	padding: 2rem;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 16rem;
+	text-align: center;
+	font-size: 1rem;
+	line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+	.DocumentContent .DocumentContentGeneratingText,
+	.ResultsDocumentContent .ResultsDocumentContentGeneratingText {
+		padding: 3rem;
+		min-height: 24rem;
+		font-size: 1.125rem;
+	}
 }
 
 /* TipTap Editor Content - ensure it fills its container */
@@ -839,4 +853,8 @@ input[data-lpignore='false'] {
 .tiptap.ProseMirror .signature-image {
 	width: auto;
 	max-height: 3em;
+}
+
+#document-content-skills-summary p:not(:first-child) {
+	padding-top: 1rem;
 }
