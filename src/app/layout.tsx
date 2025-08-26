@@ -9,6 +9,7 @@ import {
 	ThemeProvider,
 	ConfirmationProvider,
 	StyleProvider,
+	DndProvider,
 } from '@/components';
 import { ClientLayoutContent } from '@/components/layout';
 
@@ -45,7 +46,9 @@ export default function RootLayout({
 				<ThemeProvider>
 					<ConfirmationProvider>
 						<StyleProvider>
-							<ClientLayoutContent>{children}</ClientLayoutContent>
+							<DndProvider>
+								<ClientLayoutContent>{children}</ClientLayoutContent>
+							</DndProvider>
 						</StyleProvider>
 					</ConfirmationProvider>
 				</ThemeProvider>

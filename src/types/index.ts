@@ -1,3 +1,5 @@
+export type ButtonColor = 'primary' | 'secondary' | 'success' | 'danger';
+
 export type CandidateDetails = {
 	email: string;
 	fullName: string;
@@ -8,6 +10,8 @@ export type CandidateDetails = {
 	phone?: string;
 	portfolio?: string;
 	signature?: string;
+	portfolioQRCode?: boolean;
+	signatureUseImage?: boolean;
 };
 
 export type Education = {
