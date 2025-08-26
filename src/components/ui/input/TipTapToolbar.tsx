@@ -54,7 +54,7 @@ export function TipTapToolbar({ editor, className }: TipTapToolbarProps) {
 	return (
 		<div
 			className={clsx(
-				'TipTapToolbar border-light-gray bg-gray flex flex-wrap items-center gap-1 border-b p-2',
+				'TipTapToolbar border-light-gray bg-gray z-10 m-0 flex flex-wrap items-center gap-1 rounded-t-lg border-b p-3',
 				className,
 			)}
 		>

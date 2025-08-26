@@ -23,25 +23,25 @@ const TipTapToolbarComponent = dynamic(() => Promise.resolve(TipTapToolbar), {
 type TipTapEditorProps = {
 	value: string;
 	onChange: (value: string) => void;
-	placeholder?: string;
 	componentName?: string;
-	isDocument?: boolean;
 	className?: string;
-	readOnly?: boolean;
-	id?: string;
+	contentPadding?: 'sm' | 'md' | 'lg';
+	placeholder?: string;
+	isDocument?: boolean;
 	'aria-label'?: string;
+	id?: string;
 };
 
 export function TipTapEditor({
 	value,
 	onChange,
-	placeholder = 'Start typing…',
 	componentName,
-	isDocument = false,
 	className = '',
-	readOnly = false,
-	id,
+	contentPadding = 'md',
+	placeholder = 'Start typing…',
+	isDocument = false,
 	'aria-label': ariaLabel,
+	id,
 }: TipTapEditorProps) {
 	const [isMounted, setIsMounted] = useState(false);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -75,7 +75,7 @@ export function TipTapEditor({
 			Typography,
 		],
 		content: value,
-		editable: !readOnly,
+		editable: true,
 		immediatelyRender: false,
 		onUpdate: ({ editor }) => {
 			if (isUpdatingRef.current) return;
@@ -103,12 +103,6 @@ export function TipTapEditor({
 			}
 		}
 	}, [editor, value]);
-
-	useEffect(() => {
-		if (editor) {
-			editor.setEditable(!readOnly);
-		}
-	}, [editor, readOnly]);
 
 	useEffect(() => {
 		return () => {
@@ -146,20 +140,25 @@ export function TipTapEditor({
 		<div
 			className={clsx(
 				componentName || 'TipTapEditor',
-				'border-light-gray rounded-lg border bg-white',
+				'bg-white',
+				componentName === 'DocumentContentTipTapEditor'
+					? 'rounded-lg'
+					: 'border-light-gray rounded-lg border',
 				isDocument &&
-					'min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
+					'min-h-64 max-w-none overflow-y-auto text-sm leading-relaxed sm:min-h-96 sm:text-base',
 				className,
 			)}
 		>
-			{!readOnly && <TipTapToolbarComponent editor={editor} />}
+			<TipTapToolbarComponent editor={editor} />
 			<TipTapEditorContent
 				editor={editor}
 				className={clsx(
 					'TipTapEditorContent',
-					isDocument
-						? 'focus:outline-none'
-						: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base',
+					contentPadding === 'sm'
+						? 'p-4 focus:outline-none'
+						: contentPadding === 'lg'
+							? 'p-6 focus:outline-none'
+							: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base',
 				)}
 				data-placeholder={placeholder}
 			/>

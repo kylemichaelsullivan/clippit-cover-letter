@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
+import { Button } from '@/components/ui/buttons/Button';
 
 type TipTapButtonProps = {
 	onClick: () => void;
@@ -24,12 +25,13 @@ export function TipTapButton({
 	showShadow,
 }: TipTapButtonProps) {
 	return (
-		<button
-			type='button'
-			className='hover:bg-light-gray relative flex h-8 w-8 items-center justify-center rounded text-sm text-black transition-colors'
-			onClick={onClick}
+		<Button
+			componentName='TipTapButton'
+			color='secondary'
+			size='tiptap'
 			aria-label={label}
 			title={title || label}
+			onClick={onClick}
 		>
 			{showShadow && (
 				<FontAwesomeIcon
@@ -39,10 +41,10 @@ export function TipTapButton({
 			)}
 			<FontAwesomeIcon icon={icon} className={iconClassName} />
 			{number && (
-				<span className='absolute right-1/6 bottom-0 text-xs font-bold'>
+				<span className='absolute right-1/12 bottom-0 text-xs font-bold'>
 					{number}
 				</span>
 			)}
-		</button>
+		</Button>
 	);
 }
