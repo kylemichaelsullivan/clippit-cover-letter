@@ -46,6 +46,10 @@ export function DownloadButtonPDF({
 						'**Skills:** ' + allSkills.join(', '),
 					)
 					.replace(
+						/<ul>[\s\S]*?<li><strong>([^<]+):<\/strong> ([^<]+)<\/li>[\s\S]*?<\/ul>/g,
+						'<p><strong>Skills:</strong> ' + allSkills.join(', ') + '</p>',
+					)
+					.replace(
 						/<strong>([^<]+):<\/strong> ([^<]+)/g,
 						'<strong>Skills:</strong> ' + allSkills.join(', '),
 					);

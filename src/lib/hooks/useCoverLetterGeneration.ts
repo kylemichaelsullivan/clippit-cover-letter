@@ -24,7 +24,7 @@ export const useCoverLetterGeneration = ({
 		isGeneratingCoverLetter,
 		setIsGeneratingCoverLetter,
 	} = useTemplatesStore();
-	const { includeSkillGroupNames } = useSkillsStore();
+	const { includeSkillGroupNames, generatedSkills } = useSkillsStore();
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -40,6 +40,7 @@ export const useCoverLetterGeneration = ({
 				jobDetails,
 				skills,
 				includeSkillGroupNames,
+				generatedSkills,
 			});
 
 			setGeneratedCoverLetter(result.coverLetter);

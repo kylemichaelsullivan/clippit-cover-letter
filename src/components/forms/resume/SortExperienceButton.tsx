@@ -16,7 +16,8 @@ export function SortExperienceButton({
 			componentName='SortExperienceButton'
 			color='secondary'
 			size='sort'
-			title='Sort by Date'
+			aria-label='Sort Experience by Date'
+			title='Sort Experience by Date'
 			onClick={onSortByDate}
 		>
 			<FontAwesomeIcon icon={faSort} aria-hidden='true' />

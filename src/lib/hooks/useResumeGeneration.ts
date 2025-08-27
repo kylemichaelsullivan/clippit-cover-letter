@@ -28,7 +28,7 @@ export const useResumeGeneration = ({
 		isGeneratingResume,
 		setIsGeneratingResume,
 	} = useTemplatesStore();
-	const { includeSkillGroupNames } = useSkillsStore();
+	const { includeSkillGroupNames, generatedSkills } = useSkillsStore();
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -45,6 +45,7 @@ export const useResumeGeneration = ({
 				resumeDetails,
 				skills,
 				includeSkillGroupNames,
+				generatedSkills,
 			});
 
 			setGeneratedResume(result.resume);

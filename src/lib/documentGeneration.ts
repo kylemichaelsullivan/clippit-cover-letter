@@ -21,6 +21,7 @@ export type DocumentGenerationParams = {
 	};
 	skills?: Skills;
 	includeSkillGroupNames?: boolean;
+	generatedSkills?: string;
 };
 
 export type DocumentGenerationResult = {
@@ -100,7 +101,9 @@ const formatSkillsUngrouped = (skills?: Skills): string => {
 	}
 
 	const sortedSkills = sortAllSkills(skills);
-	return sortedSkills.join(', ');
+	const skillsHtml = sortedSkills.map((skill) => `<li>${skill}</li>`).join('');
+
+	return `<ul>${skillsHtml}</ul>`;
 };
 
 const formatJobLocation = (jobDetails: Job): string => {
@@ -169,6 +172,7 @@ const createMustacheValues = (
 	},
 	skills?: Skills,
 	includeSkillGroupNames?: boolean,
+	generatedSkills?: string,
 ): Record<string, string> => {
 	const values: Record<string, string> = {};
 
@@ -203,15 +207,19 @@ const createMustacheValues = (
 						: candidateDetails.fullName || '';
 				break;
 			case 'My Skills':
-				values[replacement.name] = includeSkillGroupNames
-					? formatSkillsGrouped(skills)
-					: formatSkillsUngrouped(skills);
+				values[replacement.name] =
+					generatedSkills ||
+					(includeSkillGroupNames
+						? formatSkillsGrouped(skills)
+						: formatSkillsUngrouped(skills));
 				break;
 			case 'Grouped Skills':
-				values[replacement.name] = formatSkillsGrouped(skills);
+				values[replacement.name] =
+					generatedSkills || formatSkillsGrouped(skills);
 				break;
 			case 'Ungrouped Skills':
-				values[replacement.name] = formatSkillsUngrouped(skills);
+				values[replacement.name] =
+					generatedSkills || formatSkillsUngrouped(skills);
 				break;
 			case 'Job Company':
 				values[replacement.name] = jobDetails.companyName || 'Job Company';
@@ -237,7 +245,7 @@ const createMustacheValues = (
 		}
 	});
 
-	values['skills'] = formatSkillsGrouped(skills);
+	values['skills'] = generatedSkills || formatSkillsGrouped(skills);
 	values['summary'] = resumeDetails?.summary || '';
 	values['experience'] = formatExperienceText(resumeDetails?.experience);
 
@@ -266,6 +274,7 @@ export async function generateDocuments({
 	resumeDetails,
 	skills,
 	includeSkillGroupNames,
+	generatedSkills,
 }: DocumentGenerationParams): Promise<DocumentGenerationResult> {
 	if (!includeResume && !includeCoverLetter) {
 		console.log('No documents selected for generation');
@@ -281,12 +290,10 @@ export async function generateDocuments({
 		resumeDetails,
 		skills,
 		includeSkillGroupNames,
+		generatedSkills,
 	);
 
 	const erbInstructions = createERBInstructions();
-
-	console.log('Using values for template replacement:', mustacheValues);
-	console.log('Using ERB instructions:', erbInstructions);
 
 	let generatedResume = '';
 	let generatedCoverLetter = '';
@@ -296,9 +303,11 @@ export async function generateDocuments({
 
 		const summaryContent = resumeDetails?.summary || '';
 		const experienceContent = formatExperienceText(resumeDetails?.experience);
-		const skillsContent = includeSkillGroupNames
-			? formatSkillsGrouped(skills)
-			: formatSkillsUngrouped(skills);
+		const skillsContent =
+			generatedSkills ||
+			(includeSkillGroupNames
+				? formatSkillsGrouped(skills)
+				: formatSkillsUngrouped(skills));
 
 		const educationContent = resumeDetails?.education
 			? formatEducationText(resumeDetails.education)
