@@ -1,11 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { useIsClient } from '@/lib/hooks';
-import { showToast } from '@/lib/toast';
 import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
-import { useSkillsStore } from '@/lib/stores';
+import { generatePageFooterHTML } from '@/lib/utils/pageHeader';
 import { PDF_STYLES } from '@/config';
+import { showToast } from '@/lib/toast';
+import { useIsClient } from '@/lib/hooks';
+import { useSkillsStore } from '@/lib/stores';
 import type { CandidateDetails } from '@/types';
 
 type DownloadButtonPDFProps = {
@@ -59,12 +60,17 @@ export function DownloadButtonPDF({
 		return content;
 	};
 
-	const handleDownloadPDF = () => {
+	const handleDownloadPDF = async () => {
 		if (isClient && hasContent) {
 			try {
 				const printWindow = window.open('', '_blank');
 				if (printWindow) {
-					const pageHeader = generatePageHeaderHTML(candidateDetails);
+					const isCoverLetter = !title.toLowerCase().includes('resume');
+					const pageHeader = await generatePageHeaderHTML(candidateDetails);
+					const pageFooter = await generatePageFooterHTML(
+						candidateDetails,
+						isCoverLetter,
+					);
 					const contentWithSkills = formatContentForPDFWithSkills(content);
 					const formattedContent = formatContentForPDF(contentWithSkills);
 					const customFontSize = fontSize || 11;
@@ -83,7 +89,10 @@ export function DownloadButtonPDF({
 						<body>
 							<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
 								${pageHeader}
-								<div class="print-content">${formattedContent}</div>
+								<div class="print-content print-document-content">
+									${formattedContent}
+								</div>
+								${pageFooter}
 							</div>
 						</body>
 					`;

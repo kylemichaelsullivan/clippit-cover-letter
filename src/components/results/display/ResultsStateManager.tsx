@@ -53,6 +53,7 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 						title='Cover Letter'
 						content={generatedCoverLetter}
 						isEditable={false}
+						documentType='cover-letter'
 					/>
 					<ActionButtons
 						text={generatedCoverLetter}
@@ -75,6 +76,7 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 								onChange={setResumeFontSize}
 							/>
 						}
+						documentType='resume'
 					/>
 					<ActionButtons
 						text={generatedResume}
