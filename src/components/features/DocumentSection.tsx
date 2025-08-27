@@ -17,6 +17,7 @@ type DocumentSectionProps = {
 	onContentChange?: (content: string) => void;
 	headerElement?: ReactNode;
 	disabled?: boolean;
+	documentType?: 'cover-letter' | 'resume';
 };
 
 export const DocumentSection = function DocumentSection({
@@ -31,6 +32,7 @@ export const DocumentSection = function DocumentSection({
 	fallbackMessage,
 	disabled = false,
 	headerElement,
+	documentType,
 }: DocumentSectionProps) {
 	const hasContent = !!content && content.trim() !== '';
 
@@ -45,6 +47,7 @@ export const DocumentSection = function DocumentSection({
 						isEditable={isEditable}
 						isGenerating={isGenerating}
 						onContentChange={onContentChange}
+						documentType={documentType}
 					/>
 
 					<GenerateButton

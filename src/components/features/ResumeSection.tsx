@@ -63,6 +63,7 @@ export const ResumeSection = ({
 					isGenerating={isGeneratingResume}
 					onContentChange={setGeneratedResume}
 					onGenerate={handleGenerate}
+					documentType='resume'
 				/>
 			</div>
 

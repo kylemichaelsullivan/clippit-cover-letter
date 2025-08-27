@@ -59,6 +59,7 @@ export const CoverLetterSection = ({
 					componentName='GenerateCoverLetterButton'
 					generateTitle='Generate Cover Letter'
 					fallbackMessage={<CoverLetterNotProvidedMessage />}
+					documentType='cover-letter'
 				/>
 			</div>
 
