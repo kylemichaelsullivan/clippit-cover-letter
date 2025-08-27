@@ -73,24 +73,35 @@ const SHARED_PAGE_HEADER_NAME = `
 	text-transform: uppercase;
 `;
 
+const SHARED_PAGE_FOOTER = `
+	position: absolute;
+	width: 100%;
+	height: 2rem;
+	right: 0;
+	bottom: 0;
+	left: 0;
+`;
+
 const SHARED_PAGE_LOGO = `
 	position: absolute;
-	bottom: 0rem;
 	right: 1rem;
+	bottom: 0;
 	z-index: 10;
 `;
 
 const SHARED_PAGE_LOGO_IMAGE = `
 	object-fit: contain;
 	width: auto;
+	max-width: 1.5rem;
 	height: auto;
-	max-width: 2rem;
-	max-height: 2rem;
+	max-height: 1.5rem;
 `;
 
 const SHARED_PAGE_QR_CODE = `
 	position: absolute;
-	bottom: 1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	bottom: 0;
 	left: 1rem;
 	z-index: 10;
 `;
@@ -105,8 +116,8 @@ const SHARED_PROSE_CORE = `
 `;
 
 const SHARED_PROSE_RESET = `
-	margin: 0;
 	padding: 0;
+	margin: 0;
 `;
 
 const SHARED_PAGE_BREAK = `
@@ -197,8 +208,8 @@ const TIPTAP_PAGE_BREAK_LABEL = `
 	color: var(--color-gray);
 	font-size: 0.75rem;
 	font-style: italic;
-	margin-bottom: 0.5rem;
 	text-align: center;
+	margin-bottom: 0.5rem;
 `;
 
 const TIPTAP_PAGE_BREAK_PRINT = `
@@ -208,13 +219,13 @@ const TIPTAP_PAGE_BREAK_PRINT = `
 `;
 
 const TIPTAP_PAGE_BREAK_LABEL_PRINT = `
-	content: none;
 	display: none;
+	content: none;
 `;
 
 const SIGNATURE_IMAGE = `
 	width: auto;
-	max-height: 3em;
+	max-height: 1.5em;
 `;
 
 function generateProseStyles(className: string): string {
@@ -247,9 +258,9 @@ ${className} h1 {
 }
 
 ${className} h2 {
+	border-bottom: 1px solid var(--color-gray);
 	font-size: ${SHARED_FONT_SIZES.h2};
 	font-weight: 700;
-	border-bottom: 1px solid var(--color-gray);
 }
 
 ${className} * + h2 {
@@ -431,6 +442,10 @@ ${generatePrintDocumentStyles('.print-document-content')}
 ${generatePrintPageHeaderStyles('.print-document')}
 .signature-image {
 ${SIGNATURE_IMAGE}
+}
+
+.page-footer {
+${SHARED_PAGE_FOOTER}
 }
 
 .page-logo {

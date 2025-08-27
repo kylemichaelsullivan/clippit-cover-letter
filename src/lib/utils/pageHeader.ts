@@ -1,24 +1,31 @@
-import { generateQRCodeSVGSync } from './qrCode';
+import { generateQRCodeSVG } from './qrCode';
 import type { CandidateDetails } from '@/types';
 
-export function generatePageHeaderHTML(
+export async function generatePageHeaderHTML(
 	candidateDetails: CandidateDetails,
-): string {
-	const {
-		fullName,
-		email,
-		phone,
-		linkedin,
-		portfolio,
-		logo,
-		logoInclude,
-		portfolioQRCode,
-	} = candidateDetails;
+): Promise<string> {
+	const { fullName, email, phone, linkedin, portfolio } = candidateDetails;
 
 	const formattedLinkedin = linkedin ? `/in/${linkedin}` : '';
 	const contactInfo = [email, phone, formattedLinkedin, portfolio]
 		.filter(Boolean)
 		.join(' | ');
+
+	const headerHTML = `
+		<header class="page-header">
+			<h1 class="page-header-name">${fullName}</h1>
+			${contactInfo ? `<div class="page-header-contact">${contactInfo}</div>` : ''}
+		</header>
+	`;
+
+	return headerHTML;
+}
+
+export async function generatePageFooterHTML(
+	candidateDetails: CandidateDetails,
+	isCoverLetter: boolean = false,
+): Promise<string> {
+	const { logo, logoInclude, portfolioQRCode, portfolio } = candidateDetails;
 
 	const logoHTML =
 		logoInclude && logo
@@ -29,23 +36,24 @@ export function generatePageHeaderHTML(
 	`
 			: '';
 
-	const qrCodeHTML =
-		portfolioQRCode && portfolio && portfolio.trim() !== ''
-			? `
+	const shouldShowQRCode =
+		isCoverLetter && portfolioQRCode && portfolio && portfolio.trim() !== '';
+
+	const qrCodeHTML = shouldShowQRCode
+		? `
 		<div class="page-qr-code">
-			${generateQRCodeSVGSync(portfolio)}
+			${await generateQRCodeSVG(portfolio)}
 		</div>
 	`
-			: '';
+		: '';
 
-	const headerHTML = `
-		<div class="page-header">
-			<h1 class="page-header-name">${fullName}</h1>
-			${contactInfo ? `<div class="page-header-contact">${contactInfo}</div>` : ''}
-		</div>
-		${logoHTML}
-		${qrCodeHTML}
-	`;
+	const footerContent = `${qrCodeHTML}${logoHTML}`;
 
-	return headerHTML;
+	return footerContent
+		? `
+		<footer class="page-footer">
+			${footerContent}
+		</footer>
+	`
+		: '';
 }
