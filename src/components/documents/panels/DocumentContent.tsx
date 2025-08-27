@@ -18,6 +18,7 @@ type DocumentContentProps = {
 	className?: string;
 	fontSize?: number;
 	fontSizeInput?: ReactNode;
+	documentType?: 'cover-letter' | 'resume';
 };
 
 export const DocumentContent = memo(function DocumentContent({
@@ -29,10 +30,11 @@ export const DocumentContent = memo(function DocumentContent({
 	className,
 	fontSize,
 	fontSizeInput,
+	documentType,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
-	const isCoverLetter = title.toLowerCase().includes('cover letter');
-	const isResume = title.toLowerCase().includes('resume');
+	const isCoverLetter = documentType === 'cover-letter';
+	const isResume = documentType === 'resume';
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
@@ -102,6 +104,7 @@ export const DocumentContent = memo(function DocumentContent({
 								candidateDetails={candidateDetails}
 								fontSize={fontSize || 11}
 								className='rounded-lg'
+								documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 							/>
 						</div>
 					) : (
@@ -122,6 +125,7 @@ export const DocumentContent = memo(function DocumentContent({
 						candidateDetails={candidateDetails}
 						fontSize={fontSize || 11}
 						className='rounded-lg'
+						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 					/>
 				</div>
 			) : (

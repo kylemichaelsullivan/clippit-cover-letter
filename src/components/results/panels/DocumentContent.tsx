@@ -20,6 +20,7 @@ type DocumentContentProps = {
 	fontSize?: number;
 	fontSizeInput?: ReactNode;
 	headerElement?: ReactNode;
+	documentType?: 'cover-letter' | 'resume';
 };
 
 export const DocumentContent = memo(function DocumentContent({
@@ -32,11 +33,12 @@ export const DocumentContent = memo(function DocumentContent({
 	fontSize,
 	fontSizeInput,
 	headerElement,
+	documentType,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
 	const [isTipTapView, setIsTipTapView] = useState(false);
-	const isCoverLetter = title.toLowerCase().includes('cover letter');
-	const isResume = title.toLowerCase().includes('resume');
+	const isCoverLetter = documentType === 'cover-letter';
+	const isResume = documentType === 'resume';
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
 	const getGeneratingText = (title: string) => {
@@ -70,7 +72,6 @@ export const DocumentContent = memo(function DocumentContent({
 
 	const handleContentChange = (newContent: string) => {
 		if (onContentChange) {
-			// Apply cleanup directly to remove unwanted TipTap content
 			const cleanedContent = newContent.replace(
 				/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
 				'</ul>',
@@ -135,6 +136,7 @@ export const DocumentContent = memo(function DocumentContent({
 									content={content}
 									candidateDetails={candidateDetails}
 									fontSize={fontSize || 11}
+									documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 								/>
 							</div>
 						)
@@ -162,6 +164,7 @@ export const DocumentContent = memo(function DocumentContent({
 						content={content}
 						candidateDetails={candidateDetails}
 						fontSize={fontSize || 11}
+						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 					/>
 				</div>
 			) : (
