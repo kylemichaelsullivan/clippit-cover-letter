@@ -95,6 +95,7 @@ export function TipTapEditor({
 			const currentHtml = editor.getHTML();
 			if (currentHtml !== value && value !== '<p></p>' && value !== '') {
 				isUpdatingRef.current = true;
+
 				editor.commands.setContent(value);
 				// Reset the flag after a short delay to allow the update to complete
 				setTimeout(() => {

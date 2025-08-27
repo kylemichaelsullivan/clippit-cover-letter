@@ -19,7 +19,16 @@ export function extractTipTapContent(html: string): string {
 					'<p><br></p>',
 				)
 				.replace(/<p><\/p>/g, '<p><br></p>')
-				.replace(/<p>\s*<ul[^>]*>.*?<\/ul>\s*<\/p>/gs, (match) => {
+				// Remove p tags inside li elements but preserve their content
+				.replace(/<li><p>(.*?)<\/p><\/li>/g, '<li>$1</li>')
+				// Remove trailing p element that follows ul elements
+				.replace(
+					/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
+					'</ul>',
+				)
+				.replace(/<\/ul>\s*<p><br><\/p>/g, '</ul>')
+				.replace(/<\/ul>\s*<p><\/p>/g, '</ul>')
+				.replace(/<p><ul[^>]*>.*?<\/ul>\s*<\/p>/gs, (match) => {
 					const ulMatch = match.match(/<ul[^>]*>(.*?)<\/ul>/s);
 					return ulMatch ? `<ul>${ulMatch[1]}</ul>` : match;
 				});

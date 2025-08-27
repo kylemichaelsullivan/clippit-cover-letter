@@ -727,6 +727,18 @@ input[data-lpignore='false'] {
 	min-height: 0;
 }
 
+/* Hide unwanted TipTap trailing break content */
+.TipTapEditorContent
+	.ProseMirror
+	p:last-child:has(br.ProseMirror-trailingBreak) {
+	display: none !important;
+}
+
+/* Alternative approach for browsers that don't support :has() */
+.TipTapEditorContent .ProseMirror p:last-child br.ProseMirror-trailingBreak {
+	display: none !important;
+}
+
 .FormSection .TipTapEditorContent .tiptap.ProseMirror {
 	min-height: 300px;
 	overflow-y: auto;
