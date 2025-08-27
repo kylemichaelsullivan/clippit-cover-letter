@@ -52,17 +52,23 @@ export function FormattedPreview({
 			const allSkills = generatedSkillsData
 				.flatMap((group) => group.skills)
 				.sort();
-			return <p>{allSkills.join(', ')}</p>;
+			return (
+				<ul>
+					{allSkills.map((skill, index) => (
+						<li key={index}>{skill}</li>
+					))}
+				</ul>
+			);
 		}
 
 		return (
-			<>
+			<ul>
 				{generatedSkillsData.map((group, index) => (
-					<p key={index}>
+					<li key={index}>
 						<strong>{group.name}:</strong> {group.skills.join(', ')}
-					</p>
+					</li>
 				))}
-			</>
+			</ul>
 		);
 	};
 

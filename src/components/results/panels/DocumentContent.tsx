@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, type ReactNode, useState } from 'react';
+import { memo, useState, type ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { DocumentPreview } from '@/components/ui/display';
@@ -68,6 +68,18 @@ export const DocumentContent = memo(function DocumentContent({
 		setIsTipTapView(!isTipTapView);
 	};
 
+	const handleContentChange = (newContent: string) => {
+		if (onContentChange) {
+			// Apply cleanup directly to remove unwanted TipTap content
+			const cleanedContent = newContent.replace(
+				/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
+				'</ul>',
+			);
+
+			onContentChange(cleanedContent);
+		}
+	};
+
 	return (
 		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
 			<div className='xs:flex-row flex flex-col items-center justify-between'>
@@ -94,7 +106,7 @@ export const DocumentContent = memo(function DocumentContent({
 			</div>
 			{isGenerating ? (
 				<div className='ResultsDocumentContentGenerating print-content print-document border-light-gray force-white-bg rounded-lg border'>
-					<div className='ResultsDocumentContentGeneratingText text-light-gray min-h-64 w-full p-4 font-mono sm:min-h-96 sm:text-base'>
+					<div className='ResultsDocumentContentGeneratingText text-light-gray flex min-h-64 w-full items-center justify-center p-8 text-center font-mono sm:min-h-96 sm:text-base'>
 						{getGeneratingText(title)}
 					</div>
 				</div>
@@ -105,7 +117,7 @@ export const DocumentContent = memo(function DocumentContent({
 							<div className='print-document border-light-gray force-white-bg rounded-lg border'>
 								<TipTapEditor
 									value={content}
-									onChange={onContentChange || (() => {})}
+									onChange={handleContentChange}
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
 										title.toLowerCase(),
@@ -130,7 +142,7 @@ export const DocumentContent = memo(function DocumentContent({
 						<div className='print-document border-light-gray force-white-bg rounded-lg border'>
 							<TipTapEditor
 								value={content}
-								onChange={onContentChange || (() => {})}
+								onChange={handleContentChange}
 								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 									'{title}',
 									title.toLowerCase(),

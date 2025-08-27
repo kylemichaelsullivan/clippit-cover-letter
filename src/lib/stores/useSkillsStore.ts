@@ -3,6 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 import { DEFAULTS } from '@/config';
 import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
+import { extractTipTapContent } from '@/lib/utils/tiptap';
 import type { Skills } from '@/types';
 
 type SkillsGroup = {
@@ -72,22 +73,29 @@ export const useSkillsStore = create<SkillsState>()(
 
 						if (checked) {
 							// Group by category with names
-							updatedSkillsText = state.generatedSkillsData
+							const listItems = state.generatedSkillsData
 								.map(
 									(group) =>
-										`<p><strong>${group.name}:</strong> ${group.skills.join(', ')}</p>`,
+										`<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`,
 								)
 								.join('');
+							updatedSkillsText = `<ul>${listItems}</ul>`;
 						} else {
 							// Alphabetize all skills across all groups
 							const allSkills = sortAllSkills(state.skills);
-							updatedSkillsText = `<p>${allSkills.join(', ')}</p>`;
+							const skillsHtml = allSkills
+								.map((skill) => `<li>${skill}</li>`)
+								.join('');
+							updatedSkillsText = `<ul>${skillsHtml}</ul>`;
 						}
 
-						set({ generatedSkills: updatedSkillsText });
+						const cleanedSkillsText = extractTipTapContent(updatedSkillsText);
+						set({ generatedSkills: cleanedSkillsText });
 					}
 				},
-				setGeneratedSkills: (result) => set({ generatedSkills: result }),
+				setGeneratedSkills: (result) => {
+					set({ generatedSkills: result });
+				},
 				setGeneratedSkillsData: (data) => set({ generatedSkillsData: data }),
 				setIsGeneratingSkills: (generating) =>
 					set({ isGeneratingSkills: generating }),
@@ -120,13 +128,16 @@ export const useSkillsStore = create<SkillsState>()(
 						const skillsText = skillsData
 							.map((group) =>
 								state.includeSkillGroupNames
-									? `<p><strong>${group.name}:</strong> ${group.skills.join(', ')}</p>`
-									: `<p>${group.skills.join(', ')}</p>`,
+									? `<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`
+									: group.skills.map((skill) => `<li>${skill}</li>`).join(''),
 							)
 							.join('');
 
+						const finalSkillsText = `<ul>${skillsText}</ul>`;
+						const cleanedSkillsText = extractTipTapContent(finalSkillsText);
+
 						set({
-							generatedSkills: skillsText,
+							generatedSkills: cleanedSkillsText,
 							generatedSkillsData: skillsData,
 						});
 					} catch (error) {

@@ -1,38 +1,74 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CopyButton } from '@/components/results';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { TipTapEditor } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';
 import { getSortedSkillGroups } from '@/lib/utils';
+import { useSkillsStore } from '@/lib/stores';
 import type { Skills } from '@/types';
 
 type SkillsDisplayProps = {
 	skills: Skills;
+	useGeneratedSkills?: boolean;
 };
 
-export function SkillsDisplay({ skills }: SkillsDisplayProps) {
+export function SkillsDisplay({
+	skills,
+	useGeneratedSkills = false,
+}: SkillsDisplayProps) {
+	const { generatedSkills } = useSkillsStore();
+
 	const [skillsText, setSkillsText] = useState(() => {
+		if (useGeneratedSkills && generatedSkills) {
+			return generatedSkills;
+		}
+
 		const sortedGroups = getSortedSkillGroups(skills);
 		const htmlText = sortedGroups
 			.map((group) => {
 				if (group.skills.length === 0) return '';
-				return `<p><strong>${group.name}:</strong> ${group.skills.join(', ')}</p>`;
+				return `<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`;
 			})
 			.filter(Boolean)
 			.join('');
 
-		return htmlText;
+		return htmlText ? `<ul>${htmlText}</ul>` : '';
 	});
+
+	useEffect(() => {
+		if (useGeneratedSkills && generatedSkills) {
+			setSkillsText(generatedSkills);
+		}
+	}, [useGeneratedSkills, generatedSkills]);
 
 	const handleTextChange = (value: string) => {
 		setSkillsText(value);
 	};
 
-	const hasSkills = skills.groups.some((group) => group.skills.length > 0);
+	const hasSkills = useGeneratedSkills
+		? generatedSkills && generatedSkills.trim() !== ''
+		: skills.groups.some((group) => group.skills.length > 0);
 
 	const getPlainTextForCopy = () => {
+		if (useGeneratedSkills && generatedSkills) {
+			// Convert HTML to plain text for copying
+			return generatedSkills
+				.replace(/<ul>/g, '')
+				.replace(/<\/ul>/g, '')
+				.replace(
+					/<li><p><strong>([^<]+):<\/strong> ([^<]+)<\/p><\/li>/g,
+					'$1: $2',
+				)
+				.replace(/<li><p>([^<]+)<\/p><\/li>/g, '$1')
+				.replace(/<li><strong>([^<]+):<\/strong> ([^<]+)<\/li>/g, '$1: $2')
+				.replace(/<li>([^<]+)<\/li>/g, '$1')
+				.replace(/<p>([^<]+)<\/p>/g, '$1')
+				.replace(/<br\s*\/?>/g, '\n')
+				.replace(/<[^>]*>/g, '');
+		}
+
 		const sortedGroups = getSortedSkillGroups(skills);
 		return sortedGroups
 			.map((group) => {
