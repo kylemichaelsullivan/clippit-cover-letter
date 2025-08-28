@@ -1,5 +1,13 @@
 ---
-globs: ['**/__tests__/**/*.ts', '**/__tests__/**/*.tsx', '**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx']
+globs:
+  [
+    '**/__tests__/**/*.ts',
+    '**/__tests__/**/*.tsx',
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.spec.ts',
+    '**/*.spec.tsx',
+  ]
 exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
 ---
 
@@ -44,9 +52,9 @@ describe('Button', () => {
   it('handles click events', async () => {
     const handleClick = vi.fn();
     const user = userEvent.setup();
-    
+
     render(<Button onClick={handleClick}>Click me</Button>);
-    
+
     await user.click(screen.getByRole('button'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
@@ -57,7 +65,7 @@ describe('Button', () => {
         Button
       </Button>
     );
-    
+
     const button = screen.getByRole('button');
     expect(button).toHaveClass('Button', 'bg-primary', 'text-lg', 'opacity-50');
   });
@@ -83,7 +91,7 @@ import CandidateForm from '@/components/forms/candidate/CandidateForm';
 describe('CandidateForm', () => {
   it('renders all form fields', () => {
     render(<CandidateForm />);
-    
+
     expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/phone/i)).toBeInTheDocument();
@@ -92,10 +100,10 @@ describe('CandidateForm', () => {
   it('validates required fields', async () => {
     const user = userEvent.setup();
     render(<CandidateForm />);
-    
+
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
-    
+
     await waitFor(() => {
       expect(screen.getByText(/full name is required/i)).toBeInTheDocument();
       expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument();
@@ -105,13 +113,13 @@ describe('CandidateForm', () => {
   it('submits form with valid data', async () => {
     const mockSubmit = vi.fn();
     const user = userEvent.setup();
-    
+
     render(<CandidateForm onSubmit={mockSubmit} />);
-    
+
     await user.type(screen.getByLabelText(/full name/i), 'John Doe');
     await user.type(screen.getByLabelText(/email/i), 'john@example.com');
     await user.click(screen.getByRole('button', { name: /submit/i }));
-    
+
     await waitFor(() => {
       expect(mockSubmit).toHaveBeenCalledWith({
         fullName: 'John Doe',
@@ -145,7 +153,7 @@ describe('useCandidateStore', () => {
 
   it('initializes with default state', () => {
     const { result } = renderHook(() => useCandidateStore());
-    
+
     expect(result.current.candidate).toEqual({
       fullName: '',
       email: '',
@@ -158,7 +166,7 @@ describe('useCandidateStore', () => {
 
   it('updates candidate data', () => {
     const { result } = renderHook(() => useCandidateStore());
-    
+
     act(() => {
       result.current.setCandidate({
         fullName: 'John Doe',
@@ -169,14 +177,14 @@ describe('useCandidateStore', () => {
         portfolio: 'https://portfolio.com',
       });
     });
-    
+
     expect(result.current.candidate.fullName).toBe('John Doe');
     expect(result.current.candidate.email).toBe('john@example.com');
   });
 
   it('persists data across renders', () => {
     const { result, rerender } = renderHook(() => useCandidateStore());
-    
+
     act(() => {
       result.current.setCandidate({
         fullName: 'Jane Smith',
@@ -187,9 +195,9 @@ describe('useCandidateStore', () => {
         portfolio: '',
       });
     });
-    
+
     rerender();
-    
+
     expect(result.current.candidate.fullName).toBe('Jane Smith');
     expect(result.current.candidate.email).toBe('jane@example.com');
   });
@@ -214,7 +222,7 @@ export const mockCandidate = {
 export const mockJob = {
   companyName: 'Tech Corp',
   jobTitle: 'Senior Developer',
-  jobDescription: 'We are looking for a senior developer...',
+  jobDescription: 'We are looking for a senior developer…',
   hiringManager: 'Jane Smith',
   companyAddress: '123 Tech St, San Francisco, CA',
 };
@@ -280,12 +288,12 @@ import LargeComponent from '@/components/LargeComponent';
 describe('Component Performance', () => {
   it('renders within acceptable time', () => {
     const start = performance.now();
-    
+
     render(<LargeComponent />);
-    
+
     const end = performance.now();
     const renderTime = end - start;
-    
+
     expect(renderTime).toBeLessThan(100); // 100ms threshold
   });
 });
@@ -302,26 +310,26 @@ import { test, expect } from '@playwright/test';
 test('complete cover letter generation flow', async ({ page }) => {
   // Navigate to the application
   await page.goto('/');
-  
+
   // Fill candidate form
   await page.fill('[data-testid="full-name"]', 'John Doe');
   await page.fill('[data-testid="email"]', 'john@example.com');
   await page.click('[data-testid="next-button"]');
-  
+
   // Fill job form
   await page.fill('[data-testid="company-name"]', 'Tech Corp');
   await page.fill('[data-testid="job-title"]', 'Senior Developer');
-  await page.fill('[data-testid="job-description"]', 'We are looking for...');
+  await page.fill('[data-testid="job-description"]', 'We are looking for…');
   await page.click('[data-testid="next-button"]');
-  
+
   // Select skills
   await page.click('[data-testid="skill-javascript"]');
   await page.click('[data-testid="skill-react"]');
   await page.click('[data-testid="next-button"]');
-  
+
   // Generate cover letter
   await page.click('[data-testid="generate-button"]');
-  
+
   // Verify results
   await expect(page.locator('[data-testid="cover-letter"]')).toBeVisible();
   await expect(page.locator('[data-testid="download-pdf"]')).toBeVisible();

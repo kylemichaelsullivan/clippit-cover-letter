@@ -7,7 +7,7 @@ const { callOpenAI, generateCoverLetter } = require('../src/lib/openai.ts');
 const { isAIConfigured, getAIConfig } = require('../src/config/ai.ts');
 
 async function testOpenAI() {
-	console.log('🔍 Testing OpenAI API Integration...\n');
+	console.log('🔍 Testing OpenAI API Integration…\n');
 
 	// Check configuration
 	console.log('📋 Configuration Check:');
@@ -55,4 +55,3 @@ async function testOpenAI() {
 }
 
 testOpenAI();
-

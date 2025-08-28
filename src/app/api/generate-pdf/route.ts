@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
 		console.log('PDF generation request received:', { filename, fontSize });
 
-		console.log('Launching Puppeteer browser...');
+		console.log('Launching Puppeteer browser…');
 		let browser;
 		try {
 			browser = await puppeteer.launch({

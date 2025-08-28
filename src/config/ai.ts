@@ -183,6 +183,6 @@ export function getSafeAIConfig(): Omit<AIConfig, 'apiKey'> & {
 	const config = getAIConfig();
 	return {
 		...config,
-		apiKey: config.apiKey ? `${config.apiKey.substring(0, 8)}...` : 'not-set',
+		apiKey: config.apiKey ? `${config.apiKey.substring(0, 8)}…` : 'not-set',
 	};
 }
