@@ -1,5 +1,6 @@
 export * from './htmlParser';
 export * from './htmlRenderer';
+export * from './htmlToMarkdown';
 export * from './ordinal';
 export * from './pdfFormatter';
 export * from './pageBreakExtension';
