@@ -1,15 +1,21 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { useIsClient } from '@/lib/hooks';
+import { cleanPlaintext, htmlToPlaintext } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
+import { useIsClient } from '@/lib/hooks';
 
 type CopyButtonProps = {
 	text: string;
+	documentType?: string;
 	disabled?: boolean;
 };
 
-export function CopyButton({ text, disabled = false }: CopyButtonProps) {
+export function CopyButton({
+	text,
+	documentType,
+	disabled = false,
+}: CopyButtonProps) {
 	const isClient = useIsClient();
 	const hasContent = text && text.trim() !== '';
 	const isDisabled = !isClient || disabled || !hasContent;
@@ -17,8 +23,12 @@ export function CopyButton({ text, disabled = false }: CopyButtonProps) {
 	const handleCopy = async () => {
 		if (isClient && navigator.clipboard && hasContent) {
 			try {
-				await navigator.clipboard.writeText(text);
-				showToast.success('Copied to clipboard');
+				const plaintextContent = cleanPlaintext(htmlToPlaintext(text));
+				await navigator.clipboard.writeText(plaintextContent);
+				const message = documentType
+					? `${documentType} Copied to Clipboard`
+					: 'Copied to clipboard';
+				showToast.success(message);
 			} catch {
 				showToast.error('Failed to copy to clipboard');
 			}
@@ -30,9 +40,10 @@ export function CopyButton({ text, disabled = false }: CopyButtonProps) {
 			componentName='CopyButton'
 			color='primary'
 			size='flex'
+			disabled={isDisabled}
+			aria-label='Copy'
 			title='Copy'
 			onClick={handleCopy}
-			disabled={isDisabled}
 		>
 			Copy
 		</Button>

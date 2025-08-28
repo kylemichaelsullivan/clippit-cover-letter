@@ -1,10 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
+import { downloadMD } from '@/lib/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { htmlToMarkdown, cleanMarkdown } from '@/lib/utils/htmlToMarkdown';
-import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
 import type { ButtonColor } from '@/types';
 
@@ -12,10 +11,11 @@ type DownloadButtonMDProps = {
 	content: string;
 	title: string;
 	filename: string;
-	disabled?: boolean;
-	showIcon?: boolean;
+	documentType?: string;
 	color?: ButtonColor;
 	size?: 'sm' | 'flex';
+	disabled?: boolean;
+	showIcon?: boolean;
 	tabIndex?: number;
 };
 
@@ -23,10 +23,11 @@ export function DownloadButtonMD({
 	content,
 	title,
 	filename,
-	disabled = false,
-	showIcon = false,
+	documentType,
 	color = 'primary',
 	size = 'sm',
+	disabled = false,
+	showIcon = false,
 	tabIndex,
 }: DownloadButtonMDProps) {
 	const isClient = useIsClient();
@@ -35,33 +36,20 @@ export function DownloadButtonMD({
 
 	const handleDownloadMD = () => {
 		if (isClient && hasContent) {
-			try {
-				// Convert HTML content to Markdown
-				const markdownContent = cleanMarkdown(htmlToMarkdown(content));
-				const blob = new Blob([markdownContent], { type: 'text/markdown' });
-				const url = URL.createObjectURL(blob);
-				const a = document.createElement('a');
-				a.href = url;
-				a.download = `${filename}.md`;
-				a.click();
-				URL.revokeObjectURL(url);
-				showToast.success('Markdown file downloaded');
-			} catch {
-				showToast.error('Failed to download Markdown file');
-			}
+			downloadMD(content, filename, documentType);
 		}
 	};
 
 	return (
 		<Button
+			componentName='DownloadButtonMD'
 			color={color}
 			size={size}
-			onClick={handleDownloadMD}
+			tabIndex={tabIndex}
 			disabled={isDisabled}
-			componentName='DownloadButtonMD'
 			title={`Download ${title}`}
 			aria-label={`${title} as Markdown file`}
-			tabIndex={tabIndex}
+			onClick={handleDownloadMD}
 		>
 			{showIcon && <FontAwesomeIcon icon={faSave} aria-hidden='true' />}
 			{title}

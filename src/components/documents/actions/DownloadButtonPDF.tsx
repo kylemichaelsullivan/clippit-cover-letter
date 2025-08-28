@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/buttons';
-import { generatePDF, downloadPDF } from '@/lib/utils/pdfGenerator';
+import { downloadPDF, generatePDF } from '@/lib/utils';
+import { formatContentForPDFWithSkills } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
@@ -13,8 +14,9 @@ type DownloadButtonPDFProps = {
 	title: string;
 	filename: string;
 	candidateDetails: CandidateDetails;
-	disabled?: boolean;
+	documentType?: string;
 	fontSize?: number;
+	disabled?: boolean;
 };
 
 export function DownloadButtonPDF({
@@ -22,8 +24,9 @@ export function DownloadButtonPDF({
 	title,
 	filename,
 	candidateDetails,
-	disabled = false,
+	documentType,
 	fontSize,
+	disabled = false,
 }: DownloadButtonPDFProps) {
 	const isClient = useIsClient();
 	const { includeSkillGroupNames, generatedSkillsData } = useSkillsStore();
@@ -31,43 +34,22 @@ export function DownloadButtonPDF({
 	const hasContent = content && content.trim() !== '';
 	const isDisabled = !isClient || disabled || !hasContent || isGenerating;
 
-	const formatContentForPDFWithSkills = (content: string): string => {
-		if (
-			title.toLowerCase().includes('resume') &&
-			generatedSkillsData.length > 0
-		) {
-			if (!includeSkillGroupNames) {
-				const allSkills = generatedSkillsData
-					.flatMap((group) => group.skills)
-					.sort();
-
-				// This handles both the original markdown and the HTML that might be in the content
-				return content
-					.replace(
-						/\*\*([^:]+):\*\* ([^<]+)/g,
-						'**Skills:** ' + allSkills.join(', '),
-					)
-					.replace(
-						/<ul>[\s\S]*?<li><strong>([^<]+):<\/strong> ([^<]+)<\/li>[\s\S]*?<\/ul>/g,
-						'<p><strong>Skills:</strong> ' + allSkills.join(', ') + '</p>',
-					)
-					.replace(
-						/<strong>([^<]+):<\/strong> ([^<]+)/g,
-						'<strong>Skills:</strong> ' + allSkills.join(', '),
-					);
-			}
-		}
-		return content;
-	};
-
 	const handleDownloadPDF = async () => {
 		if (isClient && hasContent && !isGenerating) {
 			setIsGenerating(true);
 			try {
-				const contentWithSkills = formatContentForPDFWithSkills(content);
+				const contentWithSkills = formatContentForPDFWithSkills(
+					content,
+					title,
+					generatedSkillsData,
+					includeSkillGroupNames,
+				);
 				const customFontSize = fontSize || 11;
 
-				const loadingToast = showToast.loading('Generating PDF...');
+				const displayDocumentType = documentType || 'PDF';
+				const loadingToast = showToast.loading(
+					`Generating ${displayDocumentType} PDF…`,
+				);
 
 				const pdfBlob = await generatePDF({
 					content: contentWithSkills,
@@ -77,8 +59,7 @@ export function DownloadButtonPDF({
 				});
 
 				showToast.dismiss(loadingToast);
-				downloadPDF(pdfBlob, filename);
-				showToast.success('PDF downloaded successfully');
+				downloadPDF(pdfBlob, filename, documentType);
 			} catch (error) {
 				console.error('PDF generation error:', error);
 				showToast.error('Failed to generate PDF. Please try again.');
@@ -90,15 +71,15 @@ export function DownloadButtonPDF({
 
 	return (
 		<Button
+			componentName='DownloadButtonPDF'
 			color='primary'
 			size='flex'
-			onClick={handleDownloadPDF}
 			disabled={isDisabled}
-			componentName='DownloadButtonPDF'
 			title={`Download ${title}`}
 			aria-label={`Download ${title} as PDF`}
+			onClick={handleDownloadPDF}
 		>
-			{isGenerating ? 'Generating...' : title}
+			{isGenerating ? 'Generating…' : title}
 		</Button>
 	);
 }

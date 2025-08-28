@@ -17,6 +17,7 @@ type ActionButtonsProps = {
 	className?: string;
 	disabled?: boolean;
 	fontSize?: number;
+	documentType?: string;
 };
 
 export function ActionButtons({
@@ -26,6 +27,7 @@ export function ActionButtons({
 	className,
 	disabled = false,
 	fontSize,
+	documentType,
 }: ActionButtonsProps) {
 	return (
 		<div
@@ -34,15 +36,16 @@ export function ActionButtons({
 				className,
 			)}
 		>
-			<CopyButton text={text} disabled={disabled} />
+			<CopyButton text={text} documentType={documentType} disabled={disabled} />
 
 			<DownloadButtonPDF
 				content={text}
 				title='PDF'
 				filename={filename}
+				documentType={documentType}
 				candidateDetails={candidateDetails}
-				disabled={disabled}
 				fontSize={fontSize}
+				disabled={disabled}
 			/>
 
 			<DownloadButtonMD
@@ -50,14 +53,17 @@ export function ActionButtons({
 				size='flex'
 				title='MD'
 				filename={filename}
+				documentType={documentType}
 				disabled={disabled}
 			/>
 
 			<DownloadButtonTXT
 				content={text}
-				title='TXT'
 				filename={filename}
+				documentType={documentType}
 				disabled={disabled}
+				aria-label='Download TXT'
+				title='Download TXT'
 			/>
 		</div>
 	);

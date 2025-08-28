@@ -1,13 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
+import { downloadTXT } from '@/lib/utils';
 import { useIsClient } from '@/lib/hooks';
-import { showToast } from '@/lib/toast';
 
 type DownloadButtonTXTProps = {
 	content: string;
 	title: string;
 	filename: string;
+	documentType?: string;
 	disabled?: boolean;
 };
 
@@ -15,6 +16,7 @@ export function DownloadButtonTXT({
 	content,
 	title,
 	filename,
+	documentType,
 	disabled = false,
 }: DownloadButtonTXTProps) {
 	const isClient = useIsClient();
@@ -23,18 +25,7 @@ export function DownloadButtonTXT({
 
 	const handleDownloadTXT = () => {
 		if (isClient && hasContent) {
-			try {
-				const blob = new Blob([content], { type: 'text/plain' });
-				const url = URL.createObjectURL(blob);
-				const a = document.createElement('a');
-				a.href = url;
-				a.download = `${filename}.txt`;
-				a.click();
-				URL.revokeObjectURL(url);
-				showToast.success('Text file downloaded');
-			} catch {
-				showToast.error('Failed to download text file');
-			}
+			downloadTXT(content, filename, documentType);
 		}
 	};
 
@@ -43,10 +34,10 @@ export function DownloadButtonTXT({
 			componentName='DownloadButtonTXT'
 			color='primary'
 			size='flex'
+			disabled={isDisabled}
 			title={`${title}`}
 			aria-label={`${title} as TXT`}
 			onClick={handleDownloadTXT}
-			disabled={isDisabled}
 		>
 			{title}
 		</Button>
