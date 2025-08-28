@@ -1,9 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/buttons';
-import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
-import { generatePageFooterHTML } from '@/lib/utils/pageHeader';
-import { PDF_STYLES } from '@/config';
+import { generatePDF, downloadPDF } from '@/lib/utils/pdfGenerator';
 import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
@@ -28,8 +27,9 @@ export function DownloadButtonPDF({
 }: DownloadButtonPDFProps) {
 	const isClient = useIsClient();
 	const { includeSkillGroupNames, generatedSkillsData } = useSkillsStore();
+	const [isGenerating, setIsGenerating] = useState(false);
 	const hasContent = content && content.trim() !== '';
-	const isDisabled = !isClient || disabled || !hasContent;
+	const isDisabled = !isClient || disabled || !hasContent || isGenerating;
 
 	const formatContentForPDFWithSkills = (content: string): string => {
 		if (
@@ -60,48 +60,29 @@ export function DownloadButtonPDF({
 	};
 
 	const handleDownloadPDF = async () => {
-		if (isClient && hasContent) {
+		if (isClient && hasContent && !isGenerating) {
+			setIsGenerating(true);
 			try {
-				const printWindow = window.open('', '_blank');
-				if (printWindow) {
-					const isCoverLetter = !title.toLowerCase().includes('resume');
-					const pageHeader = await generatePageHeaderHTML(candidateDetails);
-					const pageFooter = await generatePageFooterHTML(
-						candidateDetails,
-						isCoverLetter,
-					);
-					const contentWithSkills = formatContentForPDFWithSkills(content);
-					const formattedContent = formatContentForPDF(contentWithSkills);
-					const customFontSize = fontSize || 11;
-					const pdfStyles = PDF_STYLES.replace(
-						'font-size: 11pt;',
-						`font-size: ${customFontSize}pt;`,
-					);
+				const contentWithSkills = formatContentForPDFWithSkills(content);
+				const customFontSize = fontSize || 11;
 
-					printWindow.document.documentElement.innerHTML = `
-						<head>
-							<title>${filename}</title>
-							<style>
-								${pdfStyles}
-							</style>
-						</head>
-						<body>
-							<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
-								${pageHeader}
-								<div class="print-content print-document-content">
-									${formattedContent}
-								</div>
-								${pageFooter}
-							</div>
-						</body>
-					`;
-					printWindow.print();
-					showToast.success('PDF download initiated');
-				} else {
-					showToast.error('Failed to open print window');
-				}
-			} catch {
-				showToast.error('Failed to download PDF');
+				const loadingToast = showToast.loading('Generating PDF...');
+
+				const pdfBlob = await generatePDF({
+					content: contentWithSkills,
+					filename,
+					candidateDetails,
+					fontSize: customFontSize,
+				});
+
+				showToast.dismiss(loadingToast);
+				downloadPDF(pdfBlob, filename);
+				showToast.success('PDF downloaded successfully');
+			} catch (error) {
+				console.error('PDF generation error:', error);
+				showToast.error('Failed to generate PDF. Please try again.');
+			} finally {
+				setIsGenerating(false);
 			}
 		}
 	};
@@ -116,7 +97,7 @@ export function DownloadButtonPDF({
 			disabled={isDisabled}
 			onClick={handleDownloadPDF}
 		>
-			{title}
+			{isGenerating ? 'Generating...' : title}
 		</Button>
 	);
 }

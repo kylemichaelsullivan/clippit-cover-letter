@@ -1,10 +1,11 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/buttons';
-import { useIsClient } from '@/lib/hooks';
+import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { htmlToMarkdown, cleanMarkdown } from '@/lib/utils/htmlToMarkdown';
 import { showToast } from '@/lib/toast';
+import { useIsClient } from '@/lib/hooks';
 import type { ButtonColor } from '@/types';
 
 type DownloadButtonMDProps = {
@@ -35,7 +36,9 @@ export function DownloadButtonMD({
 	const handleDownloadMD = () => {
 		if (isClient && hasContent) {
 			try {
-				const blob = new Blob([content], { type: 'text/markdown' });
+				// Convert HTML content to Markdown
+				const markdownContent = cleanMarkdown(htmlToMarkdown(content));
+				const blob = new Blob([markdownContent], { type: 'text/markdown' });
 				const url = URL.createObjectURL(blob);
 				const a = document.createElement('a');
 				a.href = url;
