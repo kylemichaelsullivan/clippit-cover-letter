@@ -101,19 +101,26 @@ ${generatePrintContentStyles()}
 ${generateUIPageHeaderStyles()}
 ${generatePrintDocumentContent()}
 
-/* Additional PDF-specific styles for footer elements */
 .signature-image {
 	width: auto;
-	max-height: 1.5em;
+	max-height: 3em;
 }
-
+	
+/* Additional PDF-specific styles for footer elements */
 .page-footer {
 	position: absolute;
 	width: 100%;
-	height: 2rem;
+	height: 32px;
 	right: 0;
 	bottom: 0;
 	left: 0;
+}
+
+.page-logo, .page-logo-image {
+	width: auto;
+	max-width: 32px;
+	height: auto;
+	max-height: 32px;
 }
 
 .page-logo {
@@ -125,16 +132,12 @@ ${generatePrintDocumentContent()}
 
 .page-logo-image {
 	object-fit: contain;
-	width: auto;
-	max-width: 1.5rem;
-	height: auto;
-	max-height: 1.5rem;
 }
 
 .page-qr-code {
 	position: absolute;
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 32px;
+	height: 32px;
 	bottom: 0;
 	left: 1rem;
 	z-index: 10;

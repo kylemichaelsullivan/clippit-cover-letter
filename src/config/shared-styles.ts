@@ -78,7 +78,7 @@ const SHARED_PAGE_HEADER_NAME = `
 const SHARED_PAGE_FOOTER = `
 	position: absolute;
 	width: 100%;
-	height: 2rem;
+	height: 32px;
 	right: 0;
 	bottom: 0;
 	left: 0;
@@ -86,6 +86,10 @@ const SHARED_PAGE_FOOTER = `
 
 const SHARED_PAGE_LOGO = `
 	position: absolute;
+	width: auto;
+	max-width: 32px;
+	height: auto;
+	max-height: 32px;
 	right: 1rem;
 	bottom: 0;
 	z-index: 10;
@@ -94,15 +98,15 @@ const SHARED_PAGE_LOGO = `
 const SHARED_PAGE_LOGO_IMAGE = `
 	object-fit: contain;
 	width: auto;
-	max-width: 2.25rem;
+	max-width: 32px;
 	height: auto;
-	max-height: 2.25rem;
+	max-height: 32px;
 `;
 
 const SHARED_PAGE_QR_CODE = `
 	position: absolute;
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 32px;
+	height: 32px;
 	bottom: 0;
 	left: 1rem;
 	z-index: 10;
@@ -234,7 +238,7 @@ const TIPTAP_PAGE_BREAK_LABEL_PRINT = `
 
 const SIGNATURE_IMAGE = `
 	width: auto;
-	max-height: 2.5em;
+	max-height: 3em;
 `;
 
 function generateProseStyles(className: string): string {
