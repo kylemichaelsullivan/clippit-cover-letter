@@ -102,6 +102,18 @@ export const CONSTANTS = {
 		NO_SKILLS_IN_GROUP: 'No Skills',
 		ERROR_GENERATING:
 			'An error occurred while generating your documents. Please try again.',
+		DOWNLOAD: {
+			SUCCESS: {
+				MARKDOWN: 'Markdown file downloaded',
+				PDF: 'PDF downloaded successfully',
+				TEXT: 'Text file downloaded',
+			},
+			ERROR: {
+				MARKDOWN: 'Failed to download Markdown file',
+				PDF: 'Failed to download PDF',
+				TEXT: 'Failed to download text file',
+			},
+		},
 	},
 
 	LINKEDIN: {

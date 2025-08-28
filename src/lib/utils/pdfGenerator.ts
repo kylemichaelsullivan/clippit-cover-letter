@@ -73,14 +73,3 @@ export async function generatePDF({
 		throw new Error('Failed to generate PDF');
 	}
 }
-
-export function downloadPDF(blob: Blob, filename: string): void {
-	const url = URL.createObjectURL(blob);
-	const link = document.createElement('a');
-	link.href = url;
-	link.download = `${filename}.pdf`;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	URL.revokeObjectURL(url);
-}
