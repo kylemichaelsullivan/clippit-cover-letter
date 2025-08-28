@@ -2,8 +2,8 @@
 
 import { memo } from 'react';
 
-import { DocumentContent } from '@/components/results/panels';
 import { ActionButtons } from '@/components/results/actions';
+import { DocumentContent } from '@/components/results/panels';
 import { EmptyState } from '@/components/ui/feedback';
 import { FontSizeInput } from '@/components/ui/input';
 import {
@@ -56,6 +56,7 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 					/>
 					<ActionButtons
 						text={generatedCoverLetter}
+						documentType='Cover Letter'
 						filename='cover-letter'
 						candidateDetails={candidateDetails}
 					/>
@@ -67,7 +68,6 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 					<DocumentContent
 						title='Resume'
 						content={generatedResume}
-						isEditable={false}
 						fontSize={resumeFontSize}
 						fontSizeInput={
 							<FontSizeInput
@@ -75,10 +75,12 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 								onChange={setResumeFontSize}
 							/>
 						}
+						isEditable={false}
 					/>
 					<ActionButtons
 						text={generatedResume}
 						filename='resume'
+						documentType='Resume'
 						candidateDetails={candidateDetails}
 						fontSize={resumeFontSize}
 					/>

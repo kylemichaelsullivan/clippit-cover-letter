@@ -57,6 +57,7 @@ export const DocumentsStateManager = memo(function DocumentsStateManager({
 					<ActionButtons
 						text={generatedCoverLetter}
 						filename='cover-letter'
+						documentType='Cover Letter'
 						candidateDetails={candidateDetails}
 					/>
 				</div>
@@ -79,6 +80,7 @@ export const DocumentsStateManager = memo(function DocumentsStateManager({
 					<ActionButtons
 						text={generatedResume}
 						filename='resume'
+						documentType='Resume'
 						candidateDetails={candidateDetails}
 						fontSize={resumeFontSize}
 					/>

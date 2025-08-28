@@ -13,27 +13,27 @@ import { useCandidateStore } from '@/lib/stores';
 type DocumentContentProps = {
 	title: string;
 	content: string;
-	onContentChange?: (content: string) => void;
-	isEditable?: boolean;
-	isGenerating?: boolean;
+	documentType?: 'cover-letter' | 'resume';
 	className?: string;
+	headerElement?: ReactNode;
 	fontSize?: number;
 	fontSizeInput?: ReactNode;
-	headerElement?: ReactNode;
-	documentType?: 'cover-letter' | 'resume';
+	isEditable?: boolean;
+	isGenerating?: boolean;
+	onContentChange?: (content: string) => void;
 };
 
 export const DocumentContent = memo(function DocumentContent({
 	title,
 	content,
-	onContentChange,
-	isEditable = false,
-	isGenerating = false,
+	documentType,
 	className,
+	headerElement,
 	fontSize,
 	fontSizeInput,
-	headerElement,
-	documentType,
+	isEditable = false,
+	isGenerating = false,
+	onContentChange,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
 	const [isTipTapView, setIsTipTapView] = useState(false);
@@ -106,7 +106,7 @@ export const DocumentContent = memo(function DocumentContent({
 				</div>
 			</div>
 			{isGenerating ? (
-				<div className='ResultsDocumentContentGenerating print-content print-document border-light-gray force-white-bg rounded-lg border'>
+				<div className='ResultsDocumentContentGenerating print-content print-document border-light-gray force-white-bg border'>
 					<div className='ResultsDocumentContentGeneratingText text-light-gray flex min-h-64 w-full items-center justify-center p-8 text-center font-mono sm:min-h-96 sm:text-base'>
 						{getGeneratingText(title)}
 					</div>
@@ -115,61 +115,61 @@ export const DocumentContent = memo(function DocumentContent({
 				<div className='flex flex-col gap-4'>
 					{isResume || isCoverLetter ? (
 						isTipTapView ? (
-							<div className='print-document border-light-gray force-white-bg rounded-lg border'>
+							<div className='print-document border-light-gray force-white-bg border'>
 								<TipTapEditor
+									componentName='DocumentContentTipTapEditor'
+									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 									value={content}
-									onChange={handleContentChange}
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
 										title.toLowerCase(),
 									)}
-									id={inputId}
-									componentName='DocumentContentTipTapEditor'
-									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 									contentPadding='sm'
+									id={inputId}
+									onChange={handleContentChange}
 								/>
 							</div>
 						) : (
-							<div className='print-content print-document border-light-gray force-white-bg rounded-lg border p-2'>
+							<div className='print-content print-document border-light-gray force-white-bg border p-2'>
 								<DocumentPreview
 									className='rounded-lg'
+									documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 									content={content}
 									candidateDetails={candidateDetails}
 									fontSize={fontSize || 11}
-									documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 								/>
 							</div>
 						)
 					) : (
-						<div className='print-document border-light-gray force-white-bg rounded-lg border'>
+						<div className='print-document border-light-gray force-white-bg border'>
 							<TipTapEditor
+								componentName='DocumentContentTipTapEditor'
+								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 								value={content}
-								onChange={handleContentChange}
 								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 									'{title}',
 									title.toLowerCase(),
 								)}
-								id={inputId}
-								componentName='DocumentContentTipTapEditor'
-								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 								contentPadding='sm'
+								id={inputId}
+								onChange={handleContentChange}
 							/>
 						</div>
 					)}
 				</div>
 			) : isResume || isCoverLetter ? (
-				<div className='print-content print-document border-light-gray force-white-bg rounded-lg border p-2'>
+				<div className='print-content print-document border-light-gray force-white-bg border p-2'>
 					<DocumentPreview
 						className='rounded-lg'
+						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 						content={content}
 						candidateDetails={candidateDetails}
 						fontSize={fontSize || 11}
-						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 					/>
 				</div>
 			) : (
 				<div
-					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-2`}
+					className={`print-content print-document border-light-gray force-white-bg border p-2`}
 				>
 					{renderPageHeader()}
 					<div className='p-0'>

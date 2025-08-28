@@ -2,8 +2,8 @@
 
 import { memo } from 'react';
 
-import { DocumentContent } from '@/components/results/panels';
 import { ActionButtons } from '@/components/results/actions';
+import { DocumentContent } from '@/components/results/panels';
 import { EmptyState } from '@/components/ui/feedback';
 import { FontSizeInput } from '@/components/ui/input';
 import {
@@ -51,13 +51,14 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 				<div className='flex flex-col gap-4'>
 					<DocumentContent
 						title='Cover Letter'
+						documentType='cover-letter'
 						content={generatedCoverLetter}
 						isEditable={false}
-						documentType='cover-letter'
 					/>
 					<ActionButtons
 						text={generatedCoverLetter}
 						filename='cover-letter'
+						documentType='Cover Letter'
 						candidateDetails={candidateDetails}
 					/>
 				</div>
@@ -67,8 +68,8 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 				<div className='flex flex-col gap-4'>
 					<DocumentContent
 						title='Resume'
+						documentType='resume'
 						content={generatedResume}
-						isEditable={false}
 						fontSize={resumeFontSize}
 						fontSizeInput={
 							<FontSizeInput
@@ -76,11 +77,12 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 								onChange={setResumeFontSize}
 							/>
 						}
-						documentType='resume'
+						isEditable={false}
 					/>
 					<ActionButtons
 						text={generatedResume}
 						filename='resume'
+						documentType='Resume'
 						candidateDetails={candidateDetails}
 						fontSize={resumeFontSize}
 					/>

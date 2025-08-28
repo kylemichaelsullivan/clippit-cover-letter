@@ -12,25 +12,25 @@ import { useCandidateStore } from '@/lib/stores';
 type DocumentContentProps = {
 	title: string;
 	content: string;
-	onContentChange?: (content: string) => void;
-	isEditable?: boolean;
-	isGenerating?: boolean;
 	className?: string;
+	documentType?: 'cover-letter' | 'resume';
 	fontSize?: number;
 	fontSizeInput?: ReactNode;
-	documentType?: 'cover-letter' | 'resume';
+	isEditable?: boolean;
+	isGenerating?: boolean;
+	onContentChange?: (content: string) => void;
 };
 
 export const DocumentContent = memo(function DocumentContent({
 	title,
 	content,
-	onContentChange,
-	isEditable = false,
-	isGenerating = false,
 	className,
+	documentType,
 	fontSize,
 	fontSizeInput,
-	documentType,
+	isEditable = false,
+	isGenerating = false,
+	onContentChange,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
 	const isCoverLetter = documentType === 'cover-letter';
@@ -78,7 +78,7 @@ export const DocumentContent = memo(function DocumentContent({
 				) : null}
 			</div>
 			{isGenerating ? (
-				<div className='DocumentContentGenerating print-content print-document border-light-gray force-white-bg rounded-lg border p-4'>
+				<div className='DocumentContentGenerating print-content print-document border-light-gray force-white-bg border p-4'>
 					<div className='DocumentContentGeneratingText text-light-gray min-h-64 w-full p-4 font-mono sm:min-h-96 sm:text-base'>
 						{getGeneratingText(title)}
 					</div>
@@ -86,30 +86,30 @@ export const DocumentContent = memo(function DocumentContent({
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
 					<TipTapEditor
-						className='print-document min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 						componentName='DocumentContentTipTapEditor'
+						className='print-document min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 						value={content}
 						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 							'{title}',
 							title.toLowerCase(),
 						)}
+						contentPadding='sm'
 						onChange={onContentChange || (() => {})}
 						id={inputId}
-						contentPadding='sm'
 					/>
 					{isResume || isCoverLetter ? (
 						<div className='bg-gray rounded-lg p-4'>
 							<DocumentPreview
+								className='rounded-lg'
 								content={content}
+								documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 								candidateDetails={candidateDetails}
 								fontSize={fontSize || 11}
-								className='rounded-lg'
-								documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 							/>
 						</div>
 					) : (
 						<div
-							className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
+							className={`print-content print-document border-light-gray force-white-bg border p-4`}
 						>
 							{renderPageHeader()}
 							<div className='p-0'>
@@ -121,16 +121,16 @@ export const DocumentContent = memo(function DocumentContent({
 			) : isResume || isCoverLetter ? (
 				<div className='bg-gray rounded-lg p-4'>
 					<DocumentPreview
+						className='rounded-lg'
 						content={content}
+						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 						candidateDetails={candidateDetails}
 						fontSize={fontSize || 11}
-						className='rounded-lg'
-						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 					/>
 				</div>
 			) : (
 				<div
-					className={`print-content print-document border-light-gray force-white-bg rounded-lg border p-4`}
+					className={`print-content print-document border-light-gray force-white-bg border p-4`}
 				>
 					{renderPageHeader()}
 					<div className='p-0'>

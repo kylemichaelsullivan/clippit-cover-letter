@@ -1,7 +1,11 @@
 'use client';
 
 import { memo, useState, useEffect } from 'react';
-import { generatePageHeaderHTML, generatePageFooterHTML, formatContentForPDF } from '@/lib/utils';
+import {
+	generatePageHeaderHTML,
+	generatePageFooterHTML,
+	formatContentForPDF,
+} from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
 import { extractTipTapContent } from '@/lib/utils/tiptap';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
@@ -10,24 +14,27 @@ import type { CandidateDetails } from '@/types';
 type DocumentPreviewProps = {
 	content: string;
 	candidateDetails: CandidateDetails;
-	fontSize?: number;
-	className?: string;
 	documentType?: 'cover-letter' | 'resume';
+	className?: string;
+	fontSize?: number;
 };
 
 export const DocumentPreview = memo(function DocumentPreview({
 	content,
 	candidateDetails,
-	fontSize = 11,
-	className = '',
 	documentType = 'cover-letter',
+	className = '',
+	fontSize = 11,
 }: DocumentPreviewProps) {
 	const [htmlContent, setHtmlContent] = useState<string>('');
 
 	useEffect(() => {
 		const generateContent = async () => {
 			const pageHeader = await generatePageHeaderHTML(candidateDetails);
-			const pageFooter = await generatePageFooterHTML(candidateDetails, documentType === 'cover-letter');
+			const pageFooter = await generatePageFooterHTML(
+				candidateDetails,
+				documentType === 'cover-letter',
+			);
 			const extractedContent = extractTipTapContent(content);
 			const formattedContent = formatContentForPDF(extractedContent);
 			const contentWithSignature = replaceSignaturePlaceholders(
@@ -67,7 +74,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 							
 							body { 
 								box-sizing: border-box;
-								background-color: #f3f4f6;
+								background-color: #ffffff;
 								font-family: Arial, sans-serif; 
 								min-height: 11in;
 								width: 8.5in;
@@ -83,7 +90,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 						</style>
 					</head>
 					<body>
-						<div style="position: relative; background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto;">
+						<div style="position: relative; background-color: #ffffff; width: 8.5in; min-height: 11in; margin: 0 auto;">
 							${pageHeader}
 							<div class="print-content print-document-content">
 								${contentWithSignature}
@@ -104,8 +111,8 @@ export const DocumentPreview = memo(function DocumentPreview({
 		<iframe
 			srcDoc={htmlContent}
 			className={`DocumentPreview w-full rounded-lg border-0 ${className}`}
-			style={{ height: '11in', minHeight: '600px' }}
 			title='Document Preview'
+			style={{ height: '11in', minHeight: '600px' }}
 		/>
 	);
 });
