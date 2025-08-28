@@ -4,3 +4,6 @@ ignoredBuiltDependencies:
   - rustywind
   - sharp
   - unrs-resolver
+
+onlyBuiltDependencies:
+  - puppeteer
