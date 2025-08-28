@@ -54,9 +54,9 @@ export const WelcomeForm = memo(function WelcomeForm() {
 										• Template-based document generation with
 										&#123;&#123;mustache&#125;&#125; placeholders
 									</li>
-									<li>• Professional resume and cover letter templates</li>
+									<li>• Professional cover letter and resume templates</li>
 									<li>• Skills organization and management</li>
-									<li>• PDF export functionality</li>
+									<li>• Export to PDF, Markdown and TXT</li>
 									<li>• Modern, responsive interface</li>
 								</ul>
 							</div>
@@ -66,7 +66,7 @@ export const WelcomeForm = memo(function WelcomeForm() {
 							<div className='flex flex-col gap-2'>
 								<h3 className='font-medium text-green-800'>🔮 Coming Soon</h3>
 								<ul className='space-y-1 text-green-700'>
-									<li>• Job fit estimate</li>
+									<li>• Job fit score estimate</li>
 									<li>• Intelligent skill selection</li>
 									<li>• Cover letter generation</li>
 									<li>• Resume tailoring</li>
