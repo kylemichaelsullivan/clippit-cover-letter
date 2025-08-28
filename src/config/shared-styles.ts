@@ -29,8 +29,8 @@ const SHARED_FONT_SIZES = {
 
 const SHARED_HEADINGS = `
 	color: var(--color-black);
-	line-height: 1.2;
-	margin: 0;
+	line-height: 1.1;
+	margin: 0.5rem 0 0.25rem 0;
 `;
 
 const SHARED_HEADING_VARIANTS = `
@@ -47,19 +47,20 @@ const SHARED_LINKS_HOVER = `
 `;
 
 const SHARED_LISTS = `
-	line-height: 1.2;
-	margin: 0;
+	line-height: 1.1;
+	margin: 0.25rem 0;
 `;
 
 const SHARED_LIST_ITEMS = `
-	line-height: 1.2;
-	padding: 0.5rem 0 0;
+	line-height: 1.1;
+	padding: 0.125rem 0 0;
 `;
 
 const SHARED_PAGE_HEADER_CONTACT = `
 	color: var(--color-gray);
 	font-size: 0.875rem;
 	margin: 0;
+	line-height: 1.0;
 `;
 
 const SHARED_PAGE_HEADER_CORE = `
@@ -71,6 +72,7 @@ const SHARED_PAGE_HEADER_NAME = `
 	font-weight: bold;
 	margin: 0;
 	text-transform: uppercase;
+	line-height: 1.0;
 `;
 
 const SHARED_PAGE_FOOTER = `
@@ -92,9 +94,9 @@ const SHARED_PAGE_LOGO = `
 const SHARED_PAGE_LOGO_IMAGE = `
 	object-fit: contain;
 	width: auto;
-	max-width: 1.5rem;
+	max-width: 2.25rem;
 	height: auto;
-	max-height: 1.5rem;
+	max-height: 2.25rem;
 `;
 
 const SHARED_PAGE_QR_CODE = `
@@ -107,8 +109,8 @@ const SHARED_PAGE_QR_CODE = `
 `;
 
 const SHARED_PARAGRAPH = `
-	line-height: 1.2;
-	margin: 0;
+	line-height: 1.1;
+	margin: 0.25rem 0;
 `;
 
 const SHARED_PROSE_CORE = `
@@ -143,9 +145,14 @@ const PRINT_DOCUMENT_HEADINGS = `
 
 const PRINT_DOCUMENT_H1_BORDER = `
 	border-bottom: 1px solid var(--color-gray);
+	padding-bottom: 0.25rem;
+	font-variant: small-caps;
 `;
 
 const PRINT_DOCUMENT_H2_BREAK = `
+	border-bottom: 1px solid var(--color-gray);
+	padding-bottom: 0.25rem;
+	font-variant: small-caps;
 	break-after: avoid;
 	orphans: 2;
 	page-break-after: avoid;
@@ -188,10 +195,12 @@ const PRINT_DOCUMENT_HR = `
 
 const PRINT_DOCUMENT_PAGE_HEADER_NAME = `
 	color: var(--color-black);
+	line-height: 1.0;
 `;
 
 const PRINT_DOCUMENT_PAGE_HEADER_CONTACT = `
 	color: var(--color-gray);
+	line-height: 1.0;
 `;
 
 // TipTap editor page break styles
@@ -225,7 +234,7 @@ const TIPTAP_PAGE_BREAK_LABEL_PRINT = `
 
 const SIGNATURE_IMAGE = `
 	width: auto;
-	max-height: 1.5em;
+	max-height: 2.5em;
 `;
 
 function generateProseStyles(className: string): string {
@@ -253,27 +262,33 @@ ${SHARED_HEADING_VARIANTS}
 }
 
 ${className} h1 {
+	border-bottom: 1px solid var(--color-gray);
 	font-size: ${SHARED_FONT_SIZES.h1};
 	font-weight: 700;
+	padding-bottom: 0.25rem;
+	margin-bottom: 0.5rem;
 }
 
 ${className} h2 {
 	border-bottom: 1px solid var(--color-gray);
 	font-size: ${SHARED_FONT_SIZES.h2};
 	font-weight: 700;
+	padding-bottom: 0.25rem;
+	margin-bottom: 0.5rem;
 }
 
 ${className} * + h2 {
-	padding-top: 1rem;
+	padding-top: 0.5rem;
 }
 
 ${className} h3 {
 	font-size: ${SHARED_FONT_SIZES.h3};
 	font-weight: 600;
+	margin-bottom: 0.25rem;
 }
 
 ${className} * + h3 {
-	padding-top: 0.5rem;
+	padding-top: 0.25rem;
 }
 
 ${className} h4 {

@@ -1,11 +1,10 @@
 'use client';
 
 import { memo, useState, useEffect } from 'react';
-import { generatePageHeaderHTML, formatContentForPDF } from '@/lib/utils';
+import { generatePageHeaderHTML, generatePageFooterHTML, formatContentForPDF } from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
 import { extractTipTapContent } from '@/lib/utils/tiptap';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
-import { generatePageFooterHTML } from '@/lib/utils/pageHeader';
 import type { CandidateDetails } from '@/types';
 
 type DocumentPreviewProps = {
@@ -27,9 +26,8 @@ export const DocumentPreview = memo(function DocumentPreview({
 
 	useEffect(() => {
 		const generateContent = async () => {
-			const isCoverLetter = documentType === 'cover-letter';
 			const pageHeader = await generatePageHeaderHTML(candidateDetails);
-			const pageFooter = await generatePageFooterHTML(candidateDetails, isCoverLetter);
+			const pageFooter = await generatePageFooterHTML(candidateDetails, documentType === 'cover-letter');
 			const extractedContent = extractTipTapContent(content);
 			const formattedContent = formatContentForPDF(extractedContent);
 			const contentWithSignature = replaceSignaturePlaceholders(
@@ -95,7 +93,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 					</body>
 				</html>
 			`;
-			
+
 			setHtmlContent(html);
 		};
 
