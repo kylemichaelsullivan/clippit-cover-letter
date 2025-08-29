@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState, type ReactNode } from 'react';
+import { memo, useState, useRef, useCallback, type ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { DocumentPreview } from '@/components/ui/display';
@@ -43,6 +43,29 @@ export const DocumentContent = memo(function DocumentContent({
 	const isResume = documentType === 'resume';
 	const inputId = `document-content-${title.toLowerCase().replace(/\s+/g, '-')}`;
 
+	const lastContentRef = useRef<string>(content);
+
+	const handleContentChange = useCallback(
+		(newContent: string) => {
+			if (onContentChange) {
+				const cleanedContent = newContent.replace(
+					/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
+					'</ul>',
+				);
+
+				if (cleanedContent !== lastContentRef.current) {
+					lastContentRef.current = cleanedContent;
+					onContentChange(cleanedContent);
+				}
+			}
+		},
+		[onContentChange],
+	);
+
+	if (content !== lastContentRef.current) {
+		lastContentRef.current = content;
+	}
+
 	const getGeneratingText = (title: string) => {
 		return `Generating ${title}…`;
 	};
@@ -70,17 +93,6 @@ export const DocumentContent = memo(function DocumentContent({
 
 	const handleToggleView = () => {
 		setIsTipTapView(!isTipTapView);
-	};
-
-	const handleContentChange = (newContent: string) => {
-		if (onContentChange) {
-			const cleanedContent = newContent.replace(
-				/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
-				'</ul>',
-			);
-
-			onContentChange(cleanedContent);
-		}
 	};
 
 	return (
