@@ -1,19 +1,22 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { cleanPlaintext, htmlToPlaintext } from '@/lib/utils';
+import { cleanPlaintext, htmlToPlaintextWithSignature } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
+import type { CandidateDetails } from '@/types';
 
 type CopyButtonProps = {
 	text: string;
 	documentType?: string;
+	candidateDetails?: CandidateDetails;
 	disabled?: boolean;
 };
 
 export function CopyButton({
 	text,
 	documentType,
+	candidateDetails,
 	disabled = false,
 }: CopyButtonProps) {
 	const isClient = useIsClient();
@@ -23,7 +26,9 @@ export function CopyButton({
 	const handleCopy = async () => {
 		if (isClient && navigator.clipboard && hasContent) {
 			try {
-				const plaintextContent = cleanPlaintext(htmlToPlaintext(text));
+				const plaintextContent = cleanPlaintext(
+					htmlToPlaintextWithSignature(text, candidateDetails),
+				);
 				await navigator.clipboard.writeText(plaintextContent);
 				const message = documentType
 					? `${documentType} Copied to Clipboard`

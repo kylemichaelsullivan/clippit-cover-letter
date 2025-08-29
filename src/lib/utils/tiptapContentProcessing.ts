@@ -11,7 +11,6 @@ export function processTipTapContent(
 ): string {
 	if (!content) return content;
 
-	// Create a temporary version with {{My Signature}} replaced by a unique marker
 	const tempContent = content.replace(
 		/\{\{My Signature\}\}/g,
 		'___SIGNATURE_PLACEHOLDER___',

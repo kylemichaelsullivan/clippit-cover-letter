@@ -5,7 +5,7 @@ import { downloadMD } from '@/lib/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useIsClient } from '@/lib/hooks';
-import type { ButtonColor } from '@/types';
+import type { ButtonColor, CandidateDetails } from '@/types';
 
 type DownloadButtonMDProps = {
 	content: string;
@@ -17,6 +17,7 @@ type DownloadButtonMDProps = {
 	showIcon?: boolean;
 	disabled?: boolean;
 	tabIndex?: number;
+	candidateDetails?: CandidateDetails;
 };
 
 export function DownloadButtonMD({
@@ -29,6 +30,7 @@ export function DownloadButtonMD({
 	showIcon = false,
 	disabled = false,
 	tabIndex,
+	candidateDetails,
 }: DownloadButtonMDProps) {
 	const isClient = useIsClient();
 	const hasContent = content && content.trim() !== '';
@@ -36,7 +38,7 @@ export function DownloadButtonMD({
 
 	const handleDownloadMD = () => {
 		if (isClient && hasContent) {
-			downloadMD(content, filename, documentType);
+			downloadMD(content, filename, documentType, candidateDetails);
 		}
 	};
 

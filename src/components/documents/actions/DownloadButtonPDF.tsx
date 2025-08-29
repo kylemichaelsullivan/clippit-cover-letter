@@ -37,6 +37,11 @@ export function DownloadButtonPDF({
 	const handleDownloadPDF = async () => {
 		if (isClient && hasContent && !isGenerating) {
 			setIsGenerating(true);
+			const displayDocumentType = documentType || 'PDF';
+			const loadingToast = showToast.loading(
+				`Generating ${displayDocumentType} PDF…`,
+			);
+
 			try {
 				const contentWithSkills = formatContentForPDFWithSkills(
 					content,
@@ -45,11 +50,6 @@ export function DownloadButtonPDF({
 					includeSkillGroupNames,
 				);
 				const customFontSize = fontSize || 11;
-
-				const displayDocumentType = documentType || 'PDF';
-				const loadingToast = showToast.loading(
-					`Generating ${displayDocumentType} PDF…`,
-				);
 
 				const pdfBlob = await generatePDF({
 					content: contentWithSkills,
@@ -62,6 +62,7 @@ export function DownloadButtonPDF({
 				downloadPDF(pdfBlob, filename, documentType);
 			} catch (error) {
 				console.error('PDF generation error:', error);
+				showToast.dismiss(loadingToast);
 				showToast.error('Failed to generate PDF. Please try again.');
 			} finally {
 				setIsGenerating(false);

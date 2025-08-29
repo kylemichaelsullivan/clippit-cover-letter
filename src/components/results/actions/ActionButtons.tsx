@@ -31,7 +31,12 @@ export function ActionButtons({
 }: ActionButtonsProps) {
 	return (
 		<div className={clsx('ActionButtons flex flex-wrap gap-2 pt-2', className)}>
-			<CopyButton text={text} disabled={disabled} documentType={documentType} />
+			<CopyButton
+				text={text}
+				disabled={disabled}
+				documentType={documentType}
+				candidateDetails={candidateDetails}
+			/>
 
 			<DownloadButtonPDF
 				content={text}
@@ -50,6 +55,7 @@ export function ActionButtons({
 				filename={filename}
 				documentType={documentType}
 				disabled={disabled}
+				candidateDetails={candidateDetails}
 			/>
 
 			<DownloadButtonTXT
@@ -58,6 +64,7 @@ export function ActionButtons({
 				filename={filename}
 				documentType={documentType}
 				disabled={disabled}
+				candidateDetails={candidateDetails}
 			/>
 		</div>
 	);

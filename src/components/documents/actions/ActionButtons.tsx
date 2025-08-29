@@ -36,7 +36,12 @@ export function ActionButtons({
 				className,
 			)}
 		>
-			<CopyButton text={text} documentType={documentType} disabled={disabled} />
+			<CopyButton
+				text={text}
+				documentType={documentType}
+				candidateDetails={candidateDetails}
+				disabled={disabled}
+			/>
 
 			<DownloadButtonPDF
 				content={text}
@@ -54,6 +59,7 @@ export function ActionButtons({
 				title='MD'
 				filename={filename}
 				documentType={documentType}
+				candidateDetails={candidateDetails}
 				disabled={disabled}
 			/>
 
@@ -61,6 +67,7 @@ export function ActionButtons({
 				content={text}
 				filename={filename}
 				documentType={documentType}
+				candidateDetails={candidateDetails}
 				disabled={disabled}
 				aria-label='Download TXT'
 				title='Download TXT'

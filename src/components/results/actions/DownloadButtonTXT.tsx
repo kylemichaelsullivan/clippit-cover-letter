@@ -4,11 +4,14 @@ import { Button } from '@/components/ui/buttons';
 import { downloadTXT } from '@/lib/utils';
 import { useIsClient } from '@/lib/hooks';
 
+import type { CandidateDetails } from '@/types';
+
 type DownloadButtonTXTProps = {
 	content: string;
 	title: string;
 	filename: string;
 	documentType?: string;
+	candidateDetails?: CandidateDetails;
 	disabled?: boolean;
 };
 
@@ -17,6 +20,7 @@ export function DownloadButtonTXT({
 	title,
 	filename,
 	documentType,
+	candidateDetails,
 	disabled = false,
 }: DownloadButtonTXTProps) {
 	const isClient = useIsClient();
@@ -25,7 +29,7 @@ export function DownloadButtonTXT({
 
 	const handleDownloadTXT = () => {
 		if (isClient && hasContent) {
-			downloadTXT(content, filename, documentType);
+			downloadTXT(content, filename, documentType, candidateDetails);
 		}
 	};
 
