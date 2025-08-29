@@ -5,6 +5,7 @@ import { memo } from 'react';
 import { DocumentSelectionControls } from '@/components/results/display';
 import { TabTitle } from '@/components/ui';
 import { EmptyState } from '@/components/ui/feedback';
+import { DocumentRenderer } from '@/components/shared';
 import {
 	useAppStore,
 	useCandidateStore,
@@ -72,6 +73,12 @@ export const PreviewContent = memo(function PreviewContent() {
 								skills={skills}
 								includeResume={includeResume}
 								resumeDetails={resumeDetails}
+							/>
+
+							<DocumentRenderer
+								showActions={false}
+								showFontSizeControl={false}
+								emptyStateVariant='no-data'
 							/>
 						</div>
 					)}

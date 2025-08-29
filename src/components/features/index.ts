@@ -1,9 +1,8 @@
 export { CoverLetterSection } from './CoverLetterSection';
-export { DocumentGenerator } from './document-generation/DocumentGenerator';
+export { DocumentGenerator } from './DocumentGenerator';
 export { DocumentSection } from './DocumentSection';
 export { GenerateButton } from './GenerateButton';
 export { GenerationConfirmations } from './GenerationConfirmations';
 export { PreviewContent } from './PreviewContent';
 export { ResumeSection } from './ResumeSection';
-export { ResultsGenerator } from './document-generation/ResultsGenerator';
 export { SkillsSummarySection } from './SkillsSummarySection';

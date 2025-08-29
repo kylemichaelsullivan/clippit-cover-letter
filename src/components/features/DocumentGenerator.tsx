@@ -132,16 +132,16 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 		<div className='DocumentGenerator'>
 			<div className='GenerateButton w-full'>
 				<Button
+					componentName='GenerateButton'
 					color='primary'
 					size='lg'
 					onClick={handleGenerateDocuments}
-					componentName='GenerateButton'
 				>
 					{isGeneratingCoverLetter || isGeneratingResume ? (
 						<FontAwesomeIcon
 							icon={faRefresh}
-							aria-hidden='true'
 							className='animate-spin'
+							aria-hidden='true'
 						/>
 					) : (
 						'Generate Documents'

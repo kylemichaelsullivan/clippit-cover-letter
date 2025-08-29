@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 import { Form } from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
-import { DownloadButtonMD } from '@/components/documents/actions';
+import { DownloadButtonMD } from '@/components/results/actions';
 import { SkillsSection } from './';
 import { usePhaseStore, useSkillsStore } from '@/lib/stores';
 import { useSkillsForm } from '@/lib/hooks';

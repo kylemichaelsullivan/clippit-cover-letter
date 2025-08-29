@@ -12,13 +12,19 @@ import {
 	useCandidateStore,
 } from '@/lib/stores';
 
-type ResultsStateManagerProps = {
+type DocumentRendererProps = {
 	className?: string;
+	showActions?: boolean;
+	showFontSizeControl?: boolean;
+	emptyStateVariant?: 'no-results' | 'no-data';
 };
 
-export const ResultsStateManager = memo(function ResultsStateManager({
+export const DocumentRenderer = memo(function DocumentRenderer({
 	className,
-}: ResultsStateManagerProps) {
+	showActions = true,
+	showFontSizeControl = true,
+	emptyStateVariant = 'no-results',
+}: DocumentRendererProps) {
 	const {
 		includeCoverLetter,
 		includeResume,
@@ -34,7 +40,7 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 		(includeResume && generatedResume);
 
 	if (!hasSelectedDocuments) {
-		return <EmptyState variant='no-results' />;
+		return <EmptyState variant={emptyStateVariant} />;
 	}
 
 	if (hasSelectedDocuments && !hasGeneratedContent) {
@@ -42,24 +48,25 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 	}
 
 	return (
-		<div
-			className={`ResultsStateManager flex flex-col gap-6 ${className || ''}`}
-		>
+		<div className={`DocumentRenderer flex flex-col gap-6 ${className || ''}`}>
 			<div
 				className={includeCoverLetter && generatedCoverLetter ? '' : 'hidden'}
 			>
 				<div className='flex flex-col gap-4'>
 					<DocumentContent
 						title='Cover Letter'
+						documentType='cover-letter'
 						content={generatedCoverLetter}
 						isEditable={false}
 					/>
-					<ActionButtons
-						text={generatedCoverLetter}
-						documentType='Cover Letter'
-						filename='cover-letter'
-						candidateDetails={candidateDetails}
-					/>
+					{showActions && (
+						<ActionButtons
+							text={generatedCoverLetter}
+							filename='cover-letter'
+							documentType='Cover Letter'
+							candidateDetails={candidateDetails}
+						/>
+					)}
 				</div>
 			</div>
 
@@ -67,23 +74,28 @@ export const ResultsStateManager = memo(function ResultsStateManager({
 				<div className='flex flex-col gap-4'>
 					<DocumentContent
 						title='Resume'
+						documentType='resume'
 						content={generatedResume}
 						fontSize={resumeFontSize}
 						fontSizeInput={
-							<FontSizeInput
-								value={resumeFontSize}
-								onChange={setResumeFontSize}
-							/>
+							showFontSizeControl ? (
+								<FontSizeInput
+									value={resumeFontSize}
+									onChange={setResumeFontSize}
+								/>
+							) : undefined
 						}
 						isEditable={false}
 					/>
-					<ActionButtons
-						text={generatedResume}
-						filename='resume'
-						documentType='Resume'
-						candidateDetails={candidateDetails}
-						fontSize={resumeFontSize}
-					/>
+					{showActions && (
+						<ActionButtons
+							filename='resume'
+							documentType='Resume'
+							candidateDetails={candidateDetails}
+							text={generatedResume}
+							fontSize={resumeFontSize}
+						/>
+					)}
 				</div>
 			</div>
 		</div>
