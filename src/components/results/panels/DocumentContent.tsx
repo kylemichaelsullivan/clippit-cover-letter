@@ -20,6 +20,7 @@ type DocumentContentProps = {
 	fontSizeInput?: ReactNode;
 	isEditable?: boolean;
 	isGenerating?: boolean;
+	templateContent?: string; // Raw template content with placeholders for editing
 	onContentChange?: (content: string) => void;
 };
 
@@ -33,6 +34,7 @@ export const DocumentContent = memo(function DocumentContent({
 	fontSizeInput,
 	isEditable = false,
 	isGenerating = false,
+	templateContent,
 	onContentChange,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
@@ -119,7 +121,7 @@ export const DocumentContent = memo(function DocumentContent({
 								<TipTapEditor
 									componentName='DocumentContentTipTapEditor'
 									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-									value={content}
+									value={templateContent || content}
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
 										title.toLowerCase(),
@@ -145,7 +147,7 @@ export const DocumentContent = memo(function DocumentContent({
 							<TipTapEditor
 								componentName='DocumentContentTipTapEditor'
 								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-								value={content}
+								value={templateContent || content}
 								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 									'{title}',
 									title.toLowerCase(),

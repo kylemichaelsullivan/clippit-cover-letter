@@ -13,26 +13,28 @@ type DocumentSectionProps = {
 	fallbackMessage: ReactNode;
 	isEditable: boolean;
 	isGenerating: boolean;
+	documentType?: 'cover-letter' | 'resume';
+	headerElement?: ReactNode;
+	templateContent?: string; // Raw template content with placeholders for editing
+	disabled?: boolean;
 	onGenerate: () => void;
 	onContentChange?: (content: string) => void;
-	headerElement?: ReactNode;
-	disabled?: boolean;
-	documentType?: 'cover-letter' | 'resume';
 };
 
 export const DocumentSection = function DocumentSection({
 	title,
-	content,
-	isEditable,
-	onContentChange,
-	isGenerating,
-	onGenerate,
 	componentName,
+	content,
 	generateTitle,
 	fallbackMessage,
-	disabled = false,
-	headerElement,
+	isEditable,
+	isGenerating,
 	documentType,
+	headerElement,
+	templateContent,
+	disabled = false,
+	onGenerate,
+	onContentChange,
 }: DocumentSectionProps) {
 	const hasContent = !!content && content.trim() !== '';
 
@@ -42,20 +44,21 @@ export const DocumentSection = function DocumentSection({
 				<>
 					<DocumentContent
 						title={title}
+						documentType={documentType}
 						headerElement={headerElement}
 						content={content}
+						templateContent={templateContent}
 						isEditable={isEditable}
 						isGenerating={isGenerating}
 						onContentChange={onContentChange}
-						documentType={documentType}
 					/>
 
 					<GenerateButton
 						componentName={componentName}
 						title={generateTitle}
 						isGenerating={isGenerating}
-						onClick={onGenerate}
 						disabled={disabled}
+						onClick={onGenerate}
 					/>
 				</>
 			) : (
@@ -65,8 +68,8 @@ export const DocumentSection = function DocumentSection({
 						componentName={componentName}
 						title={generateTitle}
 						isGenerating={isGenerating}
-						onClick={onGenerate}
 						disabled={disabled}
+						onClick={onGenerate}
 					/>
 				</div>
 			)}

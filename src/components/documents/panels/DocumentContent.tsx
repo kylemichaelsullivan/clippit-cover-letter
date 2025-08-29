@@ -19,6 +19,7 @@ type DocumentContentProps = {
 	isEditable?: boolean;
 	isGenerating?: boolean;
 	onContentChange?: (content: string) => void;
+	templateContent?: string; // Raw template content with placeholders for editing
 };
 
 export const DocumentContent = memo(function DocumentContent({
@@ -31,6 +32,7 @@ export const DocumentContent = memo(function DocumentContent({
 	isEditable = false,
 	isGenerating = false,
 	onContentChange,
+	templateContent,
 }: DocumentContentProps) {
 	const { candidateDetails } = useCandidateStore();
 	const isCoverLetter = documentType === 'cover-letter';
@@ -88,7 +90,7 @@ export const DocumentContent = memo(function DocumentContent({
 					<TipTapEditor
 						componentName='DocumentContentTipTapEditor'
 						className='print-document min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-						value={content}
+						value={templateContent || content}
 						placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 							'{title}',
 							title.toLowerCase(),
@@ -101,9 +103,9 @@ export const DocumentContent = memo(function DocumentContent({
 						<div className='bg-gray rounded-lg p-4'>
 							<DocumentPreview
 								className='rounded-lg'
-								content={content}
 								documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 								candidateDetails={candidateDetails}
+								content={content}
 								fontSize={fontSize || 11}
 							/>
 						</div>
@@ -122,9 +124,9 @@ export const DocumentContent = memo(function DocumentContent({
 				<div className='bg-gray rounded-lg p-4'>
 					<DocumentPreview
 						className='rounded-lg'
-						content={content}
 						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 						candidateDetails={candidateDetails}
+						content={content}
 						fontSize={fontSize || 11}
 					/>
 				</div>
