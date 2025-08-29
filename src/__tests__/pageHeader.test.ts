@@ -1,9 +1,9 @@
+import { describe, it, expect } from 'vitest';
 import {
 	generatePageHeaderHTML,
 	generatePageFooterHTML,
 } from '@/lib/utils/pageHeader';
 import type { CandidateDetails } from '@/types';
-import { describe, it, expect } from 'vitest';
 
 describe('generatePageHeaderHTML', () => {
 	it('should generate header HTML with all contact information', async () => {
