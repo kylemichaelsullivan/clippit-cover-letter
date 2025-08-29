@@ -121,7 +121,7 @@ export const DocumentContent = memo(function DocumentContent({
 								<TipTapEditor
 									componentName='DocumentContentTipTapEditor'
 									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-									value={templateContent || content}
+									value={content || templateContent || ''}
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
 										title.toLowerCase(),
@@ -147,7 +147,7 @@ export const DocumentContent = memo(function DocumentContent({
 							<TipTapEditor
 								componentName='DocumentContentTipTapEditor'
 								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-								value={templateContent || content}
+								value={content || templateContent || ''}
 								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 									'{title}',
 									title.toLowerCase(),

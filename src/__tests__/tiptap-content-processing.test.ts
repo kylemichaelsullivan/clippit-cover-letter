@@ -173,4 +173,32 @@ Sincerely,
 		// Should replace with fallback values but keep signature placeholder
 		expect(processed).toBe('Job Company - Job Title - {{My Signature}}');
 	});
+
+	it('should prioritize existing content over template content for TipTap editor', () => {
+		// Simulate the logic used in DocumentContent.tsx
+		const existingContent =
+			'<p>Dear Hiring Manager,</p><p>This is my manually edited content.</p><p>{{My Signature}}</p>';
+		const templateContent =
+			'<p>Dear Jane Smith,</p><p>This is the processed template content.</p><p>{{My Signature}}</p>';
+
+		// The TipTap editor should use existing content when available
+		const tipTapValue = existingContent || templateContent || '';
+
+		expect(tipTapValue).toBe(existingContent);
+		expect(tipTapValue).toContain('manually edited content');
+		expect(tipTapValue).not.toContain('processed template content');
+	});
+
+	it('should fall back to template content when no existing content is available', () => {
+		// Simulate the logic used in DocumentContent.tsx
+		const existingContent = '';
+		const templateContent =
+			'<p>Dear Jane Smith,</p><p>This is the processed template content.</p><p>{{My Signature}}</p>';
+
+		// The TipTap editor should use template content when no existing content
+		const tipTapValue = existingContent || templateContent || '';
+
+		expect(tipTapValue).toBe(templateContent);
+		expect(tipTapValue).toContain('processed template content');
+	});
 });
