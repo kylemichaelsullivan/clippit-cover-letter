@@ -1,7 +1,9 @@
 import { CONSTANTS } from '@/config';
 import { cleanMarkdown, htmlToMarkdown } from './htmlToMarkdown';
 import { cleanPlaintext, htmlToPlaintext } from './htmlToPlaintext';
+import { replaceSignaturePlaceholders } from './signatureReplacement';
 import { showToast } from '../toast';
+import type { CandidateDetails } from '@/types';
 
 function downloadFile(
 	blob: Blob,
@@ -36,8 +38,12 @@ export function downloadMD(
 	content: string,
 	filename: string,
 	documentType?: string,
+	candidateDetails?: CandidateDetails,
 ): void {
-	const markdownContent = cleanMarkdown(htmlToMarkdown(content));
+	const contentWithSignature = candidateDetails
+		? replaceSignaturePlaceholders(content, candidateDetails, true)
+		: content;
+	const markdownContent = cleanMarkdown(htmlToMarkdown(contentWithSignature));
 	const blob = new Blob([markdownContent], { type: 'text/markdown' });
 	const successMessage = documentType
 		? `${documentType} MD Downloaded Successfully`
@@ -66,8 +72,14 @@ export function downloadTXT(
 	content: string,
 	filename: string,
 	documentType?: string,
+	candidateDetails?: CandidateDetails,
 ): void {
-	const plaintextContent = cleanPlaintext(htmlToPlaintext(content));
+	const contentWithSignature = candidateDetails
+		? replaceSignaturePlaceholders(content, candidateDetails, true)
+		: content;
+	const plaintextContent = cleanPlaintext(
+		htmlToPlaintext(contentWithSignature),
+	);
 	const blob = new Blob([plaintextContent], { type: 'text/plain' });
 	const successMessage = documentType
 		? `${documentType} TXT Downloaded Successfully`

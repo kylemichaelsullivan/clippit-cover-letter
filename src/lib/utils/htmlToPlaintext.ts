@@ -1,3 +1,6 @@
+import { replaceSignaturePlaceholders } from './signatureReplacement';
+import type { CandidateDetails } from '@/types';
+
 /**
  * Converts HTML content to plaintext format
  */
@@ -86,4 +89,21 @@ export function cleanPlaintext(plaintext: string): string {
 			// Remove leading/trailing whitespace
 			.trim()
 	);
+}
+
+/**
+ * Converts HTML content to plaintext format with signature replacement
+ */
+export function htmlToPlaintextWithSignature(
+	html: string,
+	candidateDetails?: CandidateDetails,
+): string {
+	if (!html) return '';
+
+	// Always replace signature placeholders with candidate name for Copy/TXT output
+	const contentWithSignature = candidateDetails
+		? replaceSignaturePlaceholders(html, candidateDetails, true)
+		: html;
+
+	return htmlToPlaintext(contentWithSignature);
 }

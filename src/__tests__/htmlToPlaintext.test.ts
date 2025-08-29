@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { htmlToPlaintext, cleanPlaintext } from '../lib/utils/htmlToPlaintext';
 
 describe('htmlToPlaintext', () => {
