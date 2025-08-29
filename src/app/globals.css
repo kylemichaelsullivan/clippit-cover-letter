@@ -845,23 +845,6 @@ input[data-lpignore='false'] {
 	pointer-events: none;
 }
 
-.signature-placeholder {
-	display: inline-block;
-	background-color: var(--color-light-gray);
-	border: 1px dashed var(--color-gray);
-	border-radius: 0.25rem;
-	padding: 0.25rem 0.5rem;
-	font-size: 0.875rem;
-	color: var(--color-gray);
-	font-style: italic;
-	user-select: none;
-	cursor: default;
-}
-
-.signature-placeholder::before {
-	content: '{{My Signature}}';
-}
-
 .tiptap.ProseMirror .signature-image {
 	width: auto;
 	max-height: 3em;
