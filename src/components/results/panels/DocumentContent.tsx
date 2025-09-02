@@ -4,19 +4,20 @@ import { memo, useState, useRef, useCallback, type ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { DocumentPreview } from '@/components/ui/display';
+import { renderHtmlContent } from '@/lib/utils';
 import { TipTapEditor } from '@/components/ui/input';
 import { ViewToggle } from '@/components/ui/buttons';
 import { PLACEHOLDERS } from '@/config';
-import { renderHtmlContent } from '@/lib/utils';
 import { useCandidateStore } from '@/lib/stores';
+import type { DocumentType, FontSize } from '@/types';
 
 type DocumentContentProps = {
 	title: string;
 	content: string;
-	documentType?: 'cover-letter' | 'resume';
+	documentType?: DocumentType;
 	className?: string;
 	headerElement?: ReactNode;
-	fontSize?: number;
+	fontSize?: FontSize;
 	fontSizeInput?: ReactNode;
 	isEditable?: boolean;
 	isGenerating?: boolean;
@@ -97,10 +98,10 @@ export const DocumentContent = memo(function DocumentContent({
 
 	return (
 		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
-			<div className='xs:flex-row flex flex-col items-center justify-between'>
+			<div className='flex items-center justify-between'>
 				<label
 					htmlFor={inputId}
-					className='DocumentContentTitle flex items-center justify-between text-lg font-semibold text-black'
+					className='DocumentContentTitle text-lg font-semibold text-black'
 				>
 					<span>{title}</span>
 				</label>
@@ -133,14 +134,14 @@ export const DocumentContent = memo(function DocumentContent({
 								<TipTapEditor
 									componentName='DocumentContentTipTapEditor'
 									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
-									value={content || templateContent || ''}
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
 										title.toLowerCase(),
 									)}
+									value={content || templateContent || ''}
 									contentPadding='sm'
-									id={inputId}
 									onChange={handleContentChange}
+									id={inputId}
 								/>
 							</div>
 						) : (
@@ -150,7 +151,7 @@ export const DocumentContent = memo(function DocumentContent({
 									documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 									content={content}
 									candidateDetails={candidateDetails}
-									fontSize={fontSize || 11}
+									fontSize={fontSize || [11, 'pt']}
 								/>
 							</div>
 						)
@@ -165,8 +166,8 @@ export const DocumentContent = memo(function DocumentContent({
 									title.toLowerCase(),
 								)}
 								contentPadding='sm'
-								id={inputId}
 								onChange={handleContentChange}
+								id={inputId}
 							/>
 						</div>
 					)}
@@ -178,7 +179,7 @@ export const DocumentContent = memo(function DocumentContent({
 						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
 						content={content}
 						candidateDetails={candidateDetails}
-						fontSize={fontSize || 11}
+						fontSize={fontSize || [11, 'pt']}
 					/>
 				</div>
 			) : (

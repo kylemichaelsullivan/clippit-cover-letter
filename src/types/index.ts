@@ -14,6 +14,8 @@ export type CandidateDetails = {
 	signatureUseImage?: boolean;
 };
 
+export type DocumentType = 'cover-letter' | 'resume';
+
 export type Education = {
 	id: string;
 	include: boolean;
@@ -32,6 +34,9 @@ export type Experience = {
 	end: string;
 	bullets: string[];
 };
+
+export type FontUnit = 'pt' | 'px';
+export type FontSize = [number, FontUnit];
 
 export type FormData = {
 	title: string;

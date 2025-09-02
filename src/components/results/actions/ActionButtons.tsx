@@ -8,16 +8,16 @@ import {
 	DownloadButtonTXT,
 	CopyButton,
 } from './';
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType, FontSize } from '@/types';
 
 type ActionButtonsProps = {
 	text: string;
 	filename: string;
 	candidateDetails: CandidateDetails;
 	className?: string;
+	documentType?: DocumentType;
+	fontSize?: FontSize;
 	disabled?: boolean;
-	fontSize?: number;
-	documentType?: string;
 };
 
 export function ActionButtons({
@@ -25,9 +25,9 @@ export function ActionButtons({
 	filename,
 	candidateDetails,
 	className,
-	disabled = false,
-	fontSize,
 	documentType,
+	fontSize,
+	disabled = false,
 }: ActionButtonsProps) {
 	return (
 		<div className={clsx('ActionButtons flex flex-wrap gap-2 pt-2', className)}>
@@ -41,7 +41,7 @@ export function ActionButtons({
 			<DownloadButtonPDF
 				content={text}
 				title='PDF'
-				fontSize={fontSize}
+				fontSize={fontSize ? `${fontSize[0]}${fontSize[1]}` : '11pt'}
 				filename={filename}
 				documentType={documentType}
 				candidateDetails={candidateDetails}

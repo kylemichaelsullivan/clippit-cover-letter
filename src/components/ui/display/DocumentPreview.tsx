@@ -7,16 +7,17 @@ import {
 	formatContentForPDF,
 } from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
+import { getFontSizeString } from '@/lib/utils/fontSize';
 import { extractTipTapContent } from '@/lib/utils/tiptap';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType, FontSize } from '@/types';
 
 type DocumentPreviewProps = {
 	content: string;
 	candidateDetails: CandidateDetails;
-	documentType?: 'cover-letter' | 'resume';
+	documentType?: DocumentType;
 	className?: string;
-	fontSize?: number;
+	fontSize?: FontSize;
 };
 
 export const DocumentPreview = memo(function DocumentPreview({
@@ -24,7 +25,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 	candidateDetails,
 	documentType = 'cover-letter',
 	className = '',
-	fontSize = 11,
+	fontSize = [11, 'pt'],
 }: DocumentPreviewProps) {
 	const [htmlContent, setHtmlContent] = useState<string>('');
 
@@ -68,7 +69,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 							}
 							
 							html {
-								font-size: ${fontSize}pt;
+								font-size: ${getFontSizeString(fontSize)};
 								padding: 1rem 0;
 							}
 							
@@ -105,7 +106,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 		};
 
 		generateContent();
-	}, [content, candidateDetails, fontSize, documentType]);
+	}, [content, candidateDetails, documentType, fontSize]);
 
 	return (
 		<iframe

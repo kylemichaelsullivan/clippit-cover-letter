@@ -2,20 +2,25 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
 import { DEFAULTS } from '@/config';
+import type { FontSize } from '@/types';
 
 type AppState = {
 	includeCoverLetter: boolean;
 	includeResume: boolean;
 	setIncludeCoverLetter: (include: boolean) => void;
 	setIncludeResume: (include: boolean) => void;
+
 	skillsInstructions: string;
 	coverLetterInstructions: string;
 	resumeInstructions: string;
 	setSkillsInstructions: (instructions: string) => void;
 	setCoverLetterInstructions: (instructions: string) => void;
 	setResumeInstructions: (instructions: string) => void;
-	resumeFontSize: number;
-	setResumeFontSize: (size: number) => void;
+
+	coverLetterFontSize: FontSize;
+	resumeFontSize: FontSize;
+	setCoverLetterFontSize: (size: FontSize) => void;
+	setResumeFontSize: (size: FontSize) => void;
 };
 
 export const useAppStore = create<AppState>()(
@@ -41,7 +46,9 @@ export const useAppStore = create<AppState>()(
 				setResumeInstructions: (instructions) =>
 					set({ resumeInstructions: instructions }),
 
+				coverLetterFontSize: DEFAULTS.FORM_DEFAULTS.COVER_LETTER_FONT_SIZE,
 				resumeFontSize: DEFAULTS.FORM_DEFAULTS.RESUME_FONT_SIZE,
+				setCoverLetterFontSize: (size) => set({ coverLetterFontSize: size }),
 				setResumeFontSize: (size) => set({ resumeFontSize: size }),
 			}),
 			{

@@ -6,14 +6,14 @@ type GeneratePDFParams = {
 	content: string;
 	filename: string;
 	candidateDetails: CandidateDetails;
-	fontSize?: number;
+	fontSize?: string;
 };
 
 export async function generatePDF({
 	content,
 	filename,
 	candidateDetails,
-	fontSize = 11,
+	fontSize = '11pt',
 }: GeneratePDFParams): Promise<Blob> {
 	try {
 		const formattedContent = formatContentForPDF(content);

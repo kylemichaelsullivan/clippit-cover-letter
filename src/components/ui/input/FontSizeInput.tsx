@@ -1,54 +1,93 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { FormField } from '@/components/forms/core';
+import {
+	clampFontSize,
+	FONT_SIZE_MIN,
+	FONT_SIZE_MAX,
+} from '@/lib/utils/fontSize';
+import type { DocumentType, FontSize, FontUnit } from '@/types';
 
 type FontSizeInputProps = {
-	value: number;
-	onChange: (size: number) => void;
+	value: FontSize;
+	documentType: DocumentType;
+	onChange: (value: FontSize) => void;
 	className?: string;
+	label?: string;
+	ariaLabel?: string;
 };
 
 export const FontSizeInput = memo(function FontSizeInput({
 	value,
+	documentType,
 	onChange,
 	className = '',
+	label = 'Base Font',
+	ariaLabel = 'Base font size',
 }: FontSizeInputProps) {
+	const [size, unit] = value;
+	const [localUnit, setLocalUnit] = useState<FontUnit>(unit);
+
+	useEffect(() => {
+		if (unit !== localUnit) {
+			setLocalUnit(unit);
+		}
+	}, [unit, localUnit]);
+
 	const handleChange = (newValue: string) => {
-		const newSize = parseInt(newValue, 10);
-		if (!isNaN(newSize)) {
-			onChange(newSize);
+		const newNumeric = parseFloat(newValue);
+		if (!isNaN(newNumeric)) {
+			const newFontSize: FontSize = [newNumeric, localUnit];
+			onChange(newFontSize);
 		}
 	};
 
 	const handleBlur = () => {
-		const clampedValue = Math.max(8, Math.min(16, value));
-		if (clampedValue !== value) {
-			onChange(clampedValue);
+		const clampedFontSize = clampFontSize([size, localUnit]);
+		if (clampedFontSize[0] !== size || clampedFontSize[1] !== localUnit) {
+			onChange(clampedFontSize);
 		}
+	};
+
+	const toggleUnit = () => {
+		const newUnit: FontUnit = localUnit === 'pt' ? 'px' : 'pt';
+		setLocalUnit(newUnit);
+		onChange([size, newUnit]);
 	};
 
 	return (
 		<div className={`FontSizeInput flex items-center gap-2 ${className}`}>
 			<label
-				className='text-sm font-medium'
-				htmlFor='font-size-input'
-				title='Base Font Size'
-				aria-label='Base font size for resume'
+				htmlFor={`font-size-input-${documentType}`}
+				className='text-sm font-medium text-black'
+				title={`${label} Size`}
+				aria-label={`${ariaLabel} for ${documentType}`}
 			>
-				Base Font
+				{label}
 			</label>
 			<FormField
-				id='font-size-input'
 				type='number'
-				value={value.toString()}
+				className='w-16 text-center'
+				value={size.toString()}
+				min={FONT_SIZE_MIN}
+				max={FONT_SIZE_MAX}
+				step={0.5}
+				aria-label={`${documentType} font size (${localUnit})`}
+				suffix={
+					<button
+						type='button'
+						className='hover:text-light-blue cursor-pointer transition-colors'
+						title={`Toggle between pt and px units`}
+						aria-label={`Toggle between pt and px units`}
+						onClick={toggleUnit}
+					>
+						{localUnit}
+					</button>
+				}
 				onChange={handleChange}
 				onBlur={handleBlur}
-				min={8}
-				max={16}
-				className='w-16 text-center'
-				aria-label='Resume font size (points)'
-				suffix='pt'
+				id={`font-size-input-${documentType}`}
 			/>
 		</div>
 	);

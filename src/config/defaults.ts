@@ -1,3 +1,5 @@
+import type { FontSize } from '@/types';
+
 export const DEFAULTS = {
 	GENERATING_TEXT: 'Generating…',
 
@@ -6,10 +8,11 @@ export const DEFAULTS = {
 		INCLUDE_RESUME: true,
 		INCLUDE_SKILL_GROUP_NAMES: true,
 		INCLUDE_SKILLS: true,
-		RESUME_FONT_SIZE: 11,
+		RESUME_FONT_SIZE: [11, 'pt'] as FontSize,
+		COVER_LETTER_FONT_SIZE: [11, 'pt'] as FontSize,
 		SKILLS_RANGE: {
-			MAX: 20,
 			MIN: 0,
+			MAX: 20,
 		},
 		TEXTAREA_ROWS: 10,
 	},
@@ -40,11 +43,11 @@ export const DEFAULTS = {
 			location: '',
 		},
 		EXPERIENCE: {
-			bullets: [],
-			company: '',
-			end: '',
-			start: '',
 			title: '',
+			company: '',
+			start: '',
+			end: '',
+			bullets: [],
 		},
 		GENERATION: {
 			generatedCoverLetter: '',
@@ -53,11 +56,11 @@ export const DEFAULTS = {
 			isGenerating: false,
 		},
 		JOB_DETAILS: {
-			companyAddress: '',
 			companyName: '',
-			hiringManager: '',
-			jobDescription: '',
 			jobTitle: '',
+			hiringManager: '',
+			companyAddress: '',
+			jobDescription: '',
 		},
 		PHASE: 'welcome',
 		RESUME: {
@@ -66,8 +69,8 @@ export const DEFAULTS = {
 		},
 		SKILLS: {
 			groups: [{ id: '', include: true, name: '', skills: [] }],
-			maxSkillsToUse: 10,
 			minSkillsToUse: 5,
+			maxSkillsToUse: 10,
 		},
 		TEMPLATES: {
 			coverLetter: '',

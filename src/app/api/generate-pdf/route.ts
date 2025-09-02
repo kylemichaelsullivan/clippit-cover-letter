@@ -4,10 +4,10 @@ import type { CandidateDetails } from '@/types';
 import { generateUIStyles } from '@/config/shared-styles';
 
 type GeneratePDFRequest = {
-	html: string;
 	filename: string;
 	candidateDetails: CandidateDetails;
-	fontSize?: number;
+	html: string;
+	fontSize?: string;
 };
 
 export async function POST(request: NextRequest) {
@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
 
 	try {
 		const {
-			html,
 			filename,
 			candidateDetails,
-			fontSize = 11,
+			html,
+			fontSize = '11pt',
 		}: GeneratePDFRequest = await request.json();
 
 		console.log('PDF generation request received:', { filename, fontSize });
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
 						}
 						
 						html {
-							font-size: ${fontSize}pt;
+							font-size: ${fontSize};
 						}
 						
 						body { 

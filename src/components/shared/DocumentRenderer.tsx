@@ -28,7 +28,9 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 	const {
 		includeCoverLetter,
 		includeResume,
+		coverLetterFontSize,
 		resumeFontSize,
+		setCoverLetterFontSize,
 		setResumeFontSize,
 	} = useAppStore();
 	const { generatedCoverLetter, generatedResume } = useTemplatesStore();
@@ -54,17 +56,30 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 			>
 				<div className='flex flex-col gap-4'>
 					<DocumentContent
-						title='Cover Letter'
 						documentType='cover-letter'
+						title='Cover Letter'
 						content={generatedCoverLetter}
+						fontSize={coverLetterFontSize}
+						fontSizeInput={
+							showFontSizeControl ? (
+								<FontSizeInput
+									value={coverLetterFontSize}
+									onChange={setCoverLetterFontSize}
+									documentType='cover-letter'
+									label='Base Font'
+									ariaLabel='Base font size for cover letter'
+								/>
+							) : undefined
+						}
 						isEditable={false}
 					/>
 					{showActions && (
 						<ActionButtons
 							text={generatedCoverLetter}
+							documentType='cover-letter'
 							filename='cover-letter'
-							documentType='Cover Letter'
 							candidateDetails={candidateDetails}
+							fontSize={coverLetterFontSize}
 						/>
 					)}
 				</div>
@@ -82,6 +97,9 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 								<FontSizeInput
 									value={resumeFontSize}
 									onChange={setResumeFontSize}
+									documentType='resume'
+									label='Base Font'
+									ariaLabel='Base font size for resume'
 								/>
 							) : undefined
 						}
@@ -90,7 +108,7 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 					{showActions && (
 						<ActionButtons
 							filename='resume'
-							documentType='Resume'
+							documentType='resume'
 							candidateDetails={candidateDetails}
 							text={generatedResume}
 							fontSize={resumeFontSize}
