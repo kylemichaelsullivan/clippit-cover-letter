@@ -14,6 +14,14 @@ export type CandidateDetails = {
 	signatureUseImage?: boolean;
 };
 
+export type CandidateFormHandlers = {
+	handleFieldChange: (fieldName: keyof CandidateDetails, value: any) => void;
+};
+
+export type CandidateFormProps = {
+	onSubmit: (details: CandidateDetails) => void;
+};
+
 export type DocumentType = 'cover-letter' | 'resume';
 
 export type Education = {

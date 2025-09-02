@@ -1,25 +1,15 @@
 'use client';
 
 import { memo } from 'react';
-import { Field } from '@tanstack/react-form';
 
-import {
-	Form,
-	FormSection,
-	HydrationSafeFormField,
-} from '@/components/forms/core';
+import { BrandingSection } from './BrandingSection';
+import { Form } from '@/components/forms/core';
+import { PersonalInformationSection } from './PersonalInformationSection';
+import { ProfessionalLinksSection } from './ProfessionalLinksSection';
 import { TabTitle } from '@/components/ui';
-import { ImageInput, SignatureInput, Checkbox } from '@/components/ui/input';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
-import type { CandidateDetails } from '@/types';
-import { PLACEHOLDERS, CONSTANTS } from '@/config';
-import { candidateDetailsSchema, validateSchema } from '@/lib/schemas';
-
-type CandidateFormProps = {
-	onSubmit: (details: CandidateDetails) => void;
-};
+import type { CandidateFormProps } from '@/types';
 
 export const CandidateForm = memo(function CandidateForm({
 	onSubmit,
@@ -44,244 +34,15 @@ export const CandidateForm = memo(function CandidateForm({
 			/>
 
 			<Form componentName='CandidateFormContent' onSubmit={handleSubmit}>
-				<FormSection title='Personal Information'>
-					<Field
-						form={form}
-						name='fullName'
-						validators={{
-							onChange: validateSchema(candidateDetailsSchema, 'fullName'),
-						}}
-					>
-						{(field) => (
-							<HydrationSafeFormField
-								id='fullName'
-								type='text'
-								label='Full Name'
-								placeholder={PLACEHOLDERS.CANDIDATE.FULL_NAME}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='fullName'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('fullName', value);
-								}}
-							/>
-						)}
-					</Field>
-
-					<Field
-						form={form}
-						name='email'
-						validators={{
-							onChange: validateSchema(candidateDetailsSchema, 'email'),
-						}}
-					>
-						{(field) => (
-							<HydrationSafeFormField
-								id='email'
-								type='email'
-								label='Email Address'
-								placeholder={PLACEHOLDERS.CANDIDATE.EMAIL}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='email'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('email', value);
-								}}
-							/>
-						)}
-					</Field>
-
-					<Field form={form} name='phone'>
-						{(field) => (
-							<HydrationSafeFormField
-								id='phone'
-								type='tel'
-								label='Phone Number'
-								placeholder={PLACEHOLDERS.CANDIDATE.PHONE}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='phone'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('phone', value);
-								}}
-							/>
-						)}
-					</Field>
-
-					<Field form={form} name='location'>
-						{(field) => (
-							<HydrationSafeFormField
-								id='location'
-								type='text'
-								label='Location'
-								placeholder={PLACEHOLDERS.CANDIDATE.LOCATION}
-								field={field}
-								schema={candidateDetailsSchema}
-								fieldName='location'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('location', value);
-								}}
-							/>
-						)}
-					</Field>
-				</FormSection>
-
-				<FormSection title='Professional Links'>
-					<Field
-						form={form}
-						name='linkedin'
-						validators={{
-							onChange: validateSchema(candidateDetailsSchema, 'linkedin'),
-						}}
-					>
-						{(field) => (
-							<HydrationSafeFormField
-								id='linkedin'
-								type='text'
-								label='LinkedIn Profile'
-								field={field}
-								placeholder={PLACEHOLDERS.CANDIDATE.LINKEDIN}
-								schema={candidateDetailsSchema}
-								fieldName='linkedin'
-								onChange={(value: string) => {
-									field.handleChange(value);
-									handleFieldChange('linkedin', value);
-								}}
-								prefix={
-									<>
-										<span className='hidden text-sm sm:block'>
-											{CONSTANTS.LINKEDIN.FULL_PREFIX}
-										</span>
-										<span className='text-sm sm:hidden'>
-											{CONSTANTS.LINKEDIN.SHORT_PREFIX}
-										</span>
-									</>
-								}
-							/>
-						)}
-					</Field>
-
-					<Field form={form} name='portfolio'>
-						{(field) => (
-							<Field form={form} name='portfolioQRCode'>
-								{(qrField) => (
-									<div className='FormFieldContainer'>
-										<div className='flex items-center gap-2 pb-1'>
-											<Checkbox
-												checked={Boolean(qrField.state.value ?? true)}
-												onChange={(checked) => {
-													qrField.handleChange(checked);
-													handleFieldChange('portfolioQRCode', checked);
-												}}
-												label=''
-												title='Include QR Code in Documents?'
-												aria-label='Include QR Code in Documents'
-											/>
-											<FormFieldLabel
-												htmlFor='portfolio'
-												title='Portfolio Website'
-												aria-label='Portfolio Website field'
-											>
-												Portfolio Website
-											</FormFieldLabel>
-										</div>
-										<HydrationSafeFormField
-											id='portfolio'
-											type='url'
-											label=''
-											placeholder={PLACEHOLDERS.CANDIDATE.PORTFOLIO}
-											field={field}
-											schema={candidateDetailsSchema}
-											fieldName='portfolio'
-											onChange={(value: string) => {
-												field.handleChange(value);
-												handleFieldChange('portfolio', value);
-											}}
-										/>
-									</div>
-								)}
-							</Field>
-						)}
-					</Field>
-				</FormSection>
-
-				<FormSection title='Branding'>
-					<Field form={form} name='signature'>
-						{(field) => (
-							<Field form={form} name='signatureUseImage'>
-								{(imageField) => (
-									<div className='FormFieldContainer'>
-										<div className='flex items-center gap-2 pb-1'>
-											<Checkbox
-												label=''
-												checked={Boolean(imageField.state.value ?? false)}
-												title='Use Signature Image?'
-												aria-label='Use Signature Image if available'
-												onChange={(checked) => {
-													imageField.handleChange(checked);
-													handleFieldChange('signatureUseImage', checked);
-												}}
-												id='signature-use-image'
-											/>
-											<FormFieldLabel
-												htmlFor='signature-use-image'
-												title='Signature'
-												aria-label='Signature field'
-											>
-												Signature
-											</FormFieldLabel>
-										</div>
-										<SignatureInput
-											field={field}
-											label=''
-											fieldName='signature'
-											placeholder={PLACEHOLDERS.CANDIDATE.SIGNATURE}
-											schema={candidateDetailsSchema}
-											onChange={(value: string) => {
-												field.handleChange(value);
-												handleFieldChange('signature', value);
-											}}
-											id='signature'
-										/>
-									</div>
-								)}
-							</Field>
-						)}
-					</Field>
-
-					<Field form={form} name='logo'>
-						{(field) => (
-							<Field form={form} name='logoInclude'>
-								{(includeField) => (
-									<ImageInput
-										field={field}
-										includeField={includeField}
-										label='Logo'
-										fieldName='logo'
-										aspectRatio='square'
-										includeFieldName='logoInclude'
-										placeholder={PLACEHOLDERS.CANDIDATE.LOGO}
-										schema={candidateDetailsSchema}
-										onChange={(value: string) => {
-											field.handleChange(value);
-											handleFieldChange('logo', value);
-										}}
-										onIncludeChange={(value: boolean) => {
-											includeField.handleChange(value);
-											handleFieldChange('logoInclude', value);
-										}}
-										accept='image/*'
-										id='logo'
-									/>
-								)}
-							</Field>
-						)}
-					</Field>
-				</FormSection>
+				<PersonalInformationSection
+					form={form}
+					handleFieldChange={handleFieldChange}
+				/>
+				<ProfessionalLinksSection
+					form={form}
+					handleFieldChange={handleFieldChange}
+				/>
+				<BrandingSection form={form} handleFieldChange={handleFieldChange} />
 			</Form>
 		</div>
 	);

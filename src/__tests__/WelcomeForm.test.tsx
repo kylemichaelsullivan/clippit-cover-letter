@@ -63,8 +63,9 @@ describe('WelcomeForm', () => {
 
 		render(<WelcomeForm />);
 
-		const contentCard = screen.getByText('Welcome to Clippit').closest('div')
-			?.parentElement?.parentElement;
+		const contentCard = screen
+			.getByText('Welcome to Clippit')
+			.closest('div')?.parentElement;
 		expect(contentCard).toHaveClass(
 			'bg-light-gray',
 			'rounded-lg',
@@ -109,14 +110,18 @@ describe('WelcomeForm', () => {
 	});
 
 	it('handles phase changes correctly', () => {
-		// Test with welcome phase
-		mockUsePhaseStore.mockReturnValue({ currentPhase: 'welcome' } as any);
-		const { rerender } = render(<WelcomeForm />);
-		expect(screen.getByText('Welcome to Clippit')).toBeInTheDocument();
+		// Test that the component correctly handles different phases
+		// by testing the individual scenarios separately
 
-		// Test with different phase
+		// Test welcome phase renders content
+		mockUsePhaseStore.mockReturnValue({ currentPhase: 'welcome' } as any);
+		const { unmount } = render(<WelcomeForm />);
+		expect(screen.getByText('Welcome to Clippit')).toBeInTheDocument();
+		unmount();
+
+		// Test non-welcome phase renders nothing
 		mockUsePhaseStore.mockReturnValue({ currentPhase: 'candidate' } as any);
-		rerender(<WelcomeForm />);
-		expect(screen.queryByText('Welcome to Clippit')).not.toBeInTheDocument();
+		const { container } = render(<WelcomeForm />);
+		expect(container.firstChild).toBeNull();
 	});
 });
