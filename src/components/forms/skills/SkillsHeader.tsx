@@ -34,7 +34,7 @@ export function SkillsHeader({
 						onClick={onAlphabetizeGroups}
 					>
 						<FontAwesomeIcon icon={faSort} aria-hidden='true' />
-						<span className='hidden sm:inline'>Alphabetize</span>
+						<span className='hidden sm:block'>Alphabetize</span>
 					</Button>
 				)}
 			</div>

@@ -35,6 +35,9 @@ export const ViewToggle = memo(function ViewToggle({
 					className='h-4 w-4'
 					aria-hidden='true'
 				/>
+				<span className='hidden text-sm sm:block'>
+					{isTipTapView ? 'Edit' : 'View'}
+				</span>
 			</Button>
 		</div>
 	);

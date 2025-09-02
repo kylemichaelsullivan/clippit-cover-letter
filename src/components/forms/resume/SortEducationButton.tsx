@@ -20,7 +20,7 @@ export function SortEducationButton({
 			onClick={onSortByYear}
 		>
 			<FontAwesomeIcon icon={faSort} aria-hidden='true' />
-			<span className='hidden sm:inline'>Sort</span>
+			<span className='hidden sm:block'>Sort</span>
 		</Button>
 	);
 }

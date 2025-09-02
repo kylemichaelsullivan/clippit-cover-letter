@@ -153,7 +153,7 @@ export const CandidateForm = memo(function CandidateForm({
 								}}
 								prefix={
 									<>
-										<span className='hidden text-sm sm:inline'>
+										<span className='hidden text-sm sm:block'>
 											{CONSTANTS.LINKEDIN.FULL_PREFIX}
 										</span>
 										<span className='text-sm sm:hidden'>
