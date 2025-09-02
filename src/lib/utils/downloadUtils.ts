@@ -3,7 +3,7 @@ import { cleanMarkdown, htmlToMarkdown } from './htmlToMarkdown';
 import { cleanPlaintext, htmlToPlaintext } from './htmlToPlaintext';
 import { replaceSignaturePlaceholders } from './signatureReplacement';
 import { showToast } from '../toast';
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType } from '@/types';
 
 function downloadFile(
 	blob: Blob,
@@ -37,7 +37,7 @@ function downloadFile(
 export function downloadMD(
 	content: string,
 	filename: string,
-	documentType?: string,
+	documentType?: DocumentType,
 	candidateDetails?: CandidateDetails,
 ): void {
 	const contentWithSignature = candidateDetails
@@ -57,7 +57,7 @@ export function downloadMD(
 export function downloadPDF(
 	blob: Blob,
 	filename: string,
-	documentType?: string,
+	documentType?: DocumentType,
 ): void {
 	const successMessage = documentType
 		? `${documentType} PDF Downloaded Successfully`
@@ -71,7 +71,7 @@ export function downloadPDF(
 export function downloadTXT(
 	content: string,
 	filename: string,
-	documentType?: string,
+	documentType?: DocumentType,
 	candidateDetails?: CandidateDetails,
 ): void {
 	const contentWithSignature = candidateDetails

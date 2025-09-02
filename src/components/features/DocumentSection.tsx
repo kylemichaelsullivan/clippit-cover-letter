@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 
 import { DocumentContent } from '@/components/results/panels';
 import { GenerateButton } from './GenerateButton';
+import type { DocumentType } from '@/types';
 
 type DocumentSectionProps = {
 	title: string;
@@ -13,7 +14,7 @@ type DocumentSectionProps = {
 	fallbackMessage: ReactNode;
 	isEditable: boolean;
 	isGenerating: boolean;
-	documentType?: 'cover-letter' | 'resume';
+	documentType?: DocumentType;
 	headerElement?: ReactNode;
 	templateContent?: string; // Raw template content with placeholders for editing
 	disabled?: boolean;

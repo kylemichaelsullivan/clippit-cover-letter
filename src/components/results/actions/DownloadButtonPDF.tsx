@@ -2,20 +2,21 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/buttons';
+import { DEFAULTS } from '@/config';
 import { downloadPDF, generatePDF } from '@/lib/utils';
 import { formatContentForPDFWithSkills } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType } from '@/types';
 
 type DownloadButtonPDFProps = {
 	content: string;
 	title: string;
 	filename: string;
 	candidateDetails: CandidateDetails;
-	documentType?: string;
-	fontSize?: number;
+	documentType?: DocumentType;
+	fontSize?: string;
 	disabled?: boolean;
 };
 
@@ -49,7 +50,7 @@ export function DownloadButtonPDF({
 					generatedSkillsData,
 					includeSkillGroupNames,
 				);
-				const customFontSize = fontSize || 11;
+				const customFontSize = fontSize || '11pt';
 
 				const pdfBlob = await generatePDF({
 					content: contentWithSkills,
@@ -80,7 +81,7 @@ export function DownloadButtonPDF({
 			aria-label={`Download ${title} as PDF`}
 			onClick={handleDownloadPDF}
 		>
-			{isGenerating ? 'Generating…' : title}
+			{isGenerating ? DEFAULTS.GENERATING_TEXT : title}
 		</Button>
 	);
 }

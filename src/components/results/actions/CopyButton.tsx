@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/buttons';
 import { cleanPlaintext, htmlToPlaintextWithSignature } from '@/lib/utils';
 import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType } from '@/types';
 
 type CopyButtonProps = {
 	text: string;
-	documentType?: string;
+	documentType?: DocumentType;
 	candidateDetails?: CandidateDetails;
 	disabled?: boolean;
 };

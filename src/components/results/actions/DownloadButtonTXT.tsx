@@ -4,13 +4,13 @@ import { Button } from '@/components/ui/buttons';
 import { downloadTXT } from '@/lib/utils';
 import { useIsClient } from '@/lib/hooks';
 
-import type { CandidateDetails } from '@/types';
+import type { CandidateDetails, DocumentType } from '@/types';
 
 type DownloadButtonTXTProps = {
 	content: string;
 	title: string;
 	filename: string;
-	documentType?: string;
+	documentType?: DocumentType;
 	candidateDetails?: CandidateDetails;
 	disabled?: boolean;
 };

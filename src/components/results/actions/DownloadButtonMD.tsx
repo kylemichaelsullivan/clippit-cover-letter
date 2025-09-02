@@ -5,19 +5,19 @@ import { downloadMD } from '@/lib/utils';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useIsClient } from '@/lib/hooks';
-import type { ButtonColor, CandidateDetails } from '@/types';
+import type { ButtonColor, CandidateDetails, DocumentType } from '@/types';
 
 type DownloadButtonMDProps = {
 	content: string;
 	title: string;
 	filename: string;
-	documentType?: string;
+	documentType?: DocumentType;
 	color?: ButtonColor;
 	size?: 'sm' | 'flex';
+	candidateDetails?: CandidateDetails;
 	showIcon?: boolean;
 	disabled?: boolean;
 	tabIndex?: number;
-	candidateDetails?: CandidateDetails;
 };
 
 export function DownloadButtonMD({
@@ -27,10 +27,10 @@ export function DownloadButtonMD({
 	documentType,
 	color = 'primary',
 	size = 'sm',
+	candidateDetails,
 	showIcon = false,
 	disabled = false,
 	tabIndex,
-	candidateDetails,
 }: DownloadButtonMDProps) {
 	const isClient = useIsClient();
 	const hasContent = content && content.trim() !== '';
