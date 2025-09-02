@@ -1,33 +1,35 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { type IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import { Button } from '@/components/ui/buttons/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 type TipTapButtonProps = {
-	onClick: () => void;
 	icon: IconDefinition;
 	label: string;
+	onClick: () => void;
 	title?: string;
 	number?: number;
 	iconClassName?: string;
 	showShadow?: boolean;
+	isActive?: boolean;
 };
 
 export function TipTapButton({
-	onClick,
 	icon,
 	label,
+	onClick,
 	title,
 	number,
 	iconClassName,
 	showShadow,
+	isActive = false,
 }: TipTapButtonProps) {
 	return (
 		<Button
 			componentName='TipTapButton'
-			color='secondary'
+			color={isActive ? 'primary' : 'secondary'}
 			size='tiptap'
 			aria-label={label}
 			title={title || label}

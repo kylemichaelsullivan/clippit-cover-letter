@@ -1,6 +1,7 @@
 'use client';
 
-import { type Editor } from '@tiptap/react';
+import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import {
 	faBold,
 	faFont,
@@ -11,9 +12,8 @@ import {
 	faMinus,
 	faQuoteLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
-import { useEffect, useState } from 'react';
 import { TipTapButton } from './TipTapButton';
+import type { Editor } from '@tiptap/react';
 
 function TipTapDivider() {
 	return <div className='bg-light-gray h-6 w-px' />;
@@ -58,66 +58,83 @@ export function TipTapToolbar({ editor, className }: TipTapToolbarProps) {
 				className,
 			)}
 		>
-			<TipTapButton onClick={toggleBold} icon={faBold} label='Bold' />
-
-			<TipTapButton onClick={toggleItalic} icon={faItalic} label='Italic' />
+			<TipTapButton
+				icon={faBold}
+				label='Bold'
+				isActive={editor.isActive('bold')}
+				onClick={toggleBold}
+			/>
 
 			<TipTapButton
-				onClick={toggleTextShadow}
+				icon={faItalic}
+				label='Italic'
+				isActive={editor.isActive('italic')}
+				onClick={toggleItalic}
+			/>
+
+			<TipTapButton
 				icon={faFont}
 				label='Text Shadow'
 				showShadow={true}
+				isActive={editor.isActive('textShadow')}
+				onClick={toggleTextShadow}
 			/>
 
 			<TipTapDivider />
 
 			<TipTapButton
-				onClick={() => setHeading(1)}
 				icon={faHeading}
 				label='Heading 1'
 				number={1}
+				isActive={editor.isActive('heading', { level: 1 })}
+				onClick={() => setHeading(1)}
 			/>
 
 			<TipTapButton
-				onClick={() => setHeading(2)}
 				icon={faHeading}
 				label='Heading 2'
 				number={2}
+				isActive={editor.isActive('heading', { level: 2 })}
+				onClick={() => setHeading(2)}
 			/>
 
 			<TipTapButton
-				onClick={() => setHeading(3)}
 				icon={faHeading}
 				label='Heading 3'
 				number={3}
+				isActive={editor.isActive('heading', { level: 3 })}
+				onClick={() => setHeading(3)}
 			/>
 
 			<TipTapDivider />
 
 			<TipTapButton
-				onClick={toggleBulletList}
 				icon={faListUl}
 				label='Bullet List'
+				isActive={editor.isActive('bulletList')}
+				onClick={toggleBulletList}
 			/>
 
 			<TipTapButton
-				onClick={toggleOrderedList}
 				icon={faListOl}
 				label='Numbered List'
+				isActive={editor.isActive('orderedList')}
+				onClick={toggleOrderedList}
 			/>
 
 			<TipTapButton
-				onClick={toggleBlockquote}
 				icon={faQuoteLeft}
 				label='Quote'
+				isActive={editor.isActive('blockquote')}
+				onClick={toggleBlockquote}
 			/>
 
 			<TipTapDivider />
 
 			<TipTapButton
-				onClick={insertPageBreak}
 				icon={faMinus}
 				label='Page Break'
+				onClick={insertPageBreak}
 			/>
 		</div>
 	);
