@@ -17,6 +17,13 @@ export function PhaseSwitcher({
 	currentPhase,
 	onPhaseChange,
 }: PhaseSwitcherProps) {
+	const visiblePhases = phases.filter((phase) => {
+		if (phase.id === 'welcome') {
+			return currentPhase === 'welcome';
+		}
+		return true;
+	});
+
 	return (
 		<SkipLinkTarget
 			id='PhaseSwitcher'
@@ -27,7 +34,7 @@ export function PhaseSwitcher({
 				role='tablist'
 				aria-label={CONSTANTS.ARIA_LABELS.PHASE_TABS}
 			>
-				{phases.map((phase) => (
+				{visiblePhases.map((phase) => (
 					<Button
 						key={phase.id}
 						color='secondary'
