@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-
 import { Error } from '@/components/ui/feedback';
+import { SkillInput, SkillTagsList, SkillDialogs } from './';
 import { SkipLink } from '@/components/ui/navigation';
-import { SkillInput } from './SkillInput';
-import { SkillTagsList } from './SkillTagsList';
-import { SkillDialogs } from './SkillDialogs';
-
+import { useSkillsStore } from '@/lib/stores';
 import type { SkillGroup } from '@/types';
 
 type SkillTagsProps = {
@@ -46,6 +43,15 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 	const [pendingSkill, setPendingSkill] = useState<string>('');
 	const [showImportConfirmation, setShowImportConfirmation] = useState(false);
 	const [pendingSkills, setPendingSkills] = useState<string[]>([]);
+	const { skills, setSkills } = useSkillsStore();
+
+	const updateStoreAndForm = (updatedGroups: SkillGroup[]) => {
+		setSkills({
+			...skills,
+			groups: updatedGroups,
+		});
+		form.setFieldValue('groups', updatedGroups);
+	};
 
 	const addSkill = (skill: string) => {
 		if (!skill.trim()) return;
@@ -71,7 +77,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 			...updatedGroups[groupIndex],
 			skills: [...currentSkills, skill.trim()],
 		};
-		form.setFieldValue('groups', updatedGroups);
+		updateStoreAndForm(updatedGroups);
 		setError('');
 	};
 
@@ -102,7 +108,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 				...updatedGroups[groupIndex],
 				skills: [...currentSkills, ...newSkills.map((skill) => skill.trim())],
 			};
-			form.setFieldValue('groups', updatedGroups);
+			updateStoreAndForm(updatedGroups);
 		}
 	};
 
@@ -117,7 +123,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 				...updatedGroups[groupIndex],
 				skills: [...currentSkills, pendingSkill.trim()],
 			};
-			form.setFieldValue('groups', updatedGroups);
+			updateStoreAndForm(updatedGroups);
 		}
 		setShowConfirmation(false);
 		setPendingSkill('');
@@ -175,7 +181,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 			...updatedGroups[groupIndex],
 			skills: updatedSkills,
 		};
-		form.setFieldValue('groups', updatedGroups);
+		updateStoreAndForm(updatedGroups);
 	};
 
 	return (
