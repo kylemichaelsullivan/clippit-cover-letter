@@ -2,21 +2,21 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { Checkbox, DatePicker } from '@/components/ui/input';
-import { FormFieldContainer } from '@/components/forms/core';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { PLACEHOLDERS, DEFAULTS } from '@/config';
-import { Button } from '@/components/ui/buttons';
+import { DatePicker } from '@/components/ui/input';
+import {
+	FormFieldWithCheckbox,
+	FormFieldWithLabel,
+	FormItem,
+} from '@/components/forms/core';
+import { DEFAULTS, PLACEHOLDERS } from '@/config';
 import { getOrdinalSuffix } from '@/lib/utils';
-import { Bullets } from './Bullets';
+import { BulletManager } from '@/components/forms/core';
 
 type ExperienceItemProps = {
 	form: any; // TanStack Form
 	experienceIndex: number;
-	onRemove?: () => void;
 	handleFieldChange?: (fieldName: string, value: any) => void;
+	onRemove?: () => void;
 	registerFocusRef?: (
 		experienceIndex: number,
 		inputElement: HTMLInputElement | null,
@@ -26,150 +26,84 @@ type ExperienceItemProps = {
 export function ExperienceItem({
 	form,
 	experienceIndex,
-	onRemove,
 	handleFieldChange,
+	onRemove,
 	registerFocusRef,
 }: ExperienceItemProps) {
 	return (
-		<div className='ExperienceItem flex flex-col gap-3'>
-			<div className='relative grid grid-cols-1 gap-3 sm:grid-cols-2'>
-				{onRemove && (
-					<Button
-						componentName='ExperienceItemRemoveButton'
-						color='danger'
-						size='sm'
-						positioned
-						onClick={onRemove}
-						title='Remove this Experience'
-					>
-						<FontAwesomeIcon icon={faTrash} aria-hidden='true' />
-					</Button>
-				)}
-
-				<FormFieldContainer>
-					<div className='flex items-center gap-2'>
-						<Field name={`experience.${experienceIndex}.include`} form={form}>
-							{(field) => (
-								<Checkbox
-									checked={Boolean(field.state.value ?? true)}
-									onChange={(checked) => {
-										field.handleChange(checked);
-										handleFieldChange?.(
-											`experience.${experienceIndex}.include`,
-											checked,
-										);
-									}}
-									label=''
-									title={`Include this in Resume?`}
-									aria-label={`Include ${experienceIndex + 1}${getOrdinalSuffix(experienceIndex + 1)} experience entry in Resume`}
-								/>
-							)}
-						</Field>
-						<FormFieldLabel
-							htmlFor={`experience-title-${experienceIndex}`}
-							title='Job Title'
-							aria-label='Job title or position'
-							spaced
-						>
-							Title
-						</FormFieldLabel>
-					</div>
-					<Field name={`experience.${experienceIndex}.title`} form={form}>
-						{(field) => (
-							<input
-								id={`experience-title-${experienceIndex}`}
-								type='text'
-								value={String(
-									field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.title,
-								)}
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-									handleFieldChange?.(
-										`experience.${experienceIndex}.title`,
-										e.target.value,
-									);
-								}}
-								placeholder={PLACEHOLDERS.EXPERIENCE?.TITLE}
-								className='text-sm sm:text-base'
-								ref={(element) => {
-									if (registerFocusRef) {
-										registerFocusRef(experienceIndex, element);
-									}
-								}}
-							/>
-						)}
-					</Field>
-				</FormFieldContainer>
-
-				<Field name={`experience.${experienceIndex}.company`} form={form}>
-					{(field) => (
-						<FormFieldContainer>
-							<FormFieldLabel
-								title='Company Name'
-								aria-label='Name of the company or organization'
-							>
-								Company
-							</FormFieldLabel>
-							<input
-								type='text'
-								value={String(
-									field.state.value ||
-										DEFAULTS.INITIAL_STATES.EXPERIENCE.company,
-								)}
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-									handleFieldChange?.(
-										`experience.${experienceIndex}.company`,
-										e.target.value,
-									);
-								}}
-								placeholder={PLACEHOLDERS.EXPERIENCE?.COMPANY}
-								className='text-sm sm:text-base'
-							/>
-						</FormFieldContainer>
-					)}
-				</Field>
-
-				<Field name={`experience.${experienceIndex}.start`} form={form}>
-					{(field) => (
-						<DatePicker
-							label='Start'
-							value={String(
-								field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start,
-							)}
-							onChange={(value) => {
-								field.handleChange(value);
-								handleFieldChange?.(
-									`experience.${experienceIndex}.start`,
-									value,
-								);
-							}}
-						/>
-					)}
-				</Field>
-
-				<Field name={`experience.${experienceIndex}.end`} form={form}>
-					{(field) => (
-						<DatePicker
-							label='End'
-							value={String(
-								field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end,
-							)}
-							onChange={(value) => {
-								field.handleChange(value);
-								handleFieldChange?.(`experience.${experienceIndex}.end`, value);
-							}}
-							isEndDate={true}
-						/>
-					)}
-				</Field>
-			</div>
-
-			<Bullets
+		<FormItem onRemove={onRemove} removeButtonTitle='Remove this Experience'>
+			<FormFieldWithCheckbox
+				label='Title'
 				form={form}
-				experienceIndex={experienceIndex}
-				handleFieldChange={handleFieldChange}
+				fieldPath='experience'
+				checkboxTitle='Include this in Resume?'
+				checkboxAriaLabel={`Include ${experienceIndex + 1}${getOrdinalSuffix(experienceIndex + 1)} experience entry in Resume`}
+				placeholder={PLACEHOLDERS.EXPERIENCE?.TITLE}
+				defaultValue={DEFAULTS.INITIAL_STATES.EXPERIENCE.title}
+				index={experienceIndex}
+				htmlId={`experience-title-${experienceIndex}`}
+				onChange={(value) =>
+					handleFieldChange?.(`experience.${experienceIndex}.title`, value)
+				}
+				registerFocusRef={
+					registerFocusRef
+						? (element) => registerFocusRef(experienceIndex, element)
+						: undefined
+				}
 			/>
-		</div>
+
+			<FormFieldWithLabel
+				form={form}
+				label='Company'
+				fieldPath='experience'
+				fieldName='company'
+				placeholder={PLACEHOLDERS.EXPERIENCE?.COMPANY}
+				defaultValue={DEFAULTS.INITIAL_STATES.EXPERIENCE.company}
+				index={experienceIndex}
+				onChange={(value) =>
+					handleFieldChange?.(`experience.${experienceIndex}.company`, value)
+				}
+			/>
+
+			<Field name={`experience.${experienceIndex}.start`} form={form}>
+				{(field) => (
+					<DatePicker
+						label='Start'
+						value={String(
+							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start,
+						)}
+						onChange={(value) => {
+							field.handleChange(value);
+							handleFieldChange?.(`experience.${experienceIndex}.start`, value);
+						}}
+					/>
+				)}
+			</Field>
+
+			<Field name={`experience.${experienceIndex}.end`} form={form}>
+				{(field) => (
+					<DatePicker
+						label='End'
+						value={String(
+							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end,
+						)}
+						onChange={(value) => {
+							field.handleChange(value);
+							handleFieldChange?.(`experience.${experienceIndex}.end`, value);
+						}}
+						isEndDate={true}
+					/>
+				)}
+			</Field>
+
+			<BulletManager
+				className='col-span-full'
+				label='Bullets'
+				form={form}
+				fieldPath={`experience.${experienceIndex}.bullets`}
+				placeholder={PLACEHOLDERS.EXPERIENCE?.BULLET}
+				onFieldChange={handleFieldChange}
+			/>
+		</FormItem>
 	);
 }
