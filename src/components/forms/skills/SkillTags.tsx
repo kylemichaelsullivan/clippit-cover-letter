@@ -1,19 +1,12 @@
 'use client';
 
-import { useState, type ChangeEvent } from 'react';
-import type { KeyboardEvent, ClipboardEvent, MouseEvent } from 'react';
+import { useState } from 'react';
 
-import { Button } from '@/components/ui/buttons';
-import { ConfirmationDialog, Error } from '@/components/ui/feedback';
-import { faTimes, faThumbtack } from '@fortawesome/free-solid-svg-icons';
-import { Field } from '@tanstack/react-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormFieldContainer } from '@/components/forms/core';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
-import { PLACEHOLDERS } from '@/config';
-import { skillsSchema, validateSchema } from '@/lib/schemas';
+import { Error } from '@/components/ui/feedback';
 import { SkipLink } from '@/components/ui/navigation';
-import { sortSkillsInGroup } from '@/lib/utils';
+import { SkillInput } from './SkillInput';
+import { SkillTagsList } from './SkillTagsList';
+import { SkillDialogs } from './SkillDialogs';
 
 import type { SkillGroup } from '@/types';
 
@@ -44,13 +37,6 @@ const hasDuplicateSkillInOtherGroups = (
 				(skill) => skill.toLowerCase().trim() === newSkill.toLowerCase().trim(),
 			),
 	);
-};
-
-const parsePastedSkills = (text: string): string[] => {
-	return text
-		.split(/[,\n\r]+/)
-		.map((skill) => skill.trim())
-		.filter((skill) => skill.length > 0);
 };
 
 export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
@@ -161,28 +147,19 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 		setError('');
 	};
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputValue(e.target.value);
+	const handleInputChange = (value: string) => {
+		setInputValue(value);
 		setError('');
 	};
 
-	const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			addSkill(inputValue);
-			setInputValue('');
-		}
+	const handleInputAdd = (skill: string) => {
+		addSkill(skill);
+		setInputValue('');
 	};
 
-	const handleInputPaste = (e: ClipboardEvent<HTMLInputElement>) => {
-		const pastedText = e.clipboardData.getData('text');
-		const parsedSkills = parsePastedSkills(pastedText);
-
-		if (parsedSkills.length > 1) {
-			e.preventDefault();
-			setPendingSkills(parsedSkills);
-			setShowImportConfirmation(true);
-		}
+	const handleInputPaste = (skills: string[]) => {
+		setPendingSkills(skills);
+		setShowImportConfirmation(true);
 	};
 
 	const handleRemoveSkill = (skillToRemove: string) => {
@@ -201,55 +178,16 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 		form.setFieldValue('groups', updatedGroups);
 	};
 
-	const handleAddClick = (e?: MouseEvent<HTMLButtonElement>) => {
-		if (e) {
-			e.preventDefault();
-		}
-
-		const skill = inputValue.trim();
-		if (skill) {
-			addSkill(skill);
-			setInputValue('');
-		}
-	};
-
 	return (
 		<>
 			<div className='SkillTags flex flex-col gap-2' id='skills-tags'>
-				<FormFieldContainer className='relative pb-1'>
-					<FormFieldLabel
-						htmlFor={`skill-input-${groupIndex}`}
-						title='Skill'
-						aria-label='Skill'
-						labelContent={
-							<Button
-								componentName='SkillTagsAddButton'
-								color='success'
-								size='sm'
-								positioned
-								aria-label='Add Skill'
-								title='Add Skill'
-								onClick={handleAddClick}
-								disabled={!inputValue.trim()}
-							>
-								<FontAwesomeIcon icon={faThumbtack} aria-hidden='true' />
-							</Button>
-						}
-						spaced
-					>
-						Skill
-					</FormFieldLabel>
-					<input
-						id={`skill-input-${groupIndex}`}
-						type='text'
-						value={inputValue}
-						onChange={handleInputChange}
-						placeholder={PLACEHOLDERS.SKILLS.SKILL}
-						onKeyDown={handleInputKeyDown}
-						onPaste={handleInputPaste}
-						className='text-sm sm:text-base'
-					/>
-				</FormFieldContainer>
+				<SkillInput
+					value={inputValue}
+					groupIndex={groupIndex}
+					onChange={handleInputChange}
+					onAdd={handleInputAdd}
+					onPaste={handleInputPaste}
+				/>
 
 				{error && <Error componentName='SkillTagsError'>{error}</Error>}
 
@@ -262,63 +200,22 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 					/>
 				)}
 
-				<Field
-					name={`groups.${groupIndex}.skills`}
+				<SkillTagsList
 					form={form}
-					validators={{
-						onChange: validateSchema(skillsSchema, 'groups'),
-					}}
-				>
-					{(field) => {
-						const skills = (field.state.value as string[]) || [];
-						if (skills.length === 0) return null;
-
-						const sortedSkills = sortSkillsInGroup(skills);
-
-						return (
-							<div className='SkillTagsList flex flex-wrap gap-1.5 pt-1 sm:gap-2'>
-								{sortedSkills.map((skill, index) => (
-									<span
-										key={`${skill}-${index}`}
-										className='SkillTag text-gray bg-light-gray flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-black sm:px-2 sm:py-1 sm:text-sm'
-									>
-										{skill}
-										<Button
-											componentName='SkillTagRemoveButton'
-											color='secondary'
-											size='xs'
-											aria-label={`Remove ${skill}`}
-											title={`Remove ${skill}`}
-											onClick={() => handleRemoveSkill(skill)}
-										>
-											<FontAwesomeIcon icon={faTimes} aria-hidden='true' />
-										</Button>
-									</span>
-								))}
-							</div>
-						);
-					}}
-				</Field>
+					groupIndex={groupIndex}
+					onRemoveSkill={handleRemoveSkill}
+				/>
 			</div>
 
-			<ConfirmationDialog
-				isOpen={showConfirmation}
-				onClose={handleCancelAdd}
-				onConfirm={handleConfirmAdd}
-				title='Duplicate Skill Found'
-				message={`The skill "${pendingSkill}" already exists in another group. Do you want to add it to this group as well?`}
-				confirmText='Add Anyway'
-				cancelText='Cancel'
-			/>
-
-			<ConfirmationDialog
-				isOpen={showImportConfirmation}
-				onClose={handleCancelImport}
-				onConfirm={handleConfirmImport}
-				title='Import Multiple Skills'
-				message={`Import the following skills?\n\n${pendingSkills.join(', ')}`}
-				confirmText='Import'
-				cancelText='Cancel'
+			<SkillDialogs
+				pendingSkill={pendingSkill}
+				pendingSkills={pendingSkills}
+				showConfirmation={showConfirmation}
+				showImportConfirmation={showImportConfirmation}
+				onConfirmAdd={handleConfirmAdd}
+				onCancelAdd={handleCancelAdd}
+				onConfirmImport={handleConfirmImport}
+				onCancelImport={handleCancelImport}
 			/>
 		</>
 	);
