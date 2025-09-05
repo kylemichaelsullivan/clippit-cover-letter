@@ -1,0 +1,151 @@
+# Test Organization Guide
+
+## Logical Test Grouping
+
+### Component Tests
+
+- **Forms**: All form-related components (`JobForm`, `LetterForm`, `SkillsForm`, etc.)
+- **UI**: Reusable UI components (`Button`, `Input`, `Modal`, etc.)
+- **Features**: Feature-specific components (`DocumentRenderer`, `PreviewLayout`, etc.)
+- **Layout**: Layout and navigation components (`Header`, `Footer`, `Sidebar`, etc.)
+
+### Service Tests
+
+- **API**: External API integrations (`openai`, `documentGeneration`)
+- **Utils**: Utility functions (`tiptapContentProcessing`, `htmlToPlaintext`)
+- **Stores**: State management (`resume-store`, `candidate-store`)
+
+### Integration Tests
+
+- **E2E**: End-to-end user workflows
+- **Integration**: Component integration tests
+
+## Proposed Folder Structure
+
+```
+src/__tests__/
+├── components/
+│   ├── forms/
+│   │   ├── candidate/
+│   │   ├── job/
+│   │   ├── letter/
+│   │   ├── resume/
+│   │   ├── skills/
+│   │   └── welcome/
+│   ├── ui/
+│   │   ├── buttons/
+│   │   ├── inputs/
+│   │   ├── feedback/
+│   │   └── navigation/
+│   ├── features/
+│   │   ├── document-generation/
+│   │   ├── preview/
+│   │   └── results/
+│   └── layout/
+├── services/
+│   ├── api/
+│   ├── utils/
+│   └── stores/
+├── integration/
+└── e2e/
+```
+
+## Test File Naming Standards
+
+### Component Tests
+
+- `ComponentName.test.tsx` - Main component test
+- `ComponentName.integration.test.tsx` - Integration test
+- `ComponentName.edge-cases.test.tsx` - Edge case tests
+
+### Service Tests
+
+- `serviceName.test.ts` - Main service test
+- `serviceName.integration.test.ts` - Integration test
+- `serviceName.error-handling.test.ts` - Error handling tests
+
+### Utility Tests
+
+- `utilityName.test.ts` - Main utility test
+- `utilityName.edge-cases.test.ts` - Edge case tests
+
+## Test Categories
+
+### 1. Unit Tests
+
+- Test individual components in isolation
+- Mock all external dependencies
+- Focus on component behavior and props
+- Fast execution, high coverage
+
+### 2. Integration Tests
+
+- Test component interactions
+- Test with real store data
+- Test form workflows
+- Moderate execution time
+
+### 3. E2E Tests
+
+- Test complete user workflows
+- Test across multiple pages
+- Test with real browser environment
+- Slower execution, critical path coverage
+
+## Test Data Organization
+
+### Mock Data Files
+
+```
+src/__tests__/
+├── fixtures/
+│   ├── candidate-data.ts
+│   ├── job-data.ts
+│   ├── resume-data.ts
+│   └── api-responses.ts
+├── mocks/
+│   ├── stores.ts
+│   ├── components.ts
+│   └── external-deps.ts
+└── utils/
+    ├── test-helpers.ts
+    └── render-helpers.ts
+```
+
+### Shared Test Utilities
+
+- `createMockForm()` - Form mock factory
+- `createMockStore()` - Store mock factory
+- `renderWithProviders()` - Render with context
+- `createTestData()` - Test data factory
+
+## Test Execution Strategy
+
+### Local Development
+
+- Run unit tests on file changes
+- Run integration tests on component changes
+- Run E2E tests before commits
+
+### CI/CD Pipeline
+
+- Run all unit tests
+- Run integration tests
+- Run E2E tests on staging
+- Generate coverage reports
+
+## Test Maintenance
+
+### Regular Tasks
+
+- Review test coverage monthly
+- Update mocks when APIs change
+- Refactor duplicate test code
+- Remove obsolete tests
+
+### Quality Gates
+
+- Minimum 80% code coverage
+- All critical paths covered
+- No flaky tests
+- Fast test execution (< 30s for unit tests)

@@ -1,0 +1,293 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# Testing Standards and Best Practices
+
+## Test Structure and Organization
+
+### File Naming Convention
+
+- Use descriptive test file names: `ComponentName.test.tsx` for React components
+- Use `.test.ts` for utility functions and services
+- Use `.spec.ts` for end-to-end tests
+- Group related tests in logical folders
+
+### Test File Structure
+
+```typescript
+// 1. Imports (testing libraries first, then application code)
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+// 2. Mock external dependencies (before imports)
+vi.mock('@/lib/stores', () => ({
+  useAppStore: () => mockAppStore,
+}));
+
+// 3. Import component under test (after mocks)
+import { ComponentName } from '@/components/path/ComponentName';
+
+// 4. Test suite
+describe('ComponentName', () => {
+  // Setup and teardown
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  // Test cases
+  it('should render correctly', () => {
+    // Test implementation
+  });
+});
+```
+
+## Mocking Standards
+
+### External Dependencies
+
+- Mock all external dependencies at the top of the file
+- Use consistent mock implementations across tests
+- Mock FontAwesome icons with testable attributes
+- Mock Next.js router and navigation hooks
+
+### Store Mocking
+
+```typescript
+vi.mock('@/lib/stores', () => ({
+  useAppStore: () => mockAppStore,
+  useTemplatesStore: () => mockTemplatesStore,
+  useCandidateStore: () => mockCandidateStore,
+}));
+```
+
+### Component Mocking
+
+```typescript
+vi.mock('@/components/ui/buttons', () => ({
+  Button: ({ children, onClick, ...props }: any) => (
+    <button onClick={onClick} {...props}>
+      {children}
+    </button>
+  ),
+}));
+```
+
+### FontAwesome Mocking
+
+```typescript
+vi.mock('@fortawesome/react-fontawesome', () => ({
+  FontAwesomeIcon: ({ icon }: any) => (
+    <span data-testid='font-awesome-icon'>{icon?.iconName || 'icon'}</span>
+  ),
+}));
+```
+
+## Test Case Standards
+
+### Test Naming
+
+- Use descriptive test names that explain the expected behavior
+- Start with "should" or "renders" for clarity
+- Include the condition being tested
+
+### Test Structure (AAA Pattern)
+
+```typescript
+it('should call onRemoveSkill when remove button is clicked', () => {
+  // Arrange
+  render(<Component onRemoveSkill={mockOnRemoveSkill} />);
+
+  // Act
+  fireEvent.click(screen.getByRole('button'));
+
+  // Assert
+  expect(mockOnRemoveSkill).toHaveBeenCalledWith('expected-value');
+});
+```
+
+### Assertion Standards
+
+- Use specific assertions: `toBeInTheDocument()`, `toHaveClass()`, `toHaveAttribute()`
+- Test both positive and negative cases
+- Verify callback functions are called with correct parameters
+- Test accessibility attributes (aria-label, title, etc.)
+
+## Component Testing Patterns
+
+### Rendering Tests
+
+```typescript
+it('renders component with correct structure', () => {
+  render(<Component />);
+  expect(screen.getByTestId('component-container')).toBeInTheDocument();
+  expect(screen.getByRole('button')).toBeInTheDocument();
+});
+```
+
+### Interaction Tests
+
+```typescript
+it('handles user interactions correctly', () => {
+  const mockHandler = vi.fn();
+  render(<Component onAction={mockHandler} />);
+
+  fireEvent.click(screen.getByRole('button'));
+  expect(mockHandler).toHaveBeenCalledTimes(1);
+});
+```
+
+### Props Testing
+
+```typescript
+it('passes props correctly to child components', () => {
+  render(<Component showActions={false} />);
+  expect(screen.getByTestId('child-component')).toHaveAttribute('data-show-actions', 'false');
+});
+```
+
+### CSS Class Testing
+
+```typescript
+it('applies correct CSS classes', () => {
+  const { container } = render(<Component className="custom-class" />);
+  expect(container.firstChild).toHaveClass('ComponentName', 'custom-class');
+});
+```
+
+## Service and Utility Testing
+
+### API Integration Testing
+
+```typescript
+describe('API Integration', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    global.fetch = vi.fn();
+  });
+
+  it('should make successful API call', async () => {
+    const mockResponse = { data: 'success' };
+    (global.fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    });
+
+    const result = await apiCall();
+    expect(result).toEqual(mockResponse);
+  });
+});
+```
+
+### Store Testing
+
+```typescript
+describe('Store Management', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    store.getState().clearData();
+  });
+
+  it('should update state correctly', () => {
+    const { updateField } = store.getState();
+    updateField('test', 'value');
+
+    expect(store.getState().data.test).toBe('value');
+  });
+});
+```
+
+## Error Handling and Edge Cases
+
+### Error State Testing
+
+```typescript
+it('displays error message when error is provided', () => {
+  render(<Component error="Test error" />);
+  expect(screen.getByTestId('error')).toBeInTheDocument();
+  expect(screen.getByText('Test error')).toBeInTheDocument();
+});
+
+it('does not display error when error is not provided', () => {
+  render(<Component />);
+  expect(screen.queryByTestId('error')).not.toBeInTheDocument();
+});
+```
+
+### Empty State Testing
+
+```typescript
+it('handles empty data gracefully', () => {
+  render(<Component data={[]} />);
+  expect(screen.getByTestId('empty-state')).toBeInTheDocument();
+});
+```
+
+## Accessibility Testing
+
+### ARIA Attributes
+
+```typescript
+it('has correct accessibility attributes', () => {
+  render(<Component />);
+  const button = screen.getByRole('button');
+  expect(button).toHaveAttribute('aria-label', 'Expected Label');
+  expect(button).toHaveAttribute('title', 'Expected Title');
+});
+```
+
+### Keyboard Navigation
+
+```typescript
+it('handles keyboard events correctly', () => {
+  render(<Component />);
+  const input = screen.getByRole('textbox');
+
+  fireEvent.keyDown(input, { key: 'Enter' });
+  expect(mockHandler).toHaveBeenCalled();
+});
+```
+
+## Test Data Management
+
+### Mock Data Creation
+
+```typescript
+const mockProps = {
+  includeCoverLetter: true,
+  includeResume: true,
+  candidateDetails: { name: 'John Doe' },
+  onSuccess: vi.fn(),
+  onError: vi.fn(),
+};
+```
+
+### Test Utilities
+
+- Use `test-utils.ts` for shared mock data and utilities
+- Create reusable mock functions for common patterns
+- Use `beforeEach` for consistent test setup
+
+## Performance and Best Practices
+
+### Test Isolation
+
+- Each test should be independent
+- Use `beforeEach` to reset mocks and state
+- Avoid shared mutable state between tests
+
+### Test Coverage
+
+- Test all public methods and props
+- Test error conditions and edge cases
+- Test accessibility features
+- Test user interactions
+
+### Maintainability
+
+- Keep tests simple and focused
+- Use descriptive test names
+- Group related tests in describe blocks
+- Avoid complex test setup when possible
