@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { FormFieldWithCheckbox } from '@/components/forms/core/FormFieldWithCheckbox';
-import { createMockForm } from '@/lib/test-utils';
+import { createMockForm } from '@/__tests__/utils/test-helpers';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({

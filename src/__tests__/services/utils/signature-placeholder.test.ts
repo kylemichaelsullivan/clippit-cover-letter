@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
 	htmlToPlaintextWithSignature,
 	cleanPlaintext,
-} from '../lib/utils/htmlToPlaintext';
+} from '@/lib/utils/htmlToPlaintext';
 import type { CandidateDetails } from '@/types';
 
 describe('signature placeholder preservation', () => {

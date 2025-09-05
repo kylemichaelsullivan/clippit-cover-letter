@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { processTipTapContent } from '../lib/utils/tiptapContentProcessing';
+import { processTipTapContent } from '@/lib/utils/tiptapContentProcessing';
 import type { CandidateDetails, Job } from '@/types';
 
 describe('TipTap content processing', () => {

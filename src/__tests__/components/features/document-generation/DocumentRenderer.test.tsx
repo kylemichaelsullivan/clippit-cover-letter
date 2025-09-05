@@ -6,7 +6,7 @@ import {
 	mockAppStore,
 	mockTemplatesStore,
 	mockCandidateStore,
-} from '@/lib/test-utils';
+} from '@/__tests__/mocks/stores';
 import {
 	useAppStore,
 	useTemplatesStore,
@@ -48,7 +48,7 @@ vi.mock('@/components/ui/feedback', () => ({
 }));
 
 vi.mock('@/components/ui/input', () => ({
-	FontSizeInput: ({ value, onChange, documentType, label, ariaLabel }: any) => (
+	FontSizeInput: ({ value, documentType, label, ariaLabel }: any) => (
 		<div data-testid={`font-size-input-${documentType}`}>
 			{value} - {documentType} - {label} - {ariaLabel}
 		</div>

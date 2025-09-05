@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { htmlToPlaintext, cleanPlaintext } from '../lib/utils/htmlToPlaintext';
+import { htmlToPlaintext, cleanPlaintext } from '@/lib/utils/htmlToPlaintext';
 
 describe('htmlToPlaintext', () => {
 	it('should convert basic HTML to plaintext', () => {

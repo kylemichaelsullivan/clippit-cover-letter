@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import {
 	htmlToPlaintextWithSignature,
 	cleanPlaintext,
-} from '../lib/utils/htmlToPlaintext';
-import { replaceSignaturePlaceholders } from '../lib/utils/signatureReplacement';
+} from '@/lib/utils/htmlToPlaintext';
+import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
 import type { CandidateDetails } from '@/types';
 
 describe('signature integration tests', () => {

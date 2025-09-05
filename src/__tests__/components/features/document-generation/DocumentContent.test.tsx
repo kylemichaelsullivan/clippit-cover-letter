@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 
 import { DocumentContent } from '@/components/results/panels';
-import { mockCandidateStore } from '@/lib/test-utils';
+import { mockCandidateStore } from '@/__tests__/mocks/stores';
 
 vi.mock('@/lib/stores', () => ({
 	useCandidateStore: () => mockCandidateStore,
