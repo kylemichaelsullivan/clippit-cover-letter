@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({
-	Field: ({ children, name }: any) => {
+	Field: ({ children }: any) => {
 		const mockField = {
 			state: { value: [] },
 		};

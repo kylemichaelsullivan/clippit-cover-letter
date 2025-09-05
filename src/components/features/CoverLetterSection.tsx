@@ -1,8 +1,8 @@
 'use client';
 
-import { DocumentSection } from './DocumentSection';
-import { ConfirmationDialog } from '@/components/ui/feedback';
 import { CoverLetterNotProvidedMessage } from '@/components/ui/feedback';
+import { DocumentSection } from './DocumentSection';
+import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 import { processTipTapContent } from '@/lib/utils/tiptapContentProcessing';
 import { useCoverLetterGeneration } from '@/lib/hooks';
 import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
@@ -47,7 +47,7 @@ export const CoverLetterSection = ({
 		timeoutMessage: 'Cover letter generation timed out. Please try again.',
 	});
 
-	// Process template content for TipTap editor (all placeholders except {{My Signature}})
+	// Except {{My Signature}}
 	const processedTemplateContent = processTipTapContent(
 		coverLetterTemplate,
 		candidateDetails,
@@ -61,9 +61,9 @@ export const CoverLetterSection = ({
 					componentName='GenerateCoverLetterButton'
 					documentType='cover-letter'
 					title='Cover Letter'
-					content={generatedCoverLetter}
 					generateTitle='Generate Cover Letter'
 					templateContent={processedTemplateContent}
+					content={generatedCoverLetter}
 					fallbackMessage={<CoverLetterNotProvidedMessage />}
 					isEditable={!isGeneratingCoverLetter}
 					isGenerating={isGeneratingCoverLetter}
@@ -72,14 +72,12 @@ export const CoverLetterSection = ({
 				/>
 			</div>
 
-			<ConfirmationDialog
+			<GenerationConfirmationDialog
 				title='Replace Cover Letter'
 				message='A cover letter already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				isOpen={showConfirmation}
-				confirmText='Generate New'
-				cancelText='Cancel'
-				onClose={() => setShowConfirmation(false)}
 				onConfirm={performGeneration}
+				onClose={() => setShowConfirmation(false)}
 			/>
 		</>
 	);

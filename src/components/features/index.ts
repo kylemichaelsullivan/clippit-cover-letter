@@ -1,8 +1,14 @@
 export { CoverLetterSection } from './CoverLetterSection';
 export { DocumentGenerator } from './DocumentGenerator';
+export { DocumentGenerationButton } from './DocumentGenerationButton';
+export { DocumentGenerationService } from './DocumentGenerationService';
 export { DocumentSection } from './DocumentSection';
 export { GenerateButton } from './GenerateButton';
+export { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 export { GenerationConfirmations } from './GenerationConfirmations';
 export { PreviewContent } from './PreviewContent';
+export { PreviewHeader } from './PreviewHeader';
+export { PreviewLayout } from './PreviewLayout';
+export { PreviewStateManager } from './PreviewStateManager';
 export { ResumeSection } from './ResumeSection';
 export { SkillsSummarySection } from './SkillsSummarySection';

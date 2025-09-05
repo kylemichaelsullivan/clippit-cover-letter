@@ -2,7 +2,6 @@
 
 import { memo } from 'react';
 import clsx from 'clsx';
-
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { ButtonColor } from '@/types';
 
@@ -30,13 +29,13 @@ export const Button = memo(function Button({
 		'flex cursor-pointer items-center justify-center gap-2 rounded-lg border font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-35';
 
 	const colorStyles = {
-		'bg-blue border-blue hover:bg-light-blue hover:border-light-blue text-white':
+		'bg-blue border-blue text-white hover:bg-light-blue hover:border-light-blue':
 			color === 'primary',
-		'bg-light-gray border-light-gray hover:bg-gray hover:border-gray text-black hover:text-white':
+		'bg-light-gray border-light-gray text-black hover:bg-gray hover:border-gray hover:text-white':
 			color === 'secondary',
-		'bg-green border-green hover:bg-gray text-white': color === 'success',
-		'bg-red border-red hover:bg-gray text-white': color === 'danger',
-		'text-blue text-2xs hover:bg-blue hover:border-blue border-white bg-white font-mono hover:text-white':
+		'bg-green border-green text-white hover:bg-gray': color === 'success',
+		'bg-red border-red text-white hover:bg-gray': color === 'danger',
+		'bg-white border-white text-blue text-2xs font-mono hover:bg-blue hover:border-blue hover:text-white':
 			color === 'mustache',
 		'shadow hover:bg-black hover:text-white': size === 'tiptap',
 	};
@@ -66,7 +65,7 @@ export const Button = memo(function Button({
 	);
 
 	return (
-		<button className={buttonClassName} {...props}>
+		<button type='button' className={buttonClassName} {...props}>
 			{children}
 		</button>
 	);

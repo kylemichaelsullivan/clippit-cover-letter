@@ -35,9 +35,9 @@ vi.mock('@/components/forms/core', () => ({
 }));
 
 vi.mock('@tanstack/react-form', () => ({
-	Field: ({ children, name }: any) =>
+	Field: ({ children }: any) =>
 		children({
-			handleChange: vi.fn((value) => {
+			handleChange: vi.fn(() => {
 				// Mock field change handler
 			}),
 		}),

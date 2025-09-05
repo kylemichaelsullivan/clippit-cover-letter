@@ -1,9 +1,9 @@
 'use client';
 
-import { Field } from '@tanstack/react-form';
 import { Button } from '@/components/ui/buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Field } from '@tanstack/react-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
 import { sortSkillsInGroup } from '@/lib/utils';
 
@@ -33,10 +33,7 @@ export function SkillTagsList({
 				const sortedSkills = sortSkillsInGroup(skills);
 
 				return (
-					<div
-						className='SkillTagsList flex flex-wrap gap-1.5 pt-1 sm:gap-2'
-						data-testid='SkillTagsList'
-					>
+					<div className='SkillTagsList flex flex-wrap gap-1.5 pt-1 sm:gap-2'>
 						{sortedSkills.map((skill, index) => (
 							<span
 								className='SkillTag text-gray bg-light-gray flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-black sm:px-2 sm:py-1 sm:text-sm'

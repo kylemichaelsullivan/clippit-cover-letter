@@ -2,9 +2,6 @@
 
 import { memo } from 'react';
 
-import { DocumentSelectionControls } from '@/components/results/display';
-import { TabTitle } from '@/components/ui';
-import { EmptyState } from '@/components/ui/feedback';
 import {
 	useAppStore,
 	useCandidateStore,
@@ -16,7 +13,12 @@ import {
 } from '@/lib/stores';
 import { useGenerationConfirmations } from '@/lib/hooks';
 
-import { CoverLetterSection, GenerationConfirmations, ResumeSection } from './';
+import {
+	CoverLetterSection,
+	GenerationConfirmations,
+	PreviewLayout,
+	ResumeSection,
+} from './';
 
 export const PreviewContent = memo(function PreviewContent() {
 	const { currentPhase } = usePhaseStore();
@@ -39,44 +41,31 @@ export const PreviewContent = memo(function PreviewContent() {
 		return null;
 	}
 
-	const hasData = candidateDetails && jobDetails;
+	const hasData = Boolean(candidateDetails && jobDetails);
 	const hasSelectedDocuments = includeCoverLetter || includeResume;
 
 	return (
 		<>
-			<div className='PreviewContent flex flex-col gap-12'>
-				<div className='flex items-center justify-between'>
-					<TabTitle title='Preview' componentName='PreviewContentTitle' />
-				</div>
-				<DocumentSelectionControls />
-				<div className='flex flex-col gap-4'>
-					{!hasData && <EmptyState variant='no-data' />}
+			<PreviewLayout
+				hasData={hasData}
+				hasSelectedDocuments={hasSelectedDocuments}
+			>
+				<CoverLetterSection
+					candidateDetails={candidateDetails}
+					jobDetails={jobDetails}
+					skills={skills}
+					includeCoverLetter={includeCoverLetter}
+					coverLetterTemplate={coverLetterTemplate}
+				/>
 
-					{hasData && !hasSelectedDocuments && (
-						<EmptyState variant='no-documents-selected' />
-					)}
-
-					{hasData && hasSelectedDocuments && (
-						<div className='flex flex-col gap-8'>
-							<CoverLetterSection
-								candidateDetails={candidateDetails}
-								jobDetails={jobDetails}
-								skills={skills}
-								includeCoverLetter={includeCoverLetter}
-								coverLetterTemplate={coverLetterTemplate}
-							/>
-
-							<ResumeSection
-								candidateDetails={candidateDetails}
-								jobDetails={jobDetails}
-								skills={skills}
-								includeResume={includeResume}
-								resumeDetails={resumeDetails}
-							/>
-						</div>
-					)}
-				</div>
-			</div>
+				<ResumeSection
+					candidateDetails={candidateDetails}
+					jobDetails={jobDetails}
+					skills={skills}
+					includeResume={includeResume}
+					resumeDetails={resumeDetails}
+				/>
+			</PreviewLayout>
 
 			<GenerationConfirmations
 				candidateDetails={candidateDetails}

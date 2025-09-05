@@ -3,9 +3,10 @@
 import { DocumentSection } from './DocumentSection';
 import { ResumeNotProvidedMessage } from '@/components/ui/feedback';
 import { useResumeGeneration } from '@/lib/hooks';
-import { ConfirmationDialog } from '@/components/ui/feedback';
 import { useTemplatesStore } from '@/lib/stores';
 import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
+
+import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 
 type ResumeSectionProps = {
 	candidateDetails: any;
@@ -55,23 +56,21 @@ export const ResumeSection = ({
 			<div className={includeResume ? '' : 'hidden'}>
 				<DocumentSection
 					componentName='GenerateResumeButton'
+					documentType='resume'
 					title='Resume'
-					content={generatedResume}
 					generateTitle='Generate Resume'
+					content={generatedResume}
 					fallbackMessage={<ResumeNotProvidedMessage />}
 					isEditable={!isGeneratingResume}
 					isGenerating={isGeneratingResume}
-					onContentChange={setGeneratedResume}
 					onGenerate={handleGenerate}
-					documentType='resume'
+					onContentChange={setGeneratedResume}
 				/>
 			</div>
 
-			<ConfirmationDialog
+			<GenerationConfirmationDialog
 				title='Replace Resume'
 				message='A resume already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
-				confirmText='Generate New'
-				cancelText='Cancel'
 				isOpen={showConfirmation}
 				onConfirm={performGeneration}
 				onClose={() => setShowConfirmation(false)}

@@ -1,6 +1,6 @@
 'use client';
 
-import { ConfirmationDialog } from '@/components/ui/feedback';
+import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 import { useGenerationConfirmations } from '@/lib/hooks';
 
 type GenerationConfirmationsProps = {
@@ -39,24 +39,20 @@ export const GenerationConfirmations = ({
 
 	return (
 		<>
-			<ConfirmationDialog
+			<GenerationConfirmationDialog
+				title='Replace Skills Summary'
+				message='A skills summary already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				isOpen={showSkillsConfirmation}
 				onClose={() => setShowSkillsConfirmation(false)}
 				onConfirm={performSkillsGeneration}
-				title='Replace Skills Summary'
-				message='A skills summary already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
-				confirmText='Generate New'
-				cancelText='Cancel'
 			/>
 
-			<ConfirmationDialog
+			<GenerationConfirmationDialog
+				title='Replace Cover Letter'
+				message='A cover letter already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
 				isOpen={showCoverLetterConfirmation}
 				onClose={() => setShowCoverLetterConfirmation(false)}
 				onConfirm={performCoverLetterGeneration}
-				title='Replace Cover Letter'
-				message='A cover letter already exists. Generating a new one will replace the current content. Are you sure you want to continue?'
-				confirmText='Generate New'
-				cancelText='Cancel'
 			/>
 		</>
 	);

@@ -18,7 +18,7 @@ vi.mock('@/components/forms/letter/LetterFormHeader', () => ({
 }));
 
 vi.mock('@/components/forms/letter/CoverLetterSection', () => ({
-	CoverLetterSection: ({ form, onFieldChange }: any) => (
+	CoverLetterSection: ({ onFieldChange }: any) => (
 		<div data-testid='cover-letter-section'>
 			<input
 				type='checkbox'
