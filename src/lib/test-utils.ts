@@ -31,3 +31,28 @@ export const mockField = ({ children }: any) => {
 	};
 	return children(mockFieldApi);
 };
+
+// Mock store data
+export const mockCandidateStore = {
+	candidateDetails: {
+		fullName: 'John Doe',
+		email: 'john@example.com',
+		phone: '555-1234',
+		linkedin: 'johndoe',
+		portfolio: 'https://portfolio.com',
+	},
+};
+
+export const mockAppStore = {
+	includeCoverLetter: true,
+	includeResume: true,
+	coverLetterFontSize: [12, 'pt'] as const,
+	resumeFontSize: [11, 'pt'] as const,
+	setCoverLetterFontSize: vi.fn(),
+	setResumeFontSize: vi.fn(),
+};
+
+export const mockTemplatesStore = {
+	generatedCoverLetter: 'Generated cover letter content',
+	generatedResume: 'Generated resume content',
+};

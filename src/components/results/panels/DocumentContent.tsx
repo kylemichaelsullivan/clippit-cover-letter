@@ -1,14 +1,14 @@
 'use client';
 
 import { memo, useState, useRef, useCallback, type ReactNode } from 'react';
-import clsx from 'clsx';
 
-import { DocumentPreview } from '@/components/ui/display';
-import { renderHtmlContent } from '@/lib/utils';
+import clsx from 'clsx';
+import { DocumentGenerationState } from './DocumentGenerationState';
+import { DocumentHeader } from './DocumentHeader';
+import { DocumentPreview } from './DocumentPreview';
+import { PLACEHOLDERS } from '@/config';
 import { TipTapEditor } from '@/components/ui/input';
 import { ViewToggle } from '@/components/ui/buttons';
-import { PLACEHOLDERS } from '@/config';
-import { useCandidateStore } from '@/lib/stores';
 import type { DocumentType, FontSize } from '@/types';
 
 type DocumentContentProps = {
@@ -38,7 +38,6 @@ export const DocumentContent = memo(function DocumentContent({
 	templateContent,
 	onContentChange,
 }: DocumentContentProps) {
-	const { candidateDetails } = useCandidateStore();
 	const [isTipTapView, setIsTipTapView] = useState(false);
 	const isCoverLetter = documentType === 'cover-letter';
 	const isResume = documentType === 'resume';
@@ -67,65 +66,29 @@ export const DocumentContent = memo(function DocumentContent({
 		lastContentRef.current = content;
 	}
 
-	const getGeneratingText = (title: string) => {
-		return `Generating ${title}…`;
-	};
-
-	const renderPageHeader = () => {
-		if (!isCoverLetter && !isResume) return null;
-
-		const { fullName, email, phone, linkedin, portfolio } = candidateDetails;
-		const formattedLinkedin = linkedin ? `/in/${linkedin}` : '';
-		const contactInfo = [email, phone, formattedLinkedin, portfolio]
-			.filter(Boolean)
-			.join(' | ');
-
-		return (
-			<div className='page-header text-center'>
-				<h1 className='page-header-name text-2xl font-bold'>{fullName}</h1>
-				{contactInfo && (
-					<div className='page-header-contact text-sm font-light'>
-						{contactInfo}
-					</div>
-				)}
-			</div>
-		);
-	};
-
 	const handleToggleView = () => {
 		setIsTipTapView(!isTipTapView);
 	};
 
 	return (
 		<div className={clsx('DocumentContent flex flex-col gap-4', className)}>
-			<div className='flex items-center justify-between'>
-				<label
-					htmlFor={inputId}
-					className='DocumentContentTitle text-lg font-semibold text-black'
-				>
-					<span>{title}</span>
-				</label>
-				<div className='flex items-center gap-3'>
-					{headerElement}
-					{fontSizeInput ? (
-						<div className='flex items-center justify-between'>
-							{fontSizeInput}
-						</div>
-					) : null}
-					{isEditable && (isResume || isCoverLetter) && (
+			<DocumentHeader
+				title={title}
+				fontSizeInput={fontSizeInput}
+				headerElement={
+					isEditable && (isResume || isCoverLetter) ? (
 						<ViewToggle
 							isTipTapView={isTipTapView}
 							onToggle={handleToggleView}
 						/>
-					)}
-				</div>
-			</div>
+					) : (
+						headerElement
+					)
+				}
+			/>
+
 			{isGenerating ? (
-				<div className='ResultsDocumentContentGenerating print-content print-document border-light-gray force-white-bg border'>
-					<div className='ResultsDocumentContentGeneratingText text-light-gray flex min-h-64 w-full items-center justify-center p-8 text-center font-mono sm:min-h-96 sm:text-base'>
-						{getGeneratingText(title)}
-					</div>
-				</div>
+				<DocumentGenerationState isGenerating={true} title={title} />
 			) : isEditable ? (
 				<div className='flex flex-col gap-4'>
 					{isResume || isCoverLetter ? (
@@ -145,15 +108,11 @@ export const DocumentContent = memo(function DocumentContent({
 								/>
 							</div>
 						) : (
-							<div className='print-content print-document border-light-gray force-white-bg border p-2'>
-								<DocumentPreview
-									className='rounded-lg'
-									documentType={isCoverLetter ? 'cover-letter' : 'resume'}
-									content={content}
-									candidateDetails={candidateDetails}
-									fontSize={fontSize || [11, 'pt']}
-								/>
-							</div>
+							<DocumentPreview
+								content={content}
+								documentType={isCoverLetter ? 'cover-letter' : 'resume'}
+								fontSize={fontSize || [11, 'pt']}
+							/>
 						)
 					) : (
 						<div className='print-document border-light-gray force-white-bg border'>
@@ -172,25 +131,12 @@ export const DocumentContent = memo(function DocumentContent({
 						</div>
 					)}
 				</div>
-			) : isResume || isCoverLetter ? (
-				<div className='print-content print-document border-light-gray force-white-bg border p-2'>
-					<DocumentPreview
-						className='rounded-lg'
-						documentType={isCoverLetter ? 'cover-letter' : 'resume'}
-						content={content}
-						candidateDetails={candidateDetails}
-						fontSize={fontSize || [11, 'pt']}
-					/>
-				</div>
 			) : (
-				<div
-					className={`print-content print-document border-light-gray force-white-bg border p-2`}
-				>
-					{renderPageHeader()}
-					<div className='p-0'>
-						{renderHtmlContent(content, candidateDetails)}
-					</div>
-				</div>
+				<DocumentPreview
+					content={content}
+					documentType={documentType}
+					fontSize={fontSize || [11, 'pt']}
+				/>
 			)}
 		</div>
 	);

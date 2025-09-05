@@ -2,15 +2,10 @@
 
 import { memo } from 'react';
 
-import { ActionButtons } from '@/components/results/actions';
-import { DocumentContent } from '@/components/results/panels';
+import { DocumentSection } from '@/components/results/panels';
 import { EmptyState } from '@/components/ui/feedback';
 import { FontSizeInput } from '@/components/ui/input';
-import {
-	useAppStore,
-	useTemplatesStore,
-	useCandidateStore,
-} from '@/lib/stores';
+import { useAppStore, useTemplatesStore } from '@/lib/stores';
 
 type DocumentRendererProps = {
 	className?: string;
@@ -34,7 +29,6 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 		setResumeFontSize,
 	} = useAppStore();
 	const { generatedCoverLetter, generatedResume } = useTemplatesStore();
-	const { candidateDetails } = useCandidateStore();
 
 	const hasSelectedDocuments = includeCoverLetter || includeResume;
 	const hasGeneratedContent =
@@ -51,71 +45,45 @@ export const DocumentRenderer = memo(function DocumentRenderer({
 
 	return (
 		<div className={`DocumentRenderer flex flex-col gap-6 ${className || ''}`}>
-			<div
-				className={includeCoverLetter && generatedCoverLetter ? '' : 'hidden'}
-			>
-				<div className='flex flex-col gap-4'>
-					<DocumentContent
-						documentType='cover-letter'
-						title='Cover Letter'
-						content={generatedCoverLetter}
-						fontSize={coverLetterFontSize}
-						fontSizeInput={
-							showFontSizeControl ? (
-								<FontSizeInput
-									value={coverLetterFontSize}
-									onChange={setCoverLetterFontSize}
-									documentType='cover-letter'
-									label='Base Font'
-									ariaLabel='Base font size for cover letter'
-								/>
-							) : undefined
-						}
-						isEditable={false}
-					/>
-					{showActions && (
-						<ActionButtons
-							text={generatedCoverLetter}
+			<DocumentSection
+				documentType='cover-letter'
+				title='Cover Letter'
+				content={generatedCoverLetter}
+				fontSize={coverLetterFontSize}
+				showActions={showActions}
+				headerElement={
+					showFontSizeControl ? (
+						<FontSizeInput
+							value={coverLetterFontSize}
+							onChange={setCoverLetterFontSize}
 							documentType='cover-letter'
-							filename='cover-letter'
-							candidateDetails={candidateDetails}
-							fontSize={coverLetterFontSize}
+							label='Base Font'
+							ariaLabel='Base font size for cover letter'
 						/>
-					)}
-				</div>
-			</div>
+					) : undefined
+				}
+				className={includeCoverLetter && generatedCoverLetter ? '' : 'hidden'}
+			/>
 
-			<div className={includeResume && generatedResume ? '' : 'hidden'}>
-				<div className='flex flex-col gap-4'>
-					<DocumentContent
-						title='Resume'
-						documentType='resume'
-						content={generatedResume}
-						fontSize={resumeFontSize}
-						fontSizeInput={
-							showFontSizeControl ? (
-								<FontSizeInput
-									value={resumeFontSize}
-									onChange={setResumeFontSize}
-									documentType='resume'
-									label='Base Font'
-									ariaLabel='Base font size for resume'
-								/>
-							) : undefined
-						}
-						isEditable={false}
-					/>
-					{showActions && (
-						<ActionButtons
-							filename='resume'
+			<DocumentSection
+				documentType='resume'
+				title='Resume'
+				content={generatedResume}
+				fontSize={resumeFontSize}
+				showActions={showActions}
+				headerElement={
+					showFontSizeControl ? (
+						<FontSizeInput
 							documentType='resume'
-							candidateDetails={candidateDetails}
-							text={generatedResume}
-							fontSize={resumeFontSize}
+							value={resumeFontSize}
+							label='Base Font'
+							ariaLabel='Base font size for resume'
+							onChange={setResumeFontSize}
 						/>
-					)}
-				</div>
-			</div>
+					) : undefined
+				}
+				className={includeResume && generatedResume ? '' : 'hidden'}
+			/>
 		</div>
 	);
 });

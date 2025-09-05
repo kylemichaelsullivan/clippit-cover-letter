@@ -1,43 +1,33 @@
 'use client';
 
-import { Button } from '@/components/ui';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { memo, type ReactNode } from 'react';
 
 type DocumentHeaderProps = {
 	title: string;
-	onGenerate?: () => void;
-	isGenerating?: boolean;
+	className?: string;
+	fontSizeInput?: ReactNode;
+	headerElement?: ReactNode;
 };
 
-export function DocumentHeader({
+export const DocumentHeader = memo(function DocumentHeader({
 	title,
-	onGenerate,
-	isGenerating = false,
+	className,
+	fontSizeInput,
+	headerElement,
 }: DocumentHeaderProps) {
 	return (
-		<header className='DocumentHeader border-gray flex items-center justify-between gap-3 border-b bg-white px-4 py-3 sm:flex-row sm:justify-between sm:gap-0 sm:px-6 sm:py-4'>
-			<h3 className='text-base font-medium text-black sm:text-lg'>{title}</h3>
-			{onGenerate && (
-				<div className='GenerateButton w-full'>
-					<Button
-						color='primary'
-						size='lg'
-						onClick={onGenerate}
-						componentName='GenerateButton'
-					>
-						{isGenerating ? (
-							<FontAwesomeIcon
-								icon={faRefresh}
-								aria-hidden='true'
-								className='animate-spin'
-							/>
-						) : (
-							'Generate Documents'
-						)}
-					</Button>
-				</div>
-			)}
-		</header>
+		<div className={`flex items-center justify-between ${className || ''}`}>
+			<label className='DocumentContentTitle text-lg font-semibold text-black'>
+				<span>{title}</span>
+			</label>
+			<div className='flex items-center gap-3'>
+				{headerElement}
+				{fontSizeInput && (
+					<div className='flex items-center justify-between'>
+						{fontSizeInput}
+					</div>
+				)}
+			</div>
+		</div>
 	);
-}
+});
