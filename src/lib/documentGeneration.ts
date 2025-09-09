@@ -35,6 +35,10 @@ const replaceMustacheValues = (
 ) => {
 	let result = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
 		const cleanKey = key.trim();
+		// Preserve {{My Signature}} placeholders
+		if (cleanKey === 'My Signature') {
+			return match;
+		}
 		if (Object.prototype.hasOwnProperty.call(values, cleanKey)) {
 			return values[cleanKey];
 		}
@@ -201,10 +205,7 @@ const createMustacheValues = (
 				values[replacement.name] = candidateDetails.portfolio || '';
 				break;
 			case 'My Signature':
-				values[replacement.name] =
-					candidateDetails.signatureUseImage && candidateDetails.signature
-						? `<img src="${candidateDetails.signature}" class="signature-image" alt="Signature" />`
-						: candidateDetails.fullName || '';
+				// Skip signature replacement during generation - preserve placeholder for editing
 				break;
 			case 'My Skills':
 				values[replacement.name] =
