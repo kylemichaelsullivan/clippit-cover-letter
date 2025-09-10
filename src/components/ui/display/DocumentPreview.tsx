@@ -32,10 +32,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 	useEffect(() => {
 		const generateContent = async () => {
 			const pageHeader = await generatePageHeaderHTML(candidateDetails);
-			const pageFooter = await generatePageFooterHTML(
-				candidateDetails,
-				documentType === 'cover-letter',
-			);
+			const pageFooter = await generatePageFooterHTML(candidateDetails);
 			const extractedContent = extractTipTapContent(content);
 			const formattedContent = formatContentForPDF(extractedContent);
 			const contentWithSignature = replaceSignaturePlaceholders(
@@ -89,7 +86,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 								margin: 0 auto;
 							}
 
-: 							/* Use shared styles for consistent formatting */
+	 						/* Use shared styles for consistent formatting */
 							${generateUIStyles()}
 						</style>
 					</head>

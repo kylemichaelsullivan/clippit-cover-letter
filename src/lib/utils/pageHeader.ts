@@ -23,7 +23,6 @@ export async function generatePageHeaderHTML(
 
 export async function generatePageFooterHTML(
 	candidateDetails: CandidateDetails,
-	isCoverLetter: boolean = false,
 ): Promise<string> {
 	const { logo, logoInclude, portfolioQRCode, portfolio } = candidateDetails;
 
@@ -37,7 +36,7 @@ export async function generatePageFooterHTML(
 			: '';
 
 	const shouldShowQRCode =
-		isCoverLetter && portfolioQRCode && portfolio && portfolio.trim() !== '';
+		portfolioQRCode && portfolio && portfolio.trim() !== '';
 
 	const qrCodeHTML = shouldShowQRCode
 		? `
