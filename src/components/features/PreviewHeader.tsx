@@ -7,7 +7,7 @@ import { TabTitle } from '@/components/ui';
 
 export const PreviewHeader = memo(function PreviewHeader() {
 	return (
-		<div className='flex items-center justify-between'>
+		<div className='PreviewHeader flex flex-col items-center justify-between'>
 			<TabTitle componentName='PreviewContentTitle' title='Preview' />
 			<DocumentSelectionControls />
 		</div>

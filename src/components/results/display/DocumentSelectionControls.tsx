@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, useMemo } from 'react';
+
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
@@ -18,12 +19,12 @@ export const DocumentSelectionControls = memo(
 	}: DocumentSelectionControlsProps) {
 		const {
 			includeCoverLetter,
-			setIncludeCoverLetter,
 			includeResume,
+			setIncludeCoverLetter,
 			setIncludeResume,
 			coverLetterInstructions,
-			setCoverLetterInstructions,
 			resumeInstructions,
+			setCoverLetterInstructions,
 			setResumeInstructions,
 		} = useAppStore();
 		const { generatedCoverLetter, generatedResume } = useTemplatesStore();
@@ -76,26 +77,26 @@ export const DocumentSelectionControls = memo(
 		return (
 			<>
 				<div
-					className={`DocumentSelectionControls flex flex-col gap-4 rounded-lg border border-black bg-white p-4 ${className || ''}`}
+					className={`DocumentSelectionControls flex w-full flex-col gap-4 rounded-lg border-black bg-white p-4 ${className || ''}`}
 				>
 					<div className='flex flex-col gap-14'>
 						<DocumentSelectionControl
-							checked={includeCoverLetter}
-							onChange={setIncludeCoverLetter}
 							label='Cover Letter'
+							checked={includeCoverLetter}
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.COVER_LETTER}
 							value={coverLetterInstructions}
 							title='Generate Cover Letter?'
+							onChange={setIncludeCoverLetter}
 							onValueChange={setCoverLetterInstructions}
 						/>
 
 						<DocumentSelectionControl
-							checked={includeResume}
-							onChange={setIncludeResume}
 							label='Resume'
+							checked={includeResume}
 							placeholder={PLACEHOLDERS.DOCUMENT_INSTRUCTIONS.RESUME}
 							value={resumeInstructions}
 							title='Generate Resume?'
+							onChange={setIncludeResume}
 							onValueChange={setResumeInstructions}
 						/>
 					</div>
@@ -103,12 +104,12 @@ export const DocumentSelectionControls = memo(
 					{hasSelectedDocuments && (
 						<div className='DocumentSelectionControl flex justify-center'>
 							<Button
+								componentName='GenerateAllButton'
 								color='primary'
 								size='md'
-								onClick={handleGenerateAll}
-								disabled={isGeneratingAny}
 								title={buttonText}
-								componentName='GenerateAllButton'
+								disabled={isGeneratingAny}
+								onClick={handleGenerateAll}
 							>
 								{isGeneratingAny ? DEFAULTS.GENERATING_TEXT : buttonText}
 							</Button>
@@ -117,13 +118,13 @@ export const DocumentSelectionControls = memo(
 				</div>
 
 				<ConfirmationDialog
-					isOpen={showGenerateAllConfirmation}
-					onClose={() => setShowGenerateAllConfirmation(false)}
-					onConfirm={performSelectiveGeneration}
-					title='Regenerate Content'
 					message='Select content to regenerate:'
 					availableItems={existingContentForDialog}
+					isOpen={showGenerateAllConfirmation}
+					title='Regenerate Content'
 					cancelText='Cancel'
+					onConfirm={performSelectiveGeneration}
+					onClose={() => setShowGenerateAllConfirmation(false)}
 				/>
 			</>
 		);

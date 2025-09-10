@@ -19,7 +19,7 @@ export const PLACEHOLDERS = {
 	EDUCATION: {
 		DEGREE: 'Bachelor of Science',
 		EMPTY_MESSAGE: 'Click the + button below to add your education details',
-		GRADUATION_YEAR: '2020',
+		GRADUATION_YEAR: '2020 (only for sorting)',
 		INSTITUTION: 'University of Michigan',
 		LOCATION: 'Ann Arbor, MI',
 	},
