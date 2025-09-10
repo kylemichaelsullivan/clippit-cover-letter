@@ -15,22 +15,22 @@ export type ResumeFormValues = {
 };
 
 const createDefaultEducation = (): Education => ({
-	id: crypto.randomUUID(),
 	include: true,
 	degree: '',
 	graduationYear: '',
 	institution: '',
 	location: '',
+	id: crypto.randomUUID(),
 });
 
 const createDefaultExperience = (): Experience => ({
-	id: crypto.randomUUID(),
 	include: true,
 	title: '',
 	company: '',
 	start: '',
 	end: '',
 	bullets: [],
+	id: crypto.randomUUID(),
 });
 
 export function useResumeForm(
@@ -143,6 +143,65 @@ export function useResumeForm(
 		[form, setEducation, updateTemplate],
 	);
 
+	const handleEducationPaste = useCallback(
+		(parsedEducation: any[], currentEducationIndex?: number) => {
+			const currentEducation = form.getFieldValue('education') || [];
+
+			if (parsedEducation.length === 1 && currentEducationIndex !== undefined) {
+				// Update the current education entry
+				const updatedEducation = [...currentEducation];
+				updatedEducation[currentEducationIndex] = {
+					...updatedEducation[currentEducationIndex],
+					degree: parsedEducation[0].degree,
+					institution: parsedEducation[0].institution,
+					location: parsedEducation[0].location,
+					graduationYear: parsedEducation[0].graduationYear || '',
+				};
+
+				form.setFieldValue('education', updatedEducation);
+				setEducation(updatedEducation);
+				updateTemplate({ ...form.state.values, education: updatedEducation });
+			} else if (
+				parsedEducation.length > 1 &&
+				currentEducationIndex !== undefined
+			) {
+				// Replace the current empty education entry with multiple new entries
+				const newEducationEntries = parsedEducation.map((entry) => ({
+					...createDefaultEducation(),
+					degree: entry.degree,
+					institution: entry.institution,
+					location: entry.location,
+					graduationYear: entry.graduationYear || '',
+				}));
+
+				const updatedEducation = [...currentEducation];
+				updatedEducation.splice(
+					currentEducationIndex,
+					1,
+					...newEducationEntries,
+				);
+				form.setFieldValue('education', updatedEducation);
+				setEducation(updatedEducation);
+				updateTemplate({ ...form.state.values, education: updatedEducation });
+			} else {
+				// Add new education entries (when pasting without a specific index)
+				const newEducationEntries = parsedEducation.map((entry) => ({
+					...createDefaultEducation(),
+					degree: entry.degree,
+					institution: entry.institution,
+					location: entry.location,
+					graduationYear: entry.graduationYear || '',
+				}));
+
+				const updatedEducation = [...currentEducation, ...newEducationEntries];
+				form.setFieldValue('education', updatedEducation);
+				setEducation(updatedEducation);
+				updateTemplate({ ...form.state.values, education: updatedEducation });
+			}
+		},
+		[form, setEducation, updateTemplate],
+	);
+
 	const removeExperience = useCallback(
 		(experienceIndex: number) => {
 			const currentExperience = form.getFieldValue('experience') || [];
@@ -182,7 +241,6 @@ export function useResumeForm(
 	const sortExperienceByDate = useCallback(() => {
 		const currentExperience = form.getFieldValue('experience') || [];
 		const sortedExperience = [...currentExperience].sort((a, b) => {
-			// Parse end dates
 			const endDateA = a.end;
 			const endDateB = b.end;
 
@@ -207,7 +265,6 @@ export function useResumeForm(
 		updateTemplate({ ...form.state.values, experience: sortedExperience });
 	}, [form, setExperience, updateTemplate]);
 
-	// Helper function to compare dates
 	const compareDates = (dateA: string, dateB: string) => {
 		// Handle empty dates
 		if (!dateA && !dateB) return 0;
@@ -253,9 +310,9 @@ export function useResumeForm(
 
 		// Compare by year first, then by month
 		if (parsedA.year !== parsedB.year) {
-			return parsedA.year - parsedB.year; // Descending (newer years first)
+			return parsedA.year - parsedB.year;
 		}
-		return parsedA.month - parsedB.month; // Descending (newer months first)
+		return parsedA.month - parsedB.month;
 	};
 
 	return {
@@ -264,6 +321,7 @@ export function useResumeForm(
 		addEducation,
 		removeEducation,
 		addExperience,
+		handleEducationPaste,
 		removeExperience,
 		sortEducationByYear,
 		sortExperienceByDate,

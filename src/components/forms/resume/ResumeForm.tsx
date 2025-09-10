@@ -8,19 +8,21 @@ import { TabTitle } from '@/components/ui';
 import { usePhaseStore } from '@/lib/stores';
 import { useResumeForm } from '@/lib/hooks';
 import {
-	Summary,
-	ExperienceSection,
 	EducationSection,
+	ExperienceSection,
 	SortEducationButton,
 	SortExperienceButton,
+	Summary,
 } from './index';
+
+import type { Education, Experience } from '@/types';
 
 type ResumeFormProps = {
 	onSubmit: (
 		includeResume: boolean,
 		summary: string,
-		education: any[],
-		experience: any[],
+		education: Education[],
+		experience: Experience[],
 	) => void;
 };
 
@@ -33,12 +35,15 @@ export const ResumeForm = memo(function ResumeForm({
 		form,
 		handleFieldChange,
 		addEducation,
-		removeEducation,
 		addExperience,
+		handleEducationPaste,
+		removeEducation,
 		removeExperience,
 		sortEducationByYear,
 		sortExperienceByDate,
-	} = useResumeForm(onSubmit);
+	} = useResumeForm((includeResume, summary, experience, education) =>
+		onSubmit(includeResume, summary, education, experience),
+	);
 
 	if (currentPhase !== 'resume') {
 		return null;
@@ -50,7 +55,7 @@ export const ResumeForm = memo(function ResumeForm({
 
 	return (
 		<div className='ResumeForm flex flex-col gap-6'>
-			<TabTitle title='Resume Details' componentName='ResumeFormTitle' />
+			<TabTitle componentName='ResumeFormTitle' title='Resume Details' />
 			<Form componentName='ResumeFormContent' onSubmit={handleSubmit}>
 				<div className='flex flex-col gap-6'>
 					<Field name='summary' form={form}>
@@ -100,8 +105,9 @@ export const ResumeForm = memo(function ResumeForm({
 								<EducationSection
 									form={form}
 									addEducation={addEducation}
-									removeEducation={removeEducation}
 									handleFieldChange={handleFieldChange}
+									onPaste={handleEducationPaste}
+									removeEducation={removeEducation}
 								/>
 							</FormSection>
 						)}
