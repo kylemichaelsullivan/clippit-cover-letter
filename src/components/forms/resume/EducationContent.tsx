@@ -13,6 +13,7 @@ type EducationContentProps = {
 	form: any; // TanStack Form
 	removeEducation: (educationIndex: number) => void;
 	handleFieldChange?: (fieldName: string, value: any) => void;
+	onPaste?: (educationEntries: any[], educationIndex?: number) => void;
 	registerFocusRef?: (
 		educationIndex: number,
 		inputElement: HTMLInputElement | null,
@@ -23,6 +24,7 @@ export function EducationContent({
 	form,
 	removeEducation,
 	handleFieldChange,
+	onPaste,
 	registerFocusRef,
 }: EducationContentProps) {
 	return (
@@ -44,18 +46,19 @@ export function EducationContent({
 
 								return (
 									<SkipLinkTarget
-										key={`${education.id}-${educationIndex}`}
-										id={`education-item-${educationIndex + 1}`}
-										className='EducationCard education-card border-light-gray flex flex-col gap-3 rounded-lg border bg-white p-3 sm:gap-4 sm:p-4'
+										className='EducationCard education-card border-light-gray flex flex-col rounded-lg border bg-white p-3 sm:p-4'
 										style={
 											{ '--education-index': educationIndex } as CSSProperties
 										}
+										key={`${education.id}-${educationIndex}`}
+										id={`education-item-${educationIndex + 1}`}
 									>
 										<EducationItem
 											form={form}
 											educationIndex={educationIndex}
-											onRemove={handleRemoveEducation}
 											handleFieldChange={handleFieldChange}
+											onPaste={onPaste}
+											onRemove={handleRemoveEducation}
 											registerFocusRef={registerFocusRef}
 										/>
 									</SkipLinkTarget>

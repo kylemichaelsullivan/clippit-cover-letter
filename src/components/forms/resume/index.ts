@@ -2,6 +2,7 @@ export { Bullet } from './Bullet';
 export { Bullets } from './Bullets';
 export { DraggableBullet } from './DraggableBullet';
 export { EducationContent } from './EducationContent';
+export { EducationDialogs } from './EducationDialogs';
 export { EducationHeader } from './EducationHeader';
 export { EducationItem } from './EducationItem';
 export { EducationSection } from './EducationSection';

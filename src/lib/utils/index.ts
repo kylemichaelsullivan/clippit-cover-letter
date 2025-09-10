@@ -1,4 +1,5 @@
 export * from './downloadUtils';
+export * from './educationParser';
 export * from './htmlParser';
 export * from './htmlRenderer';
 export * from './htmlToMarkdown';
@@ -11,4 +12,5 @@ export * from './pageHeader';
 export * from './pdfContentFormatter';
 export * from './qrCode';
 export * from './skillsSorting';
+export * from './stringUtils';
 export * from './tiptap';
