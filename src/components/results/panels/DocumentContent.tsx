@@ -93,7 +93,7 @@ export const DocumentContent = memo(function DocumentContent({
 				<div className='flex flex-col gap-4'>
 					{isResume || isCoverLetter ? (
 						isTipTapView ? (
-							<div className='print-document border-light-gray force-white-bg border'>
+							<div className='print-document bg-gray border-light-gray border'>
 								<TipTapEditor
 									componentName='DocumentContentTipTapEditor'
 									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
@@ -115,7 +115,7 @@ export const DocumentContent = memo(function DocumentContent({
 							/>
 						)
 					) : (
-						<div className='print-document border-light-gray force-white-bg border'>
+						<div className='print-document bg-gray border-light-gray border'>
 							<TipTapEditor
 								componentName='DocumentContentTipTapEditor'
 								className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'

@@ -47,23 +47,19 @@ export const DocumentPreview = memo(function DocumentPreview({
 
 	if (isResume || isCoverLetter) {
 		return (
-			<div
-				className={`print-content print-document border-light-gray force-white-bg border p-2 ${className || ''}`}
-			>
-				<UIDocumentPreview
-					className='rounded-lg'
-					documentType={isCoverLetter ? 'cover-letter' : 'resume'}
-					content={content}
-					candidateDetails={candidateDetails}
-					fontSize={fontSize || [11, 'pt']}
-				/>
-			</div>
+			<UIDocumentPreview
+				documentType={isCoverLetter ? 'cover-letter' : 'resume'}
+				content={content}
+				candidateDetails={candidateDetails}
+				fontSize={fontSize || [11, 'pt']}
+				className={className}
+			/>
 		);
 	}
 
 	return (
 		<div
-			className={`print-content print-document border-light-gray force-white-bg border p-2 ${className || ''}`}
+			className={`print-content print-document bg-gray border-light-gray border p-2 ${className || ''}`}
 		>
 			{renderPageHeader()}
 			<div className='p-0'>{renderHtmlContent(content, candidateDetails)}</div>

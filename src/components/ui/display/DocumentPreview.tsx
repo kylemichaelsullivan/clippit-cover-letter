@@ -75,23 +75,26 @@ export const DocumentPreview = memo(function DocumentPreview({
 							
 							body { 
 								box-sizing: border-box;
-								background-color: #ffffff;
 								font-family: Arial, sans-serif; 
-								min-height: 11in;
-								width: 8.5in;
-								margin: 0 auto;
+								padding: 0;
+								margin: 0;
 							}
 							
 							body > div {
-								padding: 1rem;
+								position: relative;
+								background-color: var(--color-white);
+								width: 8.5in;
+								height: auto;
+								padding: 1in;
+								margin: 0 auto;
 							}
-							
-							/* Use shared styles for consistent formatting */
+
+: 							/* Use shared styles for consistent formatting */
 							${generateUIStyles()}
 						</style>
 					</head>
 					<body>
-						<div style="position: relative; background-color: #ffffff; width: 8.5in; min-height: 11in; margin: 0 auto;">
+						<div>
 							${pageHeader}
 							<div class="print-content print-document-content">
 								${contentWithSignature}
@@ -109,11 +112,16 @@ export const DocumentPreview = memo(function DocumentPreview({
 	}, [content, candidateDetails, documentType, fontSize]);
 
 	return (
-		<iframe
-			srcDoc={htmlContent}
-			className={`DocumentPreview w-full rounded-lg border-0 ${className}`}
-			title='Document Preview'
-			style={{ height: '11in', minHeight: '600px' }}
-		/>
+		<div className={`border p-4 ${className}`}>
+			<iframe
+				srcDoc={htmlContent}
+				className='DocumentPreview w-full border-0'
+				title='Document Preview'
+				style={{
+					height: 'calc(10in + 1rem)',
+					aspectRatio: '8.5 / 11',
+				}}
+			/>
+		</div>
 	);
 });
