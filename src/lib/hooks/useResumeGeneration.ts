@@ -22,18 +22,14 @@ export const useResumeGeneration = ({
 	resumeDetails,
 	skills,
 }: UseResumeGenerationProps) => {
-	const {
-		generatedResume,
-		setGeneratedResume,
-		isGeneratingResume,
-		setIsGeneratingResume,
-	} = useTemplatesStore();
+	const { generatedResume, setGeneratedResume, isGenerating, setIsGenerating } =
+		useTemplatesStore();
 	const { includeSkillGroupNames, generatedSkills } = useSkillsStore();
 
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
 	const performGeneration = async () => {
-		setIsGeneratingResume(true);
+		setIsGenerating(true);
 
 		try {
 			const result = await generateDocuments({
@@ -53,7 +49,7 @@ export const useResumeGeneration = ({
 			console.error('Error generating resume:', error);
 			setGeneratedResume('Error generating resume. Please try again.');
 		} finally {
-			setIsGeneratingResume(false);
+			setIsGenerating(false);
 		}
 	};
 
@@ -73,7 +69,7 @@ export const useResumeGeneration = ({
 	return {
 		generatedResume,
 		setGeneratedResume,
-		isGeneratingResume,
+		isGenerating,
 		showConfirmation,
 		setShowConfirmation,
 		performGeneration,

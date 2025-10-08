@@ -30,7 +30,7 @@ export const ResumeSection = ({
 	const {
 		generatedResume,
 		setGeneratedResume,
-		isGeneratingResume,
+		isGenerating,
 		showConfirmation,
 		setShowConfirmation,
 		performGeneration,
@@ -43,11 +43,11 @@ export const ResumeSection = ({
 		skills,
 	});
 
-	const { setIsGeneratingResume } = useTemplatesStore();
+	const { setIsGenerating } = useTemplatesStore();
 
 	useGenerationTimeout({
-		isGenerating: isGeneratingResume,
-		setIsGenerating: setIsGeneratingResume,
+		isGenerating,
+		setIsGenerating,
 		timeoutMessage: 'Resume generation timed out. Please try again.',
 	});
 
@@ -61,8 +61,8 @@ export const ResumeSection = ({
 					generateTitle='Generate Resume'
 					content={generatedResume}
 					fallbackMessage={<ResumeNotProvidedMessage />}
-					isEditable={!isGeneratingResume}
-					isGenerating={isGeneratingResume}
+					isEditable={!isGenerating}
+					isGenerating={isGenerating}
 					onGenerate={handleGenerate}
 					onContentChange={setGeneratedResume}
 				/>

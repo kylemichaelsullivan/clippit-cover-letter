@@ -8,12 +8,14 @@ import { PreviewStateManager } from './PreviewStateManager';
 type PreviewLayoutProps = {
 	hasData: boolean;
 	hasSelectedDocuments: boolean;
+	isProcessing: boolean;
 	children: ReactNode;
 };
 
 export const PreviewLayout = memo(function PreviewLayout({
 	hasData,
 	hasSelectedDocuments,
+	isProcessing,
 	children,
 }: PreviewLayoutProps) {
 	return (
@@ -23,6 +25,7 @@ export const PreviewLayout = memo(function PreviewLayout({
 				<PreviewStateManager
 					hasData={hasData}
 					hasSelectedDocuments={hasSelectedDocuments}
+					isProcessing={isProcessing}
 				>
 					{children}
 				</PreviewStateManager>
@@ -30,4 +33,3 @@ export const PreviewLayout = memo(function PreviewLayout({
 		</div>
 	);
 });
-

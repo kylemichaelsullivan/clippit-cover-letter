@@ -26,7 +26,7 @@ export const CoverLetterSection = ({
 	const {
 		generatedCoverLetter,
 		setGeneratedCoverLetter,
-		isGeneratingCoverLetter,
+		isGenerating,
 		showConfirmation,
 		setShowConfirmation,
 		performGeneration,
@@ -39,11 +39,11 @@ export const CoverLetterSection = ({
 		coverLetterTemplate,
 	});
 
-	const { setIsGeneratingCoverLetter } = useTemplatesStore();
+	const { setIsGenerating } = useTemplatesStore();
 
 	useGenerationTimeout({
-		isGenerating: isGeneratingCoverLetter,
-		setIsGenerating: setIsGeneratingCoverLetter,
+		isGenerating,
+		setIsGenerating,
 		timeoutMessage: 'Cover letter generation timed out. Please try again.',
 	});
 
@@ -65,8 +65,8 @@ export const CoverLetterSection = ({
 					templateContent={processedTemplateContent}
 					content={generatedCoverLetter}
 					fallbackMessage={<CoverLetterNotProvidedMessage />}
-					isEditable={!isGeneratingCoverLetter}
-					isGenerating={isGeneratingCoverLetter}
+					isEditable={!isGenerating}
+					isGenerating={isGenerating}
 					onContentChange={setGeneratedCoverLetter}
 					onGenerate={handleGenerate}
 				/>

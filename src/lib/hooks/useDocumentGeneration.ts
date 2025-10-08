@@ -24,10 +24,8 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 	const { resumeDetails } = useResumeStore();
 	const {
 		coverLetterTemplate,
-		isGeneratingCoverLetter,
-		setIsGeneratingCoverLetter,
-		isGeneratingResume,
-		setIsGeneratingResume,
+		isGenerating,
+		setIsGenerating,
 		generatedCoverLetter,
 		setGeneratedCoverLetter,
 		generatedResume,
@@ -44,8 +42,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		skills.groups.some((group) => group.skills.length > 0 && group.include);
 	const hasSelectedDocuments =
 		includeSkills || includeCoverLetter || includeResume;
-	const isGeneratingAny =
-		isGeneratingSkills || isGeneratingCoverLetter || isGeneratingResume;
+	const isGeneratingAny = isGeneratingSkills || isGenerating;
 
 	const checkForExistingContent = useCallback(() => {
 		const existingContent = [];
@@ -82,6 +79,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		}
 
 		const generationTasks: Promise<void>[] = [];
+		let needsDocumentGeneration = false;
 
 		if (includeSkills) {
 			if (!generatedSkills || generatedSkills.trim() === '') {
@@ -91,7 +89,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 
 		if (includeCoverLetter && coverLetterTemplate) {
 			if (!generatedCoverLetter || generatedCoverLetter.trim() === '') {
-				setIsGeneratingCoverLetter(true);
+				needsDocumentGeneration = true;
 				const coverLetterTask = generateDocuments({
 					candidateDetails,
 					coverLetterTemplate,
@@ -109,9 +107,6 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 						setGeneratedCoverLetter(
 							'Error generating cover letter. Please try again.',
 						);
-					})
-					.finally(() => {
-						setIsGeneratingCoverLetter(false);
 					});
 				generationTasks.push(coverLetterTask);
 			}
@@ -119,7 +114,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 
 		if (includeResume) {
 			if (!generatedResume || generatedResume.trim() === '') {
-				setIsGeneratingResume(true);
+				needsDocumentGeneration = true;
 				const resumeTask = generateDocuments({
 					candidateDetails,
 					coverLetterTemplate: '',
@@ -135,15 +130,22 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 					.catch((error) => {
 						console.error('Error generating resume:', error);
 						setGeneratedResume('Error generating resume. Please try again.');
-					})
-					.finally(() => {
-						setIsGeneratingResume(false);
 					});
 				generationTasks.push(resumeTask);
 			}
 		}
 
-		await Promise.all(generationTasks);
+		if (needsDocumentGeneration) {
+			setIsGenerating(true);
+		}
+
+		try {
+			await Promise.all(generationTasks);
+		} finally {
+			if (needsDocumentGeneration) {
+				setIsGenerating(false);
+			}
+		}
 	};
 
 	const performGenerateAllWithReplacements = async () => {
@@ -152,6 +154,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		}
 
 		const generationTasks: Promise<void>[] = [];
+		let needsDocumentGeneration = false;
 
 		if (includeSkills) {
 			setIsGeneratingSkills(true);
@@ -170,7 +173,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		}
 
 		if (includeCoverLetter && coverLetterTemplate) {
-			setIsGeneratingCoverLetter(true);
+			needsDocumentGeneration = true;
 			const coverLetterTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate,
@@ -188,15 +191,12 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 					setGeneratedCoverLetter(
 						'Error generating cover letter. Please try again.',
 					);
-				})
-				.finally(() => {
-					setIsGeneratingCoverLetter(false);
 				});
 			generationTasks.push(coverLetterTask);
 		}
 
 		if (includeResume) {
-			setIsGeneratingResume(true);
+			needsDocumentGeneration = true;
 			const resumeTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate: '',
@@ -213,14 +213,21 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating resume:', error);
 					setGeneratedResume('Error generating resume. Please try again.');
-				})
-				.finally(() => {
-					setIsGeneratingResume(false);
 				});
 			generationTasks.push(resumeTask);
 		}
 
-		await Promise.all(generationTasks);
+		if (needsDocumentGeneration) {
+			setIsGenerating(true);
+		}
+
+		try {
+			await Promise.all(generationTasks);
+		} finally {
+			if (needsDocumentGeneration) {
+				setIsGenerating(false);
+			}
+		}
 	};
 
 	const performSelectiveGeneration = async (selectedItems?: string[]) => {
@@ -229,6 +236,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		}
 
 		const generationTasks: Promise<void>[] = [];
+		let needsDocumentGeneration = false;
 
 		if (selectedItems.includes('skills') && includeSkills) {
 			setIsGeneratingSkills(true);
@@ -251,7 +259,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 			includeCoverLetter &&
 			coverLetterTemplate
 		) {
-			setIsGeneratingCoverLetter(true);
+			needsDocumentGeneration = true;
 			const coverLetterTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate,
@@ -269,15 +277,12 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 					setGeneratedCoverLetter(
 						'Error generating cover letter. Please try again.',
 					);
-				})
-				.finally(() => {
-					setIsGeneratingCoverLetter(false);
 				});
 			generationTasks.push(coverLetterTask);
 		}
 
 		if (selectedItems.includes('resume') && includeResume) {
-			setIsGeneratingResume(true);
+			needsDocumentGeneration = true;
 			const resumeTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate: '',
@@ -294,14 +299,21 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating resume:', error);
 					setGeneratedResume('Error generating resume. Please try again.');
-				})
-				.finally(() => {
-					setIsGeneratingResume(false);
 				});
 			generationTasks.push(resumeTask);
 		}
 
-		await Promise.all(generationTasks);
+		if (needsDocumentGeneration) {
+			setIsGenerating(true);
+		}
+
+		try {
+			await Promise.all(generationTasks);
+		} finally {
+			if (needsDocumentGeneration) {
+				setIsGenerating(false);
+			}
+		}
 	};
 
 	const performGenerateEmptyOnly = useCallback(async () => {
@@ -310,6 +322,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		}
 
 		const generationTasks: Promise<void>[] = [];
+		let needsDocumentGeneration = false;
 
 		if (includeSkills && (!generatedSkills || generatedSkills.trim() === '')) {
 			generationTasks.push(generateSkills());
@@ -320,7 +333,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 			coverLetterTemplate &&
 			(!generatedCoverLetter || generatedCoverLetter.trim() === '')
 		) {
-			setIsGeneratingCoverLetter(true);
+			needsDocumentGeneration = true;
 			const coverLetterTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate,
@@ -338,15 +351,12 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 					setGeneratedCoverLetter(
 						'Error generating cover letter. Please try again.',
 					);
-				})
-				.finally(() => {
-					setIsGeneratingCoverLetter(false);
 				});
 			generationTasks.push(coverLetterTask);
 		}
 
 		if (includeResume && (!generatedResume || generatedResume.trim() === '')) {
-			setIsGeneratingResume(true);
+			needsDocumentGeneration = true;
 			const resumeTask = generateDocuments({
 				candidateDetails,
 				coverLetterTemplate: '',
@@ -363,14 +373,21 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating resume:', error);
 					setGeneratedResume('Error generating resume. Please try again.');
-				})
-				.finally(() => {
-					setIsGeneratingResume(false);
 				});
 			generationTasks.push(resumeTask);
 		}
 
-		await Promise.all(generationTasks);
+		if (needsDocumentGeneration) {
+			setIsGenerating(true);
+		}
+
+		try {
+			await Promise.all(generationTasks);
+		} finally {
+			if (needsDocumentGeneration) {
+				setIsGenerating(false);
+			}
+		}
 	}, [
 		hasSelectedDocuments,
 		includeSkills,
@@ -385,9 +402,8 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 		skills,
 		resumeDetails,
 		generateSkills,
-		setIsGeneratingCoverLetter,
+		setIsGenerating,
 		setGeneratedCoverLetter,
-		setIsGeneratingResume,
 		setGeneratedResume,
 		includeSkillGroupNames,
 	]);

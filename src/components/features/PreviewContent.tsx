@@ -24,7 +24,7 @@ export const PreviewContent = memo(function PreviewContent() {
 	const { currentPhase } = usePhaseStore();
 	const { candidateDetails } = useCandidateStore();
 	const { jobDetails } = useJobStore();
-	const { coverLetterTemplate } = useTemplatesStore();
+	const { coverLetterTemplate, isGenerating } = useTemplatesStore();
 	const { includeCoverLetter, includeResume } = useAppStore();
 	const { resumeDetails } = useResumeStore();
 	const { skills } = useSkillsStore();
@@ -49,6 +49,7 @@ export const PreviewContent = memo(function PreviewContent() {
 			<PreviewLayout
 				hasData={hasData}
 				hasSelectedDocuments={hasSelectedDocuments}
+				isProcessing={isGenerating}
 			>
 				<CoverLetterSection
 					candidateDetails={candidateDetails}

@@ -8,7 +8,11 @@ describe('PreviewLayout', () => {
 
 	it('renders with correct main container classes', () => {
 		render(
-			<PreviewLayout hasData={true} hasSelectedDocuments={true}>
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={false}
+			>
 				{mockChildren}
 			</PreviewLayout>,
 		);
@@ -26,7 +30,11 @@ describe('PreviewLayout', () => {
 
 	it('renders PreviewHeader component', () => {
 		render(
-			<PreviewLayout hasData={true} hasSelectedDocuments={true}>
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={false}
+			>
 				{mockChildren}
 			</PreviewLayout>,
 		);
@@ -35,9 +43,13 @@ describe('PreviewLayout', () => {
 		expect(screen.getByText('Preview')).toBeInTheDocument();
 	});
 
-	it('renders PreviewStateManager with correct props', () => {
+	it('renders PreviewStateManager with correct props when not processing', () => {
 		render(
-			<PreviewLayout hasData={false} hasSelectedDocuments={false}>
+			<PreviewLayout
+				hasData={false}
+				hasSelectedDocuments={false}
+				isProcessing={false}
+			>
 				{mockChildren}
 			</PreviewLayout>,
 		);
@@ -48,9 +60,29 @@ describe('PreviewLayout', () => {
 		expect(screen.getByText('No Data Available')).toBeInTheDocument();
 	});
 
-	it('renders children when both conditions are met', () => {
+	it('renders loading state when processing', () => {
 		render(
-			<PreviewLayout hasData={true} hasSelectedDocuments={true}>
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={true}
+			>
+				{mockChildren}
+			</PreviewLayout>,
+		);
+
+		// When processing, should show loading state
+		expect(screen.getByText('Generating Documents')).toBeInTheDocument();
+		expect(screen.queryByTestId('mock-children')).not.toBeInTheDocument();
+	});
+
+	it('renders children when both conditions are met and not processing', () => {
+		render(
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={false}
+			>
 				{mockChildren}
 			</PreviewLayout>,
 		);
@@ -61,7 +93,11 @@ describe('PreviewLayout', () => {
 
 	it('has correct nested structure', () => {
 		render(
-			<PreviewLayout hasData={true} hasSelectedDocuments={true}>
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={false}
+			>
 				{mockChildren}
 			</PreviewLayout>,
 		);
@@ -83,7 +119,11 @@ describe('PreviewLayout', () => {
 		);
 
 		render(
-			<PreviewLayout hasData={true} hasSelectedDocuments={true}>
+			<PreviewLayout
+				hasData={true}
+				hasSelectedDocuments={true}
+				isProcessing={false}
+			>
 				{multipleChildren}
 			</PreviewLayout>,
 		);

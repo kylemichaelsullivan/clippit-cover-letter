@@ -22,8 +22,8 @@ export const useGenerationConfirmations = ({
 	const {
 		generatedCoverLetter,
 		setGeneratedCoverLetter,
-		isGeneratingCoverLetter,
-		setIsGeneratingCoverLetter,
+		isGenerating,
+		setIsGenerating,
 	} = useTemplatesStore();
 
 	const {
@@ -39,7 +39,7 @@ export const useGenerationConfirmations = ({
 	const [showSkillsConfirmation, setShowSkillsConfirmation] = useState(false);
 
 	const performCoverLetterGeneration = async () => {
-		setIsGeneratingCoverLetter(true);
+		setIsGenerating(true);
 
 		try {
 			const result = await generateDocuments({
@@ -59,7 +59,7 @@ export const useGenerationConfirmations = ({
 				'Error generating cover letter. Please try again.',
 			);
 		} finally {
-			setIsGeneratingCoverLetter(false);
+			setIsGenerating(false);
 		}
 	};
 
@@ -107,6 +107,6 @@ export const useGenerationConfirmations = ({
 		performSkillsGeneration,
 		handleGenerateCoverLetter,
 		handleGenerateSkills,
-		isGeneratingCoverLetter,
+		isGenerating,
 	};
 };

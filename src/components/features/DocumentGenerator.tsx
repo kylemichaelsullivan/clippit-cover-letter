@@ -22,10 +22,8 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	const { jobDetails } = useJobStore();
 	const {
 		coverLetterTemplate,
-		isGeneratingCoverLetter,
-		isGeneratingResume,
-		setIsGeneratingCoverLetter,
-		setIsGeneratingResume,
+		isGenerating,
+		setIsGenerating,
 		setGeneratedCoverLetter,
 		setGeneratedResume,
 	} = useTemplatesStore();
@@ -34,11 +32,8 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	const { skills, includeSkillGroupNames } = useSkillsStore();
 
 	useGenerationTimeout({
-		isGenerating: isGeneratingCoverLetter || isGeneratingResume,
-		setIsGenerating: () => {
-			setIsGeneratingCoverLetter(false);
-			setIsGeneratingResume(false);
-		},
+		isGenerating,
+		setIsGenerating,
 		timeoutMessage: 'Document generation timed out. Please try again.',
 	});
 
@@ -70,16 +65,16 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 			return;
 		}
 
+		setIsGenerating(true);
+
 		if (includeCoverLetter) {
-			setIsGeneratingCoverLetter(true);
 			await generationService.generateCoverLetter();
-			setIsGeneratingCoverLetter(false);
 		}
 		if (includeResume) {
-			setIsGeneratingResume(true);
 			await generationService.generateResume();
-			setIsGeneratingResume(false);
 		}
+
+		setIsGenerating(false);
 	};
 
 	if (currentPhase !== 'generate') {
@@ -89,7 +84,7 @@ export const DocumentGenerator = memo(function DocumentGenerator() {
 	return (
 		<div className='DocumentGenerator'>
 			<DocumentGenerationButton
-				isGenerating={isGeneratingCoverLetter || isGeneratingResume}
+				isGenerating={isGenerating}
 				onClick={handleGenerateDocuments}
 			/>
 		</div>
