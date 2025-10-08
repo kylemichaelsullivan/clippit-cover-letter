@@ -345,9 +345,29 @@ test.describe('Feature Flow', () => {
 
 ### Unit Tests
 
+#### Run Once (Recommended)
+
+```bash
+pnpm test:run
+```
+
+Runs all tests once and exits. This is the recommended approach for most development scenarios as it's faster and less resource-intensive.
+
+#### Watch Mode
+
 ```bash
 pnpm test
 ```
+
+Runs tests in watch mode, automatically re-running tests when files change. This can be resource-intensive and is optional.
+
+#### Interactive UI
+
+```bash
+pnpm test:ui
+```
+
+Opens an interactive test UI for debugging and exploring test results.
 
 ### E2E Tests
 

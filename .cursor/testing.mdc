@@ -21,16 +21,33 @@ exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
 - **`pnpm test:ui`** - Interactive test UI for debugging
 - **`pnpm test:coverage`** - Run tests with coverage report
 
-### Avoid These Commands
+### Optional Commands
 
-- **`pnpm test`** - Watch mode (resource-intensive, can cause issues)
+- **`pnpm test`** - Watch mode (automatically re-runs tests on file changes)
 
-## Why Avoid Watch Mode?
+## Recommended Workflow
 
-1. **Resource Usage**: Watch mode continuously monitors file changes and can consume significant CPU/memory
-2. **Environment Issues**: Some development environments may have issues with file watching
-3. **CI/CD Compatibility**: Watch mode doesn't work well in CI/CD pipelines
-4. **Performance**: Running tests once is often faster than maintaining a watch process
+### For Development
+
+Use **`pnpm test:run`** for quick test verification:
+
+- Faster execution
+- Lower resource usage
+- Clean exit after completion
+- Ideal for pre-commit checks
+
+### For Debugging
+
+Use **`pnpm test:ui`** when you need to:
+
+- Debug failing tests interactively
+- Explore test results visually
+- Run specific test files or cases
+- Inspect component snapshots
+
+### For CI/CD
+
+Always use **`pnpm test:run`** in automated pipelines for reliable, single-pass execution
 
 ## Testing Stack
 
