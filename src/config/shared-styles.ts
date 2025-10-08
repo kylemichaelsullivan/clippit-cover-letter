@@ -229,6 +229,12 @@ const TIPTAP_PAGE_BREAK_PRINT = `
 	background: none;
 	height: 0;
 	margin: 0;
+	page-break-before: always;
+	break-before: page;
+	display: block;
+	clear: both;
+	border: none;
+	padding: 0;
 `;
 
 const TIPTAP_PAGE_BREAK_LABEL_PRINT = `

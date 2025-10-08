@@ -162,6 +162,18 @@ export async function POST(request: NextRequest) {
 							max-height: 2.5em;
 						}
 						
+						/* Page Break Styles */
+						.page-break {
+							page-break-before: always;
+							break-before: page;
+							height: 0;
+							margin: 0;
+							padding: 0;
+							border: none;
+							display: block;
+							clear: both;
+						}
+						
 						/* Use shared styles for consistency */
 						${generateUIStyles()}
 					</style>

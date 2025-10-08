@@ -13,6 +13,25 @@ exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
 
 # Testing Standards
 
+## Test Commands
+
+### Primary Commands
+
+- **`pnpm test:run`** - Run all tests once and exit (recommended for development)
+- **`pnpm test:ui`** - Interactive test UI for debugging
+- **`pnpm test:coverage`** - Run tests with coverage report
+
+### Avoid These Commands
+
+- **`pnpm test`** - Watch mode (resource-intensive, can cause issues)
+
+## Why Avoid Watch Mode?
+
+1. **Resource Usage**: Watch mode continuously monitors file changes and can consume significant CPU/memory
+2. **Environment Issues**: Some development environments may have issues with file watching
+3. **CI/CD Compatibility**: Watch mode doesn't work well in CI/CD pipelines
+4. **Performance**: Running tests once is often faster than maintaining a watch process
+
 ## Testing Stack
 
 - **Vitest**: Fast unit test framework powered by Vite
@@ -26,11 +45,40 @@ exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
 ```
 src/__tests__/
 ├── components/           # Component tests
+│   ├── ui/              # UI component tests
+│   │   ├── buttons/     # Button component tests
+│   │   ├── forms/       # Form component tests
+│   │   └── sections/    # Section component tests
+│   └── providers/       # Provider component tests
 ├── forms/               # Form tests
 ├── stores/              # Store tests
 ├── lib/                 # Library tests
+├── fixtures/            # Test data and mock responses
+├── mocks/               # Shared mock implementations
+├── utils/               # Test utilities and helpers
 └── e2e/                 # E2E tests
 ```
+
+## Best Practices
+
+### Development Workflow
+
+1. Write your code
+2. Run `pnpm test:run` to verify tests pass
+3. If tests fail, use `pnpm test:ui` for interactive debugging
+4. Before committing, run `pnpm test:coverage` to check coverage
+
+### Debugging Failed Tests
+
+- Use `pnpm test:ui` for the interactive interface
+- The UI provides better error messages and debugging tools
+- You can run individual test files or specific test cases
+
+### Coverage Analysis
+
+- Run `pnpm test:coverage` before committing
+- Aim for high coverage on critical components
+- Review coverage reports to identify untested code paths
 
 ## Testing Patterns
 
@@ -335,3 +383,9 @@ test('complete cover letter generation flow', async ({ page }) => {
   await expect(page.locator('[data-testid="download-pdf"]')).toBeVisible();
 });
 ```
+
+## Integration with Development
+
+- Tests are automatically run in CI/CD pipelines using `pnpm test:run`
+- The project is configured to run tests as part of the build process
+- All test files follow the `*.test.ts` or `*.test.tsx` naming convention
