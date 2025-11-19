@@ -16,10 +16,12 @@ export {
 	ResumeNotProvidedMessage,
 	SkillsNotConfiguredMessage,
 } from './EmptyState';
+export { CustomPlaceholderNote } from './CustomPlaceholderNote';
 export { Error } from './Error';
+export { MenuItem } from './MenuItem';
 export { ModalBackdrop } from './ModalBackdrop';
 export { ModalHeader } from './ModalHeader';
 export { MustacheReplacementModal } from './MustacheReplacementModal';
+export { Popover } from './Popover';
 export { TemplateVariableItem } from './TemplateVariableItem';
 export { TemplateVariablesSection } from './TemplateVariablesSection';
-export { CustomPlaceholderNote } from './CustomPlaceholderNote';

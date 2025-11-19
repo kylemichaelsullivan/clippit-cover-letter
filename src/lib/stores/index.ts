@@ -6,3 +6,8 @@ export { useResumeStore } from './useResumeStore';
 export { useSkillsStore } from './useSkillsStore';
 export { useTemplatesStore } from './useTemplatesStore';
 export { clearAllPersistentData } from './clearAllData';
+export {
+	exportLocalStorageToFile,
+	importLocalStorageFromFile,
+	handleFileImport,
+} from '../utils/localStorageSync';
