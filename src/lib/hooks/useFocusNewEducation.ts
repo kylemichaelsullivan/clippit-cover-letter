@@ -16,18 +16,15 @@ export function useFocusNewEducation() {
 		[],
 	);
 
-	const focusNewEducation = useCallback(
-		(educationIndex: number) => {
-			const inputElement = focusRefs.current.get(educationIndex);
-			if (inputElement) {
-				setTimeout(() => {
-					inputElement.focus();
-					inputElement.select();
-				}, 0);
-			}
-		},
-		[],
-	);
+	const focusNewEducation = useCallback((educationIndex: number) => {
+		const inputElement = focusRefs.current.get(educationIndex);
+		if (inputElement) {
+			setTimeout(() => {
+				inputElement.focus();
+				inputElement.select();
+			}, 0);
+		}
+	}, []);
 
 	return {
 		registerFocusRef,

@@ -32,7 +32,9 @@ describe('WelcomeFooter', () => {
 		render(<WelcomeFooter />);
 		expect(screen.getByText(/Ready to get started/)).toBeInTheDocument();
 		expect(screen.getByText(/Click "Next"/)).toBeInTheDocument();
-		expect(screen.getByText(/begin entering your information/)).toBeInTheDocument();
+		expect(
+			screen.getByText(/begin entering your information/),
+		).toBeInTheDocument();
 	});
 
 	it('renders the Next button text in quotes', () => {

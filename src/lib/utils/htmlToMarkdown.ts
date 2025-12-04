@@ -10,15 +10,15 @@ export function htmlToMarkdown(html: string): string {
 
 	// Remove signature images and other non-text content
 	const signatureImages = tempDiv.querySelectorAll('img.signature-image');
-	signatureImages.forEach(img => img.remove());
+	signatureImages.forEach((img) => img.remove());
 
 	// Remove any remaining images
 	const images = tempDiv.querySelectorAll('img');
-	images.forEach(img => img.remove());
+	images.forEach((img) => img.remove());
 
 	// Remove any script or style tags
 	const scripts = tempDiv.querySelectorAll('script, style');
-	scripts.forEach(script => script.remove());
+	scripts.forEach((script) => script.remove());
 
 	// Convert HTML to Markdown
 	return convertNodeToMarkdown(tempDiv);
@@ -107,11 +107,13 @@ function convertNodeToMarkdown(node: Node): string {
  * Cleans up the final markdown output
  */
 export function cleanMarkdown(markdown: string): string {
-	return markdown
-		// Remove excessive newlines
-		.replace(/\n{3,}/g, '\n\n')
-		// Remove trailing whitespace
-		.replace(/[ \t]+$/gm, '')
-		// Remove leading/trailing whitespace
-		.trim();
+	return (
+		markdown
+			// Remove excessive newlines
+			.replace(/\n{3,}/g, '\n\n')
+			// Remove trailing whitespace
+			.replace(/[ \t]+$/gm, '')
+			// Remove leading/trailing whitespace
+			.trim()
+	);
 }

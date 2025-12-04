@@ -14,25 +14,26 @@ type GenerationConfirmationDialogProps = {
 	cancelText?: string;
 };
 
-export const GenerationConfirmationDialog = memo(function GenerationConfirmationDialog({
-	title,
-	message,
-	isOpen,
-	onClose,
-	onConfirm,
-	confirmText = 'Generate New',
-	cancelText = 'Cancel',
-}: GenerationConfirmationDialogProps) {
-	return (
-		<ConfirmationDialog
-			title={title}
-			message={message}
-			isOpen={isOpen}
-			confirmText={confirmText}
-			cancelText={cancelText}
-			onClose={onClose}
-			onConfirm={onConfirm}
-		/>
-	);
-});
-
+export const GenerationConfirmationDialog = memo(
+	function GenerationConfirmationDialog({
+		title,
+		message,
+		isOpen,
+		onClose,
+		onConfirm,
+		confirmText = 'Generate New',
+		cancelText = 'Cancel',
+	}: GenerationConfirmationDialogProps) {
+		return (
+			<ConfirmationDialog
+				title={title}
+				message={message}
+				isOpen={isOpen}
+				confirmText={confirmText}
+				cancelText={cancelText}
+				onClose={onClose}
+				onConfirm={onConfirm}
+			/>
+		);
+	},
+);
