@@ -1,6 +1,6 @@
 ---
-globs: ['**/components/**/*.tsx', '**/components/**/*.ts']
-exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
+globs: **/components/**/*.tsx, **/components/**/*.ts
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*
 ---
 
 # Component Development Standards
@@ -78,7 +78,6 @@ Always use the project's utility components instead of creating custom HTML elem
 ### Core UI Components
 
 - **Button** (`@/components/ui/buttons/Button`) - Use for all button interactions
-
   - Supports colors: `primary`, `secondary`, `success`, `danger`, `navigation`
   - Supports sizes: `sm`, `md`, `lg`
   - Includes proper accessibility attributes
@@ -92,29 +91,31 @@ import { Form, FormField } from '@/components/forms/core';
 import { Error } from '@/components/ui/feedback';
 import { candidateDetailsSchema } from '@/lib/schemas';
 
-<Form componentName="MyForm" onSubmit={handleSubmit}>
-  <FormField
-    id="email"
-    type="email"
-    label="Email Address"
-    value={email}
-    onChange={setEmail}
-    placeholder="your.email@example.com"
-    schema={candidateDetailsSchema}
-    fieldName="email"
-  />
+<Form componentName='MyForm' onSubmit={handleSubmit}>
+	<FormField
+		id='email'
+		type='email'
+		label='Email Address'
+		value={email}
+		onChange={setEmail}
+		placeholder='your.email@example.com'
+		schema={candidateDetailsSchema}
+		fieldName='email'
+	/>
 
-  <Button color="primary" size="md" type="submit">
-    Submit
-  </Button>
-</Form>
+	<Button color='primary' size='md' type='submit'>
+		Submit
+	</Button>
+</Form>;
 
-{error && <Error>{error}</Error>}
+{
+	error && <Error>{error}</Error>;
+}
 
 // ❌ Don't create custom elements when utilities exist
-<form className="custom-form-classes" onSubmit={handleSubmit}>
-  <input className="custom-input-classes" />
-</form>
+<form className='custom-form-classes' onSubmit={handleSubmit}>
+	<input className='custom-input-classes' />
+</form>;
 ```
 
 ### Feedback Components
@@ -160,33 +161,35 @@ import type { ReactNode } from 'react';
 import clsx from 'clsx';
 
 type ComponentProps = {
-  // Required props
-  title: string;
-  // Optional props with defaults
-  variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  // Children
-  children?: ReactNode;
+	// Required props
+	title: string;
+	// Optional props with defaults
+	variant?: 'primary' | 'secondary';
+	size?: 'sm' | 'md' | 'lg';
+	disabled?: boolean;
+	// Children
+	children?: ReactNode;
 };
 
 function ComponentName({
-  title,
-  variant = 'primary',
-  size = 'md',
-  disabled = false,
-  children
+	title,
+	variant = 'primary',
+	size = 'md',
+	disabled = false,
+	children,
 }: ComponentProps) {
-  return (
-    <div className={clsx(
-      'ComponentName base-classes',
-      variant === 'secondary' && 'secondary-classes',
-      size === 'lg' && 'large-classes',
-      disabled && 'disabled-classes'
-    )}>
-      {children}
-    </div>
-  );
+	return (
+		<div
+			className={clsx(
+				'ComponentName base-classes',
+				variant === 'secondary' && 'secondary-classes',
+				size === 'lg' && 'large-classes',
+				disabled && 'disabled-classes',
+			)}
+		>
+			{children}
+		</div>
+	);
 }
 
 export default memo(ComponentName);

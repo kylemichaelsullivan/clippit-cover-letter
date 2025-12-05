@@ -1,14 +1,6 @@
 ---
-globs:
-  [
-    '**/__tests__/**/*.ts',
-    '**/__tests__/**/*.tsx',
-    '**/*.test.ts',
-    '**/*.test.tsx',
-    '**/*.spec.ts',
-    '**/*.spec.tsx',
-  ]
-exclude: ['**/node_modules/**', '**/dist/**', '**/.next/**']
+globs: **/__tests__/**/*.ts, **/__tests__/**/*.tsx, **/*.test.ts, **/*.test.tsx, **/*.spec.ts, **/*.spec.tsx
+exclude: **/node_modules/**, **/dist/**, **/.next/**
 ---
 
 # Testing Standards
@@ -208,64 +200,64 @@ import { renderHook, act } from '@testing-library/react';
 import { useCandidateStore } from '@/lib/stores/useCandidateStore';
 
 describe('useCandidateStore', () => {
-  beforeEach(() => {
-    // Clear store state before each test
-    const { result } = renderHook(() => useCandidateStore());
-    act(() => {
-      result.current.clearCandidate();
-    });
-  });
+	beforeEach(() => {
+		// Clear store state before each test
+		const { result } = renderHook(() => useCandidateStore());
+		act(() => {
+			result.current.clearCandidate();
+		});
+	});
 
-  it('initializes with default state', () => {
-    const { result } = renderHook(() => useCandidateStore());
+	it('initializes with default state', () => {
+		const { result } = renderHook(() => useCandidateStore());
 
-    expect(result.current.candidate).toEqual({
-      fullName: '',
-      email: '',
-      phone: '',
-      location: '',
-      linkedin: '',
-      portfolio: '',
-    });
-  });
+		expect(result.current.candidate).toEqual({
+			fullName: '',
+			email: '',
+			phone: '',
+			location: '',
+			linkedin: '',
+			portfolio: '',
+		});
+	});
 
-  it('updates candidate data', () => {
-    const { result } = renderHook(() => useCandidateStore());
+	it('updates candidate data', () => {
+		const { result } = renderHook(() => useCandidateStore());
 
-    act(() => {
-      result.current.setCandidate({
-        fullName: 'John Doe',
-        email: 'john@example.com',
-        phone: '555-1234',
-        location: 'New York',
-        linkedin: 'johndoe',
-        portfolio: 'https://portfolio.com',
-      });
-    });
+		act(() => {
+			result.current.setCandidate({
+				fullName: 'John Doe',
+				email: 'john@example.com',
+				phone: '555-1234',
+				location: 'New York',
+				linkedin: 'johndoe',
+				portfolio: 'https://portfolio.com',
+			});
+		});
 
-    expect(result.current.candidate.fullName).toBe('John Doe');
-    expect(result.current.candidate.email).toBe('john@example.com');
-  });
+		expect(result.current.candidate.fullName).toBe('John Doe');
+		expect(result.current.candidate.email).toBe('john@example.com');
+	});
 
-  it('persists data across renders', () => {
-    const { result, rerender } = renderHook(() => useCandidateStore());
+	it('persists data across renders', () => {
+		const { result, rerender } = renderHook(() => useCandidateStore());
 
-    act(() => {
-      result.current.setCandidate({
-        fullName: 'Jane Smith',
-        email: 'jane@example.com',
-        phone: '',
-        location: '',
-        linkedin: '',
-        portfolio: '',
-      });
-    });
+		act(() => {
+			result.current.setCandidate({
+				fullName: 'Jane Smith',
+				email: 'jane@example.com',
+				phone: '',
+				location: '',
+				linkedin: '',
+				portfolio: '',
+			});
+		});
 
-    rerender();
+		rerender();
 
-    expect(result.current.candidate.fullName).toBe('Jane Smith');
-    expect(result.current.candidate.email).toBe('jane@example.com');
-  });
+		expect(result.current.candidate.fullName).toBe('Jane Smith');
+		expect(result.current.candidate.email).toBe('jane@example.com');
+	});
 });
 ```
 
@@ -276,37 +268,37 @@ describe('useCandidateStore', () => {
 ```typescript
 // __tests__/mocks/candidateData.ts
 export const mockCandidate = {
-  fullName: 'John Doe',
-  email: 'john@example.com',
-  phone: '555-123-4567',
-  location: 'New York, NY',
-  linkedin: 'johndoe',
-  portfolio: 'https://portfolio.com',
+	fullName: 'John Doe',
+	email: 'john@example.com',
+	phone: '555-123-4567',
+	location: 'New York, NY',
+	linkedin: 'johndoe',
+	portfolio: 'https://portfolio.com',
 };
 
 export const mockJob = {
-  companyName: 'Tech Corp',
-  jobTitle: 'Senior Developer',
-  jobDescription: 'We are looking for a senior developer…',
-  hiringManager: 'Jane Smith',
-  companyAddress: '123 Tech St, San Francisco, CA',
+	companyName: 'Tech Corp',
+	jobTitle: 'Senior Developer',
+	jobDescription: 'We are looking for a senior developer…',
+	hiringManager: 'Jane Smith',
+	companyAddress: '123 Tech St, San Francisco, CA',
 };
 
 export const mockSkills = {
-  groups: [
-    {
-      id: '1',
-      name: 'Programming Languages',
-      skills: ['JavaScript', 'TypeScript', 'Python', 'Java'],
-    },
-    {
-      id: '2',
-      name: 'Frameworks',
-      skills: ['React', 'Next.js', 'Node.js', 'Express'],
-    },
-  ],
-  minSkillsToUse: 3,
-  maxSkillsToUse: 8,
+	groups: [
+		{
+			id: '1',
+			name: 'Programming Languages',
+			skills: ['JavaScript', 'TypeScript', 'Python', 'Java'],
+		},
+		{
+			id: '2',
+			name: 'Frameworks',
+			skills: ['React', 'Next.js', 'Node.js', 'Express'],
+		},
+	],
+	minSkillsToUse: 3,
+	maxSkillsToUse: 8,
 };
 ```
 
@@ -373,31 +365,31 @@ describe('Component Performance', () => {
 import { test, expect } from '@playwright/test';
 
 test('complete cover letter generation flow', async ({ page }) => {
-  // Navigate to the application
-  await page.goto('/');
+	// Navigate to the application
+	await page.goto('/');
 
-  // Fill candidate form
-  await page.fill('[data-testid="full-name"]', 'John Doe');
-  await page.fill('[data-testid="email"]', 'john@example.com');
-  await page.click('[data-testid="next-button"]');
+	// Fill candidate form
+	await page.fill('[data-testid="full-name"]', 'John Doe');
+	await page.fill('[data-testid="email"]', 'john@example.com');
+	await page.click('[data-testid="next-button"]');
 
-  // Fill job form
-  await page.fill('[data-testid="company-name"]', 'Tech Corp');
-  await page.fill('[data-testid="job-title"]', 'Senior Developer');
-  await page.fill('[data-testid="job-description"]', 'We are looking for…');
-  await page.click('[data-testid="next-button"]');
+	// Fill job form
+	await page.fill('[data-testid="company-name"]', 'Tech Corp');
+	await page.fill('[data-testid="job-title"]', 'Senior Developer');
+	await page.fill('[data-testid="job-description"]', 'We are looking for…');
+	await page.click('[data-testid="next-button"]');
 
-  // Select skills
-  await page.click('[data-testid="skill-javascript"]');
-  await page.click('[data-testid="skill-react"]');
-  await page.click('[data-testid="next-button"]');
+	// Select skills
+	await page.click('[data-testid="skill-javascript"]');
+	await page.click('[data-testid="skill-react"]');
+	await page.click('[data-testid="next-button"]');
 
-  // Generate cover letter
-  await page.click('[data-testid="generate-button"]');
+	// Generate cover letter
+	await page.click('[data-testid="generate-button"]');
 
-  // Verify results
-  await expect(page.locator('[data-testid="cover-letter"]')).toBeVisible();
-  await expect(page.locator('[data-testid="download-pdf"]')).toBeVisible();
+	// Verify results
+	await expect(page.locator('[data-testid="cover-letter"]')).toBeVisible();
+	await expect(page.locator('[data-testid="download-pdf"]')).toBeVisible();
 });
 ```
 

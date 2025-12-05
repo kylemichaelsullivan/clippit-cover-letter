@@ -1,14 +1,6 @@
 ---
-globs: ['**/*.tsx', '**/*.ts']
-exclude:
-  [
-    '**/__tests__/**',
-    '**/*.test.*',
-    '**/*.spec.*',
-    '**/config/**',
-    '**/lib/schemas.ts',
-    '**/lib/openai.ts',
-  ]
+globs: **/*.tsx, **/*.ts
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*, **/config/**, **/lib/schemas.ts, **/lib/openai.ts
 ---
 
 # React Development Standards
@@ -101,23 +93,23 @@ export default memo(ComponentName);
 ```typescript
 // ✅ Good store structure
 export const useAppStore = create<AppState>()(
-  devtools(
-    (set, get) => ({
-      // State
-      data: initialState,
+	devtools(
+		(set, get) => ({
+			// State
+			data: initialState,
 
-      // Setters
-      setData: (data) => set({ data }),
+			// Setters
+			setData: (data) => set({ data }),
 
-      // Actions
-      asyncAction: async () => {
-        const state = get();
-        // Action logic
-        set({ data: newData });
-      },
-    }),
-    { name: 'app-store' }
-  )
+			// Actions
+			asyncAction: async () => {
+				const state = get();
+				// Action logic
+				set({ data: newData });
+			},
+		}),
+		{ name: 'app-store' },
+	),
 );
 ```
 
@@ -128,7 +120,7 @@ export const useAppStore = create<AppState>()(
 const { data, setData, asyncAction } = useAppStore();
 
 // ❌ Don't create wrapper hooks unless necessary
-const useAppData = () => useAppStore(state => state.data);
+const useAppData = () => useAppStore((state) => state.data);
 ```
 
 ### Context Optimization

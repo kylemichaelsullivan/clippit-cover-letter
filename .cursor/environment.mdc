@@ -1,28 +1,6 @@
 ---
-globs:
-  [
-    '**/config/**/*.ts',
-    '**/config/**/*.js',
-    '**/config/**/*.mjs',
-    '**/lib/schemas.ts',
-    '**/lib/openai.ts',
-    '**/lib/documentGeneration.ts',
-    'package.json',
-    'next.config.mjs',
-    'tailwind.config.js',
-    'tsconfig.json',
-    'eslint.config.mjs',
-    'postcss.config.mjs',
-  ]
-exclude:
-  [
-    '**/__tests__/**',
-    '**/*.test.*',
-    '**/*.spec.*',
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/.next/**',
-  ]
+globs: **/config/**/*.ts, **/config/**/*.js, **/config/**/*.mjs, **/lib/schemas.ts, **/lib/openai.ts, **/lib/documentGeneration.ts, package.json, next.config.mjs, tailwind.config.js, tsconfig.json, eslint.config.mjs, postcss.config.mjs
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*, **/node_modules/**, **/dist/**, **/.next/**
 ---
 
 # Environment Configuration
@@ -41,19 +19,19 @@ exclude:
 ```typescript
 // src/config/env.ts
 export const env = {
-  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4',
-  OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
+	OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+	OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4',
+	OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
 } as const;
 
 export function validateEnv() {
-  const requiredVars = ['OPENAI_API_KEY'] as const;
+	const requiredVars = ['OPENAI_API_KEY'] as const;
 
-  for (const varName of requiredVars) {
-    if (!env[varName]) {
-      throw new Error(`Missing required environment variable: ${varName}`);
-    }
-  }
+	for (const varName of requiredVars) {
+		if (!env[varName]) {
+			throw new Error(`Missing required environment variable: ${varName}`);
+		}
+	}
 }
 ```
 
@@ -61,15 +39,13 @@ export function validateEnv() {
 
 ```typescript
 // Environment variables that must be set
-const requiredEnvVars = [
-  'OPENAI_API_KEY',
-] as const;
+const requiredEnvVars = ['OPENAI_API_KEY'] as const;
 
 // Validate required environment variables
 for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    throw new Error(`Missing required environment variable: ${envVar}`);
-  }
+	if (!process.env[envVar]) {
+		throw new Error(`Missing required environment variable: ${envVar}`);
+	}
 }
 ```
 

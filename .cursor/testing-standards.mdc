@@ -1,6 +1,4 @@
 ---
-description:
-globs:
 alwaysApply: true
 ---
 
@@ -24,7 +22,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // 2. Mock external dependencies (before imports)
 vi.mock('@/lib/stores', () => ({
-  useAppStore: () => mockAppStore,
+	useAppStore: () => mockAppStore,
 }));
 
 // 3. Import component under test (after mocks)
@@ -32,15 +30,15 @@ import { ComponentName } from '@/components/path/ComponentName';
 
 // 4. Test suite
 describe('ComponentName', () => {
-  // Setup and teardown
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+	// Setup and teardown
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-  // Test cases
-  it('should render correctly', () => {
-    // Test implementation
-  });
+	// Test cases
+	it('should render correctly', () => {
+		// Test implementation
+	});
 });
 ```
 
@@ -57,9 +55,9 @@ describe('ComponentName', () => {
 
 ```typescript
 vi.mock('@/lib/stores', () => ({
-  useAppStore: () => mockAppStore,
-  useTemplatesStore: () => mockTemplatesStore,
-  useCandidateStore: () => mockCandidateStore,
+	useAppStore: () => mockAppStore,
+	useTemplatesStore: () => mockTemplatesStore,
+	useCandidateStore: () => mockCandidateStore,
 }));
 ```
 
@@ -163,21 +161,21 @@ it('applies correct CSS classes', () => {
 
 ```typescript
 describe('API Integration', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    global.fetch = vi.fn();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+		global.fetch = vi.fn();
+	});
 
-  it('should make successful API call', async () => {
-    const mockResponse = { data: 'success' };
-    (global.fetch as any).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockResponse,
-    });
+	it('should make successful API call', async () => {
+		const mockResponse = { data: 'success' };
+		(global.fetch as any).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockResponse,
+		});
 
-    const result = await apiCall();
-    expect(result).toEqual(mockResponse);
-  });
+		const result = await apiCall();
+		expect(result).toEqual(mockResponse);
+	});
 });
 ```
 
@@ -185,17 +183,17 @@ describe('API Integration', () => {
 
 ```typescript
 describe('Store Management', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    store.getState().clearData();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+		store.getState().clearData();
+	});
 
-  it('should update state correctly', () => {
-    const { updateField } = store.getState();
-    updateField('test', 'value');
+	it('should update state correctly', () => {
+		const { updateField } = store.getState();
+		updateField('test', 'value');
 
-    expect(store.getState().data.test).toBe('value');
-  });
+		expect(store.getState().data.test).toBe('value');
+	});
 });
 ```
 
@@ -256,11 +254,11 @@ it('handles keyboard events correctly', () => {
 
 ```typescript
 const mockProps = {
-  includeCoverLetter: true,
-  includeResume: true,
-  candidateDetails: { name: 'John Doe' },
-  onSuccess: vi.fn(),
-  onError: vi.fn(),
+	includeCoverLetter: true,
+	includeResume: true,
+	candidateDetails: { name: 'John Doe' },
+	onSuccess: vi.fn(),
+	onError: vi.fn(),
 };
 ```
 

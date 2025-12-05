@@ -1,12 +1,6 @@
 ---
-globs:
-  [
-    '**/lib/openai.ts',
-    '**/lib/documentGeneration.ts',
-    '**/features/document-generation/**/*.tsx',
-    '**/features/document-generation/**/*.ts',
-  ]
-exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
+globs: **/lib/openai.ts, **/lib/documentGeneration.ts, **/features/document-generation/**/*.tsx, **/features/document-generation/**/*.ts
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*
 ---
 
 # AI Integration Standards
@@ -26,42 +20,34 @@ The application uses AI for the following functions:
 **Avoid these AI-typical patterns:**
 
 1. **Undue emphasis on symbolism and importance**
-
    - Avoid: "stands as a testament", "plays a vital role", "underscores its importance", "continues to captivate", "leaves a lasting impact", "watershed moment", "key turning point", "deeply rooted", "profound heritage", "steadfast dedication"
    - Instead: Use specific, concrete language that directly describes facts
 
 2. **Promotional language**
-
    - Avoid: "rich cultural heritage", "rich history", "breathtaking", "must-visit", "must-see", "stunning natural beauty", "enduring legacy", "rich cultural tapestry"
    - Instead: Use neutral, factual descriptions
 
 3. **Editorializing**
-
    - Avoid: "it's important to note", "it is worth", "no discussion would be complete without", "in this article"
    - Instead: Present facts directly without editorial commentary
 
 4. **Overuse of conjunctions**
-
    - Avoid: Excessive use of "moreover", "in addition", "furthermore", "on the other hand"
    - Instead: Use varied, natural transitions
 
 5. **Section summaries**
-
    - Avoid: "In summary", "In conclusion", "Overall" at paragraph/section ends
    - Instead: Let content flow naturally without forced summaries
 
 6. **Negative parallelisms**
-
    - Avoid: "Not only… but…", "It is not just about…, it's…"
    - Instead: Use direct, positive statements
 
 7. **Rule of three overuse**
-
    - Avoid: Excessive use of "adjective, adjective, and adjective" patterns
    - Instead: Vary sentence structure naturally
 
 8. **Superficial analyses**
-
    - Avoid: "ensuring…", "highlighting…", "emphasizing…", "reflecting…"
    - Instead: Provide specific, actionable insights
 
@@ -104,68 +90,68 @@ The application uses AI for the following functions:
 import { getAIConfig } from '@/config/ai';
 
 export type OpenAIResponse = {
-  content: string;
-  usage?: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
+	content: string;
+	usage?: {
+		prompt_tokens: number;
+		completion_tokens: number;
+		total_tokens: number;
+	};
 };
 
 export async function callOpenAI(
-  prompt: string,
-  systemMessage?: string,
+	prompt: string,
+	systemMessage?: string,
 ): Promise<OpenAIResponse> {
-  const config = getAIConfig();
+	const config = getAIConfig();
 
-  if (!config.apiKey) {
-    throw new Error('OpenAI API key is not configured');
-  }
+	if (!config.apiKey) {
+		throw new Error('OpenAI API key is not configured');
+	}
 
-  const messages = [
-    ...(systemMessage
-      ? [{ role: 'system' as const, content: systemMessage }]
-      : []),
-    { role: 'user' as const, content: prompt },
-  ];
+	const messages = [
+		...(systemMessage
+			? [{ role: 'system' as const, content: systemMessage }]
+			: []),
+		{ role: 'user' as const, content: prompt },
+	];
 
-  try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${config.apiKey}`,
-      },
-      body: JSON.stringify({
-        model: config.model,
-        messages,
-        max_tokens: config.maxTokens,
-        temperature: config.temperature,
-      }),
-    });
+	try {
+		const response = await fetch('https://api.openai.com/v1/chat/completions', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${config.apiKey}`,
+			},
+			body: JSON.stringify({
+				model: config.model,
+				messages,
+				max_tokens: config.maxTokens,
+				temperature: config.temperature,
+			}),
+		});
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}));
-      throw new Error(
-        `OpenAI API error: ${response.status} ${error.error?.message || response.statusText}`,
-      );
-    }
+		if (!response.ok) {
+			const error = await response.json().catch(() => ({}));
+			throw new Error(
+				`OpenAI API error: ${response.status} ${error.error?.message || response.statusText}`,
+			);
+		}
 
-    const data = await response.json();
-    const content = data.choices[0]?.message?.content;
+		const data = await response.json();
+		const content = data.choices[0]?.message?.content;
 
-    if (!content) {
-      throw new Error('No content received from OpenAI API');
-    }
+		if (!content) {
+			throw new Error('No content received from OpenAI API');
+		}
 
-    return {
-      content,
-      usage: data.usage,
-    };
-  } catch (error) {
-    console.error('OpenAI API call failed:', error);
-    throw error;
-  }
+		return {
+			content,
+			usage: data.usage,
+		};
+	} catch (error) {
+		console.error('OpenAI API call failed:', error);
+		throw error;
+	}
 }
 ```
 
@@ -175,11 +161,11 @@ export async function callOpenAI(
 
 ```typescript
 export async function generateCoverLetter(
-  jobDescription: string,
-  companyDetails: string,
-  userExperience: string,
+	jobDescription: string,
+	companyDetails: string,
+	userExperience: string,
 ): Promise<string> {
-  const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
+	const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
 - Addresses the specific job requirements directly
 - Highlights relevant experience with concrete examples
 - Shows genuine interest in the company
@@ -190,7 +176,7 @@ export async function generateCoverLetter(
 - Focuses on facts and specific achievements
 - Maintains a neutral, professional tone`;
 
-  const prompt = `Please write a cover letter for the following position:
+	const prompt = `Please write a cover letter for the following position:
 
 Job Description:
 ${jobDescription}
@@ -203,8 +189,8 @@ ${userExperience}
 
 Write a professional cover letter that connects my experience to this specific role. Use natural language and avoid AI-typical phrases.`;
 
-  const response = await callOpenAI(prompt, systemMessage);
-  return response.content;
+	const response = await callOpenAI(prompt, systemMessage);
+	return response.content;
 }
 ```
 
@@ -297,24 +283,24 @@ The following AI features are planned for future implementation:
 ```typescript
 // src/config/ai.ts
 export type AIConfig = {
-  // API Configuration
-  apiKey: string;
-  model: string;
-  maxTokens: number;
-  temperature: number;
+	// API Configuration
+	apiKey: string;
+	model: string;
+	maxTokens: number;
+	temperature: number;
 
-  // Rate Limiting
-  requestsPerMinute: number;
-  requestsPerHour: number;
+	// Rate Limiting
+	requestsPerMinute: number;
+	requestsPerHour: number;
 
-  // Security
-  enableLogging: boolean;
-  logLevel: 'none' | 'error' | 'warn' | 'info';
+	// Security
+	enableLogging: boolean;
+	logLevel: 'none' | 'error' | 'warn' | 'info';
 
-  // Feature Flags
-  enableAI: boolean;
-  enableStreaming: boolean;
-  enableRetry: boolean;
+	// Feature Flags
+	enableAI: boolean;
+	enableStreaming: boolean;
+	enableRetry: boolean;
 };
 ```
 

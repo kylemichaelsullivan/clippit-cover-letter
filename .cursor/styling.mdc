@@ -1,14 +1,6 @@
 ---
-globs: ['**/*.tsx', '**/*.ts', '**/*.css']
-exclude:
-  [
-    '**/__tests__/**',
-    '**/*.test.*',
-    '**/*.spec.*',
-    '**/config/**',
-    '**/lib/schemas.ts',
-    '**/lib/openai.ts',
-  ]
+globs: **/*.tsx, **/*.ts, **/*.css
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*, **/config/**, **/lib/schemas.ts, **/lib/openai.ts
 ---
 
 # Styling Standards
@@ -57,19 +49,19 @@ Follow this specific order for JSX attributes:
 
 ```tsx
 <button
-  type="button"
-  className="Button rounded-lg border p-4 bg-white"
-  disabled={isDisabled}
-  title="Submit form"
-  onClick={handleClick}
-  onKeyDown={handleKeyDown}
-  aria-label="Submit form"
-  aria-describedby="submit-help"
-  data-testid="submit-button"
-  ref={buttonRef}
-  id="submit-button"
+	type='button'
+	className='Button rounded-lg border bg-white p-4'
+	disabled={isDisabled}
+	title='Submit form'
+	onClick={handleClick}
+	onKeyDown={handleKeyDown}
+	aria-label='Submit form'
+	aria-describedby='submit-help'
+	data-testid='submit-button'
+	ref={buttonRef}
+	id='submit-button'
 >
-  Submit
+	Submit
 </button>
 ```
 
@@ -86,17 +78,17 @@ Follow this specific order for JSX attributes:
 
 ```tsx
 // Vertical spacing
-className='flex flex-col gap-2'    // Small gaps
-className='flex flex-col gap-4'    // Medium gaps
-className='flex flex-col gap-6'    // Large gaps
+className = 'flex flex-col gap-2'; // Small gaps
+className = 'flex flex-col gap-4'; // Medium gaps
+className = 'flex flex-col gap-6'; // Large gaps
 
 // Horizontal spacing
-className='flex items-center gap-2'
-className='flex justify-between'
+className = 'flex items-center gap-2';
+className = 'flex justify-between';
 
 // Responsive spacing
-className='flex flex-col gap-3 sm:gap-4'
-className='flex items-center gap-1.5 sm:gap-2'
+className = 'flex flex-col gap-3 sm:gap-4';
+className = 'flex items-center gap-1.5 sm:gap-2';
 ```
 
 ### Component Structure
@@ -138,10 +130,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 <FontAwesomeIcon
-  icon={faSort}
-  className="h-3 w-3 sm:h-4 sm:w-4"
-  aria-hidden="true"
-/>
+	icon={faSort}
+	className='h-3 w-3 sm:h-4 sm:w-4'
+	aria-hidden='true'
+/>;
 ```
 
 #### Adding New Icons

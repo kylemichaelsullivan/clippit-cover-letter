@@ -1,6 +1,6 @@
 ---
-globs: ['**/forms/**/*.tsx', '**/forms/**/*.ts', '**/lib/schemas.ts']
-exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
+globs: **/forms/**/*.tsx, **/forms/**/*.ts, **/lib/schemas.ts
+exclude: **/__tests__/**, **/*.test.*, **/*.spec.*
 ---
 
 # Form Development Standards
@@ -24,18 +24,22 @@ exclude: ['**/__tests__/**', '**/*.test.*', '**/*.spec.*']
 ```typescript
 // src/lib/schemas.ts
 export const candidateDetailsSchema = z.object({
-  fullName: z.string().min(1, 'Full name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  phone: z.string(),
-  location: z.string(),
-  linkedin: z.string()
-    .min(3, 'LinkedIn slug must be at least 3 characters')
-    .max(100, 'LinkedIn slug cannot exceed 100 characters')
-    .regex(/^[a-zA-Z0-9-]+$/, 'LinkedIn slug can only contain letters, numbers, and hyphens')
-    .refine((val) => !val.toLowerCase().includes('linkedin'), {
-      message: 'LinkedIn slug should not include the word "LinkedIn"',
-    }),
-  portfolio: z.string(),
+	fullName: z.string().min(1, 'Full name is required'),
+	email: z.string().email('Please enter a valid email address'),
+	phone: z.string(),
+	location: z.string(),
+	linkedin: z
+		.string()
+		.min(3, 'LinkedIn slug must be at least 3 characters')
+		.max(100, 'LinkedIn slug cannot exceed 100 characters')
+		.regex(
+			/^[a-zA-Z0-9-]+$/,
+			'LinkedIn slug can only contain letters, numbers, and hyphens',
+		)
+		.refine((val) => !val.toLowerCase().includes('linkedin'), {
+			message: 'LinkedIn slug should not include the word "LinkedIn"',
+		}),
+	portfolio: z.string(),
 });
 ```
 
@@ -43,11 +47,11 @@ export const candidateDetailsSchema = z.object({
 
 ```typescript
 export const jobDetailsSchema = z.object({
-  companyName: z.string().min(1, 'Company name is required'),
-  jobTitle: z.string().min(1, 'Job title is required'),
-  jobDescription: z.string().min(1, 'Job description is required'),
-  hiringManager: z.string(),
-  companyAddress: z.string(),
+	companyName: z.string().min(1, 'Company name is required'),
+	jobTitle: z.string().min(1, 'Job title is required'),
+	jobDescription: z.string().min(1, 'Job description is required'),
+	hiringManager: z.string(),
+	companyAddress: z.string(),
 });
 ```
 
@@ -55,15 +59,15 @@ export const jobDetailsSchema = z.object({
 
 ```typescript
 export const skillsSchema = z.object({
-  groups: z.array(
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      skills: z.array(z.string()),
-    }),
-  ),
-  minSkillsToUse: z.number().min(1),
-  maxSkillsToUse: z.number().min(1),
+	groups: z.array(
+		z.object({
+			id: z.string(),
+			name: z.string(),
+			skills: z.array(z.string()),
+		}),
+	),
+	minSkillsToUse: z.number().min(1),
+	maxSkillsToUse: z.number().min(1),
 });
 ```
 
@@ -71,10 +75,10 @@ export const skillsSchema = z.object({
 
 ```typescript
 export const templatesSchema = z.object({
-  includeCoverLetter: z.boolean(),
-  coverLetterContent: z.string(),
-  includeResume: z.boolean(),
-  resumeContent: z.string(),
+	includeCoverLetter: z.boolean(),
+	coverLetterContent: z.string(),
+	includeResume: z.boolean(),
+	resumeContent: z.string(),
 });
 ```
 
@@ -85,7 +89,6 @@ Always use the project's utility components instead of creating custom HTML elem
 ### Core Form Components
 
 - **Form** (`@/components/forms/core/Form`) - Use for consistent form containers
-
   - **Consistent styling**: Uses `CONSTANTS.CLASS_NAMES.FORM_CONTAINER` for uniform appearance
   - **Component naming**: Pass `componentName` prop for debugging and styling
   - **Form handling**: Automatically handles `preventDefault` and `stopPropagation`
@@ -93,7 +96,6 @@ Always use the project's utility components instead of creating custom HTML elem
   - **Customizable**: Optional `className` prop for additional styling
 
 - **FormField** (`@/components/forms/core/FormField`) - Use for all form inputs
-
   - Supports types: `text`, `email`, `tel`, `url`, `password`, `select`, `textarea`
   - Includes error handling and help text
   - Supports label content for additional elements
@@ -113,23 +115,23 @@ import { validateSchema } from '@/lib/schemas';
 import { candidateDetailsSchema } from '@/lib/schemas';
 
 <Field
-  form={form}
-  name='email'
-  validators={{
-    onChange: validateSchema(candidateDetailsSchema, 'email'),
-  }}
+	form={form}
+	name='email'
+	validators={{
+		onChange: validateSchema(candidateDetailsSchema, 'email'),
+	}}
 >
-  {(field) => (
-    <FormField
-      id='email'
-      type='email'
-      label='Email Address'
-      field={field}
-      schema={candidateDetailsSchema}
-      fieldName='email'
-    />
-  )}
-</Field>
+	{(field) => (
+		<FormField
+			id='email'
+			type='email'
+			label='Email Address'
+			field={field}
+			schema={candidateDetailsSchema}
+			fieldName='email'
+		/>
+	)}
+</Field>;
 ```
 
 #### Example Usage
@@ -231,40 +233,43 @@ import { candidateDetailsSchema } from '@/lib/schemas';
 ```typescript
 // Validate a specific field from a schema
 export function validateSchema(schema: z.ZodObject<any>, fieldName: string) {
-  return ({ value }: { value: any }) => {
-    const fieldSchema = schema.shape[fieldName];
-    if (!fieldSchema) return undefined;
+	return ({ value }: { value: any }) => {
+		const fieldSchema = schema.shape[fieldName];
+		if (!fieldSchema) return undefined;
 
-    const result = fieldSchema.safeParse(value);
-    return result.success ? undefined : result.error.errors[0]?.message;
-  };
+		const result = fieldSchema.safeParse(value);
+		return result.success ? undefined : result.error.errors[0]?.message;
+	};
 }
 
 // Check if a field is required
-export function isFieldRequired(schema: z.ZodSchema, fieldName: string): boolean {
-  try {
-    if (schema instanceof z.ZodObject) {
-      const shape = schema.shape as Record<string, z.ZodSchema>;
-      const fieldSchema = shape[fieldName];
+export function isFieldRequired(
+	schema: z.ZodSchema,
+	fieldName: string,
+): boolean {
+	try {
+		if (schema instanceof z.ZodObject) {
+			const shape = schema.shape as Record<string, z.ZodSchema>;
+			const fieldSchema = shape[fieldName];
 
-      if (!fieldSchema) return false;
+			if (!fieldSchema) return false;
 
-      if (fieldSchema instanceof z.ZodOptional) {
-        return false;
-      }
+			if (fieldSchema instanceof z.ZodOptional) {
+				return false;
+			}
 
-      if (fieldSchema instanceof z.ZodString) {
-        return fieldSchema._def.checks.some(
-          (check) => check.kind === 'min' && check.value > 0,
-        );
-      }
+			if (fieldSchema instanceof z.ZodString) {
+				return fieldSchema._def.checks.some(
+					(check) => check.kind === 'min' && check.value > 0,
+				);
+			}
 
-      return true;
-    }
+			return true;
+		}
 
-    return false;
-  } catch {
-    return false;
-  }
+		return false;
+	} catch {
+		return false;
+	}
 }
 ```
