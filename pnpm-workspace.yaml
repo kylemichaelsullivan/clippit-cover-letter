@@ -1,9 +1,0 @@
-ignoredBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - esbuild
-  - rustywind
-  - sharp
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - puppeteer
