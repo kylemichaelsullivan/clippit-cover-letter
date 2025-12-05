@@ -10,33 +10,33 @@ This guide covers best practices for using className utilities in the project.
 
 ```tsx
 // ❌ Avoid - uses margins
-className='space-y-4'
-className='space-x-2'
+className = 'space-x-2';
+className = 'space-y-4';
 ```
 
 **✅ Use flex/gap instead** - provides the same visual spacing without margins:
 
 ```tsx
 // ✅ Good - uses flexbox gap
-className='flex flex-col gap-4'
-className='flex items-center gap-2'
+className = 'flex flex-col gap-4';
+className = 'flex items-center gap-2';
 ```
 
 ### Spacing Patterns
 
 ```tsx
 // Vertical spacing
-className='flex flex-col gap-2'    // Small gaps
-className='flex flex-col gap-4'    // Medium gaps
-className='flex flex-col gap-6'    // Large gaps
+className = 'flex flex-col gap-2'; // Small gaps
+className = 'flex flex-col gap-4'; // Medium gaps
+className = 'flex flex-col gap-6'; // Large gaps
 
 // Horizontal spacing
-className='flex items-center gap-2'
-className='flex justify-between'
+className = 'flex items-center gap-2';
+className = 'flex justify-between';
 
 // Responsive spacing
-className='flex flex-col gap-3 sm:gap-4'
-className='flex items-center gap-1.5 sm:gap-2'
+className = 'flex flex-col gap-3 sm:gap-4';
+className = 'flex items-center gap-1.5 sm:gap-2';
 ```
 
 ## Available Utilities
@@ -107,17 +107,9 @@ className={clsx('base-classes', className)}
 className={`base-classes ${className}`}
 ```
 
-### 4. **Leverage Prettier Auto-Sorting**
+### 4. **Code Formatting with Biome**
 
-The prettier-plugin-tailwindcss will automatically sort classes:
-
-```tsx
-// Write classes in any order
-className='hover:bg-blue p-4 text-red sm:text-lg'
-
-// Prettier will sort them automatically
-className='p-4 text-red sm:text-lg hover:bg-blue'
-```
+Biome provides consistent code formatting. While it doesn't automatically sort Tailwind classes, you should manually organize classes following the recommended order.
 
 ## Common Patterns
 
@@ -125,29 +117,34 @@ className='p-4 text-red sm:text-lg hover:bg-blue'
 
 ```tsx
 type ButtonProps = {
-  variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  className?: string;
+	variant?: 'primary' | 'secondary';
+	size?: 'sm' | 'md' | 'lg';
+	disabled?: boolean;
+	className?: string;
 };
 
-export function Button({ variant = 'primary', size = 'md', disabled, className }: ButtonProps) {
-  return (
-    <button
-      className={clsx(
-        'rounded-lg border p-2 transition-colors',
-        variant === 'primary' && 'bg-blue text-white hover:bg-blue-dark',
-        variant === 'secondary' && 'bg-gray text-black hover:bg-gray-dark',
-        size === 'sm' && 'px-3 py-1 text-sm',
-        size === 'lg' && 'px-6 py-3 text-lg',
-        disabled && 'opacity-50 cursor-not-allowed',
-        className
-      )}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
+export function Button({
+	variant = 'primary',
+	size = 'md',
+	disabled,
+	className,
+}: ButtonProps) {
+	return (
+		<button
+			className={clsx(
+				'rounded-lg border p-2 transition-colors',
+				variant === 'primary' && 'bg-blue hover:bg-blue-dark text-white',
+				variant === 'secondary' && 'bg-gray hover:bg-gray-dark text-black',
+				size === 'sm' && 'px-3 py-1 text-sm',
+				size === 'lg' && 'px-6 py-3 text-lg',
+				disabled && 'cursor-not-allowed opacity-50',
+				className,
+			)}
+			disabled={disabled}
+		>
+			{children}
+		</button>
+	);
 }
 ```
 
@@ -155,17 +152,17 @@ export function Button({ variant = 'primary', size = 'md', disabled, className }
 
 ```tsx
 export function Input({ error, className, ...props }: InputProps) {
-  return (
-    <input
-      className={clsx(
-        'w-full rounded-lg border px-3 py-2',
-        error ? 'border-red' : 'border-gray',
-        'focus:border-blue focus:ring-2 focus:ring-blue',
-        className
-      )}
-      {...props}
-    />
-  );
+	return (
+		<input
+			className={clsx(
+				'w-full rounded-lg border px-3 py-2',
+				error ? 'border-red' : 'border-gray',
+				'focus:border-blue focus:ring-blue focus:ring-2',
+				className,
+			)}
+			{...props}
+		/>
+	);
 }
 ```
 
@@ -178,9 +175,9 @@ export function Input({ error, className, ...props }: InputProps) {
 ```tsx
 // ❌ Avoid - redundant wrapper
 <div className='flex flex-col gap-6'>
-  <div className='flex flex-col gap-6'>
-    <Component />
-  </div>
+	<div className='flex flex-col gap-6'>
+		<Component />
+	</div>
 </div>
 ```
 
@@ -189,7 +186,7 @@ export function Input({ error, className, ...props }: InputProps) {
 ```tsx
 // ✅ Good - direct structure
 <div className='flex flex-col gap-6'>
-  <Component />
+	<Component />
 </div>
 ```
 
@@ -224,12 +221,14 @@ Keep wrappers when they serve a specific purpose:
 For expensive conditional logic:
 
 ```tsx
-const buttonClasses = useMemo(() =>
-  clsx(
-    'base-classes',
-    variant === 'primary' && 'primary-classes',
-    size === 'lg' && 'large-classes'
-  ), [variant, size]
+const buttonClasses = useMemo(
+	() =>
+		clsx(
+			'base-classes',
+			variant === 'primary' && 'primary-classes',
+			size === 'lg' && 'large-classes',
+		),
+	[variant, size],
 );
 ```
 
@@ -239,11 +238,11 @@ Create utility functions for repeated patterns:
 
 ```tsx
 const getButtonClasses = (variant: string, size: string) =>
-  clsx(
-    'button-base',
-    variant === 'primary' && 'primary-variant',
-    size === 'lg' && 'large-size'
-  );
+	clsx(
+		'button-base',
+		variant === 'primary' && 'primary-variant',
+		size === 'lg' && 'large-size',
+	);
 ```
 
 ## Migration Guide
@@ -270,13 +269,12 @@ className={clsx('base-class', isActive && 'active')}
 
 ## Tools and Configuration
 
-- **Prettier**: Automatically sorts Tailwind classes
+- **Biome**: Formats code and provides linting
 - **clsx**: Handles conditional classes
-- **ESLint**: Can enforce consistent patterns
 
 ## Benefits
 
-1. **Automatic Sorting**: Prettier handles class ordering
+1. **Consistent Formatting**: Biome ensures consistent code style
 2. **Type Safety**: Better IntelliSense and error catching
 3. **Readability**: Clear conditional logic
 4. **Performance**: Optimized class combination

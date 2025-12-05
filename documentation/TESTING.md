@@ -119,17 +119,17 @@ it('shows validation errors for required fields', () => {
 
 ```typescript
 describe('useStore', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    useStore.getState().clearData();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+		useStore.getState().clearData();
+	});
 
-  it('updates state correctly', () => {
-    const { updateField } = useStore.getState();
-    updateField('test', 'value');
+	it('updates state correctly', () => {
+		const { updateField } = useStore.getState();
+		updateField('test', 'value');
 
-    expect(useStore.getState().data.test).toBe('value');
-  });
+		expect(useStore.getState().data.test).toBe('value');
+	});
 });
 ```
 
@@ -139,20 +139,20 @@ describe('useStore', () => {
 
 ```typescript
 describe('API Service', () => {
-  beforeEach(() => {
-    global.fetch = vi.fn();
-  });
+	beforeEach(() => {
+		global.fetch = vi.fn();
+	});
 
-  it('makes successful API call', async () => {
-    const mockResponse = { data: 'success' };
-    (global.fetch as any).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockResponse,
-    });
+	it('makes successful API call', async () => {
+		const mockResponse = { data: 'success' };
+		(global.fetch as any).mockResolvedValueOnce({
+			ok: true,
+			json: async () => mockResponse,
+		});
 
-    const result = await apiCall();
-    expect(result).toEqual(mockResponse);
-  });
+		const result = await apiCall();
+		expect(result).toEqual(mockResponse);
+	});
 });
 ```
 
@@ -162,12 +162,12 @@ describe('API Service', () => {
 
 ```typescript
 describe('utilityFunction', () => {
-  it('processes data correctly', () => {
-    const input = 'test input';
-    const result = utilityFunction(input);
+	it('processes data correctly', () => {
+		const input = 'test input';
+		const result = utilityFunction(input);
 
-    expect(result).toBe('expected output');
-  });
+		expect(result).toBe('expected output');
+	});
 });
 ```
 
@@ -196,10 +196,10 @@ vi.mock('@fortawesome/react-fontawesome', () => ({
 
 ```typescript
 export const mockAppStore = {
-  includeCoverLetter: true,
-  includeResume: true,
-  setCoverLetterFontSize: vi.fn(),
-  setResumeFontSize: vi.fn(),
+	includeCoverLetter: true,
+	includeResume: true,
+	setCoverLetterFontSize: vi.fn(),
+	setResumeFontSize: vi.fn(),
 };
 ```
 
@@ -222,18 +222,18 @@ vi.mock('@/components/ui/buttons', () => ({
 ```typescript
 // test-utils.ts
 export function createMockForm() {
-  return {
-    getFieldValue: vi.fn(),
-    setFieldValue: vi.fn(),
-    handleSubmit: vi.fn(),
-  };
+	return {
+		getFieldValue: vi.fn(),
+		setFieldValue: vi.fn(),
+		handleSubmit: vi.fn(),
+	};
 }
 
 export function createMockField(value: any = '') {
-  return {
-    state: { value },
-    handleChange: vi.fn(),
-  };
+	return {
+		state: { value },
+		handleChange: vi.fn(),
+	};
 }
 ```
 
@@ -291,16 +291,16 @@ it('handles empty data gracefully', () => {
 import { test, expect } from '@playwright/test';
 
 test.describe('Feature Flow', () => {
-  test('should complete user workflow', async ({ page }) => {
-    await page.goto('/');
+	test('should complete user workflow', async ({ page }) => {
+		await page.goto('/');
 
-    // Fill form
-    await page.fill('[data-testid="name-input"]', 'John Doe');
-    await page.click('[data-testid="next-button"]');
+		// Fill form
+		await page.fill('[data-testid="name-input"]', 'John Doe');
+		await page.click('[data-testid="next-button"]');
 
-    // Verify navigation
-    await expect(page.getByRole('heading', { name: /job/i })).toBeVisible();
-  });
+		// Verify navigation
+		await expect(page.getByRole('heading', { name: /job/i })).toBeVisible();
+	});
 });
 ```
 
@@ -348,7 +348,7 @@ test.describe('Feature Flow', () => {
 #### Run Once (Recommended)
 
 ```bash
-pnpm test:run
+bun test:run
 ```
 
 Runs all tests once and exits. This is the recommended approach for most development scenarios as it's faster and less resource-intensive.
@@ -356,7 +356,7 @@ Runs all tests once and exits. This is the recommended approach for most develop
 #### Watch Mode
 
 ```bash
-pnpm test
+bun test
 ```
 
 Runs tests in watch mode, automatically re-running tests when files change. This can be resource-intensive and is optional.
@@ -364,7 +364,7 @@ Runs tests in watch mode, automatically re-running tests when files change. This
 #### Interactive UI
 
 ```bash
-pnpm test:ui
+bun test:ui
 ```
 
 Opens an interactive test UI for debugging and exploring test results.
@@ -372,13 +372,13 @@ Opens an interactive test UI for debugging and exploring test results.
 ### E2E Tests
 
 ```bash
-pnpm test:e2e
+bun test:e2e
 ```
 
 ### Test Coverage
 
 ```bash
-pnpm test:coverage
+bun test:coverage
 ```
 
 ## Continuous Integration

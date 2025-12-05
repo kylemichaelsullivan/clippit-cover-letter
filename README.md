@@ -18,7 +18,7 @@ A Next.js application that generates tailored cover letters and resumes using AI
 ### Prerequisites
 
 - Node.js 18+
-- pnpm (recommended) or npm
+- Bun (recommended) or npm
 - OpenAI API key
 
 ### Installation
@@ -33,7 +33,7 @@ cd clippit-cover-letter
 2. Install dependencies:
 
 ```bash
-pnpm install
+bun install
 ```
 
 3. Set up environment variables:
@@ -71,7 +71,7 @@ Then edit `.env.local` and replace `your-api-key-here` with your actual OpenAI A
 Uses Turbopack for faster builds and hot reloading:
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 #### Standard Development
@@ -79,7 +79,7 @@ pnpm dev
 Uses Webpack (slower but more stable):
 
 ```bash
-pnpm dev:webpack
+bun dev:webpack
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -99,7 +99,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Styling**: Tailwind CSS v4 with custom class ordering
 - **Language**: TypeScript
 - **AI**: OpenAI GPT API
-- **Package Manager**: pnpm
+- **Package Manager**: Bun
 - **Form Handling**: TanStack Form with Zod validation and proper TypeScript typing
 - **Markdown**: React Markdown
 - **Theme**: Custom light/dark mode implementation
