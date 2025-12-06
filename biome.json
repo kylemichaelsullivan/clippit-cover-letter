@@ -35,8 +35,12 @@
 			"jsxQuoteStyle": "single",
 			"semicolons": "always",
 			"trailingCommas": "es5"
-		},
-		"globals": ["React", "JSX"]
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
+		}
 	},
 	"overrides": [
 		{
