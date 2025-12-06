@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { SkillsHeader } from '@/components/forms/skills/SkillsHeader';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('SkillsHeader', () => {
 	it('displays correct group counts', () => {
@@ -24,12 +24,12 @@ describe('SkillsHeader', () => {
 				groupsCount={2}
 				activeGroupsCount={1}
 				onAlphabetizeGroups={mockAlphabetizeGroups}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Alphabetize')).toBeInTheDocument();
 		expect(
-			screen.getByTitle('Alphabetize Skill Group Names'),
+			screen.getByTitle('Alphabetize Skill Group Names')
 		).toBeInTheDocument();
 	});
 

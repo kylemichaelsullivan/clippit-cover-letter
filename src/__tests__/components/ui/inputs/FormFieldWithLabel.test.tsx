@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { FormFieldWithLabel } from '@/components/forms/core/FormFieldWithLabel';
 import { createMockForm } from '@/__tests__/utils/test-helpers';
+import { FormFieldWithLabel } from '@/components/forms/core/FormFieldWithLabel';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({
@@ -35,7 +35,7 @@ describe('FormFieldWithLabel', () => {
 
 		expect(screen.getByText('Company')).toBeInTheDocument();
 		expect(
-			screen.getByPlaceholderText('Enter company name'),
+			screen.getByPlaceholderText('Enter company name')
 		).toBeInTheDocument();
 	});
 

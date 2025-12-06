@@ -3,19 +3,19 @@
 import { Field } from '@tanstack/react-form';
 import { memo } from 'react';
 
-import { SkillGroupName, SkillTags } from './';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { SkipLinkTarget } from '@/components/ui/navigation';
+import { SkillGroupName, SkillTags } from './';
 
-import type { CSSProperties } from 'react';
 import type { SkillGroup } from '@/types';
+import type { CSSProperties } from 'react';
 
 type SkillsContentProps = {
 	form: any; // TanStack Form
 	removeSkillGroup: (groupIndex: number) => void;
 	registerFocusRef?: (
 		groupIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 

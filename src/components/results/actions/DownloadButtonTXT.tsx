@@ -1,8 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { downloadTXT } from '@/lib/utils';
 import { useIsClient } from '@/lib/hooks';
+import { downloadTXT } from '@/lib/utils';
 
 import type { CandidateDetails, DocumentType } from '@/types';
 

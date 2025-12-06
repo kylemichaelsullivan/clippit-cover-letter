@@ -2,8 +2,8 @@
 
 import { Button } from '@/components/ui';
 import { DEFAULTS } from '@/config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type GenerateButtonProps = {
 	isGenerating: boolean;

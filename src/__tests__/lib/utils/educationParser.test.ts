@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { parseEducationFromText } from '@/lib/utils/educationParser';
+import { describe, expect, it } from 'vitest';
 
 describe('parseEducationFromText', () => {
 	it('should parse markdown format education entries', () => {

@@ -1,11 +1,11 @@
 'use client';
 
-import { memo, type ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 import { ActionButtons } from '@/components/results/actions';
-import { DocumentContent } from './DocumentContent';
 import { useCandidateStore } from '@/lib/stores';
 import type { DocumentType, FontSize } from '@/types';
+import { DocumentContent } from './DocumentContent';
 
 type DocumentSectionProps = {
 	documentType: DocumentType;

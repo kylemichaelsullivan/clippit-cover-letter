@@ -1,8 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 import type { ReactNode } from 'react';
-import clsx from 'clsx';
 
 type ErrorProps = {
 	children: ReactNode;
@@ -20,7 +20,7 @@ export const Error = memo(function Error({
 			className={clsx(
 				componentName || 'Error',
 				'text-red text-xs sm:text-sm',
-				className,
+				className
 			)}
 		>
 			{children}

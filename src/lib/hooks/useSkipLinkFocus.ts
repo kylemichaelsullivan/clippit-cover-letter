@@ -9,7 +9,7 @@ export function useSkipLinkFocus(targetId: string) {
 					// Use a small delay to ensure dynamic content is rendered
 					setTimeout(() => {
 						const focusableElements = targetElement.querySelectorAll(
-							'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+							'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 						);
 
 						if (focusableElements.length > 0) {

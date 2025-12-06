@@ -1,9 +1,9 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { CONSTANTS } from '@/config';
 import { Button } from '@/components/ui/buttons';
+import { CONSTANTS } from '@/config';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type ForwardButtonProps = {
 	onClick?: () => void;

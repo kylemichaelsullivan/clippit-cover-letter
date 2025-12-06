@@ -1,12 +1,12 @@
 'use client';
 
 import { CoverLetterNotProvidedMessage } from '@/components/ui/feedback';
-import { DocumentSection } from './DocumentSection';
-import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
-import { processTipTapContent } from '@/lib/utils/tiptapContentProcessing';
 import { useCoverLetterGeneration } from '@/lib/hooks';
 import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
 import { useTemplatesStore } from '@/lib/stores';
+import { processTipTapContent } from '@/lib/utils/tiptapContentProcessing';
+import { DocumentSection } from './DocumentSection';
+import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 
 type CoverLetterSectionProps = {
 	candidateDetails: any;
@@ -51,7 +51,7 @@ export const CoverLetterSection = ({
 	const processedTemplateContent = processTipTapContent(
 		coverLetterTemplate,
 		candidateDetails,
-		jobDetails,
+		jobDetails
 	);
 
 	return (

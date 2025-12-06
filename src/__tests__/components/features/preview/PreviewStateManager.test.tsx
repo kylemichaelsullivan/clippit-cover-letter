@@ -14,7 +14,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={true}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByText('Generating Documents')).toBeInTheDocument();
@@ -29,14 +29,14 @@ describe('PreviewStateManager', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByText('No Data Available')).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				'Please complete the previous steps to see a preview of your documents.',
-			),
+				'Please complete the previous steps to see a preview of your documents.'
+			)
 		).toBeInTheDocument();
 		expect(screen.queryByTestId('mock-children')).not.toBeInTheDocument();
 	});
@@ -49,12 +49,12 @@ describe('PreviewStateManager', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByText('No Documents Selected')).toBeInTheDocument();
 		expect(
-			screen.getByText('Please select at least one document type to generate.'),
+			screen.getByText('Please select at least one document type to generate.')
 		).toBeInTheDocument();
 		expect(screen.queryByTestId('mock-children')).not.toBeInTheDocument();
 	});
@@ -67,7 +67,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByTestId('mock-children')).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		const childrenContainer = screen.getByTestId('mock-children').parentElement;
@@ -104,7 +104,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={false}
 			>
 				{multipleChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByTestId('child-1')).toBeInTheDocument();
@@ -119,7 +119,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={true}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByText('Generating Documents')).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe('PreviewStateManager', () => {
 				isProcessing={true}
 			>
 				{mockChildren}
-			</PreviewStateManager>,
+			</PreviewStateManager>
 		);
 
 		expect(screen.getByText('Generating Documents')).toBeInTheDocument();

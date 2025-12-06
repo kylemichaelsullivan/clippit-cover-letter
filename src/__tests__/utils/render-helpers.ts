@@ -1,10 +1,10 @@
-import { render, RenderOptions } from '@testing-library/react';
-import { ReactElement } from 'react';
+import { type RenderOptions, render } from '@testing-library/react';
+import type { ReactElement } from 'react';
 
 // Custom render function that can be extended with providers
 export function customRender(
 	ui: ReactElement,
-	options?: Omit<RenderOptions, 'wrapper'>,
+	options?: Omit<RenderOptions, 'wrapper'>
 ) {
 	return render(ui, {
 		...options,

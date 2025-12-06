@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
 import { useModalClose } from '@/lib/hooks/useModalClose';
+import { type ReactNode, useEffect } from 'react';
 
 type PopoverProps = {
 	children: ReactNode;

@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({
@@ -134,13 +134,13 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('skills-header')).toBeInTheDocument();
 		expect(screen.getByTestId('skills-content')).toBeInTheDocument();
 		expect(
-			screen.getByTestId('skip-link-AddSkillGroupButton'),
+			screen.getByTestId('skip-link-AddSkillGroupButton')
 		).toBeInTheDocument();
 	});
 
@@ -152,7 +152,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('error')).toBeInTheDocument();
@@ -167,7 +167,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		expect(screen.queryByTestId('error')).not.toBeInTheDocument();
@@ -181,7 +181,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Groups: 2')).toBeInTheDocument();
@@ -196,7 +196,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		const alphabetizeButton = screen.getByTestId('alphabetize-button');
@@ -213,7 +213,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Form: present')).toBeInTheDocument();
@@ -228,7 +228,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		const removeButton = screen.getByTestId('remove-group-button');
@@ -245,7 +245,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		const addButton = screen
@@ -266,7 +266,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		const addButton = screen
@@ -287,7 +287,7 @@ describe('SkillsSection', () => {
 				addSkillGroup={mockAddSkillGroup}
 				alphabetizeGroups={mockAlphabetizeGroups}
 				removeSkillGroup={mockRemoveSkillGroup}
-			/>,
+			/>
 		);
 
 		const section = container.querySelector('section');
@@ -295,7 +295,7 @@ describe('SkillsSection', () => {
 			'SkillsSection',
 			'form-section',
 			'p-4',
-			'sm:p-6',
+			'sm:p-6'
 		);
 	});
 });

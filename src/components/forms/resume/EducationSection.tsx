@@ -3,14 +3,14 @@
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/buttons';
-import { EducationContent } from './';
-import { EducationDialogs } from './EducationDialogs';
 import { Error } from '@/components/ui/feedback';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Field } from '@tanstack/react-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SkipLinkTarget } from '@/components/ui/navigation';
 import { useFocusNewEducation } from '@/lib/hooks';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
+import { EducationContent } from './';
+import { EducationDialogs } from './EducationDialogs';
 
 import type { ParsedEducation } from '@/lib/utils';
 
@@ -34,7 +34,7 @@ export function EducationSection({
 	const { registerFocusRef, focusNewEducation } = useFocusNewEducation();
 	const [showImportConfirmation, setShowImportConfirmation] = useState(false);
 	const [pendingEducation, setPendingEducation] = useState<ParsedEducation[]>(
-		[],
+		[]
 	);
 	const [pendingEducationIndex, setPendingEducationIndex] = useState<
 		number | undefined
@@ -42,7 +42,7 @@ export function EducationSection({
 
 	const handleEducationPaste = (
 		educationEntries: ParsedEducation[],
-		educationIndex?: number,
+		educationIndex?: number
 	) => {
 		setPendingEducation(educationEntries);
 		setPendingEducationIndex(educationIndex);

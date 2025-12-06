@@ -1,7 +1,7 @@
 'use client';
 
-import { CONSTANTS } from '@/config';
 import { ThemeToggle } from '@/components/ui/buttons/ThemeToggle';
+import { CONSTANTS } from '@/config';
 import { usePhaseStore } from '@/lib/stores';
 
 export function Title() {

@@ -1,5 +1,5 @@
-import { replaceSignaturePlaceholders } from './signatureReplacement';
 import type { CandidateDetails } from '@/types';
+import { replaceSignaturePlaceholders } from './signatureReplacement';
 
 /**
  * Converts HTML content to plaintext format
@@ -96,7 +96,7 @@ export function cleanPlaintext(plaintext: string): string {
  */
 export function htmlToPlaintextWithSignature(
 	html: string,
-	candidateDetails?: CandidateDetails,
+	candidateDetails?: CandidateDetails
 ): string {
 	if (!html) return '';
 

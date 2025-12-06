@@ -1,16 +1,16 @@
 'use client';
 
-import { memo, useState, useEffect } from 'react';
-import {
-	generatePageHeaderHTML,
-	generatePageFooterHTML,
-	formatContentForPDF,
-} from '@/lib/utils';
 import { generateUIStyles } from '@/config/shared-styles';
+import {
+	formatContentForPDF,
+	generatePageFooterHTML,
+	generatePageHeaderHTML,
+} from '@/lib/utils';
 import { getFontSizeString } from '@/lib/utils/fontSize';
-import { extractTipTapContent } from '@/lib/utils/tiptap';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
+import { extractTipTapContent } from '@/lib/utils/tiptap';
 import type { CandidateDetails, DocumentType, FontSize } from '@/types';
+import { memo, useEffect, useState } from 'react';
 
 type DocumentPreviewProps = {
 	content: string;
@@ -37,7 +37,7 @@ export const DocumentPreview = memo(function DocumentPreview({
 			const formattedContent = formatContentForPDF(extractedContent);
 			const contentWithSignature = replaceSignaturePlaceholders(
 				formattedContent,
-				candidateDetails,
+				candidateDetails
 			);
 
 			const html = `

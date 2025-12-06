@@ -1,6 +1,6 @@
-import { vi, expect } from 'vitest';
-import { render, RenderOptions } from '@testing-library/react';
-import { ReactElement } from 'react';
+import { type RenderOptions, render } from '@testing-library/react';
+import type { ReactElement } from 'react';
+import { expect, vi } from 'vitest';
 
 // Test data factories
 export function createMockForm() {
@@ -40,7 +40,7 @@ export function createMockErrorHandler() {
 }
 
 // Test data generators
-export function generateMockSkills(count: number = 5): string[] {
+export function generateMockSkills(count = 5): string[] {
 	const skills = [
 		'JavaScript',
 		'TypeScript',
@@ -66,7 +66,7 @@ export function generateMockSkills(count: number = 5): string[] {
 	return skills.slice(0, count);
 }
 
-export function generateMockExperience(count: number = 3) {
+export function generateMockExperience(count = 3) {
 	const companies = [
 		'Tech Corp',
 		'Startup Inc',
@@ -95,7 +95,7 @@ export function generateMockExperience(count: number = 3) {
 	}));
 }
 
-export function generateMockEducation(count: number = 2) {
+export function generateMockEducation(count = 2) {
 	const degrees = [
 		'Bachelor of Science',
 		'Master of Science',
@@ -150,7 +150,7 @@ export function createMockKeyboardEvent(key: string, options: any = {}) {
 // Custom render function with providers
 export function renderWithProviders(
 	ui: ReactElement,
-	options?: Omit<RenderOptions, 'wrapper'>,
+	options?: Omit<RenderOptions, 'wrapper'>
 ) {
 	return render(ui, {
 		...options,
@@ -164,7 +164,7 @@ export function expectToBeInDocument(element: HTMLElement | null) {
 
 export function expectToHaveClass(
 	element: HTMLElement | null,
-	className: string,
+	className: string
 ) {
 	expect(element).toHaveClass(className);
 }
@@ -172,7 +172,7 @@ export function expectToHaveClass(
 export function expectToHaveAttribute(
 	element: HTMLElement | null,
 	attribute: string,
-	value?: string,
+	value?: string
 ) {
 	if (value !== undefined) {
 		expect(element).toHaveAttribute(attribute, value);
@@ -183,13 +183,13 @@ export function expectToHaveAttribute(
 
 export function expectToHaveTextContent(
 	element: HTMLElement | null,
-	text: string,
+	text: string
 ) {
 	expect(element).toHaveTextContent(text);
 }
 
 // Mock API responses
-export function createMockApiResponse(data: any, status: number = 200) {
+export function createMockApiResponse(data: any, status = 200) {
 	return {
 		ok: status >= 200 && status < 300,
 		status,
@@ -198,7 +198,7 @@ export function createMockApiResponse(data: any, status: number = 200) {
 	};
 }
 
-export function createMockApiError(message: string, status: number = 500) {
+export function createMockApiError(message: string, status = 500) {
 	return {
 		ok: false,
 		status,

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.describe('Form Flow', () => {
 	test('should navigate through all form phases', async ({ page }) => {
@@ -6,14 +6,14 @@ test.describe('Form Flow', () => {
 
 		// Verify we start on the candidate form
 		await expect(
-			page.getByRole('heading', { name: /candidate/i }),
+			page.getByRole('heading', { name: /candidate/i })
 		).toBeVisible();
 
 		// Fill candidate information
 		await page.fill('[data-testid="name-input"]', 'Dwight Schrute');
 		await page.fill(
 			'[data-testid="email-input"]',
-			'dwight.schrute@dundermifflin.com',
+			'dwight.schrute@dundermifflin.com'
 		);
 		await page.fill('[data-testid="phone-input"]', '555-123-4567');
 

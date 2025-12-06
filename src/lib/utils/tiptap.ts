@@ -16,7 +16,7 @@ export function extractTipTapContent(html: string): string {
 				.replace(/<br class="ProseMirror-trailingBreak">/g, '')
 				.replace(
 					/<p><br class="ProseMirror-trailingBreak"><\/p>/g,
-					'<p><br></p>',
+					'<p><br></p>'
 				)
 				.replace(/<p><\/p>/g, '<p><br></p>')
 				// Remove p tags inside li elements but preserve their content
@@ -24,7 +24,7 @@ export function extractTipTapContent(html: string): string {
 				// Remove trailing p element that follows ul elements
 				.replace(
 					/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
-					'</ul>',
+					'</ul>'
 				)
 				.replace(/<\/ul>\s*<p><br><\/p>/g, '</ul>')
 				.replace(/<\/ul>\s*<p><\/p>/g, '</ul>')

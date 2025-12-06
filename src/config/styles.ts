@@ -1,9 +1,9 @@
 import {
-	generateSharedProseStyles,
-	generateSharedPageHeaderStyles,
 	generatePrintContentStyles,
-	generateUIPageHeaderStyles,
 	generatePrintDocumentContent,
+	generateSharedPageHeaderStyles,
+	generateSharedProseStyles,
+	generateUIPageHeaderStyles,
 } from './shared-styles';
 
 export const PDF_STYLES = `

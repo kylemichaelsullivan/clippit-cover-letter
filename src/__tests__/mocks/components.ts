@@ -1,5 +1,5 @@
-import { vi } from 'vitest';
 import { createElement } from 'react';
+import { vi } from 'vitest';
 
 // Mock TanStack Form
 export const mockField = ({ children }: any) => {
@@ -45,7 +45,7 @@ export const mockFontAwesomeIcon = ({ icon, ...props }: any) =>
 	createElement(
 		'span',
 		{ 'data-testid': 'font-awesome-icon', ...props },
-		icon?.iconName || 'icon',
+		icon?.iconName || 'icon'
 	);
 
 // Mock Form Components
@@ -53,7 +53,7 @@ export const mockFormFieldContainer = ({ children, className }: any) =>
 	createElement(
 		'div',
 		{ className, 'data-testid': 'form-field-container' },
-		children,
+		children
 	);
 
 export const mockFormFieldLabel = ({ children, labelContent, htmlFor }: any) =>
@@ -61,7 +61,7 @@ export const mockFormFieldLabel = ({ children, labelContent, htmlFor }: any) =>
 		'label',
 		{ htmlFor, 'data-testid': 'form-field-label' },
 		children,
-		labelContent,
+		labelContent
 	);
 
 // Mock Navigation Components
@@ -76,7 +76,7 @@ export const mockEmptyState = ({ variant }: any) =>
 	createElement(
 		'div',
 		{ 'data-testid': 'empty-state', 'data-variant': variant },
-		`Empty State - ${variant}`,
+		`Empty State - ${variant}`
 	);
 
 // Mock Document Components
@@ -96,7 +96,7 @@ export const mockDocumentSection = ({
 			'data-show-font-size': showFontSizeControl,
 			className,
 		},
-		`${title} - ${content} - ${documentType}`,
+		`${title} - ${content} - ${documentType}`
 	);
 
 export const mockFontSizeInput = ({
@@ -108,5 +108,5 @@ export const mockFontSizeInput = ({
 	createElement(
 		'div',
 		{ 'data-testid': `font-size-input-${documentType}` },
-		`${value} - ${documentType} - ${label} - ${ariaLabel}`,
+		`${value} - ${documentType} - ${label} - ${ariaLabel}`
 	);

@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 
+import { useGenerationConfirmations } from '@/lib/hooks';
 import {
 	useAppStore,
 	useCandidateStore,
@@ -11,7 +12,6 @@ import {
 	useSkillsStore,
 	useTemplatesStore,
 } from '@/lib/stores';
-import { useGenerationConfirmations } from '@/lib/hooks';
 
 import {
 	CoverLetterSection,

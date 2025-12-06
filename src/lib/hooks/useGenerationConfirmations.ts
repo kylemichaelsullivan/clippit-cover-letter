@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { useTemplatesStore, useSkillsStore } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
+import { useSkillsStore, useTemplatesStore } from '@/lib/stores';
 import { useGenerationTimeout } from './useGenerationTimeout';
 
 type UseGenerationConfirmationsProps = {
@@ -56,7 +56,7 @@ export const useGenerationConfirmations = ({
 		} catch (error) {
 			console.error('Error generating cover letter:', error);
 			setGeneratedCoverLetter(
-				'Error generating cover letter. Please try again.',
+				'Error generating cover letter. Please try again.'
 			);
 		} finally {
 			setIsGenerating(false);

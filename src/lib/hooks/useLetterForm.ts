@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useForm } from '@tanstack/react-form';
+import { useCallback } from 'react';
 
-import { useAppStore, useTemplatesStore } from '@/lib/stores';
 import { templatesSchema } from '@/lib/schemas';
+import { useAppStore, useTemplatesStore } from '@/lib/stores';
 
 export type LetterFormValues = {
 	includeCoverLetter: boolean;
@@ -12,7 +12,7 @@ export type LetterFormValues = {
 };
 
 export function useLetterForm(
-	onSubmit: (includeCoverLetter: boolean, coverLetterTemplate: string) => void,
+	onSubmit: (includeCoverLetter: boolean, coverLetterTemplate: string) => void
 ) {
 	const { includeCoverLetter, setIncludeCoverLetter } = useAppStore();
 	const { coverLetterTemplate, setCoverLetterTemplate } = useTemplatesStore();
@@ -53,7 +53,7 @@ export function useLetterForm(
 					break;
 			}
 		},
-		[setIncludeCoverLetter, setCoverLetterTemplate],
+		[setIncludeCoverLetter, setCoverLetterTemplate]
 	);
 
 	return { form, handleFieldChange };

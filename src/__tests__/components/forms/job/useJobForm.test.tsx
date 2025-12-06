@@ -1,7 +1,7 @@
-import { renderHook } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useJobForm } from '@/lib/hooks/useJobForm';
 import { useJobStore } from '@/lib/stores';
+import { renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/lib/stores', () => ({
 	useJobStore: vi.fn(),
@@ -59,7 +59,7 @@ describe('useJobForm', () => {
 
 		expect(mockSetJobField).toHaveBeenCalledWith(
 			'jobDescription',
-			'New description',
+			'New description'
 		);
 	});
 
@@ -70,7 +70,7 @@ describe('useJobForm', () => {
 
 		expect(mockSetJobField).toHaveBeenCalledWith(
 			'hiringManager',
-			'New Manager',
+			'New Manager'
 		);
 	});
 
@@ -81,7 +81,7 @@ describe('useJobForm', () => {
 
 		expect(mockSetJobField).toHaveBeenCalledWith(
 			'companyAddress',
-			'New Address',
+			'New Address'
 		);
 	});
 

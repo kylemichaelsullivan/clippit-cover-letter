@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 export function useSkipLinkTarget() {
 	const targetRef = useRef<HTMLDivElement>(null);
@@ -6,7 +6,7 @@ export function useSkipLinkTarget() {
 	const focusFirstElement = useCallback(() => {
 		if (targetRef.current) {
 			const focusableElements = targetRef.current.querySelectorAll(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 			);
 
 			if (focusableElements.length > 0) {

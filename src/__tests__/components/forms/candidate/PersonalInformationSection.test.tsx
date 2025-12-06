@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Mock the complex form components to focus on section structure
 vi.mock('@tanstack/react-form', () => ({
@@ -21,7 +21,8 @@ vi.mock('@/components/forms/core', () => ({
 	),
 	HydrationSafeFormField: ({ label }: any) => (
 		<div data-testid='form-field'>
-			<label>{label}</label>
+			<label htmlFor='mock-input'>{label}</label>
+			<input id='mock-input' type='text' />
 		</div>
 	),
 }));
@@ -40,7 +41,7 @@ describe('PersonalInformationSection', () => {
 			<PersonalInformationSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Personal Information')).toBeInTheDocument();
@@ -51,7 +52,7 @@ describe('PersonalInformationSection', () => {
 			<PersonalInformationSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const section = container.querySelector('section');
@@ -64,7 +65,7 @@ describe('PersonalInformationSection', () => {
 			<PersonalInformationSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-section')).toBeInTheDocument();

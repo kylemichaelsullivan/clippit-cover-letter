@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 // Delete this and uncomment the tests below when ready to run OpenAI API tests
 describe('OpenAI Real API Test', () => {

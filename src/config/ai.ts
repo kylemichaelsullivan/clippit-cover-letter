@@ -66,14 +66,14 @@ function parseAIEnvConfig(): Partial<AIConfig> {
 	}
 
 	if (process.env.OPENAI_MAX_TOKENS) {
-		const maxTokens = parseInt(process.env.OPENAI_MAX_TOKENS, 10);
+		const maxTokens = Number.parseInt(process.env.OPENAI_MAX_TOKENS, 10);
 		if (!isNaN(maxTokens) && maxTokens > 0 && maxTokens <= 4000) {
 			config.maxTokens = maxTokens;
 		}
 	}
 
 	if (process.env.OPENAI_TEMPERATURE) {
-		const temperature = parseFloat(process.env.OPENAI_TEMPERATURE);
+		const temperature = Number.parseFloat(process.env.OPENAI_TEMPERATURE);
 		if (!isNaN(temperature) && temperature >= 0 && temperature <= 2) {
 			config.temperature = temperature;
 		}
@@ -81,14 +81,14 @@ function parseAIEnvConfig(): Partial<AIConfig> {
 
 	// Rate Limiting
 	if (process.env.OPENAI_REQUESTS_PER_MINUTE) {
-		const rpm = parseInt(process.env.OPENAI_REQUESTS_PER_MINUTE, 10);
+		const rpm = Number.parseInt(process.env.OPENAI_REQUESTS_PER_MINUTE, 10);
 		if (!isNaN(rpm) && rpm > 0) {
 			config.requestsPerMinute = rpm;
 		}
 	}
 
 	if (process.env.OPENAI_REQUESTS_PER_HOUR) {
-		const rph = parseInt(process.env.OPENAI_REQUESTS_PER_HOUR, 10);
+		const rph = Number.parseInt(process.env.OPENAI_REQUESTS_PER_HOUR, 10);
 		if (!isNaN(rph) && rph > 0) {
 			config.requestsPerHour = rph;
 		}

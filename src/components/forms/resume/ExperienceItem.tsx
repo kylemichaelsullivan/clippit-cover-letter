@@ -2,15 +2,15 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { DatePicker } from '@/components/ui/input';
 import {
 	FormFieldWithCheckbox,
 	FormFieldWithLabel,
 	FormItem,
 } from '@/components/forms/core';
+import { BulletManager } from '@/components/forms/core';
+import { DatePicker } from '@/components/ui/input';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
 import { getOrdinalSuffix } from '@/lib/utils';
-import { BulletManager } from '@/components/forms/core';
 
 type ExperienceItemProps = {
 	form: any; // TanStack Form
@@ -19,7 +19,7 @@ type ExperienceItemProps = {
 	onRemove?: () => void;
 	registerFocusRef?: (
 		experienceIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 
@@ -70,7 +70,7 @@ export function ExperienceItem({
 					<DatePicker
 						label='Start'
 						value={String(
-							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start,
+							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.start
 						)}
 						onChange={(value) => {
 							field.handleChange(value);
@@ -85,7 +85,7 @@ export function ExperienceItem({
 					<DatePicker
 						label='End'
 						value={String(
-							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end,
+							field.state.value || DEFAULTS.INITIAL_STATES.EXPERIENCE.end
 						)}
 						onChange={(value) => {
 							field.handleChange(value);

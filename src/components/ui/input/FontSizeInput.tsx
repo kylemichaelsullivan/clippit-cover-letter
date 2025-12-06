@@ -1,13 +1,13 @@
 'use client';
 
-import { memo, useState, useEffect } from 'react';
 import { FormField } from '@/components/forms/core';
 import {
-	clampFontSize,
-	FONT_SIZE_MIN,
 	FONT_SIZE_MAX,
+	FONT_SIZE_MIN,
+	clampFontSize,
 } from '@/lib/utils/fontSize';
 import type { DocumentType, FontSize, FontUnit } from '@/types';
+import { memo, useEffect, useState } from 'react';
 
 type FontSizeInputProps = {
 	value: FontSize;
@@ -36,7 +36,7 @@ export const FontSizeInput = memo(function FontSizeInput({
 	}, [unit, localUnit]);
 
 	const handleChange = (newValue: string) => {
-		const newNumeric = parseFloat(newValue);
+		const newNumeric = Number.parseFloat(newValue);
 		if (!isNaN(newNumeric)) {
 			const newFontSize: FontSize = [newNumeric, localUnit];
 			onChange(newFontSize);

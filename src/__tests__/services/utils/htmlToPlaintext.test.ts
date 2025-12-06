@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { htmlToPlaintext, cleanPlaintext } from '@/lib/utils/htmlToPlaintext';
+import { cleanPlaintext, htmlToPlaintext } from '@/lib/utils/htmlToPlaintext';
+import { describe, expect, it } from 'vitest';
 
 describe('htmlToPlaintext', () => {
 	it('should convert basic HTML to plaintext', () => {
@@ -27,7 +27,7 @@ describe('htmlToPlaintext', () => {
 			'<p>Visit <a href="https://example.com">our website</a> for more info.</p>';
 		const result = cleanPlaintext(htmlToPlaintext(html));
 		expect(result).toBe(
-			'Visit our website (https://example.com) for more info.',
+			'Visit our website (https://example.com) for more info.'
 		);
 	});
 

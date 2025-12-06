@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
-import { vi } from 'vitest';
 import { createElement } from 'react';
+import { vi } from 'vitest';
 
 // Mock Next.js router
 vi.mock('next/navigation', () => ({
@@ -25,6 +25,6 @@ vi.mock('@fortawesome/react-fontawesome', () => ({
 				'data-testid': 'font-awesome-icon',
 				...props,
 			},
-			icon?.iconName || 'icon',
+			icon?.iconName || 'icon'
 		),
 }));

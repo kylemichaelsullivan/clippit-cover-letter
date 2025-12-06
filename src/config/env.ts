@@ -1,7 +1,10 @@
 export const env = {
 	OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 	OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4',
-	OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
+	OPENAI_MAX_TOKENS: Number.parseInt(
+		process.env.OPENAI_MAX_TOKENS || '2000',
+		10
+	),
 } as const;
 
 export function validateEnv() {

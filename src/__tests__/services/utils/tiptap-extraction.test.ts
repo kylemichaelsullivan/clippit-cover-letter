@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { extractTipTapContent } from '@/lib/utils/tiptap';
+import { describe, expect, it } from 'vitest';
 
 describe('extractTipTapContent', () => {
 	it('should preserve empty paragraphs by converting them to <p><br></p>', () => {

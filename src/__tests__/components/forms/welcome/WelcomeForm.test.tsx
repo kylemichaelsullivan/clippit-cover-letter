@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the usePhaseStore hook before importing
 vi.mock('@/lib/stores', () => ({
@@ -25,7 +25,7 @@ describe('WelcomeForm', () => {
 
 		expect(screen.getByText('Welcome to Clippit')).toBeInTheDocument();
 		expect(
-			screen.getByText('AI-Powered Cover Letter & Resume Generation'),
+			screen.getByText('AI-Powered Cover Letter & Resume Generation')
 		).toBeInTheDocument();
 		expect(screen.getByText(/Clippit helps you create/)).toBeInTheDocument();
 		expect(screen.getByText('🚧 Development Status')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('WelcomeForm', () => {
 			'WelcomeForm',
 			'flex',
 			'flex-col',
-			'gap-6',
+			'gap-6'
 		);
 	});
 
@@ -72,7 +72,7 @@ describe('WelcomeForm', () => {
 			'border',
 			'border-black',
 			'p-6',
-			'shadow-sm',
+			'shadow-sm'
 		);
 	});
 
@@ -84,7 +84,7 @@ describe('WelcomeForm', () => {
 		// Check that all expected components are rendered
 		expect(screen.getByText('Welcome to Clippit')).toBeInTheDocument();
 		expect(
-			screen.getByText('AI-Powered Cover Letter & Resume Generation'),
+			screen.getByText('AI-Powered Cover Letter & Resume Generation')
 		).toBeInTheDocument();
 		expect(screen.getByText(/Clippit helps you create/)).toBeInTheDocument();
 		expect(screen.getByText('🚧 Development Status')).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe('WelcomeForm', () => {
 			'flex',
 			'flex-col',
 			'gap-4',
-			'text-black',
+			'text-black'
 		);
 	});
 

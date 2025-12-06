@@ -1,5 +1,5 @@
-import { vi } from 'vitest';
 import { createElement } from 'react';
+import { vi } from 'vitest';
 
 // Mock Next.js router
 export const mockNextRouter = {
@@ -21,7 +21,7 @@ export const mockFontAwesome = {
 		createElement(
 			'span',
 			{ 'data-testid': 'font-awesome-icon', ...props },
-			icon?.iconName || 'icon',
+			icon?.iconName || 'icon'
 		),
 };
 
@@ -63,7 +63,7 @@ export const mockLocalStorage = {
 export const mockFetch = vi.fn();
 
 // Mock window.matchMedia
-export const mockMatchMedia = (matches: boolean = true) => ({
+export const mockMatchMedia = (matches = true) => ({
 	matches,
 	media: '',
 	onchange: null,

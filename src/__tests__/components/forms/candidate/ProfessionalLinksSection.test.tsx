@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Mock the complex form components to focus on section structure
 vi.mock('@tanstack/react-form', () => ({
@@ -48,7 +48,7 @@ describe('ProfessionalLinksSection', () => {
 			<ProfessionalLinksSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Professional Links')).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe('ProfessionalLinksSection', () => {
 			<ProfessionalLinksSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const section = container.querySelector('section');
@@ -72,7 +72,7 @@ describe('ProfessionalLinksSection', () => {
 			<ProfessionalLinksSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-section')).toBeInTheDocument();
@@ -83,12 +83,12 @@ describe('ProfessionalLinksSection', () => {
 			<ProfessionalLinksSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('checkbox')).toBeInTheDocument();
 		expect(
-			screen.getByText('Include QR Code in Documents?'),
+			screen.getByText('Include QR Code in Documents?')
 		).toBeInTheDocument();
 	});
 });

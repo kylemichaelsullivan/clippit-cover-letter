@@ -1,9 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { cleanPlaintext, htmlToPlaintextWithSignature } from '@/lib/utils';
-import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
+import { showToast } from '@/lib/toast';
+import { cleanPlaintext, htmlToPlaintextWithSignature } from '@/lib/utils';
 import type { CandidateDetails, DocumentType } from '@/types';
 
 type CopyButtonProps = {
@@ -27,7 +27,7 @@ export function CopyButton({
 		if (isClient && navigator.clipboard && hasContent) {
 			try {
 				const plaintextContent = cleanPlaintext(
-					htmlToPlaintextWithSignature(text, candidateDetails),
+					htmlToPlaintextWithSignature(text, candidateDetails)
 				);
 				await navigator.clipboard.writeText(plaintextContent);
 				const message = documentType

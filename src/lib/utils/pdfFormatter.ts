@@ -33,19 +33,21 @@ const convertNodeToHTML = (node: any): string => {
 	if (!node.type) return '';
 
 	switch (node.type) {
-		case 'paragraph':
+		case 'paragraph': {
 			if (!node.content || node.content.length === 0) return '<p><br></p>';
 			return `<p>${node.content.map(convertNodeToHTML).join('')}</p>`;
+		}
 
-		case 'heading':
+		case 'heading': {
 			const level = node.attrs?.level || 1;
 			if (!node.content) return `<h${level}></h${level}>`;
 			return `<h${level}>${node.content.map(convertNodeToHTML).join('')}</h${level}>`;
+		}
 
-		case 'text':
+		case 'text': {
 			let text = node.text || '';
 			if (node.marks) {
-				node.marks.forEach((mark: any) => {
+				for (const mark of node.marks) {
 					switch (mark.type) {
 						case 'bold':
 							text = `<strong>${text}</strong>`;
@@ -57,9 +59,10 @@ const convertNodeToHTML = (node: any): string => {
 							text = `<u>${text}</u>`;
 							break;
 					}
-				});
+				}
 			}
 			return text;
+		}
 
 		case 'bulletList':
 			if (!node.content) return '<ul></ul>';

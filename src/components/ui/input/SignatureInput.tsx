@@ -1,16 +1,16 @@
 'use client';
 
-import { memo, useRef, useCallback, useMemo } from 'react';
-import SignatureCanvas from 'react-signature-canvas';
-import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEraser, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
+import { memo, useCallback, useMemo, useRef } from 'react';
+import SignatureCanvas from 'react-signature-canvas';
 
-import { Button } from '@/components/ui/buttons/Button';
 import { FormFieldContainer } from '@/components/forms/core';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
-import { useCandidateStore } from '@/lib/stores';
+import { Button } from '@/components/ui/buttons/Button';
 import { isFieldRequired } from '@/lib/schemas';
+import { useCandidateStore } from '@/lib/stores';
 import { showToast } from '@/lib/toast';
 
 type SignatureInputProps = {

@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the components
 vi.mock('@/components/ui/buttons', () => ({
@@ -67,7 +67,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-field-container')).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -100,7 +100,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -118,7 +118,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -141,7 +141,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -158,7 +158,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -179,7 +179,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -204,7 +204,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const addButton = screen.getByRole('button');
@@ -226,7 +226,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const addButton = screen.getByRole('button');
@@ -243,7 +243,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const addButton = screen.getByRole('button');
@@ -258,7 +258,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const addButton = screen.getByRole('button');
@@ -273,7 +273,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -291,7 +291,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Skill')).toBeInTheDocument();
@@ -307,7 +307,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const addButton = screen.getByRole('button');
@@ -324,7 +324,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');
@@ -352,7 +352,7 @@ describe('SkillInput', () => {
 				onChange={mockOnChange}
 				onAdd={mockOnAdd}
 				onPaste={mockOnPaste}
-			/>,
+			/>
 		);
 
 		const input = screen.getByRole('textbox');

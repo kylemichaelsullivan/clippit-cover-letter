@@ -3,8 +3,8 @@
 import type { ReactNode } from 'react';
 
 import { DocumentContent } from '@/components/results/panels';
-import { GenerateButton } from './GenerateButton';
 import type { DocumentType } from '@/types';
+import { GenerateButton } from './GenerateButton';
 
 type DocumentSectionProps = {
 	title: string;

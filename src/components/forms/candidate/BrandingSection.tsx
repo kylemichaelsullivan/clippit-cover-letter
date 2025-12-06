@@ -1,12 +1,12 @@
 'use client';
 
-import { candidateDetailsSchema } from '@/lib/schemas';
-import { Checkbox, ImageInput, SignatureInput } from '@/components/ui/input';
-import { Field } from '@tanstack/react-form';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { FormSection } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { Checkbox, ImageInput, SignatureInput } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';
+import { candidateDetailsSchema } from '@/lib/schemas';
 import type { CandidateFormHandlers } from '@/types';
+import { Field } from '@tanstack/react-form';
 
 type BrandingSectionProps = {
 	form: any;

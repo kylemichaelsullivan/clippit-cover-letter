@@ -1,10 +1,10 @@
 'use client';
 
-import { memo } from 'react';
+import { TabTitle } from '@/components/ui';
 import { Button } from '@/components/ui/buttons';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TabTitle } from '@/components/ui';
+import { memo } from 'react';
 
 type LetterFormHeaderProps = {
 	onOpenHelp: () => void;

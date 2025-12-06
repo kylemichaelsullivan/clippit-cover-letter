@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { DocumentPreview } from '@/components/results/panels';
 import { mockCandidateStore } from '@/__tests__/mocks/stores';
+import { DocumentPreview } from '@/components/results/panels';
 
 vi.mock('@/lib/stores', () => ({
 	useCandidateStore: () => mockCandidateStore,
@@ -40,10 +40,10 @@ describe('DocumentPreview', () => {
 
 		expect(screen.getByTestId('ui-document-preview')).toBeInTheDocument();
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'cover-letter',
+			'cover-letter'
 		);
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'Test content',
+			'Test content'
 		);
 	});
 
@@ -52,7 +52,7 @@ describe('DocumentPreview', () => {
 
 		expect(screen.getByTestId('ui-document-preview')).toBeInTheDocument();
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'resume',
+			'resume'
 		);
 	});
 
@@ -61,7 +61,7 @@ describe('DocumentPreview', () => {
 
 		expect(screen.getByTestId('ui-document-preview')).toBeInTheDocument();
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'Test content',
+			'Test content'
 		);
 	});
 
@@ -71,7 +71,7 @@ describe('DocumentPreview', () => {
 		// For cover letter and resume, the page header is rendered inside the UIDocumentPreview
 		// The mock includes the candidate name in the UIDocumentPreview output
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'John Doe',
+			'John Doe'
 		);
 	});
 
@@ -79,13 +79,13 @@ describe('DocumentPreview', () => {
 		render(<DocumentPreview {...defaultProps} documentType='cover-letter' />);
 
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'John Doe',
+			'John Doe'
 		);
 	});
 
 	it('uses default fontSize when not provided', () => {
 		render(
-			<DocumentPreview content='Test content' documentType='cover-letter' />,
+			<DocumentPreview content='Test content' documentType='cover-letter' />
 		);
 
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent('11pt');
@@ -97,7 +97,7 @@ describe('DocumentPreview', () => {
 				{...defaultProps}
 				documentType='cover-letter'
 				className='custom-class'
-			/>,
+			/>
 		);
 
 		expect(container.firstChild).toHaveClass('custom-class');
@@ -105,7 +105,7 @@ describe('DocumentPreview', () => {
 
 	it('has correct CSS classes for cover letter/resume', () => {
 		const { container } = render(
-			<DocumentPreview {...defaultProps} documentType='cover-letter' />,
+			<DocumentPreview {...defaultProps} documentType='cover-letter' />
 		);
 
 		expect(container.firstChild).toHaveClass(
@@ -114,13 +114,13 @@ describe('DocumentPreview', () => {
 			'border-light-gray',
 			'force-white-bg',
 			'border',
-			'p-2',
+			'p-2'
 		);
 	});
 
 	it('has correct CSS classes for other document types', () => {
 		const { container } = render(
-			<DocumentPreview {...defaultProps} documentType='cover-letter' />,
+			<DocumentPreview {...defaultProps} documentType='cover-letter' />
 		);
 
 		expect(container.firstChild).toHaveClass(
@@ -129,7 +129,7 @@ describe('DocumentPreview', () => {
 			'border-light-gray',
 			'force-white-bg',
 			'border',
-			'p-2',
+			'p-2'
 		);
 	});
 
@@ -139,7 +139,7 @@ describe('DocumentPreview', () => {
 		render(<DocumentPreview {...defaultProps} documentType='cover-letter' />);
 
 		expect(screen.getByTestId('ui-document-preview')).toHaveTextContent(
-			'John Doe',
+			'John Doe'
 		);
 	});
 });

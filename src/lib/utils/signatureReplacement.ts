@@ -3,7 +3,7 @@ import type { CandidateDetails } from '@/types';
 export function replaceSignaturePlaceholders(
 	content: string,
 	candidateDetails: CandidateDetails,
-	replaceImages = false,
+	replaceImages = false
 ): string {
 	let result = content;
 
@@ -21,7 +21,7 @@ export function replaceSignaturePlaceholders(
 	if (replaceImages && result.includes('class="signature-image"')) {
 		result = result.replace(
 			/<img[^>]*class="signature-image"[^>]*>/g,
-			candidateDetails.fullName || '',
+			candidateDetails.fullName || ''
 		);
 	}
 

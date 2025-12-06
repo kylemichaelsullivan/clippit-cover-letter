@@ -2,14 +2,14 @@
 
 import { memo } from 'react';
 
-import { BrandingSection } from './BrandingSection';
 import { Form } from '@/components/forms/core';
-import { PersonalInformationSection } from './PersonalInformationSection';
-import { ProfessionalLinksSection } from './ProfessionalLinksSection';
 import { TabTitle } from '@/components/ui';
 import { useCandidateForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
 import type { CandidateFormProps } from '@/types';
+import { BrandingSection } from './BrandingSection';
+import { PersonalInformationSection } from './PersonalInformationSection';
+import { ProfessionalLinksSection } from './ProfessionalLinksSection';
 
 export const CandidateForm = memo(function CandidateForm({
 	onSubmit,

@@ -1,11 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Field } from '@tanstack/react-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
 import { sortSkillsInGroup } from '@/lib/utils';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
 
 type SkillTagsListProps = {
 	form: any; // TanStack Form

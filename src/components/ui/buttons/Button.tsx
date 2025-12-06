@@ -2,9 +2,9 @@
 
 import { memo } from 'react';
 
+import type { ButtonColor } from '@/types';
 import clsx from 'clsx';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import type { ButtonColor } from '@/types';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'flex' | 'tiptap' | 'sort';
 
@@ -62,7 +62,7 @@ export const Button = memo(function Button({
 		colorStyles,
 		sizeStyles,
 		positioningStyles,
-		className,
+		className
 	);
 
 	return (

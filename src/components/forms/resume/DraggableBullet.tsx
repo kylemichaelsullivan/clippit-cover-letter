@@ -1,10 +1,10 @@
 'use client';
 
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { Bullet } from './Bullet';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons';
 
 type DraggableBulletProps = {
 	value: string;

@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/buttons';
 import { DEFAULTS } from '@/config';
-import { downloadPDF, generatePDF } from '@/lib/utils';
-import { formatContentForPDFWithSkills } from '@/lib/utils';
-import { showToast } from '@/lib/toast';
 import { useIsClient } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
+import { showToast } from '@/lib/toast';
+import { downloadPDF, generatePDF } from '@/lib/utils';
+import { formatContentForPDFWithSkills } from '@/lib/utils';
 import type { CandidateDetails, DocumentType } from '@/types';
+import { useState } from 'react';
 
 type DownloadButtonPDFProps = {
 	content: string;
@@ -40,7 +40,7 @@ export function DownloadButtonPDF({
 			setIsGenerating(true);
 			const displayDocumentType = documentType || 'PDF';
 			const loadingToast = showToast.loading(
-				`Generating ${displayDocumentType} PDF…`,
+				`Generating ${displayDocumentType} PDF…`
 			);
 
 			try {
@@ -48,7 +48,7 @@ export function DownloadButtonPDF({
 					content,
 					title,
 					generatedSkillsData,
-					includeSkillGroupNames,
+					includeSkillGroupNames
 				);
 				const customFontSize = fontSize || '11pt';
 

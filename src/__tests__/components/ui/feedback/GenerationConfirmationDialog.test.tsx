@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { GenerationConfirmationDialog } from '@/components/features';
@@ -17,7 +17,7 @@ describe('GenerationConfirmationDialog', () => {
 
 		expect(screen.getByText('Test Confirmation')).toBeInTheDocument();
 		expect(
-			screen.getByText('Are you sure you want to proceed?'),
+			screen.getByText('Are you sure you want to proceed?')
 		).toBeInTheDocument();
 	});
 
@@ -75,7 +75,7 @@ describe('GenerationConfirmationDialog', () => {
 
 		expect(screen.queryByText('Test Confirmation')).not.toBeInTheDocument();
 		expect(
-			screen.queryByText('Are you sure you want to proceed?'),
+			screen.queryByText('Are you sure you want to proceed?')
 		).not.toBeInTheDocument();
 	});
 
@@ -91,7 +91,7 @@ describe('GenerationConfirmationDialog', () => {
 
 	it('handles multiple renders correctly', () => {
 		const { rerender } = render(
-			<GenerationConfirmationDialog {...defaultProps} />,
+			<GenerationConfirmationDialog {...defaultProps} />
 		);
 
 		// First render

@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { ExperienceContent } from './';
 import { Error } from '@/components/ui/feedback';
-import { Field } from '@tanstack/react-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { SkipLinkTarget } from '@/components/ui/navigation';
 import { useFocusNewExperience } from '@/lib/hooks/useFocusNewExperience';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
+import { ExperienceContent } from './';
 
 type ExperienceSectionProps = {
 	form: any; // TanStack Form

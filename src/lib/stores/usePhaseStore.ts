@@ -28,7 +28,7 @@ export const usePhaseStore = create<PhaseState>()(
 
 				if (phaseSwitcher) {
 					const currentPhaseButton = phaseSwitcher.querySelector(
-						`[aria-selected="true"]`,
+						`[aria-selected="true"]`
 					) as HTMLElement;
 
 					if (currentPhaseButton) {
@@ -39,6 +39,6 @@ export const usePhaseStore = create<PhaseState>()(
 		}),
 		{
 			name: 'phase-store',
-		},
-	),
+		}
+	)
 );

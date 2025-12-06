@@ -1,10 +1,10 @@
 'use client';
 
-import { DocumentSection } from './DocumentSection';
 import { ResumeNotProvidedMessage } from '@/components/ui/feedback';
 import { useResumeGeneration } from '@/lib/hooks';
-import { useTemplatesStore } from '@/lib/stores';
 import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
+import { useTemplatesStore } from '@/lib/stores';
+import { DocumentSection } from './DocumentSection';
 
 import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 

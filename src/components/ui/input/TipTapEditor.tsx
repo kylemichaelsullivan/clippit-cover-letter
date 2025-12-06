@@ -1,14 +1,14 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
-import { EditorContent, useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import TextAlign from '@tiptap/extension-text-align';
 import { PageBreak } from '@/lib/utils/pageBreakExtension';
 import { TextShadow } from '@/lib/utils/textShadowExtension';
+import TextAlign from '@tiptap/extension-text-align';
 import Typography from '@tiptap/extension-typography';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import clsx from 'clsx';
+import dynamic from 'next/dynamic';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { TipTapToolbar } from './TipTapToolbar';
 
@@ -61,7 +61,7 @@ export function TipTapEditor({
 				onChange(newValue);
 			}, 150);
 		},
-		[onChange],
+		[onChange]
 	);
 
 	const editor = useEditor({
@@ -121,14 +121,14 @@ export function TipTapEditor({
 					'border-light-gray rounded-lg border bg-white',
 					isDocument &&
 						'min-h-64 max-w-none overflow-y-auto p-4 text-sm leading-relaxed sm:min-h-96 sm:text-base',
-					className,
+					className
 				)}
 			>
 				<div
 					className={clsx(
 						isDocument
 							? 'w-full max-w-none overflow-y-auto text-sm text-black sm:text-base'
-							: 'w-full max-w-none overflow-y-auto p-4 text-sm text-black sm:text-base',
+							: 'w-full max-w-none overflow-y-auto p-4 text-sm text-black sm:text-base'
 					)}
 				>
 					{value || placeholder}
@@ -147,7 +147,7 @@ export function TipTapEditor({
 					: 'border-light-gray rounded-lg border',
 				isDocument &&
 					'min-h-64 max-w-none overflow-y-auto text-sm leading-relaxed sm:min-h-96 sm:text-base',
-				className,
+				className
 			)}
 		>
 			<TipTapToolbarComponent editor={editor} />
@@ -159,7 +159,7 @@ export function TipTapEditor({
 						? 'p-4 focus:outline-none'
 						: contentPadding === 'lg'
 							? 'p-6 focus:outline-none'
-							: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base',
+							: 'w-full max-w-none overflow-y-auto p-4 text-sm focus:outline-none sm:text-base'
 				)}
 				data-placeholder={placeholder}
 			/>

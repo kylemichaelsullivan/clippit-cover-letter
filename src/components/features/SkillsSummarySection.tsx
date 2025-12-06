@@ -2,14 +2,14 @@
 
 import { memo } from 'react';
 
-import { Checkbox } from '@/components/ui/input';
-import { DocumentSection } from './DocumentSection';
 import {
 	ConfirmationDialog,
 	SkillsNotConfiguredMessage,
 } from '@/components/ui/feedback';
+import { Checkbox } from '@/components/ui/input';
 import { useGenerationConfirmations } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
+import { DocumentSection } from './DocumentSection';
 
 export const SkillsSummarySection = memo(function SkillsSummarySection() {
 	const {

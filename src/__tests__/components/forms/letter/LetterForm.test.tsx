@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { LetterForm } from '@/components/forms/letter/LetterForm';
-import { useLetterForm } from '@/lib/hooks/useLetterForm';
 import { useHelpModal } from '@/lib/hooks/useHelpModal';
+import { useLetterForm } from '@/lib/hooks/useLetterForm';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the hooks
 vi.mock('@/lib/hooks/useLetterForm');

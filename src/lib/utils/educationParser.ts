@@ -73,7 +73,7 @@ function extractDegree(line: string): string {
 	}
 
 	const degreeMatch = line.match(
-		/^(Bachelor|Master|Doctor|Associate|Certificate|Diploma|PhD|JD|MBA|MS|MA|BS|BA|AA|AS)(.*)/i,
+		/^(Bachelor|Master|Doctor|Associate|Certificate|Diploma|PhD|JD|MBA|MS|MA|BS|BA|AA|AS)(.*)/i
 	);
 	if (degreeMatch) {
 		return (degreeMatch[1] + degreeMatch[2]).trim();
@@ -122,7 +122,7 @@ function cleanMarkdownFormatting(text: string): string {
 }
 
 function createEducationEntry(
-	entry: Partial<ParsedEducation>,
+	entry: Partial<ParsedEducation>
 ): ParsedEducation {
 	return {
 		degree: entry.degree || '',

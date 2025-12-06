@@ -13,7 +13,7 @@ export function useFocusNewExperience() {
 				focusRefs.current.delete(experienceIndex);
 			}
 		},
-		[],
+		[]
 	);
 
 	const focusNewExperience = useCallback((experienceIndex: number) => {

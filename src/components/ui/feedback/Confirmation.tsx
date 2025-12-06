@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, type MouseEvent, type ReactNode } from 'react';
 import clsx from 'clsx';
+import { type MouseEvent, type ReactNode, useEffect } from 'react';
 
-import { Button } from '@/components/ui/buttons';
 import { useConfirmationContext } from '@/components/providers/ConfirmationProvider';
+import { Button } from '@/components/ui/buttons';
 
 type ConfirmationProps = {
 	children: ReactNode;
@@ -43,7 +43,7 @@ export function Confirmation({
 			className={clsx(
 				componentName || 'Confirmation',
 				'border-light-gray rounded-md border bg-white p-3',
-				className,
+				className
 			)}
 		>
 			<p className='pb-2 text-xs text-black sm:text-sm'>{children}</p>

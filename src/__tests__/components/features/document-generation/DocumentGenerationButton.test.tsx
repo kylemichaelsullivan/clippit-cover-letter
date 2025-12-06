@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DocumentGenerationButton } from '@/components/features';
@@ -8,7 +8,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('renders with correct button text when not generating', () => {
 		render(
-			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />
 		);
 
 		expect(screen.getByText('Generate Documents')).toBeInTheDocument();
@@ -16,7 +16,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('renders with correct button text when generating', () => {
 		render(
-			<DocumentGenerationButton isGenerating={true} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={true} onClick={mockOnClick} />
 		);
 
 		// When generating, should show spinner icon, not text
@@ -26,7 +26,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('calls onClick when clicked', () => {
 		render(
-			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />
 		);
 
 		const button = screen.getByRole('button');
@@ -37,7 +37,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('is disabled when isGenerating is true', () => {
 		render(
-			<DocumentGenerationButton isGenerating={true} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={true} onClick={mockOnClick} />
 		);
 
 		const button = screen.getByRole('button');
@@ -50,7 +50,7 @@ describe('DocumentGenerationButton', () => {
 				isGenerating={false}
 				onClick={mockOnClick}
 				disabled={true}
-			/>,
+			/>
 		);
 
 		const button = screen.getByRole('button');
@@ -63,7 +63,7 @@ describe('DocumentGenerationButton', () => {
 				isGenerating={true}
 				onClick={mockOnClick}
 				disabled={true}
-			/>,
+			/>
 		);
 
 		const button = screen.getByRole('button');
@@ -72,7 +72,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('has correct button size and color', () => {
 		render(
-			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />
 		);
 
 		const button = screen.getByRole('button');
@@ -81,7 +81,7 @@ describe('DocumentGenerationButton', () => {
 
 	it('has correct container classes', () => {
 		render(
-			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />,
+			<DocumentGenerationButton isGenerating={false} onClick={mockOnClick} />
 		);
 
 		const container = screen.getByText('Generate Documents').closest('div');

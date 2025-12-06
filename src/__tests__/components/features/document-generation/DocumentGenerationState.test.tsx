@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { DocumentGenerationState } from '@/components/results/panels';
 
@@ -17,28 +17,25 @@ describe('DocumentGenerationState', () => {
 			<DocumentGenerationState
 				hasSelectedDocuments={false}
 				hasContent={false}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('empty-state')).toBeInTheDocument();
 		expect(screen.getByTestId('empty-state')).toHaveAttribute(
 			'data-variant',
-			'no-results',
+			'no-results'
 		);
 	});
 
 	it('renders no-data empty state when documents selected but no content', () => {
 		render(
-			<DocumentGenerationState
-				hasSelectedDocuments={true}
-				hasContent={false}
-			/>,
+			<DocumentGenerationState hasSelectedDocuments={true} hasContent={false} />
 		);
 
 		expect(screen.getByTestId('empty-state')).toBeInTheDocument();
 		expect(screen.getByTestId('empty-state')).toHaveAttribute(
 			'data-variant',
-			'no-data',
+			'no-data'
 		);
 	});
 
@@ -49,7 +46,7 @@ describe('DocumentGenerationState', () => {
 				hasContent={true}
 				isGenerating={true}
 				title='Cover Letter'
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Generating Cover Letter…')).toBeInTheDocument();
@@ -65,7 +62,7 @@ describe('DocumentGenerationState', () => {
 			'text-center',
 			'font-mono',
 			'sm:min-h-96',
-			'sm:text-base',
+			'sm:text-base'
 		);
 	});
 
@@ -75,7 +72,7 @@ describe('DocumentGenerationState', () => {
 				hasSelectedDocuments={true}
 				hasContent={true}
 				isGenerating={false}
-			/>,
+			/>
 		);
 
 		expect(container.firstChild).toBeNull();
@@ -87,7 +84,7 @@ describe('DocumentGenerationState', () => {
 				hasSelectedDocuments={true}
 				hasContent={true}
 				isGenerating={true}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Generating Document…')).toBeInTheDocument();
@@ -99,12 +96,12 @@ describe('DocumentGenerationState', () => {
 				hasSelectedDocuments={false}
 				hasContent={false}
 				emptyStateVariant='no-data'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('empty-state')).toHaveAttribute(
 			'data-variant',
-			'no-data',
+			'no-data'
 		);
 	});
 
@@ -115,7 +112,7 @@ describe('DocumentGenerationState', () => {
 				hasContent={true}
 				isGenerating={true}
 				className='custom-class'
-			/>,
+			/>
 		);
 
 		expect(container.firstChild).toHaveClass('custom-class');
@@ -127,7 +124,7 @@ describe('DocumentGenerationState', () => {
 				hasSelectedDocuments={true}
 				hasContent={true}
 				isGenerating={true}
-			/>,
+			/>
 		);
 
 		expect(container.firstChild).toHaveClass(
@@ -136,7 +133,7 @@ describe('DocumentGenerationState', () => {
 			'print-document',
 			'border-light-gray',
 			'force-white-bg',
-			'border',
+			'border'
 		);
 	});
 
@@ -147,7 +144,7 @@ describe('DocumentGenerationState', () => {
 				hasContent={true}
 				isGenerating={true}
 				title='Resume'
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Generating Resume…')).toBeInTheDocument();

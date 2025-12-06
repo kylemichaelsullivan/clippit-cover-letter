@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 
+import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
 import {
 	useAppStore,
 	useCandidateStore,
@@ -11,7 +12,6 @@ import {
 	useSkillsStore,
 	useTemplatesStore,
 } from '@/lib/stores';
-import { useGenerationTimeout } from '@/lib/hooks/useGenerationTimeout';
 
 import { DocumentGenerationButton } from './DocumentGenerationButton';
 import { DocumentGenerationService } from './DocumentGenerationService';

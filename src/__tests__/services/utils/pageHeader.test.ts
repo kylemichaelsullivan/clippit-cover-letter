@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
 import {
-	generatePageHeaderHTML,
 	generatePageFooterHTML,
+	generatePageHeaderHTML,
 } from '@/lib/utils/pageHeader';
 import type { CandidateDetails } from '@/types';
+import { describe, expect, it } from 'vitest';
 
 describe('generatePageHeaderHTML', () => {
 	it('should generate header HTML with all contact information', async () => {
@@ -19,11 +19,11 @@ describe('generatePageHeaderHTML', () => {
 
 		expect(result).toContain('<header class="page-header">');
 		expect(result).toContain(
-			'<h1 class="page-header-name">Dwight Schrute</h1>',
+			'<h1 class="page-header-name">Dwight Schrute</h1>'
 		);
 		expect(result).toContain('<div class="page-header-contact">');
 		expect(result).toContain(
-			'dwight.schrute@dundermifflin.com | +1-555-123-4567 | /in/dwightschrute | schrutefarms.com',
+			'dwight.schrute@dundermifflin.com | +1-555-123-4567 | /in/dwightschrute | schrutefarms.com'
 		);
 	});
 
@@ -39,10 +39,10 @@ describe('generatePageHeaderHTML', () => {
 		const result = await generatePageHeaderHTML(candidateDetails);
 
 		expect(result).toContain(
-			'<h1 class="page-header-name">Dwight Schrute</h1>',
+			'<h1 class="page-header-name">Dwight Schrute</h1>'
 		);
 		expect(result).toContain(
-			'dwight.schrute@dundermifflin.com | /in/dwightschrute',
+			'dwight.schrute@dundermifflin.com | /in/dwightschrute'
 		);
 		expect(result).not.toContain('||');
 	});
@@ -59,7 +59,7 @@ describe('generatePageHeaderHTML', () => {
 		const result = await generatePageHeaderHTML(candidateDetails);
 
 		expect(result).toContain(
-			'<h1 class="page-header-name">Dwight Schrute</h1>',
+			'<h1 class="page-header-name">Dwight Schrute</h1>'
 		);
 		expect(result).toContain('dwight.schrute@dundermifflin.com');
 		expect(result).not.toContain('|');
@@ -77,7 +77,7 @@ describe('generatePageHeaderHTML', () => {
 		const result = await generatePageHeaderHTML(candidateDetails);
 
 		expect(result).toContain(
-			'<h1 class="page-header-name">Dwight Schrute</h1>',
+			'<h1 class="page-header-name">Dwight Schrute</h1>'
 		);
 		expect(result).not.toContain('<div class="page-header-contact">');
 	});
@@ -96,7 +96,7 @@ describe('generatePageFooterHTML', () => {
 
 		const coverLetterResult = await generatePageFooterHTML(
 			candidateDetails,
-			true,
+			true
 		);
 		const resumeResult = await generatePageFooterHTML(candidateDetails, false);
 

@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useResumeStore } from '@/lib/stores/useResumeStore';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock localStorage
 const localStorageMock = {
@@ -81,8 +81,8 @@ describe('Education Sorting', () => {
 		// Now sort by year
 		const { updateEducation } = useResumeStore.getState();
 		const sortedEducation = [...educationArray].sort((a, b) => {
-			const yearA = parseInt(a.graduationYear || '', 10);
-			const yearB = parseInt(b.graduationYear || '', 10);
+			const yearA = Number.parseInt(a.graduationYear || '', 10);
+			const yearB = Number.parseInt(b.graduationYear || '', 10);
 			const isValidA = !Number.isNaN(yearA);
 			const isValidB = !Number.isNaN(yearB);
 			if (isValidA && isValidB) return yearB - yearA;
@@ -142,8 +142,8 @@ describe('Education Sorting', () => {
 
 		// Sort by year
 		const sortedEducation = [...educationArray].sort((a, b) => {
-			const yearA = parseInt(a.graduationYear || '', 10);
-			const yearB = parseInt(b.graduationYear || '', 10);
+			const yearA = Number.parseInt(a.graduationYear || '', 10);
+			const yearB = Number.parseInt(b.graduationYear || '', 10);
 			const isValidA = !Number.isNaN(yearA);
 			const isValidB = !Number.isNaN(yearB);
 			if (isValidA && isValidB) return yearB - yearA;

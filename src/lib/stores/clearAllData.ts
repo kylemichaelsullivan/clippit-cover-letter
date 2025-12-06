@@ -1,10 +1,10 @@
+import { DEFAULTS } from '@/config';
 import { useAppStore } from './useAppStore';
 import { useCandidateStore } from './useCandidateStore';
 import { useJobStore } from './useJobStore';
 import { useResumeStore } from './useResumeStore';
 import { useSkillsStore } from './useSkillsStore';
 import { useTemplatesStore } from './useTemplatesStore';
-import { DEFAULTS } from '@/config';
 
 export function clearAllPersistentData() {
 	try {
@@ -34,18 +34,18 @@ export function clearAllPersistentData() {
 		appStore.setIncludeCoverLetter(DEFAULTS.FORM_DEFAULTS.INCLUDE_COVER_LETTER);
 		appStore.setIncludeResume(DEFAULTS.FORM_DEFAULTS.INCLUDE_RESUME);
 		appStore.setSkillsInstructions(
-			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.skillsInstructions,
+			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.skillsInstructions
 		);
 		appStore.setCoverLetterInstructions(
-			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.coverLetterInstructions,
+			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.coverLetterInstructions
 		);
 		appStore.setResumeInstructions(
-			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.resumeInstructions,
+			DEFAULTS.INITIAL_STATES.DOCUMENT_INSTRUCTIONS.resumeInstructions
 		);
 
 		// Reset candidate store
 		candidateStore.setCandidateDetails(
-			DEFAULTS.INITIAL_STATES.CANDIDATE_DETAILS,
+			DEFAULTS.INITIAL_STATES.CANDIDATE_DETAILS
 		);
 
 		// Reset job store
@@ -68,22 +68,22 @@ export function clearAllPersistentData() {
 		});
 		skillsStore.setIncludeSkills(DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILLS);
 		skillsStore.setIncludeSkillGroupNames(
-			DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILL_GROUP_NAMES,
+			DEFAULTS.FORM_DEFAULTS.INCLUDE_SKILL_GROUP_NAMES
 		);
 		skillsStore.setGeneratedSkills(
-			DEFAULTS.INITIAL_STATES.GENERATION.generatedSkills,
+			DEFAULTS.INITIAL_STATES.GENERATION.generatedSkills
 		);
 
 		// Reset templates store
 		templatesStore.setCoverLetterTemplate(
-			DEFAULTS.INITIAL_STATES.TEMPLATES.coverLetter,
+			DEFAULTS.INITIAL_STATES.TEMPLATES.coverLetter
 		);
 
 		templatesStore.setGeneratedCoverLetter(
-			DEFAULTS.INITIAL_STATES.GENERATION.generatedCoverLetter,
+			DEFAULTS.INITIAL_STATES.GENERATION.generatedCoverLetter
 		);
 		templatesStore.setGeneratedResume(
-			DEFAULTS.INITIAL_STATES.GENERATION.generatedResume,
+			DEFAULTS.INITIAL_STATES.GENERATION.generatedResume
 		);
 
 		console.log('All persistent data cleared successfully');

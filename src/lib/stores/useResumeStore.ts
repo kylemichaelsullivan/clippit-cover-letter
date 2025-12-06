@@ -77,7 +77,7 @@ export const useResumeStore = create<ResumeState>()(
 				removeEducation: (index) =>
 					set((state) => {
 						const updatedEducation = state.resumeDetails.education.filter(
-							(_, i) => i !== index,
+							(_, i) => i !== index
 						);
 
 						if (updatedEducation.length === 0) {
@@ -131,7 +131,7 @@ export const useResumeStore = create<ResumeState>()(
 				removeExperience: (index) =>
 					set((state) => {
 						const updatedExperience = state.resumeDetails.experience.filter(
-							(_, i) => i !== index,
+							(_, i) => i !== index
 						);
 
 						if (updatedExperience.length === 0) {
@@ -197,10 +197,10 @@ export const useResumeStore = create<ResumeState>()(
 			}),
 			{
 				name: 'resume-store',
-			},
+			}
 		),
 		{
 			name: 'resume-store',
-		},
-	),
+		}
+	)
 );

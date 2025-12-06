@@ -1,4 +1,4 @@
-import type { Experience, Education } from '@/types';
+import type { Education, Experience } from '@/types';
 
 export const mockExperience: Experience[] = [
 	{

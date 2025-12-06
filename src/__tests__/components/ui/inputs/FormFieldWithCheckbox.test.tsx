@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { FormFieldWithCheckbox } from '@/components/forms/core/FormFieldWithCheckbox';
 import { createMockForm } from '@/__tests__/utils/test-helpers';
+import { FormFieldWithCheckbox } from '@/components/forms/core/FormFieldWithCheckbox';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({
@@ -57,7 +57,7 @@ describe('FormFieldWithCheckbox', () => {
 
 	it('applies custom className when provided', () => {
 		render(
-			<FormFieldWithCheckbox {...defaultProps} className='custom-class' />,
+			<FormFieldWithCheckbox {...defaultProps} className='custom-class' />
 		);
 
 		const container = screen.getByText('Title').closest('.FormFieldContainer');
@@ -90,7 +90,7 @@ describe('FormFieldWithCheckbox', () => {
 			<FormFieldWithCheckbox
 				{...defaultProps}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const input = screen.getByPlaceholderText('Enter job title');
@@ -113,7 +113,7 @@ describe('FormFieldWithCheckbox', () => {
 		expect(checkbox).toHaveAttribute('title', 'Include this in Resume?');
 		expect(checkbox).toHaveAttribute(
 			'aria-label',
-			'Include 1st experience entry in Resume',
+			'Include 1st experience entry in Resume'
 		);
 	});
 

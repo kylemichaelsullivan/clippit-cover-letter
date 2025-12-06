@@ -1,12 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { Button } from '@/components/ui/buttons/Button';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('Button', () => {
 	it('renders with correct text', () => {
 		render(<Button>Click me</Button>);
 		expect(
-			screen.getByRole('button', { name: 'Click me' }),
+			screen.getByRole('button', { name: 'Click me' })
 		).toBeInTheDocument();
 	});
 
@@ -25,7 +25,7 @@ describe('Button', () => {
 			'bg-light-gray',
 			'hover:bg-gray',
 			'border',
-			'text-black',
+			'text-black'
 		);
 	});
 

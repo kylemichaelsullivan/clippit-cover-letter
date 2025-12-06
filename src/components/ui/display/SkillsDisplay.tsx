@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { CopyButton } from '@/components/results';
 import { EmptySkillsMessage } from '@/components/ui/feedback';
 import { TipTapEditor } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';
-import { getSortedSkillGroups } from '@/lib/utils';
 import { useSkillsStore } from '@/lib/stores';
+import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
+import { useEffect, useState } from 'react';
 
 type SkillsDisplayProps = {
 	skills: Skills;
@@ -59,7 +59,7 @@ export function SkillsDisplay({
 				.replace(/<\/ul>/g, '')
 				.replace(
 					/<li><p><strong>([^<]+):<\/strong> ([^<]+)<\/p><\/li>/g,
-					'$1: $2',
+					'$1: $2'
 				)
 				.replace(/<li><p>([^<]+)<\/p><\/li>/g, '$1')
 				.replace(/<li><strong>([^<]+):<\/strong> ([^<]+)<\/li>/g, '$1: $2')

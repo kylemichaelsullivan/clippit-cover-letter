@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { useResumeStore } from '@/lib/stores/useResumeStore';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const localStorageMock = {
 	getItem: vi.fn(),
@@ -25,7 +25,7 @@ const compareDates = (dateA: string, dateB: string) => {
 		if (parts.length !== 2) return null;
 
 		const month = parts[0];
-		const year = parseInt(parts[1], 10);
+		const year = Number.parseInt(parts[1], 10);
 
 		if (Number.isNaN(year)) return null;
 

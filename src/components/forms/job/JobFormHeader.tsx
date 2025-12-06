@@ -1,12 +1,12 @@
 'use client';
 
-import { memo, useState } from 'react';
 import { Button, TabTitle } from '@/components/ui';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { DEFAULTS } from '@/config';
+import { useJobStore } from '@/lib/stores';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useJobStore } from '@/lib/stores';
+import { memo, useState } from 'react';
 
 export const JobFormHeader = memo(function JobFormHeader() {
 	const { setJobDetails } = useJobStore();

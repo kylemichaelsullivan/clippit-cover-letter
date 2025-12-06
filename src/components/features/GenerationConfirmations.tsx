@@ -1,7 +1,7 @@
 'use client';
 
-import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 import { useGenerationConfirmations } from '@/lib/hooks';
+import { GenerationConfirmationDialog } from './GenerationConfirmationDialog';
 
 type GenerationConfirmationsProps = {
 	candidateDetails: any;

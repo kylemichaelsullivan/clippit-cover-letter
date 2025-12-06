@@ -2,12 +2,12 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { ExperienceItem } from './ExperienceItem';
 import { EmptyExperienceMessage } from '@/components/ui/feedback';
 import { SkipLinkTarget } from '@/components/ui/navigation';
+import { ExperienceItem } from './ExperienceItem';
 
-import type { CSSProperties } from 'react';
 import type { Experience } from '@/types';
+import type { CSSProperties } from 'react';
 
 type ExperienceContentProps = {
 	form: any; // TanStack Form
@@ -15,7 +15,7 @@ type ExperienceContentProps = {
 	handleFieldChange?: (fieldName: string, value: any) => void;
 	registerFocusRef?: (
 		experienceIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 
@@ -62,7 +62,7 @@ export function ExperienceContent({
 										/>
 									</SkipLinkTarget>
 								);
-							},
+							}
 						)}
 					</div>
 				);

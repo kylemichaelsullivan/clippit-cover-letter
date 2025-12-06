@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { callOpenAI, generateCoverLetter } from '@/lib/openai';
 import { getAIConfig, isAIConfigured, validateAIConfig } from '@/config/ai';
+import { callOpenAI, generateCoverLetter } from '@/lib/openai';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock fetch globally
 global.fetch = vi.fn();
@@ -10,7 +10,10 @@ vi.mock('@/config/env', () => ({
 	env: {
 		OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',
 		OPENAI_MODEL: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-		OPENAI_MAX_TOKENS: parseInt(process.env.OPENAI_MAX_TOKENS || '2000', 10),
+		OPENAI_MAX_TOKENS: Number.parseInt(
+			process.env.OPENAI_MAX_TOKENS || '2000',
+			10
+		),
 	},
 }));
 
@@ -124,7 +127,7 @@ describe('OpenAI API Integration', () => {
 						Authorization: 'Bearer sk-test123456789012345678901234567890',
 					},
 					body: expect.stringContaining('Test prompt'),
-				}),
+				})
 			);
 		});
 
@@ -142,13 +145,13 @@ describe('OpenAI API Integration', () => {
 			process.env.OPENAI_API_KEY = 'sk-invalid-key';
 
 			await expect(callOpenAI('Test prompt')).rejects.toThrow(
-				'OpenAI API error: 401 Invalid API key',
+				'OpenAI API error: 401 Invalid API key'
 			);
 		});
 
 		it('should throw error when API key is missing', async () => {
 			await expect(callOpenAI('Test prompt')).rejects.toThrow(
-				'OpenAI API key is not configured',
+				'OpenAI API key is not configured'
 			);
 		});
 	});
@@ -183,7 +186,7 @@ describe('OpenAI API Integration', () => {
 			const result = await generateCoverLetter(
 				'Software Engineer position',
 				'Tech Company Inc.',
-				'5 years of React development',
+				'5 years of React development'
 			);
 
 			expect(result).toContain('Dear Hiring Manager');
@@ -191,7 +194,7 @@ describe('OpenAI API Integration', () => {
 				'https://api.openai.com/v1/chat/completions',
 				expect.objectContaining({
 					body: expect.stringContaining('Software Engineer position'),
-				}),
+				})
 			);
 		});
 	});

@@ -1,15 +1,15 @@
 'use client';
 
-import { memo, useState, useRef, useCallback, type ReactNode } from 'react';
+import { type ReactNode, memo, useCallback, useRef, useState } from 'react';
 
+import { ViewToggle } from '@/components/ui/buttons';
+import { TipTapEditor } from '@/components/ui/input';
+import { PLACEHOLDERS } from '@/config';
+import type { DocumentType, FontSize } from '@/types';
 import clsx from 'clsx';
 import { DocumentGenerationState } from './DocumentGenerationState';
 import { DocumentHeader } from './DocumentHeader';
 import { DocumentPreview } from './DocumentPreview';
-import { PLACEHOLDERS } from '@/config';
-import { TipTapEditor } from '@/components/ui/input';
-import { ViewToggle } from '@/components/ui/buttons';
-import type { DocumentType, FontSize } from '@/types';
 
 type DocumentContentProps = {
 	title: string;
@@ -50,7 +50,7 @@ export const DocumentContent = memo(function DocumentContent({
 			if (onContentChange) {
 				const cleanedContent = newContent.replace(
 					/<\/ul>\s*<p><br class="ProseMirror-trailingBreak"><\/p>/g,
-					'</ul>',
+					'</ul>'
 				);
 
 				if (cleanedContent !== lastContentRef.current) {
@@ -59,7 +59,7 @@ export const DocumentContent = memo(function DocumentContent({
 				}
 			}
 		},
-		[onContentChange],
+		[onContentChange]
 	);
 
 	if (content !== lastContentRef.current) {
@@ -99,7 +99,7 @@ export const DocumentContent = memo(function DocumentContent({
 									className='min-h-64 w-full font-mono sm:min-h-96 sm:text-base'
 									placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 										'{title}',
-										title.toLowerCase(),
+										title.toLowerCase()
 									)}
 									value={content || templateContent || ''}
 									contentPadding='sm'
@@ -122,7 +122,7 @@ export const DocumentContent = memo(function DocumentContent({
 								value={content || templateContent || ''}
 								placeholder={PLACEHOLDERS.GENERAL.DOCUMENT_CONTENT.replace(
 									'{title}',
-									title.toLowerCase(),
+									title.toLowerCase()
 								)}
 								contentPadding='sm'
 								onChange={handleContentChange}

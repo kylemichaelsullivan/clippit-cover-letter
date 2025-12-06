@@ -4,9 +4,9 @@ import {
 	MUSTACHE_REPLACEMENTS,
 	PLACEHOLDERS,
 } from '@/config';
+import type { MustacheReplacement } from '@/config/mustacheReplacements';
 import { getSortedSkillGroups, sortAllSkills } from '@/lib/utils';
 import type { CandidateDetails, Job, Skills } from '@/types';
-import type { MustacheReplacement } from '@/config/mustacheReplacements';
 
 export type DocumentGenerationParams = {
 	includeResume: boolean;
@@ -31,7 +31,7 @@ export type DocumentGenerationResult = {
 
 const replaceMustacheValues = (
 	template: string,
-	values: Record<string, string>,
+	values: Record<string, string>
 ) => {
 	let result = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
 		const cleanKey = key.trim();
@@ -56,7 +56,7 @@ const replaceMustacheValues = (
 const replaceERBInstructions = (
 	template: string,
 	instructions: Record<string, string>,
-	values: Record<string, string>,
+	values: Record<string, string>
 ) => {
 	return template.replace(/<%=([^%>]+)%>/g, (match, key) => {
 		const cleanKey = key.trim();
@@ -67,7 +67,7 @@ const replaceERBInstructions = (
 					(mustacheMatch: string, mustacheKey: string) => {
 						const cleanMustacheKey = mustacheKey.trim();
 						return values[cleanMustacheKey] || mustacheMatch;
-					},
+					}
 				)
 			: match;
 	});
@@ -130,7 +130,7 @@ const formatJobAddress = (jobDetails: Job): string => {
 
 const formatEducationText = (education: any[]): string => {
 	const filtered = education.filter(
-		(edu) => edu.include !== false && (edu.degree || edu.institution),
+		(edu) => edu.include !== false && (edu.degree || edu.institution)
 	);
 
 	const result = filtered
@@ -176,7 +176,7 @@ const createMustacheValues = (
 	},
 	skills?: Skills,
 	includeSkillGroupNames?: boolean,
-	generatedSkills?: string,
+	generatedSkills?: string
 ): Record<string, string> => {
 	const values: Record<string, string> = {};
 
@@ -291,7 +291,7 @@ export async function generateDocuments({
 		resumeDetails,
 		skills,
 		includeSkillGroupNames,
-		generatedSkills,
+		generatedSkills
 	);
 
 	const erbInstructions = createERBInstructions();
@@ -334,12 +334,12 @@ ${experienceContent}${educationSection}`;
 		console.log('Generating cover letter…');
 		let processedTemplate = replaceMustacheValues(
 			coverLetterTemplate,
-			mustacheValues,
+			mustacheValues
 		);
 		processedTemplate = replaceERBInstructions(
 			processedTemplate,
 			erbInstructions,
-			mustacheValues,
+			mustacheValues
 		);
 		generatedCoverLetter = processedTemplate;
 		console.log('Cover letter generated successfully');

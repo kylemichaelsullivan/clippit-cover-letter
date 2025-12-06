@@ -4,12 +4,12 @@ import { memo } from 'react';
 
 import { usePhaseStore } from '@/lib/stores';
 import {
-	WelcomeHeader,
-	WelcomeDescription,
 	DevelopmentStatusCard,
 	FeaturesAvailableCard,
 	FeaturesComingSoonCard,
+	WelcomeDescription,
 	WelcomeFooter,
+	WelcomeHeader,
 } from './index';
 
 export const WelcomeForm = memo(function WelcomeForm() {

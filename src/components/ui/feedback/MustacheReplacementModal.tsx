@@ -2,13 +2,13 @@
 
 import { memo, useEffect } from 'react';
 
+import { ERB_INSTRUCTIONS, MUSTACHE_REPLACEMENTS } from '@/config';
 import { useModalClose } from '@/lib/hooks/useModalClose';
-import { MUSTACHE_REPLACEMENTS, ERB_INSTRUCTIONS } from '@/config';
 import { showToast } from '@/lib/toast';
+import { CustomPlaceholderNote } from './CustomPlaceholderNote';
 import { ModalBackdrop } from './ModalBackdrop';
 import { ModalHeader } from './ModalHeader';
 import { TemplateVariablesSection } from './TemplateVariablesSection';
-import { CustomPlaceholderNote } from './CustomPlaceholderNote';
 
 type MustacheReplacementModalProps = {
 	isOpen: boolean;
@@ -33,7 +33,7 @@ export const MustacheReplacementModal = memo(function MustacheReplacementModal({
 
 	const handleCopyToClipboard = async (
 		templateName: string,
-		syntax: 'mustache' | 'erb',
+		syntax: 'mustache' | 'erb'
 	) => {
 		const templateText =
 			syntax === 'mustache' ? `{{${templateName}}}` : `<%=${templateName}%>`;

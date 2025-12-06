@@ -1,4 +1,4 @@
-import type { Skills, SkillGroup } from '@/types';
+import type { SkillGroup, Skills } from '@/types';
 
 export const sortSkillGroups = (groups: SkillGroup[]): SkillGroup[] => {
 	return [...groups].sort((a, b) => {
@@ -26,9 +26,9 @@ export const sortAllSkills = (skills: Skills): string[] => {
 	}
 
 	const allSkills: string[] = [];
-	skills.groups.forEach((group) => {
+	for (const group of skills.groups) {
 		allSkills.push(...group.skills);
-	});
+	}
 
 	return sortSkillsInGroup(allSkills);
 };

@@ -13,7 +13,7 @@ export function useFocusNewEducation() {
 				focusRefs.current.delete(educationIndex);
 			}
 		},
-		[],
+		[]
 	);
 
 	const focusNewEducation = useCallback((educationIndex: number) => {

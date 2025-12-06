@@ -1,11 +1,11 @@
 'use client';
 
-import { memo } from 'react';
-import { CONSTANTS, PLACEHOLDERS } from '@/config';
-import { Field } from '@tanstack/react-form';
 import { FormSection } from '@/components/forms/core';
-import { templatesSchema, validateSchema } from '@/lib/schemas';
 import { TipTapEditor } from '@/components/ui/input';
+import { CONSTANTS, PLACEHOLDERS } from '@/config';
+import { templatesSchema, validateSchema } from '@/lib/schemas';
+import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 
 type CoverLetterSectionProps = {
 	form: any;

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, type ChangeEvent } from 'react';
+import { type ChangeEvent, memo } from 'react';
 
 type NumberInputProps = {
 	value: string;

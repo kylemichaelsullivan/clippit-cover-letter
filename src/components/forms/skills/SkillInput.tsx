@@ -1,15 +1,15 @@
 'use client';
 
-import { Button } from '@/components/ui/buttons';
-import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormFieldContainer } from '@/components/forms/core';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { Button } from '@/components/ui/buttons';
 import { PLACEHOLDERS } from '@/config';
+import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type {
 	ChangeEvent,
-	KeyboardEvent,
 	ClipboardEvent,
+	KeyboardEvent,
 	MouseEvent,
 } from 'react';
 

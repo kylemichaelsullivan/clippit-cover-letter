@@ -1,8 +1,8 @@
 'use client';
 
+import { useSkipLinkTarget } from '@/lib/hooks/useSkipLinkTarget';
 import { memo, useEffect } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import { useSkipLinkTarget } from '@/lib/hooks/useSkipLinkTarget';
 import { registerSkipLinkTarget, unregisterSkipLinkTarget } from './SkipLink';
 
 type SkipLinkTargetProps = {

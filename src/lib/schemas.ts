@@ -11,7 +11,7 @@ export const candidateDetailsSchema = z.object({
 		.max(100, 'LinkedIn slug cannot exceed 100 characters')
 		.regex(
 			/^[a-zA-Z0-9-]+$/,
-			'LinkedIn slug can only contain letters, numbers, and hyphens',
+			'LinkedIn slug can only contain letters, numbers, and hyphens'
 		)
 		.refine((val) => !val.toLowerCase().includes('linkedin'), {
 			message: 'LinkedIn slug should not include the word "LinkedIn"',
@@ -31,7 +31,7 @@ export const skillsSchema = z.object({
 			include: z.boolean(),
 			name: z.string(),
 			skills: z.array(z.string()),
-		}),
+		})
 	),
 	minSkillsToUse: z.number().min(1).max(20),
 	maxSkillsToUse: z.number().min(1).max(20),
@@ -66,7 +66,7 @@ export function validateSchema(schema: z.ZodObject<any>, fieldName: string) {
 
 export function isFieldRequired(
 	schema: z.ZodSchema,
-	fieldName: string,
+	fieldName: string
 ): boolean {
 	try {
 		if (schema instanceof z.ZodObject) {
@@ -81,7 +81,7 @@ export function isFieldRequired(
 
 			if (fieldSchema instanceof z.ZodString) {
 				return fieldSchema._def.checks.some(
-					(check) => check.kind === 'min' && check.value > 0,
+					(check) => check.kind === 'min' && check.value > 0
 				);
 			}
 

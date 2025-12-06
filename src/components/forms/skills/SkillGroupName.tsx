@@ -1,17 +1,17 @@
 'use client';
 
-import { Field } from '@tanstack/react-form';
 import { FormFieldContainer } from '@/components/forms/core';
-import { Checkbox } from '@/components/ui/input';
-import { Button } from '@/components/ui/buttons';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '@/components/ui/buttons';
+import { Checkbox } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';
 import { skillsSchema, validateSchema } from '@/lib/schemas';
-import { getOrdinalSuffix } from '@/lib/utils';
 import { useSkillsStore } from '@/lib/stores';
-import { useCallback, memo, useState, useEffect, useMemo } from 'react';
+import { getOrdinalSuffix } from '@/lib/utils';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { SkillGroup } from '@/types';
 
@@ -21,14 +21,14 @@ type SkillGroupNameProps = {
 	onRemove?: () => void;
 	registerFocusRef?: (
 		groupIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 
 const hasDuplicateGroupName = (
 	groups: SkillGroup[],
 	currentIndex: number,
-	newName: string,
+	newName: string
 ): boolean => {
 	if (!newName.trim()) return false;
 
@@ -36,7 +36,7 @@ const hasDuplicateGroupName = (
 	return groups.some(
 		(group, index) =>
 			index !== currentIndex &&
-			group.name.toLowerCase().trim() === normalizedNewName,
+			group.name.toLowerCase().trim() === normalizedNewName
 	);
 };
 
@@ -72,14 +72,14 @@ export const SkillGroupName = memo(function SkillGroupName({
 			const updatedSkills = {
 				...currentSkills,
 				groups: currentSkills.groups.map((group, index) =>
-					index === groupIndex ? { ...group, include: checked } : group,
+					index === groupIndex ? { ...group, include: checked } : group
 				),
 			};
 			setSkills(updatedSkills);
 
 			form.setFieldValue(`groups.${groupIndex}.include`, checked);
 		},
-		[groupIndex, setSkills, form],
+		[groupIndex, setSkills, form]
 	);
 
 	return (
@@ -95,7 +95,7 @@ export const SkillGroupName = memo(function SkillGroupName({
 				const hasDuplicate = hasDuplicateGroupName(
 					currentGroups,
 					groupIndex,
-					currentValue,
+					currentValue
 				);
 
 				return (

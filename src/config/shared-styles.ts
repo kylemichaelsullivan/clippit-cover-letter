@@ -515,7 +515,7 @@ export function generateTipTapPageBreakStyles(): string {
 
 function generatePageHeaderStyles(
 	className: string,
-	margin: string = '0 0 2rem 0',
+	margin = '0 0 2rem 0'
 ): string {
 	return `
 ${className} {

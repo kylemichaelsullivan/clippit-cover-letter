@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { cleanMarkdown, htmlToMarkdown } from '@/lib/utils/htmlToMarkdown';
 import {
-	htmlToPlaintextWithSignature,
 	cleanPlaintext,
+	htmlToPlaintextWithSignature,
 } from '@/lib/utils/htmlToPlaintext';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
-import { cleanMarkdown, htmlToMarkdown } from '@/lib/utils/htmlToMarkdown';
 import type { CandidateDetails } from '@/types';
+import { describe, expect, it } from 'vitest';
 
 describe('signature requirements verification', () => {
 	const mockCandidateDetails: CandidateDetails = {
@@ -33,7 +33,7 @@ describe('signature requirements verification', () => {
 			// This should be replaced in the preview
 			const previewContent = replaceSignaturePlaceholders(
 				tipTapContent,
-				mockCandidateDetails,
+				mockCandidateDetails
 			);
 			expect(previewContent).toContain('signature-image');
 			expect(previewContent).not.toContain('{{My Signature}}');
@@ -45,7 +45,7 @@ describe('signature requirements verification', () => {
 			const templateContent = '<p>{{My Signature}}</p>';
 			const previewContent = replaceSignaturePlaceholders(
 				templateContent,
-				mockCandidateDetails,
+				mockCandidateDetails
 			);
 
 			expect(previewContent).toContain('signature-image');
@@ -58,7 +58,7 @@ describe('signature requirements verification', () => {
 			const templateContent = '<p>{{My Signature}}</p>';
 			const pdfContent = replaceSignaturePlaceholders(
 				templateContent,
-				mockCandidateDetails,
+				mockCandidateDetails
 			);
 
 			expect(pdfContent).toContain('signature-image');
@@ -74,10 +74,10 @@ describe('signature requirements verification', () => {
 			const contentWithSignature = replaceSignaturePlaceholders(
 				templateContent,
 				mockCandidateDetails,
-				true,
+				true
 			);
 			const markdownContent = cleanMarkdown(
-				htmlToMarkdown(contentWithSignature),
+				htmlToMarkdown(contentWithSignature)
 			);
 
 			expect(markdownContent).toContain('John Doe');
@@ -92,10 +92,10 @@ describe('signature requirements verification', () => {
 			const contentWithSignature = replaceSignaturePlaceholders(
 				generatedContent,
 				mockCandidateDetails,
-				true,
+				true
 			);
 			const markdownContent = cleanMarkdown(
-				htmlToMarkdown(contentWithSignature),
+				htmlToMarkdown(contentWithSignature)
 			);
 
 			expect(markdownContent).toContain('John Doe');
@@ -110,7 +110,7 @@ describe('signature requirements verification', () => {
 
 			// Apply signature replacement for plaintext
 			const plaintextContent = cleanPlaintext(
-				htmlToPlaintextWithSignature(templateContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(templateContent, mockCandidateDetails)
 			);
 
 			expect(plaintextContent).toContain('John Doe');
@@ -123,7 +123,7 @@ describe('signature requirements verification', () => {
 
 			// Apply signature replacement for plaintext
 			const plaintextContent = cleanPlaintext(
-				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails)
 			);
 
 			// Should contain candidate name, not image
@@ -136,7 +136,7 @@ describe('signature requirements verification', () => {
 				'<p>Dear Hiring Manager,</p><p>{{My Signature}}</p><p>Sincerely,</p><p><img src="data:image/png;base64,test" class="signature-image" alt="Signature" /></p>';
 
 			const plaintextContent = cleanPlaintext(
-				htmlToPlaintextWithSignature(mixedContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(mixedContent, mockCandidateDetails)
 			);
 
 			const nameCount = (plaintextContent.match(/John Doe/g) || []).length;
@@ -151,12 +151,12 @@ describe('signature requirements verification', () => {
 			const templateContent = '<p>{{My Signature}}</p>';
 
 			const plaintextContent = cleanPlaintext(
-				htmlToPlaintextWithSignature(templateContent),
+				htmlToPlaintextWithSignature(templateContent)
 			);
 			expect(plaintextContent).toContain('{{My Signature}}');
 
 			const plaintextWithName = cleanPlaintext(
-				htmlToPlaintextWithSignature(templateContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(templateContent, mockCandidateDetails)
 			);
 			expect(plaintextWithName).toContain('John Doe');
 			expect(plaintextWithName).not.toContain('{{My Signature}}');
@@ -174,7 +174,7 @@ describe('signature requirements verification', () => {
 			// Should replace with name instead of image
 			const contentWithName = replaceSignaturePlaceholders(
 				templateContent,
-				candidateNoImage,
+				candidateNoImage
 			);
 			expect(contentWithName).toContain('John Doe');
 			expect(contentWithName).not.toContain('{{My Signature}}');
@@ -192,7 +192,7 @@ describe('signature requirements verification', () => {
 			// Should replace with name when no signature image available
 			const contentWithName = replaceSignaturePlaceholders(
 				templateContent,
-				candidateNoSignature,
+				candidateNoSignature
 			);
 			expect(contentWithName).toContain('John Doe');
 			expect(contentWithName).not.toContain('{{My Signature}}');
@@ -206,7 +206,7 @@ describe('signature requirements verification', () => {
 			// Should not change content without placeholders
 			const unchangedContent = replaceSignaturePlaceholders(
 				regularContent,
-				mockCandidateDetails,
+				mockCandidateDetails
 			);
 			expect(unchangedContent).toBe(regularContent);
 		});

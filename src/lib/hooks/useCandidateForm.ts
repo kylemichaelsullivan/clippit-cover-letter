@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
 import { useForm } from '@tanstack/react-form';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { useCandidateStore } from '@/lib/stores';
 import { candidateDetailsSchema } from '@/lib/schemas';
+import { useCandidateStore } from '@/lib/stores';
 
 import type { CandidateDetails } from '@/types';
 
@@ -23,7 +23,7 @@ export type CandidateFormValues = {
 };
 
 export function useCandidateForm(
-	onSubmit: (details: CandidateDetails) => void,
+	onSubmit: (details: CandidateDetails) => void
 ) {
 	const { candidateDetails, setCandidateDetails, setCandidateField } =
 		useCandidateStore();
@@ -67,7 +67,7 @@ export function useCandidateForm(
 					break;
 			}
 		},
-		[setCandidateField],
+		[setCandidateField]
 	);
 
 	const form = useForm({

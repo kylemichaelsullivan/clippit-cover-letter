@@ -1,10 +1,10 @@
 'use client';
 
-import { memo } from 'react';
+import { SkillsSummarySection } from '@/components/features';
 import { FormSection } from '@/components/forms/core';
 import { SkillsRangeSlider } from '@/components/ui/input';
-import { SkillsSummarySection } from '@/components/features';
 import { useSkillsStore } from '@/lib/stores';
+import { memo } from 'react';
 
 export const JobSkillsSection = memo(function JobSkillsSection() {
 	const { skills, setSkillsRange } = useSkillsStore();

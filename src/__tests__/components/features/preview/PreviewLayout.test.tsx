@@ -14,7 +14,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		const mainContainer = screen
@@ -24,7 +24,7 @@ describe('PreviewLayout', () => {
 			'PreviewContent',
 			'flex',
 			'flex-col',
-			'gap-12',
+			'gap-12'
 		);
 	});
 
@@ -36,7 +36,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		// Should render the Preview title
@@ -51,7 +51,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		// When hasData is false, children should not be rendered
@@ -68,7 +68,7 @@ describe('PreviewLayout', () => {
 				isProcessing={true}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		// When processing, should show loading state
@@ -84,7 +84,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		expect(screen.getByTestId('mock-children')).toBeInTheDocument();
@@ -99,7 +99,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{mockChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		const mainContainer = screen
@@ -125,7 +125,7 @@ describe('PreviewLayout', () => {
 				isProcessing={false}
 			>
 				{multipleChildren}
-			</PreviewLayout>,
+			</PreviewLayout>
 		);
 
 		expect(screen.getByTestId('child-1')).toBeInTheDocument();

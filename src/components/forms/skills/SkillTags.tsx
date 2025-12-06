@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import { Error } from '@/components/ui/feedback';
-import { SkillInput, SkillTagsList, SkillDialogs } from './';
 import { SkipLink } from '@/components/ui/navigation';
 import { useSkillsStore } from '@/lib/stores';
 import type { SkillGroup } from '@/types';
+import { useState } from 'react';
+import { SkillDialogs, SkillInput, SkillTagsList } from './';
 
 type SkillTagsProps = {
 	form: any; // TanStack Form
@@ -15,24 +15,24 @@ type SkillTagsProps = {
 
 const hasDuplicateSkillInGroup = (
 	skills: string[],
-	newSkill: string,
+	newSkill: string
 ): boolean => {
 	return skills.some(
-		(skill) => skill.toLowerCase().trim() === newSkill.toLowerCase().trim(),
+		(skill) => skill.toLowerCase().trim() === newSkill.toLowerCase().trim()
 	);
 };
 
 const hasDuplicateSkillInOtherGroups = (
 	groups: SkillGroup[],
 	currentGroupIndex: number,
-	newSkill: string,
+	newSkill: string
 ): boolean => {
 	return groups.some(
 		(group, index) =>
 			index !== currentGroupIndex &&
 			group.skills.some(
-				(skill) => skill.toLowerCase().trim() === newSkill.toLowerCase().trim(),
-			),
+				(skill) => skill.toLowerCase().trim() === newSkill.toLowerCase().trim()
+			)
 	);
 };
 
@@ -61,7 +61,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 
 		if (hasDuplicateSkillInGroup(currentSkills, skill)) {
 			setError(
-				'This skill already exists in this group. Please choose a different skill.',
+				'This skill already exists in this group. Please choose a different skill.'
 			);
 			return;
 		}
@@ -173,7 +173,7 @@ export function SkillTags({ form, groupIndex, isLastGroup }: SkillTagsProps) {
 		const currentSkills = currentGroups[groupIndex]?.skills || [];
 
 		const updatedSkills = currentSkills.filter(
-			(skill) => skill !== skillToRemove,
+			(skill) => skill !== skillToRemove
 		);
 
 		const updatedGroups = [...currentGroups];

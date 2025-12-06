@@ -2,11 +2,11 @@
 
 import { memo } from 'react';
 
-import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 
-import type { ButtonHTMLAttributes } from 'react';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { ButtonHTMLAttributes } from 'react';
 
 type MenuItemProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	icon: IconDefinition;
@@ -29,7 +29,7 @@ export const MenuItem = memo(function MenuItem({
 			className={clsx(
 				'hover:bg-light-gray flex cursor-pointer items-center gap-2 rounded px-3 py-2 text-left text-sm',
 				variant === 'danger' ? 'text-red' : 'text-black',
-				className,
+				className
 			)}
 			role='menuitem'
 			title={accessibleLabel}

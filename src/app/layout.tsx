@@ -6,10 +6,10 @@ import type { ReactNode } from 'react';
 import { CONSTANTS } from '@/config/constants';
 
 import {
-	ThemeProvider,
 	ConfirmationProvider,
-	StyleProvider,
 	DndProvider,
+	StyleProvider,
+	ThemeProvider,
 } from '@/components';
 import { ClientLayoutContent } from '@/components/layout';
 

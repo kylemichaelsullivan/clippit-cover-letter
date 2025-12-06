@@ -1,12 +1,12 @@
+import type { SelectableItems } from '@/types';
 import { useCallback, useState } from 'react';
 import { generateDocuments } from '../documentGeneration';
 import { useAppStore } from '../stores/useAppStore';
 import { useCandidateStore } from '../stores/useCandidateStore';
 import { useJobStore } from '../stores/useJobStore';
+import { useResumeStore } from '../stores/useResumeStore';
 import { useSkillsStore } from '../stores/useSkillsStore';
 import { useTemplatesStore } from '../stores/useTemplatesStore';
-import { useResumeStore } from '../stores/useResumeStore';
-import type { SelectableItems } from '@/types';
 
 export const useDocumentGeneration = (excludeSkills = false) => {
 	const { includeCoverLetter, includeResume } = useAppStore();
@@ -105,7 +105,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 					.catch((error) => {
 						console.error('Error generating cover letter:', error);
 						setGeneratedCoverLetter(
-							'Error generating cover letter. Please try again.',
+							'Error generating cover letter. Please try again.'
 						);
 					});
 				generationTasks.push(coverLetterTask);
@@ -189,7 +189,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating cover letter:', error);
 					setGeneratedCoverLetter(
-						'Error generating cover letter. Please try again.',
+						'Error generating cover letter. Please try again.'
 					);
 				});
 			generationTasks.push(coverLetterTask);
@@ -275,7 +275,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating cover letter:', error);
 					setGeneratedCoverLetter(
-						'Error generating cover letter. Please try again.',
+						'Error generating cover letter. Please try again.'
 					);
 				});
 			generationTasks.push(coverLetterTask);
@@ -349,7 +349,7 @@ export const useDocumentGeneration = (excludeSkills = false) => {
 				.catch((error) => {
 					console.error('Error generating cover letter:', error);
 					setGeneratedCoverLetter(
-						'Error generating cover letter. Please try again.',
+						'Error generating cover letter. Please try again.'
 					);
 				});
 			generationTasks.push(coverLetterTask);

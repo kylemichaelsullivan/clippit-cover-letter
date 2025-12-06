@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
 import {
-	htmlToPlaintextWithSignature,
 	cleanPlaintext,
+	htmlToPlaintextWithSignature,
 } from '@/lib/utils/htmlToPlaintext';
 import type { CandidateDetails } from '@/types';
+import { describe, expect, it } from 'vitest';
 
 describe('signature placeholder preservation', () => {
 	const mockCandidateDetails: CandidateDetails = {
@@ -31,7 +31,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>Sincerely,</p><p><img src="data:image/png;base64,test" class="signature-image" alt="Signature" /></p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, mockCandidateDetails),
+			htmlToPlaintextWithSignature(html, mockCandidateDetails)
 		);
 		expect(result).toContain('John Doe');
 		expect(result).not.toContain('signature-image');
@@ -41,7 +41,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>Sincerely,</p><p>{{My Signature}}</p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, mockCandidateDetails),
+			htmlToPlaintextWithSignature(html, mockCandidateDetails)
 		);
 		expect(result).toContain('John Doe');
 		expect(result).not.toContain('{{My Signature}}');
@@ -55,7 +55,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>Sincerely,</p><p>{{My Signature}}</p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, candidateWithImageFlag),
+			htmlToPlaintextWithSignature(html, candidateWithImageFlag)
 		);
 		expect(result).toContain('John Doe');
 		expect(result).not.toContain('{{My Signature}}');
@@ -69,7 +69,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>Sincerely,</p><p>{{My Signature}}</p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, candidateWithSignature),
+			htmlToPlaintextWithSignature(html, candidateWithSignature)
 		);
 		expect(result).toContain('John Doe');
 		expect(result).not.toContain('{{My Signature}}');
@@ -79,7 +79,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>{{My Signature}}</p><p>Sincerely,</p><p>{{My Signature}}</p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, mockCandidateDetails),
+			htmlToPlaintextWithSignature(html, mockCandidateDetails)
 		);
 		expect(result).toContain('John Doe');
 		expect(result).not.toContain('{{My Signature}}');
@@ -92,7 +92,7 @@ describe('signature placeholder preservation', () => {
 		const html =
 			'<p>Dear Hiring Manager,</p><p>This is a test letter.</p><p>Sincerely,</p>';
 		const result = cleanPlaintext(
-			htmlToPlaintextWithSignature(html, mockCandidateDetails),
+			htmlToPlaintextWithSignature(html, mockCandidateDetails)
 		);
 		expect(result).not.toContain('{{My Signature}}');
 		expect(result).not.toContain('John Doe');

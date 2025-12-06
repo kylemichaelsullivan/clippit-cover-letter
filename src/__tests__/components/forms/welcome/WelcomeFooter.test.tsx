@@ -1,21 +1,21 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { WelcomeFooter } from '@/components/forms/welcome/WelcomeFooter';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('WelcomeFooter', () => {
 	it('renders the call to action text', () => {
 		render(<WelcomeFooter />);
 		expect(
 			screen.getByText(
-				'Ready to get started? Click "Next" to begin entering your information.',
-			),
+				'Ready to get started? Click "Next" to begin entering your information.'
+			)
 		).toBeInTheDocument();
 	});
 
 	it('renders as a paragraph element', () => {
 		render(<WelcomeFooter />);
 		const paragraph = screen.getByText(
-			'Ready to get started? Click "Next" to begin entering your information.',
+			'Ready to get started? Click "Next" to begin entering your information.'
 		);
 		expect(paragraph.tagName).toBe('P');
 	});
@@ -23,7 +23,7 @@ describe('WelcomeFooter', () => {
 	it('applies correct styling classes', () => {
 		render(<WelcomeFooter />);
 		const paragraph = screen.getByText(
-			'Ready to get started? Click "Next" to begin entering your information.',
+			'Ready to get started? Click "Next" to begin entering your information.'
 		);
 		expect(paragraph).toHaveClass('text-gray', 'text-sm');
 	});
@@ -33,7 +33,7 @@ describe('WelcomeFooter', () => {
 		expect(screen.getByText(/Ready to get started/)).toBeInTheDocument();
 		expect(screen.getByText(/Click "Next"/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/begin entering your information/),
+			screen.getByText(/begin entering your information/)
 		).toBeInTheDocument();
 	});
 

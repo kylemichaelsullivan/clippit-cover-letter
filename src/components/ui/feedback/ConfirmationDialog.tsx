@@ -1,18 +1,18 @@
 'use client';
 
-import { memo, useState, useMemo, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/buttons';
 import { Checkbox } from '@/components/ui/input';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalBackdrop } from './ModalBackdrop';
-import { ModalHeader } from './ModalHeader';
+import { useModalClose } from '@/lib/hooks/useModalClose';
+import type { SelectableItems } from '@/types';
 import {
 	faExclamationTriangle,
 	faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { useModalClose } from '@/lib/hooks/useModalClose';
-import type { SelectableItems } from '@/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalBackdrop } from './ModalBackdrop';
+import { ModalHeader } from './ModalHeader';
 
 type ConfirmationDialogProps = {
 	title: string;

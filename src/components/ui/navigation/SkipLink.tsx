@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, type KeyboardEvent, type MouseEvent } from 'react';
+import { type KeyboardEvent, type MouseEvent, memo } from 'react';
 
 type SkipLinkProps = {
 	href: string;
@@ -36,7 +36,7 @@ export const SkipLink = memo(function SkipLink({
 
 		if (targetElement) {
 			const focusableElements = targetElement.querySelectorAll(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 			);
 
 			if (focusableElements.length > 0) {

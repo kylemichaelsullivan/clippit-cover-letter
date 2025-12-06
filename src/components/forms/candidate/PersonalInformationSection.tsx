@@ -1,10 +1,10 @@
 'use client';
 
-import { Field } from '@tanstack/react-form';
 import { FormSection, HydrationSafeFormField } from '@/components/forms/core';
-import { candidateDetailsSchema, validateSchema } from '@/lib/schemas';
 import { PLACEHOLDERS } from '@/config';
+import { candidateDetailsSchema, validateSchema } from '@/lib/schemas';
 import type { CandidateFormHandlers } from '@/types';
+import { Field } from '@tanstack/react-form';
 
 type PersonalInformationSectionProps = {
 	form: any;

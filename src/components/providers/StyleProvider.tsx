@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, type ReactNode } from 'react';
 import { generateUIStyles } from '@/config/shared-styles';
+import { type ReactNode, useEffect } from 'react';
 
 export function StyleProvider({ children }: { children: ReactNode }) {
 	useEffect(() => {

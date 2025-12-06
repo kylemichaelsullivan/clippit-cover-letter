@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
 export function useFocusNewSkillGroup() {
 	const focusRefs = useRef<Map<number, HTMLInputElement>>(new Map());
@@ -13,7 +13,7 @@ export function useFocusNewSkillGroup() {
 				focusRefs.current.delete(groupIndex);
 			}
 		},
-		[],
+		[]
 	);
 
 	const focusNewGroup = useCallback((groupIndex: number) => {

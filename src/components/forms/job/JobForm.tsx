@@ -1,13 +1,13 @@
 'use client';
 
-import { memo } from 'react';
 import { Form } from '@/components/forms/core';
-import { JobFormFields } from './JobFormFields';
-import { JobFormHeader } from './JobFormHeader';
-import { JobSkillsSection } from './JobSkillsSection';
 import { useJobForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
 import type { Job } from '@/types';
+import { memo } from 'react';
+import { JobFormFields } from './JobFormFields';
+import { JobFormHeader } from './JobFormHeader';
+import { JobSkillsSection } from './JobSkillsSection';
 
 type JobFormProps = {
 	onSubmit: (details: Job) => Promise<void>;

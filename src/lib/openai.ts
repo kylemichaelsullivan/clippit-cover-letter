@@ -11,7 +11,7 @@ export type OpenAIResponse = {
 
 export async function callOpenAI(
 	prompt: string,
-	systemMessage?: string,
+	systemMessage?: string
 ): Promise<OpenAIResponse> {
 	const config = getAIConfig();
 
@@ -44,7 +44,7 @@ export async function callOpenAI(
 		if (!response.ok) {
 			const error = await response.json().catch(() => ({}));
 			throw new Error(
-				`OpenAI API error: ${response.status} ${error.error?.message || response.statusText}`,
+				`OpenAI API error: ${response.status} ${error.error?.message || response.statusText}`
 			);
 		}
 
@@ -68,7 +68,7 @@ export async function callOpenAI(
 export async function generateCoverLetter(
 	jobDescription: string,
 	companyDetails: string,
-	userExperience: string,
+	userExperience: string
 ): Promise<string> {
 	const systemMessage = `You are a professional cover letter writer. Create a compelling, personalized cover letter that:
 - Addresses the specific job requirements directly

@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { FeaturesComingSoonCard } from '@/components/forms/welcome/FeaturesComingSoonCard';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('FeaturesComingSoonCard', () => {
 	it('renders the coming soon heading', () => {
@@ -32,7 +32,7 @@ describe('FeaturesComingSoonCard', () => {
 			'border',
 			'border-green-200',
 			'bg-green-50',
-			'p-4',
+			'p-4'
 		);
 	});
 

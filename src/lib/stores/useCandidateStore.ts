@@ -9,7 +9,7 @@ type CandidateState = {
 	setCandidateDetails: (details: CandidateDetails) => void;
 	setCandidateField: (
 		field: keyof CandidateDetails,
-		value: string | boolean,
+		value: string | boolean
 	) => void;
 	getCandidateDetails: () => CandidateDetails;
 };
@@ -37,10 +37,10 @@ export const useCandidateStore = create<CandidateState>()(
 			}),
 			{
 				name: 'candidate-store',
-			},
+			}
 		),
 		{
 			name: 'candidate-store',
-		},
-	),
+		}
+	)
 );

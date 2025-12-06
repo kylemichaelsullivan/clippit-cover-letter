@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { JobForm } from '@/components/forms/job/JobForm';
 import { useJobForm } from '@/lib/hooks';
 import { usePhaseStore } from '@/lib/stores';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/lib/hooks', () => ({
 	useJobForm: vi.fn(),

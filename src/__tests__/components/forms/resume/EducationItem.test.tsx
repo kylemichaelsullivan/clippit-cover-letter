@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the components
 vi.mock('@/components/ui/buttons', () => ({
@@ -137,7 +137,7 @@ describe('EducationItem', () => {
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		expect(screen.getByLabelText('Degree')).toBeInTheDocument();
@@ -155,7 +155,7 @@ describe('EducationItem', () => {
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const degreeInput = screen.getByLabelText('Degree');
@@ -200,7 +200,7 @@ describe('EducationItem', () => {
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const degreeInput = screen.getByLabelText('Degree');
@@ -228,7 +228,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const degreeInput = screen.getByLabelText('Degree');
@@ -254,7 +254,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const degreeInput = screen.getByLabelText('Degree');
@@ -262,7 +262,7 @@ University of Michigan | Ann Arbor, MI`,
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'education.0.degree',
-			'Bachelor of Science',
+			'Bachelor of Science'
 		);
 	});
 
@@ -275,7 +275,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const graduationYearInput = screen.getByLabelText('Graduation Year');
@@ -283,7 +283,7 @@ University of Michigan | Ann Arbor, MI`,
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'education.0.graduationYear',
-			'2020',
+			'2020'
 		);
 	});
 
@@ -296,7 +296,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const institutionInput = screen.getByLabelText('Institution');
@@ -306,7 +306,7 @@ University of Michigan | Ann Arbor, MI`,
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'education.0.institution',
-			'University of Michigan',
+			'University of Michigan'
 		);
 	});
 
@@ -319,7 +319,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const locationInput = screen.getByLabelText('Location');
@@ -327,7 +327,7 @@ University of Michigan | Ann Arbor, MI`,
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'education.0.location',
-			'Ann Arbor, MI',
+			'Ann Arbor, MI'
 		);
 	});
 
@@ -340,7 +340,7 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		const removeButton = screen.getByTitle('Remove this Education');
@@ -358,12 +358,12 @@ University of Michigan | Ann Arbor, MI`,
 				onRemove={mockOnRemove}
 				onPaste={mockOnPaste}
 				registerFocusRef={mockRegisterFocusRef}
-			/>,
+			/>
 		);
 
 		expect(mockRegisterFocusRef).toHaveBeenCalledWith(
 			educationIndex,
-			expect.any(HTMLInputElement),
+			expect.any(HTMLInputElement)
 		);
 	});
 

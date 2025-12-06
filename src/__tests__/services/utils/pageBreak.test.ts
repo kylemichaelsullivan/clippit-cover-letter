@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { PageBreak } from '@/lib/utils/pageBreakExtension';
+import { describe, expect, it } from 'vitest';
 
 describe('PageBreak Extension', () => {
 	it('should be importable and have the correct name', () => {

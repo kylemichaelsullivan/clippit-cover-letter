@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
 import { processTipTapContent } from '@/lib/utils/tiptapContentProcessing';
 import type { CandidateDetails, Job } from '@/types';
+import { describe, expect, it } from 'vitest';
 
 describe('TipTap content processing', () => {
 	const mockCandidateDetails: CandidateDetails = {
@@ -49,7 +49,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			template,
 			mockCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 
 		// Should replace all placeholders except {{My Signature}}
@@ -80,7 +80,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			template,
 			mockCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 
 		// Should replace other placeholders
@@ -103,7 +103,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			'',
 			mockCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 		expect(processed).toBe('');
 	});
@@ -113,7 +113,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			content,
 			mockCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 		expect(processed).toBe(content);
 	});
@@ -123,7 +123,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			template,
 			mockCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 		expect(processed).toBe('{{My Signature}}');
 	});
@@ -147,7 +147,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			template,
 			emptyCandidateDetails,
-			mockJobDetails,
+			mockJobDetails
 		);
 
 		// Should replace with empty strings but keep signature placeholder
@@ -167,7 +167,7 @@ Sincerely,
 		const processed = processTipTapContent(
 			template,
 			mockCandidateDetails,
-			emptyJobDetails,
+			emptyJobDetails
 		);
 
 		// Should replace with fallback values but keep signature placeholder

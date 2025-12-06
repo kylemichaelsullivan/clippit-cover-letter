@@ -1,6 +1,6 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { ConfirmationDialog } from '@/components/ui/feedback/ConfirmationDialog';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('ConfirmationDialog with Selective Generation', () => {
 	const mockOnClose = vi.fn();
@@ -41,10 +41,10 @@ describe('ConfirmationDialog with Selective Generation', () => {
 		render(<ConfirmationDialog {...defaultProps} />);
 
 		const skillsCheckbox = screen.getByLabelText(
-			'Skills Summary',
+			'Skills Summary'
 		) as HTMLInputElement;
 		const coverLetterCheckbox = screen.getByLabelText(
-			'Cover Letter',
+			'Cover Letter'
 		) as HTMLInputElement;
 		const resumeCheckbox = screen.getByLabelText('Resume') as HTMLInputElement;
 
@@ -57,7 +57,7 @@ describe('ConfirmationDialog with Selective Generation', () => {
 		render(<ConfirmationDialog {...defaultProps} />);
 
 		const skillsCheckbox = screen.getByLabelText(
-			'Skills Summary',
+			'Skills Summary'
 		) as HTMLInputElement;
 		const resumeCheckbox = screen.getByLabelText('Resume') as HTMLInputElement;
 
@@ -92,10 +92,10 @@ describe('ConfirmationDialog with Selective Generation', () => {
 		render(<ConfirmationDialog {...defaultProps} />);
 
 		const skillsCheckbox = screen.getByLabelText(
-			'Skills Summary',
+			'Skills Summary'
 		) as HTMLInputElement;
 		const coverLetterCheckbox = screen.getByLabelText(
-			'Cover Letter',
+			'Cover Letter'
 		) as HTMLInputElement;
 
 		fireEvent.click(skillsCheckbox);

@@ -2,8 +2,8 @@
 
 import { memo } from 'react';
 
-import { CONSTANTS } from '@/config';
 import { Copyright } from '@/components/utils/Copyright';
+import { CONSTANTS } from '@/config';
 import { usePhaseStore } from '@/lib/stores';
 import { BackButton, ForwardButton } from './';
 

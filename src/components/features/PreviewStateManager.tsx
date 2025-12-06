@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, type ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 import { EmptyState } from '@/components/ui/feedback';
 

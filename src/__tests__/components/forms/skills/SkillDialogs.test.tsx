@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the components
 vi.mock('@/components/ui/feedback', () => ({
@@ -51,15 +51,15 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('confirmation-dialog')).toBeInTheDocument();
 		expect(screen.getByText('Duplicate Skill Found')).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				'The skill "React" already exists in another group. Do you want to add it to this group as well?',
-			),
+				'The skill "React" already exists in another group. Do you want to add it to this group as well?'
+			)
 		).toBeInTheDocument();
 		expect(screen.getByText('Add Anyway')).toBeInTheDocument();
 		expect(screen.getByText('Cancel')).toBeInTheDocument();
@@ -77,13 +77,13 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('confirmation-dialog')).toBeInTheDocument();
 		expect(screen.getByText('Import Multiple Skills')).toBeInTheDocument();
 		expect(
-			screen.getByText(/Import the following skills\?/),
+			screen.getByText(/Import the following skills\?/)
 		).toBeInTheDocument();
 		expect(screen.getByText(/React, Vue, Angular/)).toBeInTheDocument();
 		expect(screen.getByText('Import')).toBeInTheDocument();
@@ -101,7 +101,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.queryByTestId('confirmation-dialog')).not.toBeInTheDocument();
@@ -118,7 +118,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const confirmButton = screen.getByTestId('confirm-button');
@@ -138,7 +138,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const cancelButton = screen.getByTestId('cancel-button');
@@ -158,7 +158,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const confirmButton = screen.getByTestId('confirm-button');
@@ -178,7 +178,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const cancelButton = screen.getByTestId('cancel-button');
@@ -198,13 +198,13 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
 			screen.getByText(
-				'The skill "C++" already exists in another group. Do you want to add it to this group as well?',
-			),
+				'The skill "C++" already exists in another group. Do you want to add it to this group as well?'
+			)
 		).toBeInTheDocument();
 	});
 
@@ -219,11 +219,11 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.getByText(/Import the following skills\?/),
+			screen.getByText(/Import the following skills\?/)
 		).toBeInTheDocument();
 	});
 
@@ -238,11 +238,11 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.getByText(/Import the following skills\?/),
+			screen.getByText(/Import the following skills\?/)
 		).toBeInTheDocument();
 		expect(screen.getByText(/React/)).toBeInTheDocument();
 	});
@@ -259,14 +259,14 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.getByText(/Import the following skills\?/),
+			screen.getByText(/Import the following skills\?/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/React, Vue, Angular, Svelte, Next\.js/),
+			screen.getByText(/React, Vue, Angular, Svelte, Next\.js/)
 		).toBeInTheDocument();
 	});
 
@@ -281,7 +281,7 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const dialogs = screen.getAllByTestId('confirmation-dialog');
@@ -299,13 +299,13 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
 			screen.getByText(
-				'The skill "" already exists in another group. Do you want to add it to this group as well?',
-			),
+				'The skill "" already exists in another group. Do you want to add it to this group as well?'
+			)
 		).toBeInTheDocument();
 	});
 
@@ -321,14 +321,14 @@ describe('SkillDialogs', () => {
 				onCancelAdd={mockOnCancelAdd}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.getByText(/Import the following skills\?/),
+			screen.getByText(/Import the following skills\?/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/React, Redux, Vue, Vuex, Angular, RxJS/),
+			screen.getByText(/React, Redux, Vue, Vuex, Angular, RxJS/)
 		).toBeInTheDocument();
 	});
 });

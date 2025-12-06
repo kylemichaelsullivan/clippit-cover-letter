@@ -1,9 +1,9 @@
 'use client';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { CONSTANTS } from '@/config';
 import { Button } from '@/components/ui/buttons';
+import { CONSTANTS } from '@/config';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type BackButtonProps = {
 	onClick: () => void;

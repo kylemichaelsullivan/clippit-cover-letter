@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { JobFormFields } from '@/components/forms/job/JobFormFields';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the JobFormField component
 vi.mock('@/components/forms/job/JobFormField', () => ({
@@ -48,7 +48,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-field-companyName')).toBeInTheDocument();
@@ -63,14 +63,14 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const companyNameField = screen.getByTestId('form-field-companyName');
 		expect(companyNameField).toBeInTheDocument();
 		expect(screen.getByLabelText('Company Name')).toBeInTheDocument();
 		expect(
-			screen.getByPlaceholderText('Dunder Mifflin Paper Company'),
+			screen.getByPlaceholderText('Dunder Mifflin Paper Company')
 		).toBeInTheDocument();
 	});
 
@@ -79,14 +79,14 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const jobTitleField = screen.getByTestId('form-field-jobTitle');
 		expect(jobTitleField).toBeInTheDocument();
 		expect(screen.getByLabelText('Job Title')).toBeInTheDocument();
 		expect(
-			screen.getByPlaceholderText('Assistant to the Regional Manager'),
+			screen.getByPlaceholderText('Assistant to the Regional Manager')
 		).toBeInTheDocument();
 	});
 
@@ -95,7 +95,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const hiringManagerField = screen.getByTestId('form-field-hiringManager');
@@ -109,7 +109,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const companyAddressField = screen.getByTestId('form-field-companyAddress');
@@ -123,7 +123,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const jobDescriptionField = screen.getByTestId('form-field-jobDescription');
@@ -131,8 +131,8 @@ describe('JobFormFields', () => {
 		expect(screen.getByLabelText('Job Description')).toBeInTheDocument();
 		expect(
 			screen.getByPlaceholderText(
-				/Support the Regional Manager in daily operations/,
-			),
+				/Support the Regional Manager in daily operations/
+			)
 		).toBeInTheDocument();
 
 		const textarea = screen
@@ -147,7 +147,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const companyNameInput = screen
@@ -157,7 +157,7 @@ describe('JobFormFields', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'companyName',
-			'Test Company',
+			'Test Company'
 		);
 	});
 
@@ -166,7 +166,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const jobTitleInput = screen
@@ -178,7 +178,7 @@ describe('JobFormFields', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'jobTitle',
-			'Software Engineer',
+			'Software Engineer'
 		);
 	});
 
@@ -187,7 +187,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const hiringManagerInput = screen
@@ -197,7 +197,7 @@ describe('JobFormFields', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'hiringManager',
-			'John Doe',
+			'John Doe'
 		);
 	});
 
@@ -206,7 +206,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const companyAddressInput = screen
@@ -218,7 +218,7 @@ describe('JobFormFields', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'companyAddress',
-			'123 Main St',
+			'123 Main St'
 		);
 	});
 
@@ -227,7 +227,7 @@ describe('JobFormFields', () => {
 			<JobFormFields
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const jobDescriptionTextarea = screen
@@ -239,7 +239,7 @@ describe('JobFormFields', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'jobDescription',
-			'Test job description',
+			'Test job description'
 		);
 	});
 });

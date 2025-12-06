@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { DocumentRenderer } from '@/components/shared';
 import {
 	mockAppStore,
-	mockTemplatesStore,
 	mockCandidateStore,
+	mockTemplatesStore,
 } from '@/__tests__/mocks/stores';
+import { DocumentRenderer } from '@/components/shared';
 import {
 	useAppStore,
-	useTemplatesStore,
 	useCandidateStore,
+	useTemplatesStore,
 } from '@/lib/stores';
 
 vi.mock('@/lib/stores', () => ({
@@ -75,7 +75,7 @@ describe('DocumentRenderer', () => {
 		expect(screen.getByTestId('empty-state')).toBeInTheDocument();
 		expect(screen.getByTestId('empty-state')).toHaveAttribute(
 			'data-variant',
-			'no-results',
+			'no-results'
 		);
 	});
 
@@ -100,7 +100,7 @@ describe('DocumentRenderer', () => {
 		expect(screen.getByTestId('empty-state')).toBeInTheDocument();
 		expect(screen.getByTestId('empty-state')).toHaveAttribute(
 			'data-variant',
-			'no-data',
+			'no-data'
 		);
 	});
 
@@ -123,13 +123,13 @@ describe('DocumentRenderer', () => {
 		render(<DocumentRenderer />);
 
 		expect(
-			screen.getByTestId('document-section-cover-letter'),
+			screen.getByTestId('document-section-cover-letter')
 		).toBeInTheDocument();
 		expect(
-			screen.getByTestId('document-section-cover-letter'),
+			screen.getByTestId('document-section-cover-letter')
 		).toHaveTextContent('Cover Letter');
 		expect(
-			screen.getByTestId('document-section-cover-letter'),
+			screen.getByTestId('document-section-cover-letter')
 		).toHaveTextContent('Cover letter content');
 	});
 
@@ -153,10 +153,10 @@ describe('DocumentRenderer', () => {
 
 		expect(screen.getByTestId('document-section-resume')).toBeInTheDocument();
 		expect(screen.getByTestId('document-section-resume')).toHaveTextContent(
-			'Resume',
+			'Resume'
 		);
 		expect(screen.getByTestId('document-section-resume')).toHaveTextContent(
-			'Resume content',
+			'Resume content'
 		);
 	});
 
@@ -179,7 +179,7 @@ describe('DocumentRenderer', () => {
 		render(<DocumentRenderer />);
 
 		expect(
-			screen.getByTestId('document-section-cover-letter'),
+			screen.getByTestId('document-section-cover-letter')
 		).toBeInTheDocument();
 		expect(screen.getByTestId('document-section-resume')).toBeInTheDocument();
 	});
@@ -203,10 +203,10 @@ describe('DocumentRenderer', () => {
 		render(<DocumentRenderer />);
 
 		expect(screen.getByTestId('document-section-cover-letter')).toHaveClass(
-			'hidden',
+			'hidden'
 		);
 		expect(screen.getByTestId('document-section-resume')).not.toHaveClass(
-			'hidden',
+			'hidden'
 		);
 	});
 
@@ -229,7 +229,7 @@ describe('DocumentRenderer', () => {
 		render(<DocumentRenderer />);
 
 		expect(screen.getByTestId('document-section-cover-letter')).not.toHaveClass(
-			'hidden',
+			'hidden'
 		);
 		expect(screen.getByTestId('document-section-resume')).toHaveClass('hidden');
 	});
@@ -254,7 +254,7 @@ describe('DocumentRenderer', () => {
 
 		expect(screen.getByTestId('document-section-cover-letter')).toHaveAttribute(
 			'data-show-actions',
-			'false',
+			'false'
 		);
 	});
 
@@ -279,11 +279,11 @@ describe('DocumentRenderer', () => {
 		// When showFontSizeControl is false, the headerElement should be undefined
 		// This means no FontSizeInput should be rendered in the header
 		expect(
-			screen.getByTestId('document-section-cover-letter'),
+			screen.getByTestId('document-section-cover-letter')
 		).toBeInTheDocument();
 		expect(screen.getByTestId('document-section-cover-letter')).toHaveAttribute(
 			'data-show-actions',
-			'true',
+			'true'
 		);
 	});
 
@@ -330,7 +330,7 @@ describe('DocumentRenderer', () => {
 			'DocumentRenderer',
 			'flex',
 			'flex-col',
-			'gap-6',
+			'gap-6'
 		);
 	});
 });

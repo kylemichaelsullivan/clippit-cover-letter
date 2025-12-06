@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
+import { useEffect, useRef, useState } from 'react';
 
-import { useSkillsStore } from '@/lib/stores';
 import { skillsSchema } from '@/lib/schemas';
+import { useSkillsStore } from '@/lib/stores';
 import { sortSkillGroups } from '@/lib/utils';
 
-import type { Skills, SkillGroup, SkillGroupItems } from '@/types';
+import type { SkillGroup, SkillGroupItems, Skills } from '@/types';
 
 export type SkillsFormValues = {
 	groups: SkillGroupItems;
@@ -134,7 +134,7 @@ export function useSkillsForm(onSubmit: (skills: Skills) => void) {
 		const groupToRemove = currentGroups[groupIndex];
 		if (groupToRemove) {
 			const updatedGroups = currentGroups.filter(
-				(group: SkillGroup) => group.id !== groupToRemove.id,
+				(group: SkillGroup) => group.id !== groupToRemove.id
 			);
 
 			if (updatedGroups.length === 0) {

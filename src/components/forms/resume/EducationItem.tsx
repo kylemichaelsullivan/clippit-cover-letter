@@ -1,13 +1,13 @@
 'use client';
 
-import { ClipboardEvent } from 'react';
-import { Field } from '@tanstack/react-form';
 import { FormFieldWithLabel, FormItem } from '@/components/forms/core';
-import { Checkbox } from '@/components/ui/input';
 import { FormFieldContainer } from '@/components/forms/core/FormFieldContainer';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { Checkbox } from '@/components/ui/input';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
 import { getOrdinalSuffix, parseEducationFromText } from '@/lib/utils';
+import { Field } from '@tanstack/react-form';
+import type { ClipboardEvent } from 'react';
 
 type EducationItemProps = {
 	form: any; // TanStack Form
@@ -17,7 +17,7 @@ type EducationItemProps = {
 	onRemove?: () => void;
 	registerFocusRef?: (
 		educationIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 
@@ -54,7 +54,7 @@ export function EducationItem({
 									field.handleChange(checked);
 									handleFieldChange?.(
 										`education.${educationIndex}.degree`,
-										checked ? ' ' : '',
+										checked ? ' ' : ''
 									);
 								}}
 							/>
@@ -75,14 +75,14 @@ export function EducationItem({
 							type='text'
 							className='text-sm sm:text-base'
 							value={String(
-								field.state.value || DEFAULTS.INITIAL_STATES.EDUCATION.degree,
+								field.state.value || DEFAULTS.INITIAL_STATES.EDUCATION.degree
 							)}
 							placeholder={PLACEHOLDERS.EDUCATION?.DEGREE}
 							onChange={(e) => {
 								field.handleChange(e.target.value);
 								handleFieldChange?.(
 									`education.${educationIndex}.degree`,
-									e.target.value,
+									e.target.value
 								);
 							}}
 							onPaste={handlePaste}
@@ -108,7 +108,7 @@ export function EducationItem({
 				onChange={(value) =>
 					handleFieldChange?.(
 						`education.${educationIndex}.graduationYear`,
-						value,
+						value
 					)
 				}
 			/>

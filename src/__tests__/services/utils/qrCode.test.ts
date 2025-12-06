@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { generateQRCodeSVG } from '@/lib/utils/qrCode';
+import { describe, expect, it } from 'vitest';
 
 describe('QR Code Generation', () => {
 	it('should generate async QR code SVG', async () => {

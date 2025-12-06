@@ -1,11 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
+import { useIsClient } from '@/lib/hooks';
 import { downloadMD } from '@/lib/utils';
+import type { ButtonColor, CandidateDetails, DocumentType } from '@/types';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useIsClient } from '@/lib/hooks';
-import type { ButtonColor, CandidateDetails, DocumentType } from '@/types';
 
 type DownloadButtonMDProps = {
 	content: string;

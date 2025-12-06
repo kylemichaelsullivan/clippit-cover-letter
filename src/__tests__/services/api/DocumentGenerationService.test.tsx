@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { DocumentGenerationService } from '@/components/features';
 
@@ -129,7 +129,7 @@ describe('DocumentGenerationService', () => {
 		await result.generateCoverLetter();
 
 		expect(mockProps.onCoverLetterGenerated).toHaveBeenCalledWith(
-			mockResult.coverLetter,
+			mockResult.coverLetter
 		);
 	});
 
@@ -152,7 +152,7 @@ describe('DocumentGenerationService', () => {
 		await result.generateCoverLetter();
 
 		expect(mockProps.onCoverLetterError).toHaveBeenCalledWith(
-			'Error generating cover letter. Please try again.',
+			'Error generating cover letter. Please try again.'
 		);
 	});
 
@@ -164,7 +164,7 @@ describe('DocumentGenerationService', () => {
 		await result.generateResume();
 
 		expect(mockProps.onResumeError).toHaveBeenCalledWith(
-			'Error generating resume. Please try again.',
+			'Error generating resume. Please try again.'
 		);
 	});
 });

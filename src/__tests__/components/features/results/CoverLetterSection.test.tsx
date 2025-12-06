@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { CoverLetterSection } from '@/components/forms/letter/CoverLetterSection';
 
 // Mock the form field components
@@ -53,7 +54,6 @@ vi.mock('@/components/ui/input', () => ({
 				onChange={(e) => onChange(e.target.value)}
 				placeholder={placeholder}
 				aria-label={ariaLabel}
-				role='textbox'
 			/>
 		</div>
 	),
@@ -71,7 +71,7 @@ describe('CoverLetterSection', () => {
 
 	it('renders cover letter section with checkbox and editor', () => {
 		render(
-			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />,
+			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />
 		);
 
 		expect(screen.getByText('Cover Letter')).toBeInTheDocument();
@@ -80,7 +80,7 @@ describe('CoverLetterSection', () => {
 
 	it('has correct form section attributes', () => {
 		render(
-			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />,
+			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />
 		);
 
 		const checkbox = screen.getByRole('checkbox');
@@ -90,7 +90,7 @@ describe('CoverLetterSection', () => {
 
 	it('renders TipTap editor with correct attributes', () => {
 		render(
-			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />,
+			<CoverLetterSection form={mockForm} onFieldChange={mockOnFieldChange} />
 		);
 
 		// The TipTap editor should be present

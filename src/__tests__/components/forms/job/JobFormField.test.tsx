@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, beforeEach, it, expect, vi } from 'vitest';
 import { JobFormField } from '@/components/forms/job/JobFormField';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/components/forms/core', () => ({
 	FormField: ({
@@ -59,7 +59,7 @@ describe('JobFormField', () => {
 				label='Company Name'
 				placeholder='Test Company'
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-field-companyName')).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('JobFormField', () => {
 				type='textarea'
 				rows={10}
 				className='custom-class'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-field-jobDescription')).toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('JobFormField', () => {
 				label='Job Title'
 				placeholder='Test title'
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const input = screen
@@ -110,7 +110,7 @@ describe('JobFormField', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'jobTitle',
-			'Software Engineer',
+			'Software Engineer'
 		);
 	});
 
@@ -123,7 +123,7 @@ describe('JobFormField', () => {
 				placeholder='Test description'
 				handleFieldChange={mockHandleFieldChange}
 				type='textarea'
-			/>,
+			/>
 		);
 
 		const textarea = screen
@@ -133,7 +133,7 @@ describe('JobFormField', () => {
 
 		expect(mockHandleFieldChange).toHaveBeenCalledWith(
 			'jobDescription',
-			'Test job description',
+			'Test job description'
 		);
 	});
 
@@ -145,7 +145,7 @@ describe('JobFormField', () => {
 				label='Company Name'
 				placeholder='Test Company'
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const input = screen
@@ -165,7 +165,7 @@ describe('JobFormField', () => {
 				type='textarea'
 				className='min-h-64 sm:min-h-96'
 				rows={8}
-			/>,
+			/>
 		);
 
 		const textarea = screen

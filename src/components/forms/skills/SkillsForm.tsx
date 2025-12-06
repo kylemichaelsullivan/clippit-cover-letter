@@ -3,13 +3,13 @@
 import { memo } from 'react';
 
 import { Form } from '@/components/forms/core';
-import { TabTitle } from '@/components/ui';
 import { DownloadButtonMD } from '@/components/results/actions';
-import { SkillsSection } from './';
-import { usePhaseStore, useSkillsStore } from '@/lib/stores';
+import { TabTitle } from '@/components/ui';
 import { useSkillsForm } from '@/lib/hooks';
+import { usePhaseStore, useSkillsStore } from '@/lib/stores';
 import { getSortedSkillGroups } from '@/lib/utils';
 import type { Skills } from '@/types';
+import { SkillsSection } from './';
 
 type SkillsFormProps = {
 	onSubmit: (skillsData: Skills) => void;
@@ -35,13 +35,13 @@ export const SkillsForm = memo(function SkillsForm({
 	const includedSkillsCount =
 		skills?.groups?.reduce(
 			(total, group) => total + (group.include ? group.skills?.length || 0 : 0),
-			0,
+			0
 		) || 0;
 
 	const totalSkillsCount =
 		skills?.groups?.reduce(
 			(total, group) => total + (group.skills?.length || 0),
-			0,
+			0
 		) || 0;
 
 	const actionButton =

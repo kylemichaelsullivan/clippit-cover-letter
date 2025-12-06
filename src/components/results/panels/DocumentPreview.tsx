@@ -3,8 +3,8 @@
 import { memo } from 'react';
 
 import { DocumentPreview as UIDocumentPreview } from '@/components/ui/display';
-import { renderHtmlContent } from '@/lib/utils';
 import { useCandidateStore } from '@/lib/stores';
+import { renderHtmlContent } from '@/lib/utils';
 import type { DocumentType, FontSize } from '@/types';
 
 type DocumentPreviewProps = {

@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { DevelopmentStatusCard } from '@/components/forms/welcome/DevelopmentStatusCard';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('DevelopmentStatusCard', () => {
 	it('renders the development status heading', () => {
@@ -18,18 +18,18 @@ describe('DevelopmentStatusCard', () => {
 		render(<DevelopmentStatusCard />);
 		expect(
 			screen.getByText(
-				/AI features are currently in development and not yet available/,
-			),
+				/AI features are currently in development and not yet available/
+			)
 		).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				/The application is fully functional for template-based document generation/,
-			),
+				/The application is fully functional for template-based document generation/
+			)
 		).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				/AI-powered enhancements will be added in future updates/,
-			),
+				/AI-powered enhancements will be added in future updates/
+			)
 		).toBeInTheDocument();
 	});
 
@@ -43,7 +43,7 @@ describe('DevelopmentStatusCard', () => {
 			'border',
 			'border-yellow-200',
 			'bg-yellow-50',
-			'p-4',
+			'p-4'
 		);
 	});
 
@@ -51,14 +51,14 @@ describe('DevelopmentStatusCard', () => {
 		render(<DevelopmentStatusCard />);
 		expect(screen.getByText(/Note:/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/AI features are currently in development/),
+			screen.getByText(/AI features are currently in development/)
 		).toBeInTheDocument();
 		expect(screen.getByText(/not yet available/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/fully functional for template-based/),
+			screen.getByText(/fully functional for template-based/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/AI-powered enhancements will be added/),
+			screen.getByText(/AI-powered enhancements will be added/)
 		).toBeInTheDocument();
 	});
 

@@ -27,7 +27,7 @@ describe('PreviewHeader', () => {
 		expect(headerContainer).toHaveClass(
 			'flex',
 			'items-center',
-			'justify-between',
+			'justify-between'
 		);
 	});
 });

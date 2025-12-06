@@ -1,8 +1,8 @@
 'use client';
 
-import { memo, type ReactNode } from 'react';
-import { Toaster } from 'react-hot-toast';
 import clsx from 'clsx';
+import { type ReactNode, memo } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import { Body, Footer, Header } from '@/components/layout';
 

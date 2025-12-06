@@ -1,6 +1,6 @@
+import type { CandidateDetails } from '@/types';
 import { formatContentForPDF } from './pdfFormatter';
 import { replaceSignaturePlaceholders } from './signatureReplacement';
-import type { CandidateDetails } from '@/types';
 
 type GeneratePDFParams = {
 	content: string;
@@ -19,7 +19,7 @@ export async function generatePDF({
 		const formattedContent = formatContentForPDF(content);
 		const contentWithSignature = replaceSignaturePlaceholders(
 			formattedContent,
-			candidateDetails,
+			candidateDetails
 		);
 
 		const response = await fetch('/api/generate-pdf', {
@@ -61,13 +61,13 @@ export async function generatePDF({
 		if (error instanceof Error) {
 			if (error.message.includes('Failed to fetch')) {
 				throw new Error(
-					'Unable to connect to PDF generation service. Please check your internet connection and try again.',
+					'Unable to connect to PDF generation service. Please check your internet connection and try again.'
 				);
-			} else if (error.message.includes('timeout')) {
-				throw new Error('PDF generation timed out. Please try again.');
-			} else {
-				throw error;
 			}
+			if (error.message.includes('timeout')) {
+				throw new Error('PDF generation timed out. Please try again.');
+			}
+			throw error;
 		}
 
 		throw new Error('Failed to generate PDF');

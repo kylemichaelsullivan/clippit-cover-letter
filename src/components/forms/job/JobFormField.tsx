@@ -1,9 +1,9 @@
 'use client';
 
-import { memo } from 'react';
-import { Field } from '@tanstack/react-form';
 import { FormField } from '@/components/forms/core';
 import { jobDetailsSchema, validateSchema } from '@/lib/schemas';
+import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 
 type JobFormFieldProps = {
 	name: string;

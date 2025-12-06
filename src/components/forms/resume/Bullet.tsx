@@ -1,9 +1,9 @@
 'use client';
 
 import { Button } from '@/components/ui/buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PLACEHOLDERS } from '@/config';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type BulletProps = {
 	value: string;

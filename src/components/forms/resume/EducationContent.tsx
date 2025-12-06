@@ -2,12 +2,12 @@
 
 import { Field } from '@tanstack/react-form';
 
-import { EducationItem } from './EducationItem';
 import { EmptyEducationMessage } from '@/components/ui/feedback';
 import { SkipLinkTarget } from '@/components/ui/navigation';
+import { EducationItem } from './EducationItem';
 
-import type { CSSProperties } from 'react';
 import type { Education } from '@/types';
+import type { CSSProperties } from 'react';
 
 type EducationContentProps = {
 	form: any; // TanStack Form
@@ -16,7 +16,7 @@ type EducationContentProps = {
 	onPaste?: (educationEntries: any[], educationIndex?: number) => void;
 	registerFocusRef?: (
 		educationIndex: number,
-		inputElement: HTMLInputElement | null,
+		inputElement: HTMLInputElement | null
 	) => void;
 };
 
@@ -63,7 +63,7 @@ export function EducationContent({
 										/>
 									</SkipLinkTarget>
 								);
-							},
+							}
 						)}
 					</div>
 				);

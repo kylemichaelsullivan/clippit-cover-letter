@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { DocumentSection } from '@/components/results/panels';
 import { mockCandidateStore } from '@/__tests__/mocks/stores';
+import { DocumentSection } from '@/components/results/panels';
 
 vi.mock('@/lib/stores', () => ({
 	useCandidateStore: () => mockCandidateStore,
@@ -81,11 +81,7 @@ describe('DocumentSection', () => {
 
 	it('uses resume filename for resume document type', () => {
 		render(
-			<DocumentSection
-				{...defaultProps}
-				documentType='resume'
-				title='Resume'
-			/>,
+			<DocumentSection {...defaultProps} documentType='resume' title='Resume' />
 		);
 
 		const actionButtons = screen.getByTestId('action-buttons');
@@ -94,7 +90,7 @@ describe('DocumentSection', () => {
 
 	it('applies custom className', () => {
 		const { container } = render(
-			<DocumentSection {...defaultProps} className='custom-class' />,
+			<DocumentSection {...defaultProps} className='custom-class' />
 		);
 
 		expect(container.firstChild).toHaveClass('custom-class');

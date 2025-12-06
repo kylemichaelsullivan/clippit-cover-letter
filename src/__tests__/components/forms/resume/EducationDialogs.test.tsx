@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
 import { EducationDialogs } from '@/components/forms/resume/EducationDialogs';
 import type { ParsedEducation } from '@/lib/utils';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('EducationDialogs', () => {
 	const mockOnConfirmImport = vi.fn();
@@ -33,11 +33,11 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.getByText('Import Multiple Education Entries'),
+			screen.getByText('Import Multiple Education Entries')
 		).toBeInTheDocument();
 		expect(screen.getByText('Import')).toBeInTheDocument();
 		expect(screen.getByText('Cancel')).toBeInTheDocument();
@@ -50,11 +50,11 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={false}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(
-			screen.queryByText('Import Multiple Education Entries'),
+			screen.queryByText('Import Multiple Education Entries')
 		).not.toBeInTheDocument();
 	});
 
@@ -65,19 +65,19 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText(/Degree: Juris Doctor/)).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				/Institution: Western Michigan University Thomas M. Cooley Law School/,
-			),
+				/Institution: Western Michigan University Thomas M. Cooley Law School/
+			)
 		).toBeInTheDocument();
 		expect(screen.getByText(/Location: Grand Rapids, MI/)).toBeInTheDocument();
 		expect(screen.getByText(/Degree: Bachelor's Degree/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/Institution: University of Michigan/),
+			screen.getByText(/Institution: University of Michigan/)
 		).toBeInTheDocument();
 		expect(screen.getByText(/Location: Ann Arbor, MI/)).toBeInTheDocument();
 		expect(screen.getByText(/Graduation Year: 2020/)).toBeInTheDocument();
@@ -99,12 +99,12 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText(/Degree: Bachelor of Science/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/Institution: University of California/),
+			screen.getByText(/Institution: University of California/)
 		).toBeInTheDocument();
 		expect(screen.queryByText(/Location:/)).not.toBeInTheDocument();
 	});
@@ -116,7 +116,7 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const importButton = screen.getByText('Import');
@@ -132,7 +132,7 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		const cancelButton = screen.getByText('Cancel');
@@ -148,7 +148,7 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Import Education Entry')).toBeInTheDocument();
@@ -172,12 +172,12 @@ describe('EducationDialogs', () => {
 				showImportConfirmation={true}
 				onConfirmImport={mockOnConfirmImport}
 				onCancelImport={mockOnCancelImport}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText(/Degree: Master of Science/)).toBeInTheDocument();
 		expect(
-			screen.getByText(/Institution: Stanford University/),
+			screen.getByText(/Institution: Stanford University/)
 		).toBeInTheDocument();
 		expect(screen.getByText(/Location: Stanford, CA/)).toBeInTheDocument();
 		expect(screen.getByText(/Graduation Year: 2022/)).toBeInTheDocument();

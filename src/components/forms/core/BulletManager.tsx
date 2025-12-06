@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-import { Bullet } from '../resume/Bullet';
-import { Button } from '@/components/ui/buttons';
-import { DraggableBullet } from '../resume/DraggableBullet';
-import { faPlus, faArrowsUpDown } from '@fortawesome/free-solid-svg-icons';
-import { Field } from '@tanstack/react-form';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
+import { Button } from '@/components/ui/buttons';
+import { faArrowsUpDown, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
+import { Bullet } from '../resume/Bullet';
+import { DraggableBullet } from '../resume/DraggableBullet';
 
 type BulletManagerProps = {
 	fieldPath: string;
@@ -39,7 +39,7 @@ export function BulletManager({
 	const removeBullet = (bulletIndex: number) => {
 		const currentBullets = form.getFieldValue(fieldPath) || [];
 		const updatedBullets = currentBullets.filter(
-			(_: string, index: number) => index !== bulletIndex,
+			(_: string, index: number) => index !== bulletIndex
 		);
 		form.setFieldValue(fieldPath, updatedBullets);
 		onFieldChange?.(fieldPath, updatedBullets);
@@ -124,7 +124,7 @@ export function BulletManager({
 										onRemove={() => removeBullet(bulletIndex)}
 										key={bulletIndex}
 									/>
-								),
+								)
 							)}
 							{bullets.length === 0 && (
 								<p className='text-gray text-sm italic'>

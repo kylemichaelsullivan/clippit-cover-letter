@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
 import { useForm } from '@tanstack/react-form';
+import { useCallback, useEffect, useRef } from 'react';
 
-import { useJobStore } from '@/lib/stores';
 import { jobDetailsSchema } from '@/lib/schemas';
+import { useJobStore } from '@/lib/stores';
 
 import type { Job } from '@/types';
 
@@ -40,7 +40,7 @@ export function useJobForm(onSubmit: (job: Job) => void) {
 					break;
 			}
 		},
-		[setJobField],
+		[setJobField]
 	);
 
 	const form = useForm({

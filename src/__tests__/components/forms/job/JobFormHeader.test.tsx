@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { JobFormHeader } from '@/components/forms/job/JobFormHeader';
 import { useJobStore } from '@/lib/stores';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/lib/stores', () => ({
 	useJobStore: vi.fn(),
@@ -104,8 +104,8 @@ describe('JobFormHeader', () => {
 		expect(screen.getByText('Clear Job Data')).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				/This will permanently delete all your saved job details/,
-			),
+				/This will permanently delete all your saved job details/
+			)
 		).toBeInTheDocument();
 	});
 
@@ -122,7 +122,7 @@ describe('JobFormHeader', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.queryByTestId('confirmation-dialog'),
+				screen.queryByTestId('confirmation-dialog')
 			).not.toBeInTheDocument();
 		});
 	});
@@ -170,7 +170,7 @@ describe('JobFormHeader', () => {
 		await waitFor(() => {
 			expect(consoleErrorSpy).toHaveBeenCalledWith(
 				'Failed to clear job data:',
-				expect.any(Error),
+				expect.any(Error)
 			);
 		});
 

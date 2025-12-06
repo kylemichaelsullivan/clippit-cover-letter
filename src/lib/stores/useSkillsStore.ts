@@ -76,7 +76,7 @@ export const useSkillsStore = create<SkillsState>()(
 							const listItems = state.generatedSkillsData
 								.map(
 									(group) =>
-										`<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`,
+										`<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`
 								)
 								.join('');
 							updatedSkillsText = `<ul>${listItems}</ul>`;
@@ -129,7 +129,7 @@ export const useSkillsStore = create<SkillsState>()(
 							.map((group) =>
 								state.includeSkillGroupNames
 									? `<li><strong>${group.name}:</strong> ${group.skills.join(', ')}</li>`
-									: group.skills.map((skill) => `<li>${skill}</li>`).join(''),
+									: group.skills.map((skill) => `<li>${skill}</li>`).join('')
 							)
 							.join('');
 
@@ -153,10 +153,10 @@ export const useSkillsStore = create<SkillsState>()(
 			}),
 			{
 				name: 'skills-store',
-			},
+			}
 		),
 		{
 			name: 'skills-store',
-		},
-	),
+		}
+	)
 );

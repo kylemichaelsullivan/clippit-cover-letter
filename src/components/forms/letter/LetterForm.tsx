@@ -1,12 +1,12 @@
 'use client';
 
-import { memo } from 'react';
-import { CoverLetterSection } from './CoverLetterSection';
 import { Form } from '@/components/forms/core';
-import { LetterFormHeader } from './LetterFormHeader';
 import { MustacheReplacementModal } from '@/components/ui/feedback';
 import { useLetterForm } from '@/lib/hooks';
 import { useHelpModal } from '@/lib/hooks/useHelpModal';
+import { memo } from 'react';
+import { CoverLetterSection } from './CoverLetterSection';
+import { LetterFormHeader } from './LetterFormHeader';
 
 type LetterFormProps = {
 	onSubmit: (includeCoverLetter: boolean, coverLetterTemplate: string) => void;

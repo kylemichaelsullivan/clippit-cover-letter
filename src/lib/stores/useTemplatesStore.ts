@@ -32,10 +32,10 @@ export const useTemplatesStore = create<TemplatesState>()(
 			}),
 			{
 				name: 'templates-store',
-			},
+			}
 		),
 		{
 			name: 'templates-store',
-		},
-	),
+		}
+	)
 );

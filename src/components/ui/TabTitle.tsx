@@ -1,5 +1,5 @@
-import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
+import { type ReactNode, memo } from 'react';
 
 type TabTitleProps = {
 	title: string;
@@ -17,7 +17,7 @@ export const TabTitle = memo(function TabTitle({
 			<h2
 				className={clsx(
 					componentName || 'TabTitle',
-					'text-2xl font-bold text-black',
+					'text-2xl font-bold text-black'
 				)}
 			>
 				{title}

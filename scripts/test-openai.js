@@ -21,7 +21,7 @@ async function testOpenAI() {
 
 	if (!isAIConfigured()) {
 		console.log(
-			'❌ OpenAI is not properly configured. Please check your .env.local file.',
+			'❌ OpenAI is not properly configured. Please check your .env.local file.'
 		);
 		process.exit(1);
 	}
@@ -30,7 +30,7 @@ async function testOpenAI() {
 		// Test 1: Simple API call
 		console.log('🧪 Test 1: Simple API Call');
 		const simpleResult = await callOpenAI(
-			'Say "Hello, this is a test!" in a simple way.',
+			'Say "Hello, this is a test!" in a simple way.'
 		);
 		console.log('✅ Response:', simpleResult.content);
 		console.log('📊 Token Usage:', simpleResult.usage);
@@ -41,7 +41,7 @@ async function testOpenAI() {
 		const coverLetter = await generateCoverLetter(
 			'Software Engineer position focusing on React and TypeScript',
 			'TechCorp - A leading software company',
-			'3 years of React development experience with modern JavaScript',
+			'3 years of React development experience with modern JavaScript'
 		);
 		console.log('✅ Generated Cover Letter:');
 		console.log(coverLetter);

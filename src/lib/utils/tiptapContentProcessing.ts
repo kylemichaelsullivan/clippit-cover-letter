@@ -7,13 +7,13 @@ import type { CandidateDetails, Job } from '@/types';
 export function processTipTapContent(
 	content: string,
 	candidateDetails: CandidateDetails,
-	jobDetails: Job,
+	jobDetails: Job
 ): string {
 	if (!content) return content;
 
 	const tempContent = content.replace(
 		/\{\{My Signature\}\}/g,
-		'___SIGNATURE_PLACEHOLDER___',
+		'___SIGNATURE_PLACEHOLDER___'
 	);
 
 	// Do {{Mustache Replacements}} (except {{My Signature}})
@@ -41,7 +41,7 @@ export function processTipTapContent(
 
 	const finalContent = processedContent.replace(
 		/___SIGNATURE_PLACEHOLDER___/g,
-		'{{My Signature}}',
+		'{{My Signature}}'
 	);
 
 	return finalContent;
@@ -69,7 +69,7 @@ function formatJobAddress(jobDetails: Job): string {
  */
 function replaceMustacheValues(
 	template: string,
-	values: Record<string, string>,
+	values: Record<string, string>
 ): string {
 	let result = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
 		const cleanKey = key.trim();

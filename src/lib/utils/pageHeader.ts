@@ -1,8 +1,8 @@
-import { generateQRCodeSVG } from './qrCode';
 import type { CandidateDetails } from '@/types';
+import { generateQRCodeSVG } from './qrCode';
 
 export async function generatePageHeaderHTML(
-	candidateDetails: CandidateDetails,
+	candidateDetails: CandidateDetails
 ): Promise<string> {
 	const { fullName, email, phone, linkedin, portfolio } = candidateDetails;
 
@@ -22,7 +22,7 @@ export async function generatePageHeaderHTML(
 }
 
 export async function generatePageFooterHTML(
-	candidateDetails: CandidateDetails,
+	candidateDetails: CandidateDetails
 ): Promise<string> {
 	const { logo, logoInclude, portfolioQRCode, portfolio } = candidateDetails;
 

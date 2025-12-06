@@ -1,8 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 import type { FormEvent, ReactNode } from 'react';
-import clsx from 'clsx';
 
 import { CONSTANTS } from '@/config';
 
@@ -29,7 +29,7 @@ export const Form = memo(function Form({
 			className={clsx(
 				componentName,
 				CONSTANTS.CLASS_NAMES.FORM_CONTAINER,
-				'flex flex-col gap-4',
+				'flex flex-col gap-4'
 			)}
 		>
 			{children}

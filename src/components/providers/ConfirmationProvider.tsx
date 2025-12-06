@@ -1,7 +1,7 @@
 'use client';
 
-import { createContext, useContext, type ReactNode } from 'react';
 import { useConfirmationStack } from '@/lib/hooks/useConfirmationStack';
+import { type ReactNode, createContext, useContext } from 'react';
 
 type ConfirmationContextType = {
 	addConfirmation: (onCancel: () => void) => void;
@@ -30,7 +30,7 @@ export function useConfirmationContext() {
 	const context = useContext(ConfirmationContext);
 	if (!context) {
 		throw new Error(
-			'useConfirmationContext must be used within a ConfirmationProvider',
+			'useConfirmationContext must be used within a ConfirmationProvider'
 		);
 	}
 	return context;

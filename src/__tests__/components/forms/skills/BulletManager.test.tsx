@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BulletManager } from '@/components/forms/core/BulletManager';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the Bullet and DraggableBullet components
 vi.mock('@/components/forms/resume/Bullet', () => ({
@@ -106,14 +106,14 @@ describe('BulletManager', () => {
 
 		expect(mockForm.setFieldValue).toHaveBeenCalledWith(
 			'experience.0.bullets',
-			['First bullet', 'Second bullet', ''],
+			['First bullet', 'Second bullet', '']
 		);
 	});
 
 	it('calls onFieldChange when adding bullet', () => {
 		const mockOnFieldChange = vi.fn();
 		render(
-			<BulletManager {...defaultProps} onFieldChange={mockOnFieldChange} />,
+			<BulletManager {...defaultProps} onFieldChange={mockOnFieldChange} />
 		);
 
 		const addButton = screen.getByTitle('Add Bullet Point');
@@ -153,7 +153,7 @@ describe('BulletManager', () => {
 		render(<BulletManager {...defaultProps} form={emptyMockForm} />);
 
 		expect(
-			screen.getByText('No bullets yet. Click the + button to add your items.'),
+			screen.getByText('No bullets yet. Click the + button to add your items.')
 		).toBeInTheDocument();
 	});
 

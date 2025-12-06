@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { FeaturesAvailableCard } from '@/components/forms/welcome/FeaturesAvailableCard';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('FeaturesAvailableCard', () => {
 	it('renders the features available heading', () => {
@@ -17,19 +17,19 @@ describe('FeaturesAvailableCard', () => {
 	it('renders all available features in a list', () => {
 		render(<FeaturesAvailableCard />);
 		expect(
-			screen.getByText(/Template-based document generation/),
+			screen.getByText(/Template-based document generation/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/Professional cover letter and resume templates/),
+			screen.getByText(/Professional cover letter and resume templates/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/Skills organization and management/),
+			screen.getByText(/Skills organization and management/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/Export to PDF, Markdown and TXT/),
+			screen.getByText(/Export to PDF, Markdown and TXT/)
 		).toBeInTheDocument();
 		expect(
-			screen.getByText(/Modern, responsive interface/),
+			screen.getByText(/Modern, responsive interface/)
 		).toBeInTheDocument();
 	});
 
@@ -43,7 +43,7 @@ describe('FeaturesAvailableCard', () => {
 			'border',
 			'border-blue-200',
 			'bg-blue-50',
-			'p-4',
+			'p-4'
 		);
 	});
 

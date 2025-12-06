@@ -1,7 +1,7 @@
 'use client';
 
-import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
+import { type ReactNode, memo } from 'react';
 
 import { CONSTANTS } from '@/config';
 
@@ -46,7 +46,7 @@ export const FormSection = memo(function FormSection({
 				className={clsx(
 					'FormSection',
 					CONSTANTS.CLASS_NAMES.FORM_SECTION,
-					className,
+					className
 				)}
 			>
 				<div className='flex items-center gap-3'>
@@ -76,7 +76,7 @@ export const FormSection = memo(function FormSection({
 			className={clsx(
 				'FormSection',
 				CONSTANTS.CLASS_NAMES.FORM_SECTION,
-				className,
+				className
 			)}
 		>
 			{title && (

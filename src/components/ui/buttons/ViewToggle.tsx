@@ -1,9 +1,9 @@
 'use client';
 
-import { memo } from 'react';
-import clsx from 'clsx';
+import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
+import { memo } from 'react';
 
 import { Button } from '@/components/ui/buttons/Button';
 

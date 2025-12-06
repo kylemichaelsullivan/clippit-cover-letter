@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/buttons';
 import { CONSTANTS } from '@/config/constants';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type EmptyStateVariant =
 	| 'cover-letter-not-provided'
@@ -83,7 +83,7 @@ export function EmptyState({
 			case 'missing-templates':
 				if (!missingTemplatesConfig) {
 					throw new Error(
-						'MissingTemplatesConfig is required for missing-templates variant',
+						'MissingTemplatesConfig is required for missing-templates variant'
 					);
 				}
 				return {

@@ -1,25 +1,25 @@
 'use client';
 
-import {
-	memo,
-	useRef,
-	useCallback,
-	useMemo,
-	useEffect,
-	type ChangeEvent,
-} from 'react';
+import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudArrowUp, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+	type ChangeEvent,
+	memo,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from 'react';
 
 import { FormFieldContainer } from '@/components/forms/core';
 import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { Button } from '@/components/ui/buttons/Button';
 import { Checkbox } from '@/components/ui/input';
 import { isFieldRequired } from '@/lib/schemas';
-import { showToast } from '@/lib/toast';
 import { useCandidateStore } from '@/lib/stores';
+import { showToast } from '@/lib/toast';
 
 type ImageInputProps = {
 	id: string;
@@ -123,9 +123,9 @@ const UploadButton = memo(function UploadButton({
 				'border-light-gray text-gray hover:border-blue hover:bg-light-gray',
 				'focus:border-blue focus:bg-light-gray',
 				hasError && 'border-red',
-				className,
+				className
 			),
-		[hasError, className],
+		[hasError, className]
 	);
 
 	return (
@@ -180,7 +180,7 @@ export const ImageInput = memo(function ImageInput({
 
 			if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
 				showToast.error(
-					'Please select a valid image file (PNG, JPG, GIF, etc.). SVG files are not supported.',
+					'Please select a valid image file (PNG, JPG, GIF, etc.). SVG files are not supported.'
 				);
 				return;
 			}
@@ -188,7 +188,7 @@ export const ImageInput = memo(function ImageInput({
 			const maxSize = 5 * 1024 * 1024; // 5MB
 			if (file.size > maxSize) {
 				showToast.error(
-					'Image file is too large. Please select a file smaller than 5MB.',
+					'Image file is too large. Please select a file smaller than 5MB.'
 				);
 				return;
 			}
@@ -215,7 +215,7 @@ export const ImageInput = memo(function ImageInput({
 			};
 			reader.readAsDataURL(file);
 		},
-		[field, fieldName, candidateDetails, setCandidateField, onChange],
+		[field, fieldName, candidateDetails, setCandidateField, onChange]
 	);
 
 	const handleRemoveFile = useCallback(() => {
@@ -247,7 +247,7 @@ export const ImageInput = memo(function ImageInput({
 			schema && fieldName
 				? isFieldRequired(schema, fieldName as string)
 				: false,
-		[schema, fieldName],
+		[schema, fieldName]
 	);
 
 	const getIncludeValue = useCallback(() => {
@@ -279,7 +279,7 @@ export const ImageInput = memo(function ImageInput({
 			if (field.state.value !== currentStoreValue) {
 				setCandidateField(
 					fieldName as keyof typeof candidateDetails,
-					field.state.value,
+					field.state.value
 				);
 			}
 		}
@@ -302,7 +302,7 @@ export const ImageInput = memo(function ImageInput({
 								if (includeFieldName && includeFieldName in candidateDetails) {
 									setCandidateField(
 										includeFieldName as keyof typeof candidateDetails,
-										checked,
+										checked
 									);
 								}
 								if (onIncludeChange) {

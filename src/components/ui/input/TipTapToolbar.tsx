@@ -1,19 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import clsx from 'clsx';
 import {
 	faBold,
 	faFont,
-	faItalic,
 	faHeading,
+	faItalic,
 	faListOl,
 	faListUl,
 	faMinus,
 	faQuoteLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import { TipTapButton } from './TipTapButton';
 import type { Editor } from '@tiptap/react';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { TipTapButton } from './TipTapButton';
 
 function TipTapDivider() {
 	return <div className='bg-light-gray h-6 w-px' />;
@@ -55,7 +55,7 @@ export function TipTapToolbar({ editor, className }: TipTapToolbarProps) {
 		<div
 			className={clsx(
 				'TipTapToolbar border-light-gray bg-gray z-10 m-0 flex flex-wrap items-center gap-1 rounded-t-lg border-b p-3',
-				className,
+				className
 			)}
 		>
 			<TipTapButton

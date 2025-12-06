@@ -1,10 +1,10 @@
 'use client';
 
-import { useCallback } from 'react';
 import { useForm } from '@tanstack/react-form';
+import { useCallback } from 'react';
 
-import { useAppStore, useResumeStore } from '@/lib/stores';
 import { DEFAULTS } from '@/config';
+import { useAppStore, useResumeStore } from '@/lib/stores';
 import type { Education, Experience } from '@/types';
 
 export type ResumeFormValues = {
@@ -38,8 +38,8 @@ export function useResumeForm(
 		includeResume: boolean,
 		summary: string,
 		experience: Experience[],
-		education: Education[],
-	) => void,
+		education: Education[]
+	) => void
 ) {
 	const { includeResume, setIncludeResume } = useAppStore();
 	const { resumeDetails, setResumeDetails, setEducation, setExperience } =
@@ -72,7 +72,7 @@ export function useResumeForm(
 				value.includeResume,
 				value.summary,
 				value.experience,
-				value.education,
+				value.education
 			);
 		},
 	});
@@ -85,7 +85,7 @@ export function useResumeForm(
 				education: values.education || [],
 			});
 		},
-		[setResumeDetails],
+		[setResumeDetails]
 	);
 
 	const handleFieldChange = useCallback(
@@ -98,7 +98,7 @@ export function useResumeForm(
 			const currentValues = form.state.values;
 			updateTemplate(currentValues);
 		},
-		[setIncludeResume, updateTemplate, form.state.values],
+		[setIncludeResume, updateTemplate, form.state.values]
 	);
 
 	const addEducation = useCallback(() => {
@@ -129,7 +129,7 @@ export function useResumeForm(
 		(educationIndex: number) => {
 			const currentEducation = form.getFieldValue('education') || [];
 			let updatedEducation = currentEducation.filter(
-				(_: Education, index: number) => index !== educationIndex,
+				(_: Education, index: number) => index !== educationIndex
 			);
 
 			if (updatedEducation.length === 0) {
@@ -140,7 +140,7 @@ export function useResumeForm(
 			setEducation(updatedEducation);
 			updateTemplate({ ...form.state.values, education: updatedEducation });
 		},
-		[form, setEducation, updateTemplate],
+		[form, setEducation, updateTemplate]
 	);
 
 	const handleEducationPaste = useCallback(
@@ -178,7 +178,7 @@ export function useResumeForm(
 				updatedEducation.splice(
 					currentEducationIndex,
 					1,
-					...newEducationEntries,
+					...newEducationEntries
 				);
 				form.setFieldValue('education', updatedEducation);
 				setEducation(updatedEducation);
@@ -199,14 +199,14 @@ export function useResumeForm(
 				updateTemplate({ ...form.state.values, education: updatedEducation });
 			}
 		},
-		[form, setEducation, updateTemplate],
+		[form, setEducation, updateTemplate]
 	);
 
 	const removeExperience = useCallback(
 		(experienceIndex: number) => {
 			const currentExperience = form.getFieldValue('experience') || [];
 			let updatedExperience = currentExperience.filter(
-				(_: Experience, index: number) => index !== experienceIndex,
+				(_: Experience, index: number) => index !== experienceIndex
 			);
 
 			if (updatedExperience.length === 0) {
@@ -217,14 +217,14 @@ export function useResumeForm(
 			setExperience(updatedExperience);
 			updateTemplate({ ...form.state.values, experience: updatedExperience });
 		},
-		[form, setExperience, updateTemplate],
+		[form, setExperience, updateTemplate]
 	);
 
 	const sortEducationByYear = useCallback(() => {
 		const currentEducation = form.getFieldValue('education') || [];
 		const sortedEducation = [...currentEducation].sort((a, b) => {
-			const yearA = parseInt(a.graduationYear || '', 10);
-			const yearB = parseInt(b.graduationYear || '', 10);
+			const yearA = Number.parseInt(a.graduationYear || '', 10);
+			const yearB = Number.parseInt(b.graduationYear || '', 10);
 			const isValidA = !Number.isNaN(yearA);
 			const isValidB = !Number.isNaN(yearB);
 			if (isValidA && isValidB) return yearB - yearA;
@@ -277,7 +277,7 @@ export function useResumeForm(
 			if (parts.length !== 2) return null;
 
 			const month = parts[0];
-			const year = parseInt(parts[1], 10);
+			const year = Number.parseInt(parts[1], 10);
 
 			if (Number.isNaN(year)) return null;
 

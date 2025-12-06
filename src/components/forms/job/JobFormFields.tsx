@@ -1,8 +1,8 @@
 'use client';
 
+import { PLACEHOLDERS } from '@/config';
 import { memo } from 'react';
 import { JobFormField } from './JobFormField';
-import { PLACEHOLDERS } from '@/config';
 
 type JobFormFieldsProps = {
 	form: any;

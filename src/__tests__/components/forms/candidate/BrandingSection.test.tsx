@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Mock the complex form components to focus on section structure
 vi.mock('@tanstack/react-form', () => ({
@@ -47,7 +47,7 @@ describe('BrandingSection', () => {
 			<BrandingSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByText('Branding')).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe('BrandingSection', () => {
 			<BrandingSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		const section = container.querySelector('section');
@@ -71,7 +71,7 @@ describe('BrandingSection', () => {
 			<BrandingSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('form-section')).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe('BrandingSection', () => {
 			<BrandingSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('checkbox')).toBeInTheDocument();
@@ -94,7 +94,7 @@ describe('BrandingSection', () => {
 			<BrandingSection
 				form={mockForm}
 				handleFieldChange={mockHandleFieldChange}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('signature-input')).toBeInTheDocument();

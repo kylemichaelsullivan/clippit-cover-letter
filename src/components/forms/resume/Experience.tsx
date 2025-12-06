@@ -1,7 +1,7 @@
 'use client';
 
-import { memo } from 'react';
 import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 
 import { TipTapEditor } from '@/components/ui/input';
 import { PLACEHOLDERS } from '@/config';

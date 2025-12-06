@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { DocumentHeader } from '@/components/results/panels';
 
@@ -13,7 +13,7 @@ describe('DocumentHeader', () => {
 
 		expect(screen.getByText('Test Document')).toBeInTheDocument();
 		expect(screen.getByText('Test Document').closest('label')).toHaveClass(
-			'DocumentContentTitle',
+			'DocumentContentTitle'
 		);
 	});
 
@@ -50,7 +50,7 @@ describe('DocumentHeader', () => {
 				{...defaultProps}
 				fontSizeInput={fontSizeInput}
 				headerElement={headerElement}
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('font-size-input')).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe('DocumentHeader', () => {
 
 	it('applies custom className', () => {
 		const { container } = render(
-			<DocumentHeader {...defaultProps} className='custom-class' />,
+			<DocumentHeader {...defaultProps} className='custom-class' />
 		);
 
 		expect(container.firstChild).toHaveClass('custom-class');
@@ -72,7 +72,7 @@ describe('DocumentHeader', () => {
 		expect(headerElement).toHaveClass(
 			'flex',
 			'items-center',
-			'justify-between',
+			'justify-between'
 		);
 	});
 
@@ -84,7 +84,7 @@ describe('DocumentHeader', () => {
 			'DocumentContentTitle',
 			'text-lg',
 			'font-semibold',
-			'text-black',
+			'text-black'
 		);
 	});
 });

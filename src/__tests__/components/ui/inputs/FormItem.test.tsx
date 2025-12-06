@@ -1,13 +1,13 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { FormItem } from '@/components/forms/core/FormItem';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('FormItem', () => {
 	it('renders children correctly', () => {
 		render(
 			<FormItem>
 				<div data-testid='test-child'>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		expect(screen.getByTestId('test-child')).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		expect(screen.queryByRole('button')).not.toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem onRemove={mockOnRemove}>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		const removeButton = screen.getByRole('button');
@@ -42,7 +42,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem onRemove={mockOnRemove}>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		const removeButton = screen.getByRole('button');
@@ -56,7 +56,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem onRemove={mockOnRemove} removeButtonTitle='Custom Remove Text'>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		const removeButton = screen.getByRole('button');
@@ -67,7 +67,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem className='custom-class'>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		const formItem = screen.getByText('Test Content').closest('.FormItem');
@@ -78,7 +78,7 @@ describe('FormItem', () => {
 		render(
 			<FormItem>
 				<div>Test Content</div>
-			</FormItem>,
+			</FormItem>
 		);
 
 		const formItem = screen.getByText('Test Content').closest('.FormItem');

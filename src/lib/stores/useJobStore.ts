@@ -27,10 +27,10 @@ export const useJobStore = create<JobState>()(
 			}),
 			{
 				name: 'job-store',
-			},
+			}
 		),
 		{
 			name: 'job-store',
-		},
-	),
+		}
+	)
 );

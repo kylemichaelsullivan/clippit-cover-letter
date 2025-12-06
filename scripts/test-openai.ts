@@ -1,11 +1,11 @@
+import { resolve } from 'node:path';
 import { config } from 'dotenv';
-import { resolve } from 'path';
 
 // Load environment variables from .env.local
 config({ path: resolve(process.cwd(), '.env.local') });
 
+import { getAIConfig, isAIConfigured } from '../src/config/ai';
 import { callOpenAI, generateCoverLetter } from '../src/lib/openai';
-import { isAIConfigured, getAIConfig } from '../src/config/ai';
 
 async function testOpenAI() {
 	console.log('🔍 Testing OpenAI API Integration…\n');
@@ -22,10 +22,10 @@ async function testOpenAI() {
 
 	if (!isAIConfigured()) {
 		console.log(
-			'❌ OpenAI is not properly configured. Please check your .env.local file.',
+			'❌ OpenAI is not properly configured. Please check your .env.local file.'
 		);
 		console.log(
-			'Make sure you have OPENAI_API_KEY=your_key_here in .env.local',
+			'Make sure you have OPENAI_API_KEY=your_key_here in .env.local'
 		);
 		process.exit(1);
 	}
@@ -34,7 +34,7 @@ async function testOpenAI() {
 		// Test 1: Simple API call
 		console.log('🧪 Test 1: Simple API Call');
 		const simpleResult = await callOpenAI(
-			'Say "Hello, this is a test!" in a simple way.',
+			'Say "Hello, this is a test!" in a simple way.'
 		);
 		console.log('✅ Response:', simpleResult.content);
 		console.log('📊 Token Usage:', simpleResult.usage);
@@ -45,7 +45,7 @@ async function testOpenAI() {
 		const coverLetter = await generateCoverLetter(
 			'Software Engineer position focusing on React and TypeScript',
 			'TechCorp - A leading software company',
-			'3 years of React development experience with modern JavaScript',
+			'3 years of React development experience with modern JavaScript'
 		);
 		console.log('✅ Generated Cover Letter:');
 		console.log(coverLetter);
@@ -55,7 +55,7 @@ async function testOpenAI() {
 	} catch (error) {
 		console.error(
 			'❌ Test failed:',
-			error instanceof Error ? error.message : String(error),
+			error instanceof Error ? error.message : String(error)
 		);
 		if (error instanceof Error) {
 			console.error('Error details:', error.stack);

@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock TanStack Form
 vi.mock('@tanstack/react-form', () => ({
@@ -62,7 +62,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		// Check that the container exists by looking for the first skill text
@@ -78,7 +78,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const skillTags = screen.getAllByText(/JavaScript|React|TypeScript/);
@@ -93,7 +93,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const removeButtons = screen.getAllByRole('button');
@@ -108,7 +108,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const removeButtons = screen.getAllByRole('button');
@@ -124,7 +124,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const skillTags = screen.getAllByText(/JavaScript|React|TypeScript/);
@@ -144,7 +144,7 @@ describe('SkillTagsList', () => {
 				'text-black',
 				'sm:px-2',
 				'sm:py-1',
-				'sm:text-sm',
+				'sm:text-sm'
 			);
 		});
 	});
@@ -155,7 +155,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const container = screen.getByText('JavaScript').closest('div');
@@ -165,7 +165,7 @@ describe('SkillTagsList', () => {
 			'flex-wrap',
 			'gap-1.5',
 			'pt-1',
-			'sm:gap-2',
+			'sm:gap-2'
 		);
 	});
 
@@ -175,7 +175,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const icons = screen.getAllByText('times');
@@ -191,7 +191,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const skillTags = screen.getAllByText(/JavaScript|React|TypeScript/);
@@ -219,7 +219,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const removeButtons = screen.getAllByRole('button');
@@ -242,7 +242,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const removeButtons = screen.getAllByRole('button');
@@ -257,7 +257,7 @@ describe('SkillTagsList', () => {
 				form={mockForm}
 				groupIndex={groupIndex}
 				onRemoveSkill={mockOnRemoveSkill}
-			/>,
+			/>
 		);
 
 		const removeButtons = screen.getAllByRole('button');

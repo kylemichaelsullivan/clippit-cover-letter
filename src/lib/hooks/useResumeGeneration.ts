@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { useTemplatesStore, useSkillsStore } from '@/lib/stores';
 import { generateDocuments } from '@/lib/documentGeneration';
+import { useSkillsStore, useTemplatesStore } from '@/lib/stores';
 
 type UseResumeGenerationProps = {
 	candidateDetails: any;

@@ -3,23 +3,23 @@
 import { memo } from 'react';
 
 import {
-	WelcomeForm,
 	CandidateForm,
 	JobForm,
 	LetterForm,
-	SkillsForm,
 	ResumeForm,
+	SkillsForm,
+	WelcomeForm,
 } from '@/components/forms';
 import { ResultContent } from '@/components/results/display';
 import {
-	usePhaseStore,
-	useCandidateStore,
-	useSkillsStore,
 	useAppStore,
+	useCandidateStore,
 	useJobStore,
+	usePhaseStore,
+	useSkillsStore,
 	useTemplatesStore,
 } from '@/lib/stores';
-import type { CandidateDetails, Skills, Job } from '@/types';
+import type { CandidateDetails, Job, Skills } from '@/types';
 
 import { PreviewContent } from '@/components/features/PreviewContent';
 
@@ -45,7 +45,7 @@ export default memo(function Page() {
 
 	const handleLetterSubmit = (
 		includeCoverLetter: boolean,
-		coverLetterTemplate: string,
+		coverLetterTemplate: string
 	) => {
 		setIncludeCoverLetter(includeCoverLetter);
 		setCoverLetterTemplate(coverLetterTemplate);

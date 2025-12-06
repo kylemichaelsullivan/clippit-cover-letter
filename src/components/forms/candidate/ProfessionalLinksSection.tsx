@@ -1,12 +1,12 @@
 'use client';
 
-import { candidateDetailsSchema, validateSchema } from '@/lib/schemas';
+import { FormSection, HydrationSafeFormField } from '@/components/forms/core';
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { Checkbox } from '@/components/ui/input';
 import { CONSTANTS, PLACEHOLDERS } from '@/config';
-import { Field } from '@tanstack/react-form';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
-import { FormSection, HydrationSafeFormField } from '@/components/forms/core';
+import { candidateDetailsSchema, validateSchema } from '@/lib/schemas';
 import type { CandidateFormHandlers } from '@/types';
+import { Field } from '@tanstack/react-form';
 
 type ProfessionalLinksSectionProps = {
 	form: any;

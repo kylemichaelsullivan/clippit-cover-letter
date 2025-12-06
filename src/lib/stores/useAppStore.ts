@@ -53,10 +53,10 @@ export const useAppStore = create<AppState>()(
 			}),
 			{
 				name: 'app-store',
-			},
+			}
 		),
 		{
 			name: 'app-store',
-		},
-	),
+		}
+	)
 );

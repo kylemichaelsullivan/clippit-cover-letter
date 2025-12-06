@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { useHelpModal } from '@/lib/hooks/useHelpModal';
+import { act, renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('useHelpModal', () => {
 	it('initializes with modal closed', () => {

@@ -2,23 +2,23 @@
 
 import { memo, useRef, useState } from 'react';
 
+import {
+	ConfirmationDialog,
+	MenuItem,
+	Popover,
+} from '@/components/ui/feedback';
 import { CONSTANTS } from '@/config';
 import {
 	clearAllPersistentData,
 	exportLocalStorageToFile,
 	handleFileImport,
 } from '@/lib/stores';
-import {
-	ConfirmationDialog,
-	MenuItem,
-	Popover,
-} from '@/components/ui/feedback';
+import { showToast } from '@/lib/toast';
 import {
 	faDownload,
 	faTrash,
 	faUpload,
 } from '@fortawesome/free-solid-svg-icons';
-import { showToast } from '@/lib/toast';
 
 import type { KeyboardEvent, MouseEvent } from 'react';
 
@@ -28,7 +28,7 @@ export const Copyright = memo(function Copyright() {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [triggerElement, setTriggerElement] = useState<HTMLElement | null>(
-		null,
+		null
 	);
 
 	const fileInputRef = useRef<HTMLInputElement>(null);

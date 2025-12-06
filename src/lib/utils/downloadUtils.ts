@@ -1,9 +1,9 @@
 import { CONSTANTS } from '@/config';
+import type { CandidateDetails, DocumentType } from '@/types';
+import { showToast } from '../toast';
 import { cleanMarkdown, htmlToMarkdown } from './htmlToMarkdown';
 import { cleanPlaintext, htmlToPlaintext } from './htmlToPlaintext';
 import { replaceSignaturePlaceholders } from './signatureReplacement';
-import { showToast } from '../toast';
-import type { CandidateDetails, DocumentType } from '@/types';
 
 function downloadFile(
 	blob: Blob,
@@ -11,7 +11,7 @@ function downloadFile(
 	extension: string,
 	successMessage: string,
 	errorMessage: string,
-	appendToBody = false,
+	appendToBody = false
 ): void {
 	try {
 		const url = URL.createObjectURL(blob);
@@ -38,7 +38,7 @@ export function downloadMD(
 	content: string,
 	filename: string,
 	documentType?: DocumentType,
-	candidateDetails?: CandidateDetails,
+	candidateDetails?: CandidateDetails
 ): void {
 	const contentWithSignature = candidateDetails
 		? replaceSignaturePlaceholders(content, candidateDetails, true)
@@ -57,7 +57,7 @@ export function downloadMD(
 export function downloadPDF(
 	blob: Blob,
 	filename: string,
-	documentType?: DocumentType,
+	documentType?: DocumentType
 ): void {
 	const successMessage = documentType
 		? `${documentType} PDF Downloaded Successfully`
@@ -72,13 +72,13 @@ export function downloadTXT(
 	content: string,
 	filename: string,
 	documentType?: DocumentType,
-	candidateDetails?: CandidateDetails,
+	candidateDetails?: CandidateDetails
 ): void {
 	const contentWithSignature = candidateDetails
 		? replaceSignaturePlaceholders(content, candidateDetails, true)
 		: content;
 	const plaintextContent = cleanPlaintext(
-		htmlToPlaintext(contentWithSignature),
+		htmlToPlaintext(contentWithSignature)
 	);
 	const blob = new Blob([plaintextContent], { type: 'text/plain' });
 	const successMessage = documentType

@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, type ReactNode } from 'react';
+import { type ReactNode, forwardRef } from 'react';
 
 type ModalBackdropProps = {
 	children: ReactNode;
@@ -22,5 +22,5 @@ export const ModalBackdrop = forwardRef<HTMLDivElement, ModalBackdropProps>(
 				</div>
 			</div>
 		);
-	},
+	}
 );

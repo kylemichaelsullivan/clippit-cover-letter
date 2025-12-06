@@ -7,7 +7,7 @@ export function formatContentForPDFWithSkills(
 	content: string,
 	title: string,
 	generatedSkillsData: SkillsGroup[],
-	includeSkillGroupNames: boolean,
+	includeSkillGroupNames: boolean
 ): string {
 	if (
 		title.toLowerCase().includes('resume') &&
@@ -21,15 +21,15 @@ export function formatContentForPDFWithSkills(
 			return content
 				.replace(
 					/\*\*([^:]+):\*\* ([^<]+)/g,
-					'**Skills:** ' + allSkills.join(', '),
+					'**Skills:** ' + allSkills.join(', ')
 				)
 				.replace(
 					/<ul>[\s\S]*?<li><strong>([^<]+):<\/strong> ([^<]+)<\/li>[\s\S]*?<\/ul>/g,
-					'<p><strong>Skills:</strong> ' + allSkills.join(', ') + '</p>',
+					'<p><strong>Skills:</strong> ' + allSkills.join(', ') + '</p>'
 				)
 				.replace(
 					/<strong>([^<]+):<\/strong> ([^<]+)/g,
-					'<strong>Skills:</strong> ' + allSkills.join(', '),
+					'<strong>Skills:</strong> ' + allSkills.join(', ')
 				);
 		}
 	}

@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
-import { DocumentContent } from '@/components/results/panels';
 import { mockCandidateStore } from '@/__tests__/mocks/stores';
+import { DocumentContent } from '@/components/results/panels';
 
 vi.mock('@/lib/stores', () => ({
 	useCandidateStore: () => mockCandidateStore,
@@ -50,7 +50,7 @@ vi.mock('@/components/ui/input', () => ({
 
 vi.mock('@/components/ui/buttons', () => ({
 	ViewToggle: ({ isTipTapView, onToggle }: any) => (
-		<button data-testid='view-toggle' onClick={onToggle}>
+		<button type='button' data-testid='view-toggle' onClick={onToggle}>
 			{isTipTapView ? 'TipTap View' : 'Preview View'}
 		</button>
 	),
@@ -100,7 +100,7 @@ describe('DocumentContent', () => {
 
 		expect(screen.getByTestId('document-header')).toBeInTheDocument();
 		expect(screen.getByTestId('document-header')).toHaveTextContent(
-			'Test Document',
+			'Test Document'
 		);
 	});
 
@@ -109,7 +109,7 @@ describe('DocumentContent', () => {
 
 		expect(screen.getByTestId('document-preview')).toBeInTheDocument();
 		expect(screen.getByTestId('document-preview')).toHaveTextContent(
-			'Test content',
+			'Test content'
 		);
 	});
 
@@ -118,7 +118,7 @@ describe('DocumentContent', () => {
 
 		expect(screen.getByTestId('generation-state')).toBeInTheDocument();
 		expect(screen.getByTestId('generation-state')).toHaveTextContent(
-			'Generating Test Document…',
+			'Generating Test Document…'
 		);
 	});
 
@@ -128,7 +128,7 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={true}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('view-toggle')).toBeInTheDocument();
@@ -144,7 +144,7 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={true}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('view-toggle')).toBeInTheDocument();
@@ -156,7 +156,7 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={true}
 				documentType='resume'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('view-toggle')).toBeInTheDocument();
@@ -168,7 +168,7 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={false}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		expect(screen.queryByTestId('view-toggle')).not.toBeInTheDocument();
@@ -180,7 +180,7 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={true}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		expect(screen.queryByTestId('view-toggle')).toBeInTheDocument();
@@ -192,7 +192,7 @@ describe('DocumentContent', () => {
 		render(<DocumentContent {...defaultProps} fontSizeInput={fontSizeInput} />);
 
 		expect(screen.getByTestId('document-header')).toHaveTextContent(
-			'has-font-size',
+			'has-font-size'
 		);
 	});
 
@@ -202,7 +202,7 @@ describe('DocumentContent', () => {
 		render(<DocumentContent {...defaultProps} headerElement={headerElement} />);
 
 		expect(screen.getByTestId('document-header')).toHaveTextContent(
-			'has-header-element',
+			'has-header-element'
 		);
 	});
 
@@ -212,11 +212,11 @@ describe('DocumentContent', () => {
 				{...defaultProps}
 				isEditable={true}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		expect(screen.getByTestId('document-header')).toHaveTextContent(
-			'has-header-element',
+			'has-header-element'
 		);
 	});
 
@@ -229,7 +229,7 @@ describe('DocumentContent', () => {
 				isEditable={true}
 				documentType='cover-letter'
 				onContentChange={onContentChange}
-			/>,
+			/>
 		);
 
 		fireEvent.click(screen.getByTestId('view-toggle'));
@@ -248,7 +248,7 @@ describe('DocumentContent', () => {
 				templateContent='Template content'
 				isEditable={true}
 				documentType='cover-letter'
-			/>,
+			/>
 		);
 
 		fireEvent.click(screen.getByTestId('view-toggle'));
@@ -259,7 +259,7 @@ describe('DocumentContent', () => {
 
 	it('applies custom className', () => {
 		const { container } = render(
-			<DocumentContent {...defaultProps} className='custom-class' />,
+			<DocumentContent {...defaultProps} className='custom-class' />
 		);
 
 		expect(container.firstChild).toHaveClass('custom-class');
@@ -272,7 +272,7 @@ describe('DocumentContent', () => {
 			'DocumentContent',
 			'flex',
 			'flex-col',
-			'gap-4',
+			'gap-4'
 		);
 	});
 });

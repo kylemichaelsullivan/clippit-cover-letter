@@ -2,13 +2,13 @@
 
 import clsx from 'clsx';
 
+import type { CandidateDetails, DocumentType, FontSize } from '@/types';
 import {
+	CopyButton,
 	DownloadButtonMD,
 	DownloadButtonPDF,
 	DownloadButtonTXT,
-	CopyButton,
 } from './';
-import type { CandidateDetails, DocumentType, FontSize } from '@/types';
 
 type ActionButtonsProps = {
 	text: string;

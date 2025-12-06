@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest';
 import {
-	htmlToPlaintextWithSignature,
 	cleanPlaintext,
+	htmlToPlaintextWithSignature,
 } from '@/lib/utils/htmlToPlaintext';
 import { replaceSignaturePlaceholders } from '@/lib/utils/signatureReplacement';
 import type { CandidateDetails } from '@/types';
+import { describe, expect, it } from 'vitest';
 
 describe('signature integration tests', () => {
 	const mockCandidateDetails: CandidateDetails = {
@@ -32,7 +32,7 @@ describe('signature integration tests', () => {
 			// It should be replaced in the preview
 			const previewContent = replaceSignaturePlaceholders(
 				tipTapContent,
-				mockCandidateDetails,
+				mockCandidateDetails
 			);
 			expect(previewContent).toContain('signature-image');
 			expect(previewContent).not.toContain('{{My Signature}}');
@@ -48,7 +48,7 @@ describe('signature integration tests', () => {
 
 			// When converted to plaintext, images should be replaced with name
 			const plaintext = cleanPlaintext(
-				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails)
 			);
 			expect(plaintext).toContain('John Doe');
 			expect(plaintext).not.toContain('signature-image');
@@ -62,7 +62,7 @@ describe('signature integration tests', () => {
 
 			// When no candidate details provided, preserve placeholder
 			const result1 = cleanPlaintext(
-				htmlToPlaintextWithSignature(templateContent),
+				htmlToPlaintextWithSignature(templateContent)
 			);
 			expect(result1).toContain('{{My Signature}}');
 
@@ -72,7 +72,7 @@ describe('signature integration tests', () => {
 				signatureUseImage: false,
 			};
 			const result2 = cleanPlaintext(
-				htmlToPlaintextWithSignature(templateContent, candidateNoImage),
+				htmlToPlaintextWithSignature(templateContent, candidateNoImage)
 			);
 			expect(result2).toContain('John Doe');
 			expect(result2).not.toContain('{{My Signature}}');
@@ -84,13 +84,13 @@ describe('signature integration tests', () => {
 
 			// When no candidate details provided, remove images but don't replace
 			const result1 = cleanPlaintext(
-				htmlToPlaintextWithSignature(generatedContent),
+				htmlToPlaintextWithSignature(generatedContent)
 			);
 			expect(result1).not.toContain('signature-image');
 			expect(result1).not.toContain('John Doe');
 
 			const result2 = cleanPlaintext(
-				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails),
+				htmlToPlaintextWithSignature(generatedContent, mockCandidateDetails)
 			);
 			expect(result2).toContain('John Doe');
 			expect(result2).not.toContain('signature-image');
@@ -106,7 +106,7 @@ describe('signature integration tests', () => {
 				signatureUseImage: false,
 			};
 			const result = cleanPlaintext(
-				htmlToPlaintextWithSignature(mixedContent, candidateNoImage),
+				htmlToPlaintextWithSignature(mixedContent, candidateNoImage)
 			);
 
 			// Should have two instances of the name (one from placeholder, one from image)
@@ -129,7 +129,7 @@ describe('signature integration tests', () => {
 			};
 			const result1 = replaceSignaturePlaceholders(
 				templateContent,
-				candidateWithImage,
+				candidateWithImage
 			);
 			expect(result1).toContain('signature-image');
 			expect(result1).not.toContain('{{My Signature}}');
@@ -142,7 +142,7 @@ describe('signature integration tests', () => {
 			};
 			const result2 = replaceSignaturePlaceholders(
 				templateContent,
-				candidateNoImage,
+				candidateNoImage
 			);
 			expect(result2).toContain('John Doe');
 			expect(result2).not.toContain('{{My Signature}}');
@@ -156,7 +156,7 @@ describe('signature integration tests', () => {
 			};
 			const result3 = replaceSignaturePlaceholders(
 				templateContent,
-				candidateNoImageFlag,
+				candidateNoImageFlag
 			);
 			expect(result3).toContain('John Doe');
 			expect(result3).not.toContain('{{My Signature}}');

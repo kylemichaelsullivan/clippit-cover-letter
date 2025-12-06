@@ -1,10 +1,10 @@
 'use client';
 
+import { useTheme } from '@/components/providers/ThemeProvider';
 import { Button } from '@/components/ui/buttons';
 import { CONSTANTS } from '@/config';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from '@/components/providers/ThemeProvider';
 
 export function ThemeToggle() {
 	const { theme, toggleTheme, isMounted } = useTheme();

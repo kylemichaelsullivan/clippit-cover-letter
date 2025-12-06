@@ -5,9 +5,9 @@ import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/buttons';
 import { ConfirmationDialog } from '@/components/ui/feedback';
 import { DEFAULTS, PLACEHOLDERS } from '@/config';
-import { DocumentSelectionControl } from './DocumentSelectionControl';
-import { useAppStore, useTemplatesStore } from '@/lib/stores';
 import { useDocumentGeneration } from '@/lib/hooks';
+import { useAppStore, useTemplatesStore } from '@/lib/stores';
+import { DocumentSelectionControl } from './DocumentSelectionControl';
 
 type DocumentSelectionControlsProps = {
 	className?: string;
@@ -128,5 +128,5 @@ export const DocumentSelectionControls = memo(
 				/>
 			</>
 		);
-	},
+	}
 );

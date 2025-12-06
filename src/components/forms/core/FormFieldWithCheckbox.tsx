@@ -1,9 +1,9 @@
 'use client';
 
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { Checkbox } from '@/components/ui/input';
 import { Field } from '@tanstack/react-form';
 import { FormFieldContainer } from './FormFieldContainer';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 
 type FormFieldWithCheckboxProps = {
 	label: string;

@@ -1,12 +1,12 @@
 'use client';
 
-import { memo } from 'react';
 import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
 
 import { Form, FormSection } from '@/components/forms/core';
 import { TabTitle } from '@/components/ui';
-import { usePhaseStore } from '@/lib/stores';
 import { useResumeForm } from '@/lib/hooks';
+import { usePhaseStore } from '@/lib/stores';
 import {
 	EducationSection,
 	ExperienceSection,
@@ -22,7 +22,7 @@ type ResumeFormProps = {
 		includeResume: boolean,
 		summary: string,
 		education: Education[],
-		experience: Experience[],
+		experience: Experience[]
 	) => void;
 };
 
@@ -42,7 +42,7 @@ export const ResumeForm = memo(function ResumeForm({
 		sortEducationByYear,
 		sortExperienceByDate,
 	} = useResumeForm((includeResume, summary, experience, education) =>
-		onSubmit(includeResume, summary, education, experience),
+		onSubmit(includeResume, summary, education, experience)
 	);
 
 	if (currentPhase !== 'resume') {

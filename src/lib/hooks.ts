@@ -1,6 +1,12 @@
 'use client';
 
-import { useEffect, useState, useRef, RefObject, useCallback } from 'react';
+import {
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 /**
  * Hook for auto-saving form data with debouncing
@@ -12,7 +18,7 @@ export function useAutoSave<T>(
 	validationSchema?: {
 		safeParse: (data: unknown) => { success: boolean; data?: T };
 	},
-	debounceMs: number = 300,
+	debounceMs = 300
 ) {
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -105,7 +111,7 @@ export function useDebounce<T>(value: T, delay: number): T {
  */
 export function useThrottledField<T>(
 	field: { state: { value: T }; handleChange: (value: T) => void },
-	throttleMs: number = 100,
+	throttleMs = 100
 ) {
 	const [localValue, setLocalValue] = useState<T>(field.state.value);
 	const lastUpdateRef = useRef<number>(0);
@@ -127,7 +133,7 @@ export function useThrottledField<T>(
 				pendingValueRef.current = value;
 			}
 		},
-		[field, throttleMs],
+		[field, throttleMs]
 	);
 
 	useEffect(() => {
@@ -147,7 +153,7 @@ export function useThrottledField<T>(
 			setLocalValue(value);
 			throttledChange(value);
 		},
-		[throttledChange],
+		[throttledChange]
 	);
 
 	return {

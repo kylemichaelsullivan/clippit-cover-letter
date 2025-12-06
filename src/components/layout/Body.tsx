@@ -1,8 +1,8 @@
 'use client';
 
+import { SkipLinkTarget } from '@/components/ui/navigation';
 import { memo } from 'react';
 import type { ReactNode } from 'react';
-import { SkipLinkTarget } from '@/components/ui/navigation';
 
 type BodyProps = {
 	children: ReactNode;

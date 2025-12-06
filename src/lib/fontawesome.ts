@@ -28,5 +28,5 @@ library.add(
 	faSpinner,
 	faSun,
 	faTrash,
-	faXmark,
+	faXmark
 );

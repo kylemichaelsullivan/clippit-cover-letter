@@ -1,5 +1,5 @@
-import { memo, type ReactNode } from 'react';
 import clsx from 'clsx';
+import { type ReactNode, memo } from 'react';
 
 type FormFieldLabelProps = {
 	children: ReactNode;
@@ -29,7 +29,7 @@ export const FormFieldLabel = memo(function FormFieldLabel({
 					'sm:py-3': !spaced,
 					'py-3': spaced,
 					'flex items-center justify-between': labelContent,
-				},
+				}
 			)}
 			htmlFor={htmlFor}
 			title={title}

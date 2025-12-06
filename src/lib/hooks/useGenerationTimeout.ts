@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { showToast } from '@/lib/toast';
+import { useEffect } from 'react';
 
 type UseGenerationTimeoutProps = {
 	isGenerating: boolean;

@@ -1,13 +1,13 @@
 'use client';
 
-import { ConfirmationDialogActions } from './ConfirmationDialogActions';
-import { EducationPreview } from './EducationPreview';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalBackdrop } from '@/components/ui/feedback/ModalBackdrop';
 import { ModalHeader } from '@/components/ui/feedback/ModalHeader';
 import { useModalClose } from '@/lib/hooks/useModalClose';
 import type { ParsedEducation } from '@/lib/utils';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ConfirmationDialogActions } from './ConfirmationDialogActions';
+import { EducationPreview } from './EducationPreview';
 
 type EducationDialogsProps = {
 	pendingEducation: ParsedEducation[];

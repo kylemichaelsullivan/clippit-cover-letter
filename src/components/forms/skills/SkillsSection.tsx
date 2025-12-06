@@ -1,16 +1,16 @@
 'use client';
 
-import { Field } from '@tanstack/react-form';
-import { memo } from 'react';
-import { SkillsHeader, SkillsContent } from './';
 import { Button } from '@/components/ui/buttons';
-import { SkipLinkTarget } from '@/components/ui/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Error } from '@/components/ui/feedback';
+import { SkipLinkTarget } from '@/components/ui/navigation';
 import { CONSTANTS } from '@/config';
 import { useFocusNewSkillGroup } from '@/lib/hooks';
 import { useSkillsStore } from '@/lib/stores';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Field } from '@tanstack/react-form';
+import { memo } from 'react';
+import { SkillsContent, SkillsHeader } from './';
 
 type SkillsSectionProps = {
 	form: any; // TanStack Form

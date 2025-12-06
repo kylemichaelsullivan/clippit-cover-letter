@@ -1,7 +1,7 @@
-import puppeteer from 'puppeteer';
-import { NextRequest, NextResponse } from 'next/server';
-import type { CandidateDetails } from '@/types';
 import { generateUIStyles } from '@/config/shared-styles';
+import type { CandidateDetails } from '@/types';
+import { type NextRequest, NextResponse } from 'next/server';
+import puppeteer from 'puppeteer';
 
 type GeneratePDFRequest = {
 	filename: string;
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
 		} catch (browserError) {
 			console.error('Failed to launch Puppeteer browser:', browserError);
 			throw new Error(
-				`Failed to start PDF generation engine: ${browserError instanceof Error ? browserError.message : 'Unknown error'}`,
+				`Failed to start PDF generation engine: ${browserError instanceof Error ? browserError.message : 'Unknown error'}`
 			);
 		}
 
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function generateHeaderTemplate(
-	candidateDetails: CandidateDetails,
+	candidateDetails: CandidateDetails
 ): Promise<string> {
 	const { fullName, email, phone, linkedin, portfolio } = candidateDetails;
 
@@ -266,7 +266,7 @@ async function generateHeaderTemplate(
 }
 
 async function generateFooterTemplate(
-	candidateDetails: CandidateDetails,
+	candidateDetails: CandidateDetails
 ): Promise<string> {
 	const { logo, logoInclude, portfolioQRCode, portfolio } = candidateDetails;
 

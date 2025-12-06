@@ -1,8 +1,8 @@
 'use client';
 
-import { memo, useState, type ChangeEvent } from 'react';
-import ReactSlider from 'react-slider';
 import { DEFAULTS } from '@/config/defaults';
+import { type ChangeEvent, memo, useState } from 'react';
+import ReactSlider from 'react-slider';
 import { RangeInputGroup } from './RangeInputGroup';
 
 type SkillsRangeSliderProps = {
@@ -37,10 +37,10 @@ export const SkillsRangeSlider = memo(function SkillsRangeSlider({
 
 	const handleMinInputBlur = () => {
 		const inputValue =
-			parseInt(minInputValue) || DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MIN;
+			Number.parseInt(minInputValue) || DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MIN;
 		const newMin = Math.max(
 			DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MIN,
-			Math.min(inputValue, DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MAX),
+			Math.min(inputValue, DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MAX)
 		);
 		const newMax = Math.max(newMin, maxSkills);
 		onRangeChange(newMin, newMax);
@@ -50,10 +50,10 @@ export const SkillsRangeSlider = memo(function SkillsRangeSlider({
 
 	const handleMaxInputBlur = () => {
 		const inputValue =
-			parseInt(maxInputValue) || DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MIN;
+			Number.parseInt(maxInputValue) || DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MIN;
 		const newMax = Math.max(
 			minSkills,
-			Math.min(inputValue, DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MAX),
+			Math.min(inputValue, DEFAULTS.FORM_DEFAULTS.SKILLS_RANGE.MAX)
 		);
 		onRangeChange(minSkills, newMax);
 		setMinInputValue(minSkills.toString());

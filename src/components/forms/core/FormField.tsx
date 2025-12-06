@@ -1,18 +1,18 @@
 'use client';
 
-import { memo, useRef, type ChangeEvent } from 'react';
 import clsx from 'clsx';
+import { type ChangeEvent, memo, useRef } from 'react';
 
+import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 import { isFieldRequired } from '@/lib/schemas';
 import { FormFieldContainer } from './FormFieldContainer';
-import { FormFieldLabel } from '@/components/ui/FormFieldLabel';
 
 import type {
+	ClipboardEvent,
 	InputHTMLAttributes,
 	ReactNode,
-	TextareaHTMLAttributes,
 	SelectHTMLAttributes,
-	ClipboardEvent,
+	TextareaHTMLAttributes,
 } from 'react';
 
 type FormFieldType =
@@ -74,7 +74,7 @@ export const FormField = memo(function FormField({
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleChange = (
-		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
 	) => {
 		const newValue = e.target.value;
 
@@ -115,7 +115,7 @@ export const FormField = memo(function FormField({
 		prefix && 'rounded-l-none',
 		suffix && 'rounded-r-none',
 		prefix && suffix && 'rounded-none',
-		className,
+		className
 	);
 
 	const renderInput = () => {
