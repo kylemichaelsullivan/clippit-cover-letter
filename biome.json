@@ -1,5 +1,8 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"files": {
+		"ignore": [".next/**", "dist/**", "build/**", ".bun/**", "node_modules/**"]
+	},
 	"organizeImports": {
 		"enabled": true
 	},
@@ -7,14 +10,38 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"a11y": {
+				"useKeyWithClickEvents": "warn",
+				"noNoninteractiveTabindex": "warn",
+				"noLabelWithoutControl": "warn",
+				"noNoninteractiveElementToInteractiveRole": "warn",
+				"useSemanticElements": "warn"
+			},
 			"correctness": {
-				"useExhaustiveDependencies": "warn"
+				"useExhaustiveDependencies": "warn",
+				"noSwitchDeclarations": "warn",
+				"noUnknownProperty": "warn"
 			},
 			"suspicious": {
-				"noExplicitAny": "warn"
+				"noExplicitAny": "warn",
+				"noImplicitAnyLet": "warn",
+				"noArrayIndexKey": "warn",
+				"noShadowRestrictedNames": "warn",
+				"noGlobalIsNan": "warn"
 			},
 			"style": {
-				"useImportType": "error"
+				"useImportType": "error",
+				"useNodejsImportProtocol": "error",
+				"useTemplate": "warn",
+				"noNonNullAssertion": "warn",
+				"noUnusedTemplateLiteral": "warn",
+				"useSelfClosingElements": "warn"
+			},
+			"complexity": {
+				"noForEach": "warn",
+				"useOptionalChain": "warn",
+				"noUselessTernary": "warn",
+				"useLiteralKeys": "warn"
 			}
 		}
 	},
@@ -56,6 +83,27 @@
 			},
 			"linter": {
 				"enabled": false
+			}
+		},
+		{
+			"include": ["**/__tests__/**", "**/*.test.ts", "**/*.test.tsx"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noLabelWithoutControl": "warn",
+						"useButtonType": "warn",
+						"useKeyWithClickEvents": "warn"
+					},
+					"style": {
+						"noNonNullAssertion": "warn"
+					},
+					"complexity": {
+						"noForEach": "warn"
+					},
+					"performance": {
+						"noDelete": "warn"
+					}
+				}
 			}
 		}
 	]

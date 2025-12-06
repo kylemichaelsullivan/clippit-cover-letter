@@ -4,8 +4,9 @@
 	"private": true,
 	"scripts": {
 		"build": "next build",
-		"check": "biome check .",
+		"check": "biome check . --diagnostic-level=error",
 		"check:fix": "biome check --write .",
+		"check:raw": "biome check .",
 		"dev": "next dev --turbopack",
 		"dev:webpack": "next dev",
 		"format": "biome format --write .",
